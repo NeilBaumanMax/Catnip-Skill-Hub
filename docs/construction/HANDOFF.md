@@ -69,3 +69,16 @@ Phase 0 Foundation 的工程和文档验收已完成，正在执行最终 Git �
 - 不运行自动 breaking-change 修复；先在获准条件下审阅 npm 安全公告和依赖链。
 - 不批准未知安装脚本；如需重新安装或构建原生依赖，先核验 sharp/unrs-resolver 脚本用途。
 - Phase 1 不得接数据库、认证、下载、安装命令、导入或统计。
+
+## 2026-07-27 05:10 CST / Phase 0 / Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`533818fec7a8f2f3a4906183f92e58906d9e4792`
+- 备份分支：`backup/pre-phase0-foundation-20260727-0456`，已 push
+- Foundation 提交：`7c82b513190f98ecd44c33ea743a710f9e1fd190`，已 push 到 main
+- Foundation push 后工作区：干净
+- 文档收尾：本追加记录提交并 push 后，以下一条 Git 日志为最新提交；功能基线仍为上述 Foundation 提交。

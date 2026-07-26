@@ -87,3 +87,14 @@ Phase 0 的安装、lint、typecheck、build 和差异检查门禁均有真实�
 ### 下一步
 
 下一轮先重新执行开工与远端备份门禁，再进入 Phase 1：公共页面外壳、分类胶囊和静态 Skill 卡片瀑布流；仍不接数据库。
+
+## 2026-07-27 05:10 CST / Phase 0 / Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`533818fec7a8f2f3a4906183f92e58906d9e4792`。
+- 备份分支：`backup/pre-phase0-foundation-20260727-0456`，远端 push 成功，远端仍指向开发前基线。
+- Foundation 提交：`7c82b513190f98ecd44c33ea743a710f9e1fd190`。
+- Foundation main push：成功；`git ls-remote` 核验 `refs/heads/main` 指向该提交。
+- push 后工作区：干净。
+- 本状态回写将形成独立文档收尾提交并正常 push；这是对 Foundation 交付事实的追加记录，不改写既有日志。
+- 回滚目标：如需撤销 Foundation，执行 `git revert 7c82b513190f98ecd44c33ea743a710f9e1fd190`，再执行 `npm run lint`、`npm run typecheck`、`npm run build`。
