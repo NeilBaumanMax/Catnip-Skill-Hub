@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-Phase 0 使用 Next.js 16 App Router、React 19、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开路由位于 `src/app`。当前只包含最小占位首页，不接数据库或外部服务。
+当前仓库处于代码施工前的文档基线，不含应用代码、package.json、锁文件或构建配置。Neil Bauman 明确要求继续后，Phase 0 计划采用当时稳定的 Next.js App Router、React、TypeScript、Tailwind CSS、ESLint 与 npm；计划使用 `src/` 目录，公开路由位于 `src/app`。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -17,7 +17,7 @@ Phase 0 使用 Next.js 16 App Router、React 19、TypeScript、Tailwind CSS 4、
 - `src/lib/auth`：管理员认证、会话和权限；不包含普通用户认证。
 - `public/brand`：可替换 Logo、吉祥物、社交分享图及约定。
 
-Phase 0 不为未实现层创建空代码目录；上述路径在对应 Phase 出现真实职责时创建。
+当前不创建任何代码目录。收到继续指令后，Phase 0 只建立最小应用所需目录；其余路径在对应 Phase 出现真实职责时创建。
 
 ## 服务边界
 
@@ -27,8 +27,9 @@ Phase 0 不为未实现层创建空代码目录；上述路径在对应 Phase �
 
 资源模型首版支持 Skill 和 Skill Pack，并可表达单项、原生包、编辑包、父子关系、子项独立页面开关、单一主分类、多标签、草稿到发布状态、来源与版本、图片来源、下载开关、推荐池/权重/置顶/隐藏及低优先级统计字段。未来资源类型通过明确枚举扩展，首版前台不暴露未来类型。
 
-## Phase 0 事实
+## 当前事实
 
+- 无应用代码、依赖、锁文件或构建配置。
 - 无数据库、ORM、认证、对象存储、搜索、ZIP、GitHub SDK、统计 SDK 或复杂状态库。
-- 无正式品牌图像；首页只有规定的文字占位内容。
+- 无正式品牌图像；仅保留 `public/brand/README.md` 的未来资源约定。
 - 环境文件只有无真实值的 `.env.example`。

@@ -20,7 +20,7 @@ Phase 0 基线：`533818fec7a8f2f3a4906183f92e58906d9e4792`；远端备份：`ba
 
 单个错误提交优先 `git revert <bad-commit>`；连续错误提交可在审阅范围后使用 `git revert <oldest-bad-commit>^..<newest-bad-commit>`。回滚提交后执行对应 Phase 的全量验证并正常 push。
 
-Phase 0 回滚最低复测：`npm run lint`、`npm run typecheck`、`npm run build`。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
+当前文档基线回滚后最低复测：`git diff --check`、docs 结构检查和代码暂停检查。应用脚手架建立后，Phase 0 回滚最低复测再增加 `npm run lint`、`npm run typecheck`、`npm run build`。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
 
 ## 失败现场
 

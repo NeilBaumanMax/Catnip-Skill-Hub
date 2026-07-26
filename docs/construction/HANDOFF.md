@@ -82,3 +82,59 @@ Phase 0 Foundation 的工程和文档验收已完成，正在执行最终 Git �
 - Foundation 提交：`7c82b513190f98ecd44c33ea743a710f9e1fd190`，已 push 到 main
 - Foundation push 后工作区：干净
 - 文档收尾：本追加记录提交并 push 后，以下一条 Git 日志为最新提交；功能基线仍为上述 Foundation 提交。
+
+## 2026-07-27 05:37 CST / Phase 0 / 文档优先暂停交接
+
+### 当前状态
+
+项目已回到代码施工前状态。施工文档脚手架、产品边界、架构契约、Git 治理和品牌资源约定已建立；应用代码、依赖、锁文件和构建配置均不存在。
+
+### 本轮完成
+
+- 远端备份撤回前的完整 Next.js 状态。
+- 安全撤回全部应用脚手架和本地可再生产物。
+- 修正施工规范、测试门禁和当前 Phase 事实。
+
+### 未完成
+
+- Phase 0 最小应用脚手架尚未开始（以最新指令定义的当前状态为准）。
+- Phase 1 及后续功能均未开始。
+- 当前无 package.json，因此无 lint、typecheck、build 或 test 脚本。
+
+### 下次优先任务
+
+等待 Neil Bauman 明确继续。收到继续指令后：先读文档、检查 Git、追加开工计划并 push 新备份；再建立 Phase 0 最小应用脚手架。不得直接进入 Phase 1。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；当前层仍为 `docs/construction/progress/layers/00-foundation.md`。
+
+### 关键文件
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/ARCHITECTURE.md`
+- `docs/construction/CONSTRUCTION_PLAN.md`
+- `docs/construction/TEST_METRICS.md`
+
+### 测试基线
+
+- `git diff --check`：成功。
+- docs 结构、代码暂停和身份/Remote 检查：成功。
+- npm 脚本：不存在，未执行或虚报通过。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 本轮开发前基线：`7eeb9d6ad47afcb7df21adf878e055396ef519ff`
+- 本轮备份分支：`backup/pre-phase0-docs-only-20260727-0534`，已 push
+- 范围修正提交：Git 收尾后见 LOG 最新状态回写
+- 最终工作区：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 历史记录提到曾建立并测试 Next.js，这是保留的历史事实，不代表当前存在应用。
+- 最新指令优先：未收到继续指令前不得写代码。

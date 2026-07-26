@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 0：Foundation 已完成并交付。下一轮目标为 Phase 1：Public Web；完成新一轮开工与备份门禁前不得修改 Phase 1 代码，也不得大量实现 Phase 2 或后续功能。
+Phase 0：文档 Foundation 已完成，项目暂停在写代码之前。只有 Neil Bauman 明确要求继续后，才可完成 Phase 0 的最小应用脚手架；不得提前进入 Phase 1 或后续功能。
 
 ## 禁止事项
 
@@ -42,3 +42,4 @@ Phase 0：Foundation 已完成并交付。下一轮目标为 Phase 1：Public We
 - 不提交密钥、Token、密码、SSH 私钥、真实凭据、`.env`、构建产物或依赖目录。
 - 不使用其他姓名替代 Neil Bauman 作为管理员、负责人或产品所有者。
 - 不伪造测试、远端备份、push 或完成状态。
+- 在 Neil Bauman 明确要求继续前，不创建应用代码、依赖清单或构建配置。

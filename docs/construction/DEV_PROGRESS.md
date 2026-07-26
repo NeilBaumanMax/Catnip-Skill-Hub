@@ -74,3 +74,70 @@
 ### 当前结论
 
 Phase 0 工程与文档验收完成，等待 Git 交付收尾。下一轮只可在新的开工记录和开发前备份成功后进入 Phase 1。
+
+## 2026-07-27 05:34 CST / Phase 0 / 文档优先范围修正开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新指令，将仓库收缩为“施工文档脚手架已建立、应用代码尚未开始”的可接力状态；在收到继续指令前不写应用代码。
+
+### 涉及层
+
+- Foundation 施工治理与文档事实修正
+- 已生成应用脚手架的安全撤回
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`7eeb9d6ad47afcb7df21adf878e055396ef519ff`，与 `origin/main` 一致。
+- SSH 已复验为 NeilBaumanMax；Remote 保持指定 SSH 地址。
+- 当前存在已提交的 Next.js 应用、依赖和配置；这是本轮需要撤回的明确目标，不涉及来源不明用户文件。
+
+### 计划修改
+
+- 保留 AGENTS、docs、README、`.gitignore`、`.env.example` 和品牌资源说明。
+- 删除 Next.js/TypeScript/Tailwind/ESLint 应用、依赖锁文件和构建配置。
+- 修正规范中的 Phase 0 边界、测试门禁、当前 Phase 和交接事实。
+- 不创建任何新应用代码、页面或依赖。
+
+### 测试计划
+
+- `git diff --check`
+- 核对 docs 规定结构完整。
+- 核对应用代码、package.json、锁文件和构建配置已不存在。
+- 核对 Git、SSH、身份、品牌和 Remote 文本一致。
+- 因代码与 package.json 将不存在，不执行或声称 npm lint、typecheck、build、test 通过。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`7eeb9d6ad47afcb7df21adf878e055396ef519ff`
+- 备份分支：`backup/pre-phase0-docs-only-20260727-0534`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮完成后如需恢复撤回的应用脚手架，优先 revert 本轮范围修正提交；新的远端备份分支保留撤回前完整状态。
+
+## 2026-07-27 05:37 CST / Phase 0 / 文档优先范围修正完成记录
+
+### 完成范围
+
+- 撤回已提交的 Next.js 应用、依赖、锁文件和构建配置。
+- 删除本地可再生的 node_modules、.next 与 TypeScript 缓存。
+- 修正当前 Phase、架构事实、施工计划、测试门禁、工具和回滚规范。
+- 保留完整 docs 脚手架、AGENTS、README、品牌资源约定和安全环境示例。
+
+### 验证状态
+
+- `git diff --check`：成功。
+- docs 结构检查：成功。
+- 应用代码、package.json、锁文件和构建配置不存在。
+- 身份、品牌和指定 SSH Remote 文本检查一致。
+- lint、typecheck、build、test：当前无代码和 package.json，未执行且未声称通过。
+
+### 当前结论
+
+项目已暂停在写代码之前。只有收到 Neil Bauman 明确继续指令后，才可重新完成开工计划、开发前备份，并开始 Phase 0 最小应用脚手架。

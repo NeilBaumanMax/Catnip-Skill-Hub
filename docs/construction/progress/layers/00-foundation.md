@@ -42,3 +42,41 @@
 ### 层状态
 
 Foundation 已完成，等待 Git 交付收尾；下一层为 01 Public Web。
+
+## 2026-07-27 05:34 CST / Phase 0 / 文档优先范围修正开工计划
+
+### 当前目标
+
+将 Foundation 调整为仅完成仓库连接、施工文档和边界定义；应用脚手架延后到 Neil Bauman 明确要求继续之后。
+
+### 计划改动
+
+- 远端备份当前完整 Foundation 状态。
+- 撤回 Next.js 应用、依赖、锁文件与构建配置。
+- 更新规范、测试门禁、进度和 HANDOFF，明确暂停点。
+
+### 验收指标
+
+- docs 施工文档结构完整且可接力。
+- 仓库中不存在应用代码或应用依赖清单。
+- 文档不再把 lint、typecheck、build 作为当前可执行成功项。
+- main 与备份均成功 push，最终工作区干净。
+
+## 2026-07-27 05:37 CST / Phase 0 / 文档优先范围修正完成记录
+
+### 实际完成
+
+- 撤回全部已生成应用、依赖和构建配置。
+- 保留并校正施工文档、产品边界、架构契约、品牌约定与 Git 治理。
+- 远端备份 `backup/pre-phase0-docs-only-20260727-0534` 已成功保存撤回前状态。
+
+### 验收结果
+
+- docs 规定结构完整。
+- 无 `src`、package.json、锁文件、Next.js/TypeScript/Tailwind/ESLint 配置或本地构建产物。
+- `git diff --check` 成功；身份、品牌和 Remote 检查一致。
+- 当前无代码测试可运行，未虚报 lint、typecheck、build 或 test 通过。
+
+### 层状态
+
+Foundation 文档段完成；应用脚手架段暂停，等待 Neil Bauman 明确继续。

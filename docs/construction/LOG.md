@@ -98,3 +98,66 @@ Phase 0 的安装、lint、typecheck、build 和差异检查门禁均有真实�
 - push 后工作区：干净。
 - 本状态回写将形成独立文档收尾提交并正常 push；这是对 Foundation 交付事实的追加记录，不改写既有日志。
 - 回滚目标：如需撤销 Foundation，执行 `git revert 7c82b513190f98ecd44c33ea743a710f9e1fd190`，再执行 `npm run lint`、`npm run typecheck`、`npm run build`。
+
+## 2026-07-27 05:37 CST / Phase 0 / 文档优先范围修正
+
+### 本轮计划回放
+
+按 Neil Bauman 最新指令将仓库从“已建立应用脚手架”收缩为“仅完成施工文档脚手架”。完成文档读取、Git/SSH/远端检查、开工计划和新的远端备份后再撤回代码。
+
+### 实际修改
+
+- 创建并成功 push `backup/pre-phase0-docs-only-20260727-0534`，保存撤回前提交 `7eeb9d6ad47afcb7df21adf878e055396ef519ff`。
+- 删除 `src/app`、package.json、package-lock.json、Next.js、TypeScript、ESLint 和 PostCSS 配置。
+- 删除本地可再生的 node_modules、.next 与 tsconfig.tsbuildinfo。
+- 更新 AGENTS、主施工要求、架构、阶段计划、测试指标、工具策略和回滚规则。
+- 更新 DEV_PROGRESS、Foundation 层进度和 HANDOFF，明确暂停在写代码前。
+
+### 修改文件
+
+- 删除：应用目录、依赖清单/锁文件和构建配置。
+- 修改：`AGENTS.md` 与 `docs/construction/` 中相关规范和追加式状态文件。
+- 保留：产品需求、全部施工文档结构、README、`.gitignore`、`.env.example`、`public/brand/README.md`。
+
+### 验证结果
+
+- `git diff --check`：成功。
+- docs 文件结构：完整。
+- 应用/依赖/配置不存在检查：成功。
+- 本地 node_modules、.next、TypeScript 缓存不存在检查：成功。
+- 旧姓名文本：不存在；Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和指定 Remote 保持一致。
+
+### 测试日志
+
+- 当前没有代码或 package.json，因此未执行 lint、typecheck、build、test，也未将其写成通过。
+- 替代验证为 Git 差异检查、文档结构检查、代码暂停检查和身份/Remote 一致性检查。
+
+### 测试指标判断
+
+当前文档基线门禁满足。应用脚手架测试门禁暂不适用，必须等待继续指令后恢复。
+
+### 文档漂移检查
+
+- 已将“Phase 0 已有可构建应用”修正为“文档段完成、应用段暂停”。
+- 已将 npm 锁文件和测试脚本事实修正为当前不存在。
+- 历史日志保留原施工事实，最新追加记录覆盖当前接力判断。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 本轮开发前基线：`7eeb9d6ad47afcb7df21adf878e055396ef519ff`。
+- 备份分支：`backup/pre-phase0-docs-only-20260727-0534`，push 成功并经远端核验。
+- 范围修正提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。若需恢复撤回前脚手架，优先 revert 本轮范围修正提交；复测要求取决于恢复后的 package.json 脚本。
+
+### 当前风险
+
+- 施工文档保留了先前脚手架施工的历史记录；下一次 Agent 必须以最新记录和 AGENTS 当前 Phase 为准。
+- 在明确继续前没有可运行应用或 npm 测试命令，这是有意暂停状态。
+
+### 下一步
+
+等待 Neil Bauman 明确要求继续；在此之前不写代码。继续后先执行新一轮开工计划和开发前远端备份，再建立最小应用脚手架。
