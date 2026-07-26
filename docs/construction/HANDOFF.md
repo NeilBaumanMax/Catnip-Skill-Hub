@@ -138,3 +138,15 @@ Phase 0 Foundation 的工程和文档验收已完成，正在执行最终 Git �
 
 - 历史记录提到曾建立并测试 Next.js，这是保留的历史事实，不代表当前存在应用。
 - 最新指令优先：未收到继续指令前不得写代码。
+
+## 2026-07-27 05:40 CST / Phase 0 / 文档优先范围修正 Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 撤回前备份：`backup/pre-phase0-docs-only-20260727-0534`，已 push
+- docs-only 范围修正提交：`8f9ab957a1ac0f1d14205c8dc7e7357d3cfc4e1f`，已 push 到 main
+- 范围修正 push 后工作区：干净
+- 当前状态：只保留文档 Foundation，等待 Neil Bauman 明确继续后再开始代码脚手架

@@ -161,3 +161,14 @@ Phase 0 的安装、lint、typecheck、build 和差异检查门禁均有真实�
 ### 下一步
 
 等待 Neil Bauman 明确要求继续；在此之前不写代码。继续后先执行新一轮开工计划和开发前远端备份，再建立最小应用脚手架。
+
+## 2026-07-27 05:40 CST / Phase 0 / 文档优先范围修正 Git 状态回写
+
+- 当前分支：main。
+- 撤回前基线：`7eeb9d6ad47afcb7df21adf878e055396ef519ff`。
+- 撤回前备份：`backup/pre-phase0-docs-only-20260727-0534`，已 push 且远端指向撤回前基线。
+- docs-only 范围修正提交：`8f9ab957a1ac0f1d14205c8dc7e7357d3cfc4e1f`。
+- main push：成功；远端 `refs/heads/main` 已核验指向范围修正提交。
+- push 后工作区：干净。
+- 推荐回滚：如需恢复应用脚手架，执行 `git revert 8f9ab957a1ac0f1d14205c8dc7e7357d3cfc4e1f`，然后按恢复后的 package.json 执行 lint、typecheck 和 build。
+- 本状态回写将形成独立文档提交并正常 push；当前项目事实仍以 docs-only 范围修正提交为准。
