@@ -252,3 +252,94 @@ Phase 0 应用脚手架的安装、lint、typecheck、build 和 Git 差异门禁
 - push 后工作区：干净。
 - 推荐回滚：`git revert 35cad34fa2f9c79a120368c896d20eef09dcc4f0`，随后执行 docs-only 结构检查；恢复应用后执行 `npm run lint`、`npm run typecheck`、`npm run build`。
 - 本状态回写将形成独立文档提交并正常 push；应用功能基线仍为上述 Phase 0 提交。
+
+## 2026-07-28 19:00 CST / Phase 1 / 首轮构建失败记录
+
+### 失败命令
+
+`npm run build`
+
+### 失败摘要
+
+Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时尝试创建子进程并绑定本地端口，受当前文件系统沙箱限制返回 `Operation not permitted (os error 1)`。同批执行的 lint、typecheck 和 `git diff --check` 均成功，未出现指向页面源代码或类型的错误。
+
+### 处理动作
+
+- 停止继续扩展页面功能。
+- 不修改代码以规避环境权限，也不降低构建门禁。
+- 在允许构建子进程正常工作的授权环境中重新执行同一条 `npm run build`。
+- 复测后再执行全量 lint、typecheck、build 与差异检查，并在本轮完整 LOG 中记录最终状态。
+
+## 2026-07-28 19:13 CST / Phase 1 / Public Web
+
+### 本轮计划回放
+
+收到 Neil Bauman 明确继续指令后，完成必读文档、Git/SSH/远端核验、Phase 1 开工计划和远端备份，再施工静态公共前台；验证、漂移检查、交接和 Git 交付后停下，不进入 Phase 2。
+
+### 实际修改
+
+- 创建并核验 `backup/pre-phase1-public-web-20260728-1853`，保存 Phase 0 完成基线。
+- 将 Phase 0 占位页扩展为文字品牌、基础导航、搜索外观、推荐入口、分类胶囊、静态卡片瀑布流和页脚。
+- 使用十组 CSS 视觉封面与静态展示文案，不创建正式 Logo、吉祥物或外部图片。
+- 加入响应式、键盘焦点和 reduced-motion 支持。
+- 更新 metadata；未添加依赖、领域模型、详情路由或任何后端能力。
+
+### 修改文件
+
+- 页面与样式：`src/app/page.tsx`、`src/app/globals.css`、`src/app/layout.tsx`。
+- 规范：`AGENTS.md`、CODEX_MASTER_REQUIREMENTS、ARCHITECTURE、CONSTRUCTION_PLAN、TEST_METRICS、GITHUB_ROLLBACK。
+- 追加记录：DEV_PROGRESS、LOG、HANDOFF、`01-public-web.md`。
+
+### 验证结果
+
+- npm 锁文件安装、lint、typecheck、授权环境生产构建、Git 差异和静态边界核对最终成功。
+- 首页与 not-found 均被静态预渲染。
+- 单元测试脚本尚未建立。
+
+### 测试日志
+
+1. `npm ci`：退出码 0，安装 357 个包并审计 358 个包；报告 12 个 high 漏洞、两个 allowScripts 待审项和可选 WASM peer 覆盖警告。
+2. 首次 `npm run lint`：退出码 0。
+3. 首次 `npm run typecheck`：退出码 0。
+4. 首次 `npm run build`：退出码 1；沙箱禁止 Turbopack CSS 处理进程绑定本地端口，错误为 `Operation not permitted`。
+5. 首次 `git diff --check`：退出码 0。
+6. 处理动作：停止扩展、记录失败，不修改代码或降低门禁；改在允许构建子进程的授权环境复测同一命令。
+7. 第二次 `npm run build`：退出码 0，生产构建和静态预渲染成功。
+8. 全量复测：lint、typecheck、build、`git diff --check` 全部退出码 0。
+9. 静态边界核对：五类目和品牌文案存在；无 `src/lib`、详情路由、管理路由或旧管理员姓名。
+10. npm test：脚本不存在，未执行且未写成通过。
+
+### 测试指标判断
+
+Phase 1 工程门禁和静态产品边界门禁最终满足；中间构建失败已保留且完成同命令复测。单元测试门禁不适用，因为未建立 test 脚本。
+
+### 文档漂移检查
+
+- 将 AGENTS、主要求、架构和施工计划从“等待 Phase 1”修正为“Phase 1 完成、等待 Phase 2”。
+- 将当前架构事实更新为静态首页、CSS 封面、预留详情链接和未接后端。
+- 为 Phase 1 增加测试门禁和远端备份基线。
+- 核对 PRODUCT_REQUIREMENTS、LAYER_CONTRACT、WORKFLOW 无需修改；实际目录与禁止依赖方向一致。
+- Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和指定 SSH Remote 均一致；未发现旧管理员姓名、真实密钥、正式品牌图像、普通用户认证或后续 Phase 实现。
+- 收尾文本核对曾发现禁止姓名字面量出现在本段否定说明中；已立即改为“旧管理员姓名”并重新执行全仓文本核对。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`。
+- 备份分支：`backup/pre-phase1-public-web-20260728-1853`，push 成功并经远端核验。
+- Phase 1 提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销，优先 revert Phase 1 交付提交；随后执行 `npm run lint`、`npm run typecheck`、`npm run build` 和 `git diff --check`。
+
+### 当前风险
+
+- 十张卡片是 Phase 1 展示占位，作者字段明确标记待正式数据接入；Phase 2 必须替换为领域种子数据。
+- 卡片已预留 `/skills/<slug>`，但 Phase 2 前详情路由不存在；搜索框保持禁用，分类和推荐入口不执行数据操作。
+- npm 的 12 个 high 漏洞、allowScripts 与可选 WASM peer 警告尚未完成专项安全处置。
+- 当前没有单元测试脚本，也未进行用户未要求的浏览器视觉验收。
+
+### 下一步
+
+停止施工并向 Neil Bauman 汇报 Phase 1。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 2 Skill Domain。

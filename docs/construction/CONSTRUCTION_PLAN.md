@@ -4,11 +4,11 @@
 
 ## Phase 0：Foundation（已完成）
 
-SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定，以及最小 Next.js、TypeScript、Tailwind CSS、ESLint 脚手架和 lint/typecheck/build 门禁均已完成。当前停在 Phase 0 与 Phase 1 之间，等待 Neil Bauman 下一次明确继续指令。
+SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定，以及最小 Next.js、TypeScript、Tailwind CSS、ESLint 脚手架和 lint/typecheck/build 门禁均已完成。
 
-## Phase 1：Public Web
+## Phase 1：Public Web（已完成）
 
-公共页面外壳、文字品牌占位、分类胶囊、静态 Skill 卡片瀑布流、导航和响应式；不接数据库。
+公共页面外壳、文字品牌占位、五类目胶囊、十张静态 Skill 卡片瀑布流、基础导航、CSS 封面和响应式均已完成；未接数据库。当前停在 Phase 1 与 Phase 2 之间，等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 2：Skill Domain
 

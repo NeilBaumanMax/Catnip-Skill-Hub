@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录，公开路由位于 `src/app`；当前只包含最小占位首页，不接数据库或外部服务。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录，公开路由位于 `src/app`；当前包含 Phase 1 静态公共首页，不接数据库或外部服务。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -17,7 +17,7 @@
 - `src/lib/auth`：管理员认证、会话和权限；不包含普通用户认证。
 - `public/brand`：可替换 Logo、吉祥物、社交分享图及约定。
 
-Phase 0 只创建最小 `src/app` 目录；其余领域和基础设施路径在对应 Phase 出现真实职责时创建，不预建空目录。
+Phase 1 仍只使用 `src/app`：页面中的常量是瀑布流排版用静态展示数据，不构成正式 Skill 领域模型。其余领域和基础设施路径在对应 Phase 出现真实职责时创建，不预建空目录。
 
 ## 服务边界
 
@@ -33,3 +33,10 @@ Phase 0 只创建最小 `src/app` 目录；其余领域和基础设施路径在�
 - 无数据库、ORM、认证、对象存储、搜索、ZIP、GitHub SDK、统计 SDK 或复杂状态库。
 - 无正式品牌图像；首页使用文字品牌，`public/brand/README.md` 保留未来资源约定。
 - 环境文件只有无真实值的 `.env.example`。
+
+## Phase 1 事实
+
+- `src/app/page.tsx` 提供文字品牌、基础导航、禁用状态的搜索外观、五个主分类胶囊、十张静态展示卡片和页脚说明。
+- `src/app/globals.css` 提供可替换 CSS 封面构图、瀑布流、响应式、键盘焦点和 reduced-motion 处理；未增加 UI 依赖或正式品牌图片。
+- 卡片链接预留 `/skills/<slug>`；Phase 2 前尚无详情路由，搜索、分类和推荐入口也不执行数据操作。
+- 无领域层、下载/安装层、数据层、存储层、认证层、数据库或外部服务。

@@ -223,3 +223,68 @@ Phase 0 Foundation 已完成：仓库与文档治理、产品/架构边界、品
 - Phase 0 应用提交：`35cad34fa2f9c79a120368c896d20eef09dcc4f0`，已 push 到 main
 - 应用提交 push 后工作区：干净
 - 当前状态：Phase 0 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 1
+
+## 2026-07-28 19:13 CST / Phase 1 -> Phase 2 / 完成交接
+
+### 当前状态
+
+Phase 1 Public Web 已完成：静态公共首页、文字品牌、分类胶囊、十张 Skill 展示卡片、基础导航、CSS 视觉封面和响应式均已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 建立紧凑的创意发现首页，没有大型搜索 Hero。
+- 建立五个固定主分类和十张高低错落的静态卡片。
+- 建立文字品牌、导航、禁用搜索外观、推荐入口、页脚和基础无障碍状态。
+- 完成依赖安装、lint、typecheck、生产构建、Git 差异与 Phase 边界核对。
+- 首次沙箱 build 失败已完整记录，并在授权环境成功复测及全量复测。
+
+### 未完成
+
+- Phase 2 Skill 领域模型、正式种子数据、Pack/子项关系和详情页尚未开始。
+- 卡片作者仍为明确占位；`/skills/<slug>` 在详情页建立前不会命中真实页面。
+- 搜索、分类筛选、推荐表单、下载、安装、后台、数据库、认证、导入和统计均未实现。
+- 正式 Logo、吉祥物和单元测试脚本尚未建立。
+
+### 下次优先任务
+
+收到 Neil Bauman 明确继续指令后，先按 AGENTS 顺序检查文档与 Git，追加 Phase 2 开工计划并 push 新开发前备份；然后只实现 Skill 领域模型、Pack/子项关系、静态正式种子数据和详情页范围。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；下一个层文件为 `docs/construction/progress/layers/02-skill-domain.md`。
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/ARCHITECTURE.md`
+- `docs/construction/LAYER_CONTRACT.md`
+- `docs/construction/progress/layers/02-skill-domain.md`
+
+### 测试基线
+
+- `npm ci`：成功；保留安全警告。
+- `npm run lint`：最终复测成功。
+- `npm run typecheck`：最终复测成功。
+- `npm run build`：首次受沙箱端口限制失败，授权环境同命令及全量复测成功。
+- `git diff --check`：成功。
+- npm test：脚本不存在，单元测试尚未建立。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`
+- 备份分支：`backup/pre-phase1-public-web-20260728-1853`，已 push
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- Phase 2 必须用正式领域种子数据替换 Phase 1 展示占位，不得让占位作者进入真实发布数据。
+- 详情路由建立前卡片预留链接不可用；搜索框是明确禁用的后续能力占位。
+- npm 安全警告需专项评估，不得未经审阅直接执行 breaking-change 自动修复。
+- 下一轮不得越过 Phase 2，不得提前实现下载、安装、后台、数据库或认证。

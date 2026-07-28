@@ -212,3 +212,75 @@ Phase 0 工程与文档验收完成，等待 Git 交付收尾。下一轮只可�
 ### 当前结论
 
 Phase 0 Foundation 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 1。
+
+## 2026-07-28 18:53 CST / Phase 1 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 1 Public Web：建立 Catnip 公共页面外壳、文字品牌占位、分类胶囊、静态 Skill 卡片瀑布流、基础导航和响应式布局；完成后停下汇报，不进入 Phase 2。
+
+### 涉及层
+
+- 公共前台层：`src/app` 下的首页展示与基础交互语义。
+- 品牌展示层：继续使用可替换的“Catnip 薄荷猫”文字品牌，不创建正式 Logo 或吉祥物。
+- 静态展示数据：仅用于 Phase 1 卡片排版，不建立正式 Skill 领域模型或数据库访问。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`，与 `origin/main` 一致。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+
+### 计划修改
+
+- 将 Phase 0 最小占位页扩展为紧凑、图片感优先的静态发现首页。
+- 增加文字品牌、探索/分类/推荐入口和无真实查询行为的顶部搜索外观。
+- 增加五个固定主分类胶囊和静态 Skill 卡片瀑布流。
+- 使用 CSS 视觉封面占位，不生成正式品牌资产，不下载网络猫图。
+- 增加基础响应式、键盘焦点、语义结构和页脚来源说明。
+- 不实现详情页、真实搜索、随机算法、下载、安装、后台、数据库、认证、导入或统计。
+
+### 测试计划
+
+- `npm ci`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 检查 npm test 是否存在；不存在则记录“单元测试脚本尚未建立”。
+- 按 Phase 1 产品边界检查公开文案、分类、整卡链接、响应式样式和禁用范围。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`
+- 备份分支：`backup/pre-phase1-public-web-20260728-1853`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 1 交付提交；开发前 Phase 0 状态保存在远端备份分支。回滚后重新执行 lint、typecheck、build 和 `git diff --check`。
+
+## 2026-07-28 19:13 CST / Phase 1 / 完成记录
+
+### 完成范围
+
+- 建立紧凑公共首页、Catnip 薄荷猫文字品牌、基础导航和推荐入口。
+- 建立五个固定主分类胶囊和十张静态 Skill 卡片瀑布流。
+- 卡片包含 CSS 视觉封面、中文传播标题、简介、作者占位、分类和标签，整卡预留详情链接。
+- 建立桌面/移动响应式、键盘焦点和 reduced-motion 处理。
+- 搜索保持明确禁用的外观预览；未进入真实搜索、详情或后端施工。
+
+### 验证状态
+
+- `npm ci`：成功；保留 12 个 high 漏洞、allowScripts 和可选 WASM peer 警告。
+- 首次 `npm run build`：因沙箱禁止 Turbopack 绑定本地端口而失败，已记录在 LOG。
+- 授权环境同命令复测成功；随后全量 lint、typecheck、build、`git diff --check` 与边界核对全部成功。
+- 单元测试脚本尚未建立；未执行或虚报 npm test 通过。
+
+### 当前结论
+
+Phase 1 Public Web 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 2。
