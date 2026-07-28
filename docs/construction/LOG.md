@@ -893,3 +893,16 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 ### 下一步
 
 本轮完成 Git 收尾后停止。收到 Neil Bauman 下一次明确继续指令，才可先评估部署目标与权限，再进入 Phase 7 Deployment。
+
+## 2026-07-29 00:29 CST / Phase 6 / Git 状态回写
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`0962395111eb58abce18d2b71620b388472ec4bf`。
+- 开发前备份：`backup/pre-phase6-search-discovery-20260729-0018`，已 push；远端核验指向开发前基线。
+- Phase 6 功能提交：`dcce37226db251bbfd19714696ef0fcba1798177`。
+- main push：成功；远端 `refs/heads/main` 已核验指向功能提交。
+- 功能提交 push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert dcce37226db251bbfd19714696ef0fcba1798177`，随后执行 npm test、lint、typecheck、build、搜索/筛选/推荐/统计边界检查和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 6 功能基线仍为上述功能提交。
