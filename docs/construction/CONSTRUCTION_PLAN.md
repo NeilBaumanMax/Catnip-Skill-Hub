@@ -12,11 +12,11 @@ SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定�
 
 ## Phase 2：Skill Domain（已完成）
 
-纯 TypeScript 领域模型、Pack 和子项关系、十条原创演示种子、十个静态详情页、CSS 图片集、功能、场景、用法、效果、风险和相关 Skill 均已完成。当前停在 Phase 2 与 Phase 3 之间，等待 Neil Bauman 下一次明确继续指令。
+纯 TypeScript 领域模型、Pack 和子项关系、十条原创演示种子、十个静态详情页、CSS 图片集、功能、场景、用法、效果、风险和相关 Skill 均已完成。
 
-## Phase 3：Download and Install
+## Phase 3：Download and Install（已完成）
 
-ZIP 与 Catnip 外层说明；真实核验后生成 Claude Code CLI/Codex CLI 的项目级和全局安装命令，并测试。
+ZIP 与 Catnip 外层说明、下载授权与路径安全、下载 API，以及经真实 CLI 核验的 Claude Code CLI/Codex CLI 项目级和全局安装命令均已完成并有单元测试。当前停在 Phase 3 与 Phase 4 之间，等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 4：Admin CMS
 

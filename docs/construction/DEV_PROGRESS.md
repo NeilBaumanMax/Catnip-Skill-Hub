@@ -358,3 +358,81 @@ Phase 1 Public Web 已完成。按 Neil Bauman 的阶段汇报要求，本轮必
 ### 当前结论
 
 Phase 2 Skill Domain 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 3。
+
+## 2026-07-28 22:22 CST / Phase 3 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 3 Download and Install：实际核验 skills CLI、建立独立下载/安装服务、提供一个真实 Catnip 原创 Skill 夹具、生成标准 ZIP、接入详情页下载和安装命令选择；完成后停下汇报，不进入 Phase 4。
+
+### 涉及层
+
+- 下载层：`src/lib/downloads`，负责只读目录采集、ZIP 外层说明、来源 JSON、授权与归档。
+- 安装层：`src/lib/install`，负责 Agent、范围、来源验证和命令生成。
+- 公共前台层：详情页只消费服务结果，通过独立 API 下载，不在 React 组件内打包或拼命令。
+- 测试层：建立真实单元测试脚本，验证命令矩阵、路径安全、ZIP 结构和原 Skill 内容不变。
+- 内容夹具：`content/skills/project-brief`，使用 Skill 创建规范建立 Catnip 原创最小可分发 Skill。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`72cfd8cd954c2c044f10c93b454f4149be9dead7`，与 `origin/main` 一致。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+
+### 计划修改
+
+- 在远端备份完成后实际执行 `npx skills --help` 与 `npx skills add --help`，记录真实参数和 Agent 标识。
+- 使用官方 Skill 初始化/校验脚本创建 `project-brief` 原创夹具，只包含必要 Skill 文件。
+- 为该资源补齐仓库路径、明确 License、版本和管理员下载授权；其他演示种子继续关闭下载。
+- 使用最小 ZIP 依赖建立服务，保持原 Skill 文件夹内部字节不变，Catnip 说明仅写入归档外层。
+- 建立下载 API，严格限制到领域目录中已授权且路径安全的资源。
+- 建立安装命令服务和可交互客户端面板，支持 Claude Code CLI/Codex CLI 与当前项目/全局范围。
+- 新增真实 test 脚本和测试；不实现后台、数据库、认证、对象存储、GitHub 导入或统计。
+
+### 测试计划
+
+- `npm ci` 或依赖变更后的 `npm install`
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 实际检查四种安装命令、下载授权拒绝、路径逃逸拒绝、ZIP 顶层结构、原 SKILL.md 字节一致和 Catnip 元数据。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`72cfd8cd954c2c044f10c93b454f4149be9dead7`
+- 备份分支：`backup/pre-phase3-download-install-20260728-2222`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 3 交付提交；Phase 2 完成状态保存在远端备份分支。回滚后执行 npm test、lint、typecheck、build、下载/安装边界检查和 `git diff --check`。
+
+## 2026-07-28 22:39 CST / Phase 3 / 完成记录
+
+### 完成范围
+
+- 实际核验 skills CLI 1.5.20 的总帮助、add 帮助和版本，并在隔离临时项目中真实完成 Codex CLI 与 Claude Code CLI 的项目级安装。
+- 建立 `src/lib/install` 命令服务，覆盖两个 Agent、两个范围、仓库地址与稳定 Skill 名称校验。
+- 建立 `src/lib/downloads` 只读 ZIP 服务，包含管理员下载开关、`content/skills` 路径边界、文件类型保护和 Catnip 外层说明/来源元数据。
+- 建立动态下载 API 和详情页操作面板；UI 不打包 ZIP，也不拼接安装命令。
+- 使用 Skill 初始化规范建立并校验 Catnip 原创 `project-brief` 夹具；只有该资源开放下载，其余演示资源保持关闭。
+- 建立真实 npm test 脚本与 7 项下载/安装单元测试。
+
+### 验证状态
+
+- `npm test`：7/7 通过。
+- `npm run lint`、`npm run typecheck`、`git diff --check`：通过。
+- `npm run build`：首次构建成功但出现动态文件追踪警告；收敛下载根目录后复测成功且警告消失。
+- Skill 校验首次因系统 Python 缺少 PyYAML 失败；在 `/tmp` 隔离虚拟环境安装 PyYAML 后输出 `Skill is valid!`。
+- `npm install` 成功；保留 12 个 high 漏洞、可选 peer 和三个 allowScripts 待审警告，不执行自动修复。
+
+### 当前结论
+
+Phase 3 Download and Install 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 4 Admin CMS。

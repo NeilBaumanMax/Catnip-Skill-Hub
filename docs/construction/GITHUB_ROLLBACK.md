@@ -18,6 +18,8 @@ Phase 1 Public Web 施工前基线：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`�
 
 Phase 2 Skill Domain 施工前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`；远端备份：`backup/pre-phase2-skill-domain-20260728-1942`。
 
+Phase 3 Download and Install 施工前基线：`72cfd8cd954c2c044f10c93b454f4149be9dead7`；远端备份：`backup/pre-phase3-download-install-20260728-2222`。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。
@@ -26,7 +28,7 @@ Phase 2 Skill Domain 施工前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996
 
 单个错误提交优先 `git revert <bad-commit>`；连续错误提交可在审阅范围后使用 `git revert <oldest-bad-commit>^..<newest-bad-commit>`。回滚提交后执行对应 Phase 的全量验证并正常 push。
 
-当前文档基线回滚后最低复测：`git diff --check`、docs 结构检查和代码暂停检查。应用脚手架建立后，Phase 0 至 Phase 2 回滚最低复测再增加 `npm run lint`、`npm run typecheck`、`npm run build`；Phase 2 还需核对领域目录约束和静态详情路由。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
+当前文档基线回滚后最低复测：`git diff --check`、docs 结构检查和代码暂停检查。应用脚手架建立后，Phase 0 至 Phase 2 回滚最低复测再增加 `npm run lint`、`npm run typecheck`、`npm run build`；Phase 2 还需核对领域目录约束和静态详情路由。Phase 3 回滚还必须执行 `npm test`，并核对下载授权、路径安全、ZIP 原文件一致和四种安装命令。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
 
 ## 失败现场
 

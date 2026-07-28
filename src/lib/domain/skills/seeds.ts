@@ -22,6 +22,12 @@ interface SeedInput {
   relatedSlugs: readonly string[];
   childSkills?: SkillResource["childSkills"];
   galleryTheme?: CoverTheme;
+  repositoryPath?: string;
+  license?: string;
+  version?: string;
+  downloadEnabled?: boolean;
+  sourceLabel?: string;
+  adminNotes?: string;
 }
 
 function createSeed(input: SeedInput): SkillResource {
@@ -42,11 +48,12 @@ function createSeed(input: SeedInput): SkillResource {
     },
     source: {
       kind: subtype === "editorial_pack" ? "editorial_collection" : "catnip_original",
-      label: "Catnip Phase 2 原创演示目录",
+      label: input.sourceLabel ?? "Catnip Phase 2 原创演示目录",
       sourceUrl: repositoryUrl,
       repositoryUrl,
-      license: "待管理员在正式发布前确认",
-      version: "0.2.0-demo",
+      repositoryPath: input.repositoryPath,
+      license: input.license ?? "待管理员在正式发布前确认",
+      version: input.version ?? "0.2.0-demo",
     },
     category: input.category,
     tags: input.tags,
@@ -89,8 +96,8 @@ function createSeed(input: SeedInput): SkillResource {
       recommendationWeight: 50,
       pinned: false,
       hidden: false,
-      downloadEnabled: false,
-      adminNotes: "Phase 2 原创演示种子；正式内容接入前不得开放下载。",
+      downloadEnabled: input.downloadEnabled ?? false,
+      adminNotes: input.adminNotes ?? "Phase 2 原创演示种子；正式内容接入前不得开放下载。",
       reviewState: "unreviewed",
     },
     stats: {
@@ -182,6 +189,12 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     results: [{ title: "减少返工", description: "团队可以在写代码前发现范围和验收理解差异。" }],
     risks: ["简报质量依赖输入背景是否充分", "重大范围变化需要重新确认而不是静默追加"],
     relatedSlugs: ["release-checklist", "deeper-reasoning"],
+    repositoryPath: "content/skills/project-brief",
+    license: "MIT",
+    version: "1.0.0",
+    downloadEnabled: true,
+    sourceLabel: "Catnip 原创 Skill",
+    adminNotes: "Phase 3 可分发测试夹具；MIT License 已记录，管理员已显式开放镜像下载。",
   }),
   createSeed({
     slug: "automation-flow",

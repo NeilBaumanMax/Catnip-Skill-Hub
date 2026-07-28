@@ -405,6 +405,7 @@ Phase 2 工程、领域约束和静态路由门禁全部满足。单元测试门
 - 将当前架构事实更新为纯领域层、十条原创演示种子、SSG 详情页和禁用操作。
 - 为 Phase 2 增加测试门禁和远端备份基线。
 - 核对 PRODUCT_REQUIREMENTS、LAYER_CONTRACT、WORKFLOW 无需修改；实际依赖方向一致。
+- 漂移检查发现 `project-brief` 仍继承 Phase 2 的演示来源标签和“不得开放下载”管理员备注；已改为可配置字段，写入 Phase 3 可分发夹具事实，并增加开放下载必须具备仓库路径的目录断言。
 - Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和指定 SSH Remote 均一致；未发现旧管理员姓名、真实密钥、正式品牌图像、普通用户认证或 Phase 3 实现。
 
 ### GitHub 状态
@@ -466,3 +467,121 @@ Phase 2 工程、领域约束和静态路由门禁全部满足。单元测试门
 - push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert bdae1ce5a37ff2a7edd3ef59cddc77ca661789af`，随后执行 lint、typecheck、build、领域边界检查和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 2 功能基线仍为上述 Skill Domain 提交。
+
+## 2026-07-28 22:27 CST / Phase 3 / Skill 校验首次失败
+
+### 失败命令
+
+`python3 /Users/neil/.codex/skills/.system/skill-creator/scripts/quick_validate.py content/skills/project-brief`
+
+### 失败摘要
+
+校验器启动时因当前 Python 环境缺少 `yaml` 模块而退出，错误为 `ModuleNotFoundError: No module named 'yaml'`；失败发生在读取 Skill 内容之前。
+
+### 处理计划
+
+- 不向项目 package 或系统 Python 写入无关依赖。
+- 在 `/tmp` 下建立隔离虚拟环境并安装 PyYAML。
+- 使用虚拟环境 Python 复跑同一个 `quick_validate.py`，保留复测结果。
+
+## 2026-07-28 22:38 CST / Phase 3 / 首次生产构建警告与修正
+
+### 首次结果
+
+- 命令：`npm run build`。
+- 结果：退出码 0，编译、类型检查和 13 个页面生成成功。
+- 警告：Turbopack 判断下载服务的动态文件路径可能从项目根开始追踪，给出 `Encountered unexpected file in NFT list`。
+
+### 修正动作
+
+- 将下载服务允许读取的根路径进一步收敛为 `content/skills`，并要求领域层仓库路径显式带有该前缀。
+- 保留项目目录逃逸检查，不放宽符号链接或文件类型限制。
+- 修正后重新执行下载单元测试、lint、typecheck 和生产构建；最终结果在本轮完整日志中记录。
+
+## 2026-07-28 22:39 CST / Phase 3 / Download and Install
+
+### 本轮计划回放
+
+按开工计划完成远端开发前备份，先核验真实 CLI，再建立独立安装/下载层、可分发 Skill 夹具、API、详情页操作区和测试；严格停在 Phase 3，不进入管理端或数据库。
+
+### 实际修改
+
+- 核验 skills CLI 1.5.20：`skills add <package>` 支持 `--global`、`--agent <agents>`、`--skill <skills>`、`--yes` 和 `--full-depth`。
+- 在隔离临时项目中分别以 `--agent codex` 与 `--agent claude-code` 成功安装本仓库的 `project-brief`；未执行会改变用户环境的全局安装。
+- 使用 Skill 创建工具初始化 `content/skills/project-brief`，修正 shell 展开导致的默认 Prompt 文本，再通过 quick validator；增加 MIT License。
+- 为 `project-brief` 补齐仓库路径、License、版本和管理员显式下载开关；其余九条演示资源仍关闭下载。
+- 新建命令服务，验证 GitHub 仓库根地址、稳定 Skill 名称、目标 Agent 和安装范围，并生成四种命令矩阵。
+- 新建只读 ZIP 服务，限制到 `content/skills`，拒绝路径逃逸、符号链接和异常文件；原文件不变，Catnip 两个文件只加入 ZIP 外层。
+- 新建下载 API 和详情页操作组件；React 组件不拼接命令、不执行 ZIP 打包。
+- 增加 `fflate` 运行依赖、`tsx` 开发依赖和真实 npm test 脚本。
+
+### 修改文件
+
+- 内容：`content/skills/project-brief/{SKILL.md,LICENSE,agents/openai.yaml}`。
+- 安装层：`src/lib/install/{types,commands,index}.ts`。
+- 下载层：`src/lib/downloads/{archive,index}.ts`。
+- Web：`src/app/api/skills/[slug]/download/route.ts`、`src/app/_components/skill-actions.tsx`、详情页和全局样式。
+- 领域与测试：`src/lib/domain/skills/seeds.ts`、`tests/{install,downloads}.test.ts`、package.json、package-lock.json。
+- 规范与记录：AGENTS、主要求、架构、施工计划、测试指标、回滚、DEV_PROGRESS、LOG、HANDOFF 和 `03-download-install.md`。
+
+### 验证结果
+
+- CLI 总帮助、add 帮助、版本和两个项目级真实安装成功。
+- Skill quick validator 最终输出 `Skill is valid!`。
+- 7 项单元测试全部通过；lint、typecheck、生产构建和 Git 空白检查最终通过。
+- 生产构建生成 13 个静态页面和动态 `/api/skills/[slug]/download` 路由。
+
+### 测试日志
+
+1. `npx skills --help`：完成，确认 add/list/remove/check/update/init 等命令。
+2. `npx skills add --help`：完成，确认 Phase 3 使用的真实参数。
+3. `npx skills --version`：输出 `1.5.20`。
+4. 隔离目录执行 Codex 项目级 add：成功，安装到 `.agents/skills/project-brief`。
+5. 隔离目录执行 Claude Code 项目级 add：成功，安装到 `.claude/skills/project-brief`。
+6. Skill quick validator 首次失败：系统 Python 缺少 `yaml` 模块；未修改系统或项目 Python，在 `/tmp` 隔离 venv 安装 PyYAML 6.0.3 后复测成功。
+7. `npm install fflate` 与 `npm install --save-dev tsx`：成功；审计仍报告 12 个 high 漏洞、可选 peer 覆盖和三个 allowScripts 待审项。
+8. 首轮 `npm test`：7/7 通过。
+9. 首轮 `npm run lint`：通过。
+10. 首轮 `npm run typecheck`：通过。
+11. 首轮 `git diff --check`：通过。
+12. 首轮 `npm run build`：退出码 0，但 Turbopack 警告下载路径可能追踪整个项目。
+13. 将文件读取根收敛到 `content/skills` 后，`npm test` 7/7、lint、typecheck、`git diff --check` 全部复测通过。
+14. 最终 `npm run build`：退出码 0，警告消失，页面和下载 API 正常生成。
+15. 文档漂移修正后的额外领域治理审计首次退出码 1：脚本直接导入了未导出的内部 `skillSeeds`，得到 `undefined`；产品测试、lint 和 typecheck 同批仍通过。修正为通过 `getPublishedSkills` 公开接口读取目录后复测。
+16. 修正后的审计在受管沙箱内再次退出码 1：`tsx` 创建本地 IPC socket 时得到 `listen EPERM`，领域代码尚未开始执行；按权限流程在允许 IPC 的环境运行同一只读断言。
+17. 允许本地 IPC 的环境复跑公开接口审计：退出码 0，输出 `Phase 3 domain boundary passed`；确认仅 `project-brief` 开放下载且具备仓库路径。
+
+### 测试指标判断
+
+Phase 3 当前门禁满足：真实 test 脚本存在，四种命令、标题隔离、参数拒绝、下载授权、路径逃逸、ZIP 外层结构和原 SKILL.md 字节一致均有通过测试。全局安装未实际写入用户环境，依据真实 help 和同一生成器的单元测试验收，未误报为已实装。
+
+### 文档漂移检查
+
+- 将 AGENTS、主要求、架构和施工计划从“等待 Phase 3”修正为“Phase 3 完成、等待 Phase 4”。
+- 将实际 `src/lib/install`、`src/lib/downloads`、动态 API、内容目录、`fflate`、`tsx` 和 test 脚本写入架构/测试事实。
+- 增加 Phase 3 远端备份、回滚复测要求和当前层完成记录。
+- 核对 PRODUCT_REQUIREMENTS、LAYER_CONTRACT、WORKFLOW 无需修改；实际依赖方向一致。
+- 核对管理员始终为 Neil Bauman、GitHub 用户为 NeilBaumanMax、品牌为 Catnip 薄荷猫、origin 为指定 SSH Remote。
+- 未发现旧管理员姓名、真实密钥、正式 Logo/吉祥物、普通用户认证、后台、数据库、导入、搜索、统计或 Phase 4 越界。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`72cfd8cd954c2c044f10c93b454f4149be9dead7`。
+- 备份分支：`backup/pre-phase3-download-install-20260728-2222`，已 push 且远端核验指向开发前基线。
+- Phase 3 提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销，优先 revert Phase 3 交付提交；随后执行 `npm test`、lint、typecheck、build、下载/安装边界检查和 `git diff --check`。
+
+### 当前风险
+
+- npm 仍报告 12 个 high 漏洞、可选 peer 覆盖和三个 allowScripts 待审项，尚未进行专项安全升级。
+- 当前只有一个 Catnip 原创 Skill 可下载；其余演示资源不可视为已验证第三方内容。
+- 下载源当前是仓库文件系统；对象存储、管理员上传与持久化尚未实现。
+- 全局命令未在用户机器真实安装，以避免超出验证范围并污染用户环境。
+
+### 下一步
+
+停止施工并向 Neil Bauman 汇报 Phase 3。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 4 Admin CMS。

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Brief"
+  short_description: "Turn rough ideas into clear, testable project briefs"
+  default_prompt: "Use $project-brief to turn this idea into a scoped project brief with acceptance criteria."

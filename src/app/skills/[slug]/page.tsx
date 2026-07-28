@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { SkillActions } from "@/app/_components/skill-actions";
 import { getPublishedSkills, getRelatedSkills, getSkillBySlug } from "@/lib/domain/skills";
+import { buildInstallCommandMatrix } from "@/lib/install";
 
 interface SkillPageProps {
   params: Promise<{ slug: string }>;
@@ -39,6 +41,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
 
   const relatedSkills = getRelatedSkills(skill);
   const cover = skill.images.find((image) => image.kind === "cover");
+  const installCommands = buildInstallCommandMatrix(skill);
 
   return (
     <div className="site-shell detail-shell">
@@ -93,17 +96,11 @@ export default async function SkillPage({ params }: SkillPageProps) {
           </div>
         </section>
 
-        <section className="action-panel" aria-labelledby="action-title">
-          <div>
-            <p className="eyebrow">获取 Skill</p>
-            <h2 id="action-title">下载与安装将在 Phase 3 接入</h2>
-            <p>当前种子未绑定可下载文件、已确认 License 或真实安装参数，因此操作保持禁用。</p>
-          </div>
-          <div className="action-buttons">
-            <button type="button" disabled>下载 ZIP</button>
-            <button type="button" disabled>安装到 Agent</button>
-          </div>
-        </section>
+        <SkillActions
+          commands={installCommands}
+          downloadEnabled={skill.governance.downloadEnabled}
+          downloadUrl={`/api/skills/${skill.slug}/download`}
+        />
 
         <div className="detail-columns">
           <div className="detail-main-column">
@@ -221,8 +218,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
           <p>由管理员筛选、整理和发布的中文 Agent Skill 独立站。</p>
         </div>
         <div className="footer-note">
-          <span>当前内容为 Phase 2 原创演示种子</span>
-          <span>下载与安装将在后续阶段接入</span>
+          <span>当前目录含一个可下载 Catnip 原创 Skill</span>
+          <span>其他演示种子继续保持下载关闭</span>
         </div>
       </footer>
     </div>

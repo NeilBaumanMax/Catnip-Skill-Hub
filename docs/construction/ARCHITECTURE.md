@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，当前不接数据库或外部服务。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装和下载服务分别位于 `src/lib/install` 与 `src/lib/downloads`。ZIP 使用无供应商绑定的 `fflate`；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库或外部服务。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -49,3 +49,12 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `src/app/page.tsx` 从领域查询读取首页资源；`src/app/skills/[slug]/page.tsx` 使用 `generateStaticParams` 生成十个详情页。
 - 详情页展示 CSS 图片集、功能、场景、子项、用法、Prompt、效果、风险、来源和相关 Skill；下载/安装仅为禁用的 Phase 3 说明。
 - 领域层不依赖 React、Next.js、数据库或对象存储；仍无下载/安装、数据、存储、认证层或外部服务。
+
+## Phase 3 事实
+
+- `src/lib/install` 根据经实际核验的 skills CLI 1.5.20 参数生成 Claude Code CLI/Codex CLI × 当前项目/全局安装的四种命令；来源只接受仓库根级 GitHub HTTPS 地址，Skill 名称使用稳定原始名称。
+- `src/lib/downloads` 只读取 `content/skills` 下的普通目录，拒绝目录逃逸、符号链接和非普通文件，并根据管理员 `downloadEnabled` 字段决定是否归档。
+- ZIP 保持原 Skill 文件夹内容和字节不变；`Catnip-安装说明.md` 与 `Catnip-来源信息.json` 只放在归档外层。
+- `src/app/api/skills/[slug]/download` 是 Node.js 下载入口；详情页客户端组件只消费预生成命令和下载 URL，不直接拼接命令或打包 ZIP。
+- `content/skills/project-brief` 是经 Skill 校验脚本验证的 Catnip 原创 MIT 夹具，也是当前唯一显式开放镜像下载的资源；其余九条演示资源继续关闭下载。
+- 当前无数据库、对象存储、管理员认证、GitHub 导入、统计写入、真实搜索或随机推荐。

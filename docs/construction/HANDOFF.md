@@ -380,3 +380,72 @@ Phase 2 Skill Domain 已完成：纯 TypeScript 领域模型、十条 Catnip 原
 - Phase 2 Skill Domain 提交：`bdae1ce5a37ff2a7edd3ef59cddc77ca661789af`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 2 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 3
+
+## 2026-07-28 22:39 CST / Phase 3 -> Phase 4 / 完成交接
+
+### 当前状态
+
+Phase 3 Download and Install 已完成：独立下载/安装服务、动态下载 API、详情页操作面板、真实 Catnip 原创 Skill 夹具和单元测试已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 实际核验 skills CLI 1.5.20 的 `--help`、`add --help` 与版本，并在隔离项目完成两个 Agent 的本地安装。
+- 生成 Claude Code CLI/Codex CLI × 当前项目/全局范围四种命令，不依赖中文标题。
+- 生成标准 ZIP，保留原 Skill 文件夹内容，Catnip 说明和来源 JSON 只在外层。
+- 仅 `project-brief` 具备真实文件、MIT License、版本、仓库路径和显式下载授权；其他演示资源保持关闭。
+- 下载 API 拒绝未知、未授权、缺少来源和不安全路径；UI 只消费服务结果。
+- 建立 7 项单元测试并完成 lint、typecheck、生产构建和漂移检查。
+
+### 未完成
+
+- Phase 4 管理员认证、预创建账号、Skill CRUD、草稿/发布/下架和分类标签管理均未开始。
+- 仍无数据库、对象存储、GitHub 导入、搜索、随机推荐、统计写入或正式品牌视觉。
+- 其余九条演示资源不是可分发第三方内容，未开放下载。
+
+### 下次优先任务
+
+1. 收到明确继续指令后，按 AGENTS 必读顺序核验文档和 Git，追加 Phase 4 开工计划并 push 新开发前备份。
+2. 先确定仅管理员的认证边界与草稿到发布状态机，再实现最小管理端用例，不增加普通用户认证。
+3. 让管理端通过服务层维护 Skill、分类和标签，不让 UI 直接写数据。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；下一个层文件为 `docs/construction/progress/layers/04-admin-cms.md`。
+
+### 关键文件
+
+- `src/lib/domain/skills/types.ts`
+- `src/lib/install/commands.ts`
+- `src/lib/downloads/archive.ts`
+- `src/app/api/skills/[slug]/download/route.ts`
+- `src/app/_components/skill-actions.tsx`
+- `content/skills/project-brief/SKILL.md`
+- `tests/install.test.ts`
+- `tests/downloads.test.ts`
+
+### 测试基线
+
+- `npm test`：7/7 成功。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run build`：最终成功且无文件追踪警告；生成既有静态页面和动态下载 API。
+- `git diff --check`：成功。
+- Skill quick validator：首次因当前 Python 缺少 PyYAML 失败；隔离环境复测输出 `Skill is valid!`。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`72cfd8cd954c2c044f10c93b454f4149be9dead7`
+- 备份分支：`backup/pre-phase3-download-install-20260728-2222`，已 push 且远端核验指向开发前基线
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- npm 当前报告 12 个 high 漏洞、可选 peer 覆盖和 sharp/unrs-resolver/esbuild 三个 allowScripts 待审项；不得直接执行 breaking-change 自动修复或批准未知脚本。
+- 全局安装命令依据真实 CLI help 与单元测试生成，但为避免改变用户全局环境，本轮只实装验证项目级范围。
+- 下载目前读取仓库内 `content/skills`；对象存储和上传属于后续 Phase，不得在 Phase 4 绕过存储契约临时耦合。
+- 下一轮不得越过 Phase 4，不得提前引入普通用户认证、支付、搜索或部署栈。
