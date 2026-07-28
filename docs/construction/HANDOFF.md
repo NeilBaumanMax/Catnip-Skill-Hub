@@ -367,3 +367,16 @@ Phase 2 Skill Domain 已完成：纯 TypeScript 领域模型、十条 Catnip 原
 - 安装命令不得凭记忆实现，也不得依赖中文传播标题。
 - npm 安全警告需专项评估，不得直接执行 breaking-change 自动修复。
 - 下一轮不得越过 Phase 3，不得提前建立后台、数据库、认证或导入系统。
+
+## 2026-07-28 20:01 CST / Phase 2 / Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`
+- 备份分支：`backup/pre-phase2-skill-domain-20260728-1942`，已 push 且远端已核验
+- Phase 2 Skill Domain 提交：`bdae1ce5a37ff2a7edd3ef59cddc77ca661789af`，已 push 到 main
+- 功能提交 push 后工作区：干净
+- 当前状态：Phase 2 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 3

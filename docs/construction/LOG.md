@@ -455,3 +455,14 @@ Phase 2 工程、领域约束和静态路由门禁全部满足。单元测试门
 - `git diff --check` 同批成功；确认十条种子、五类目、两个原生包、一个编辑组合包、下载关闭、领域依赖安全、禁止姓名和密钥文件检查全部通过。
 - 两次失败均为验证脚本表达式问题，未修改领域代码或测试标准。
 - 差异审阅后补充单张图片占满详情图片集网格的 CSS 规则；随后全量 lint、typecheck、build、边界检查和 `git diff --check` 再次全部成功。
+
+## 2026-07-28 20:01 CST / Phase 2 / Skill Domain Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`。
+- 开发前备份：`backup/pre-phase2-skill-domain-20260728-1942`，已 push；远端指向开发前基线。
+- Phase 2 Skill Domain 提交：`bdae1ce5a37ff2a7edd3ef59cddc77ca661789af`。
+- main push：成功；远端 `refs/heads/main` 已核验指向该提交。
+- push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert bdae1ce5a37ff2a7edd3ef59cddc77ca661789af`，随后执行 lint、typecheck、build、领域边界检查和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 2 功能基线仍为上述 Skill Domain 提交。
