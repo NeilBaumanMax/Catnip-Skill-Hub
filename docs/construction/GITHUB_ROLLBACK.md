@@ -12,6 +12,8 @@
 
 Phase 0 基线：`533818fec7a8f2f3a4906183f92e58906d9e4792`；远端备份：`backup/pre-phase0-foundation-20260727-0456`。
 
+Phase 0 应用脚手架施工前 docs-only 基线：`594639767d947e93de0a1556f9d640b7c9510f6f`；远端备份：`backup/pre-phase0-app-scaffold-20260728-1832`。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

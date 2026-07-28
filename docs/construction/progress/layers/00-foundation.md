@@ -80,3 +80,42 @@ Foundation 已完成，等待 Git 交付收尾；下一层为 01 Public Web。
 ### 层状态
 
 Foundation 文档段完成；应用脚手架段暂停，等待 Neil Bauman 明确继续。
+
+## 2026-07-28 18:32 CST / Phase 0 / 应用脚手架开工计划
+
+### 当前目标
+
+完成 Foundation 的最小可构建应用段，并严格停在 Phase 0。
+
+### 计划改动
+
+- 建立官方稳定 Next.js App Router、TypeScript、Tailwind CSS、ESLint 与 npm 基线。
+- 使用 `src/` 目录创建仅含规定三项文案的占位首页。
+- 建立 lint、typecheck、build 脚本并生成 npm 锁文件。
+- 更新架构事实、测试基线和独立接力交接。
+
+### 验收指标
+
+- 新的开发前远端备份成功且指向 docs-only 基线。
+- `npm install`、lint、typecheck、build、git diff --check 均获得成功结果。
+- 不存在 Phase 1+ 页面、组件、业务逻辑或复杂依赖。
+- main 成功 push，最终工作区干净；完成后停下汇报。
+
+## 2026-07-28 18:39 CST / Phase 0 / 应用脚手架完成记录
+
+### 实际完成
+
+- Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm 基线已建立。
+- `src/app` 只有 globals、layout 和最小 page 三个文件。
+- 首页只显示规定的三项文字，不包含 Phase 1 功能。
+- 新开发前备份 `backup/pre-phase0-app-scaffold-20260728-1832` 已成功 push 并核验。
+
+### 验收结果
+
+- npm install、lint、typecheck、build、git diff --check 均成功。
+- npm test 不存在，已如实记录。
+- 依赖、品牌、身份、Remote、目录和 Phase 边界漂移检查完成。
+
+### 层状态
+
+Foundation 全部完成。当前停在 Phase 0 与 Phase 1 之间，等待 Neil Bauman 下一次明确继续指令。

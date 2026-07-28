@@ -2,11 +2,9 @@
 
 任何 Phase 开始前均需完成文档读取、Git 安全检查、开工记录和远端开发前备份；结束时完成验证、漂移检查、交接、提交与 push。
 
-## Phase 0：Foundation（当前暂停阶段）
+## Phase 0：Foundation（已完成）
 
-第一段已完成：SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定。当前暂停在写代码之前。
-
-第二段仅在 Neil Bauman 明确要求继续后开始：建立最小 Next.js、TypeScript、Tailwind CSS、ESLint 脚手架，以及 lint、typecheck、build。继续前仍需完成开工计划和远端备份。禁止提前实现后续业务。
+SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定，以及最小 Next.js、TypeScript、Tailwind CSS、ESLint 脚手架和 lint/typecheck/build 门禁均已完成。当前停在 Phase 0 与 Phase 1 之间，等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 1：Public Web
 

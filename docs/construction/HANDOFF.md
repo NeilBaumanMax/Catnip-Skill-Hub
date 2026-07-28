@@ -150,3 +150,63 @@ Phase 0 Foundation 的工程和文档验收已完成，正在执行最终 Git �
 - docs-only 范围修正提交：`8f9ab957a1ac0f1d14205c8dc7e7357d3cfc4e1f`，已 push 到 main
 - 范围修正 push 后工作区：干净
 - 当前状态：只保留文档 Foundation，等待 Neil Bauman 明确继续后再开始代码脚手架
+
+## 2026-07-28 18:39 CST / Phase 0 -> Phase 1 / 完成交接
+
+### 当前状态
+
+Phase 0 Foundation 已完成：仓库与文档治理、产品/架构边界、品牌占位约定和最小可构建应用均已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 新远端开发前备份已建立并核验。
+- Next.js App Router、TypeScript、Tailwind CSS、ESLint 和 npm 脚手架已建立。
+- 最小首页和中文 metadata 已建立。
+- lint、typecheck、build 与 Git 差异门禁已通过。
+
+### 未完成
+
+- Phase 1 公共前台尚未开始。
+- 无正式 Logo、吉祥物、导航、分类胶囊、Skill 卡片、详情、搜索或后端功能。
+- 单元测试脚本尚未建立。
+
+### 下次优先任务
+
+收到 Neil Bauman 明确继续指令后，先按 AGENTS 顺序读文档、检查 Git、追加 Phase 1 开工计划并 push 新备份；然后只实现 Phase 1 静态公共前台，不接数据库。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的顺序读取；下一个层文件为 `docs/construction/progress/layers/01-public-web.md`。
+
+### 关键文件
+
+- `AGENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/ARCHITECTURE.md`
+- `docs/construction/LAYER_CONTRACT.md`
+- `src/app/page.tsx`
+- `src/app/layout.tsx`
+- `src/app/globals.css`
+
+### 测试基线
+
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run build`：成功。
+- `git diff --check`：成功。
+- npm test：脚本不存在，单元测试尚未建立。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`594639767d947e93de0a1556f9d640b7c9510f6f`
+- 备份分支：`backup/pre-phase0-app-scaffold-20260728-1832`，已 push
+- Phase 0 最终提交：Git 收尾后见 LOG 最新状态回写
+- 最终工作区：提交 push 后必须复核干净
+
+### 风险提醒
+
+- npm 安装报告的漏洞与 allowScripts 警告尚待后续安全审阅；不得直接执行 breaking-change 自动修复。
+- 下一轮不得越过 Phase 1，也不得提前接数据库、认证、下载或安装服务。

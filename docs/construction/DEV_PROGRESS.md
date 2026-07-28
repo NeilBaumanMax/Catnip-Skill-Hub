@@ -141,3 +141,74 @@ Phase 0 工程与文档验收完成，等待 Git 交付收尾。下一轮只可�
 ### 当前结论
 
 项目已暂停在写代码之前。只有收到 Neil Bauman 明确继续指令后，才可重新完成开工计划、开发前备份，并开始 Phase 0 最小应用脚手架。
+
+## 2026-07-28 18:32 CST / Phase 0 / 应用脚手架开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 0 第二段：建立最小 Next.js App Router、TypeScript、Tailwind CSS、ESLint 应用和基础质量门禁；完成后停下汇报，不进入 Phase 1。
+
+### 涉及层
+
+- Foundation 工程基线
+- 公共前台最小文字占位壳层（仅 Phase 0 三项规定文案）
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`594639767d947e93de0a1556f9d640b7c9510f6f`，与 `origin/main` 一致。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为指定 SSH 地址。
+- `.DS_Store` 为已忽略的本地系统文件，不纳入施工或提交。
+
+### 计划修改
+
+- 使用当时稳定的官方 create-next-app 在隔离临时目录生成最小参考脚手架。
+- 安全引入 Next.js App Router、TypeScript、Tailwind CSS、ESLint 与 npm 配置。
+- 创建 `src/app` 最小页面，只显示 Catnip 薄荷猫、Agent Skill 独立站、Logo 与吉祥物将在后续接入。
+- 提供 lint、typecheck、build 脚本和 package-lock.json。
+- 不实现导航、卡片、瀑布流、详情、搜索、下载、安装、后台、数据库或认证。
+
+### 测试计划
+
+- `npm install`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 检查 npm test 是否存在；不存在则记录“单元测试脚本尚未建立”。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`594639767d947e93de0a1556f9d640b7c9510f6f`
+- 备份分支：`backup/pre-phase0-app-scaffold-20260728-1832`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert 本轮应用脚手架提交；开发前 docs-only 状态同时保存在远端备份分支。回滚后执行当前文档基线检查，恢复应用时执行 lint、typecheck 和 build。
+
+## 2026-07-28 18:39 CST / Phase 0 / 应用脚手架完成记录
+
+### 完成范围
+
+- 使用官方稳定 create-next-app 16.2.12 作为隔离参考，建立 Next.js App Router、TypeScript、Tailwind CSS、ESLint 和 npm 基线。
+- 使用 `src/` 目录创建最小占位首页和中文站点元数据。
+- 提供 dev、start、lint、typecheck、build 脚本并生成 package-lock.json。
+- 严格未实现 Phase 1 的导航、分类胶囊、Skill 卡片或响应式内容流。
+
+### 验证状态
+
+- `npm install`：成功；npm 报告 12 个 high severity 漏洞、两个 allowScripts 待审项和可选 WASM peer dependency 覆盖警告。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run build`：成功，首页和 not-found 静态预渲染。
+- `git diff --check`：成功。
+- 单元测试脚本尚未建立；未执行或虚报 npm test 通过。
+
+### 当前结论
+
+Phase 0 Foundation 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 1。

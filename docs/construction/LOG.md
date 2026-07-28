@@ -172,3 +172,72 @@ Phase 0 的安装、lint、typecheck、build 和差异检查门禁均有真实�
 - push 后工作区：干净。
 - 推荐回滚：如需恢复应用脚手架，执行 `git revert 8f9ab957a1ac0f1d14205c8dc7e7357d3cfc4e1f`，然后按恢复后的 package.json 执行 lint、typecheck 和 build。
 - 本状态回写将形成独立文档提交并正常 push；当前项目事实仍以 docs-only 范围修正提交为准。
+
+## 2026-07-28 18:39 CST / Phase 0 / 应用脚手架 Foundation
+
+### 本轮计划回放
+
+收到 Neil Bauman 明确继续指令后，完成文档读取、Git/SSH/远端检查、开工计划和远端备份，再建立最小应用、执行验证、修正文档漂移并准备交付。严格不进入 Phase 1。
+
+### 实际修改
+
+- 创建并核验 `backup/pre-phase0-app-scaffold-20260728-1832`，保存 docs-only 基线。
+- 使用官方 create-next-app 16.2.12 在隔离临时目录生成参考脚手架，未覆盖现有文档。
+- 创建 package.json、package-lock.json、Next.js/TypeScript/ESLint/PostCSS 配置和最小 `src/app`。
+- 首页仅包含 Catnip 薄荷猫、Agent Skill 独立站、Logo 与吉祥物将在后续接入。
+- 修正当前技术事实、Phase 状态、测试指标、工具策略和回滚基线。
+
+### 修改文件
+
+- 新增：package.json、package-lock.json、六份基础配置及 `src/app` 三个文件。
+- 修改：AGENTS 和 Phase 0 相关施工规范、进度、日志与交接。
+- 保留：产品需求、品牌说明、README 和所有后续层占位文件。
+
+### 验证结果
+
+- npm install、lint、typecheck、build、git diff --check 全部获得成功结果。
+- 生产构建成功生成 `/` 与 `/_not-found` 静态页面。
+- 单元测试脚本尚未建立。
+
+### 测试日志
+
+1. `npm install`：退出码 0，新增 357 个包。
+2. `npm run lint`：退出码 0。
+3. `npm run typecheck`：退出码 0。
+4. `npm run build`：退出码 0。
+5. `git diff --check`：退出码 0。
+6. npm test：脚本不存在，未执行且未写成通过。
+7. 本轮无测试失败或修复复测循环。
+
+### 测试指标判断
+
+Phase 0 应用脚手架的安装、lint、typecheck、build 和 Git 差异门禁全部满足。单元测试门禁不适用，因为未建立 test 脚本。
+
+### 文档漂移检查
+
+- 已把“代码施工前暂停”更新为“Phase 0 完成、等待 Phase 1 指令”。
+- 已把架构事实更新为 Next.js 16.2.12、React 19.2.4、npm/package-lock 和最小 `src/app`。
+- 已更新当前测试门禁、工具策略和最新备份基线。
+- 未发现 Phase 1+ 功能、旧姓名、真实密钥、正式品牌图片或禁止依赖。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`594639767d947e93de0a1556f9d640b7c9510f6f`。
+- 备份分支：`backup/pre-phase0-app-scaffold-20260728-1832`，push 成功并经远端核验。
+- Foundation 应用提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销，优先 revert 本轮应用脚手架提交；随后执行 docs-only 结构检查。恢复应用状态后最低复测为 lint、typecheck 和 build。
+
+### 当前风险
+
+- npm install 报告 12 个 high severity 漏洞，尚未在获准条件下进一步区分生产与开发依赖范围。
+- sharp 与 unrs-resolver 安装脚本尚未列入 npm allowScripts；当前构建成功。
+- 可选 WASM 绑定依赖出现 peer dependency 覆盖警告；当前 lint、typecheck 与生产构建未受影响。
+- 当前没有单元测试脚本。
+
+### 下一步
+
+停止施工并向 Neil Bauman 汇报 Phase 0。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 1 Public Web。
