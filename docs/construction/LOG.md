@@ -818,3 +818,78 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert e82f54fff45b580ced8d6703b628738a06062e26`，随后执行 npm test、lint、typecheck、build、导入/存储/推荐边界检查和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 5 功能基线仍为上述功能提交。
+
+## 2026-07-29 00:25 CST / Phase 6 / Search and Discovery
+
+### 本轮计划回放
+
+按文档与 Git 检查、开工计划、远端开发前备份、发现服务、统计端口、公开界面/API、测试、漂移检查和 Git 收尾执行。未实现 Phase 7 数据库、对象存储或部署设施。
+
+### 实际修改
+
+- 新增公开目录搜索、分类/标签组合筛选、推荐池/权重/置顶随机排序和可注入随机源。
+- 首页顶部搜索、分类和标签交互改为可分享 GET 参数，新增结果状态、条件清除、空结果恢复和阅读量显示。
+- 新增四事件统计类型、应用服务、进程内 Repository、运行时实例和同源事件 API。
+- 详情页上报阅读与来源跳转，下载/安装操作上报点击或成功复制；UI 不直接写 Repository。
+- 新增发现与统计测试；没有增加 npm 依赖或外部服务。
+
+### 修改文件
+
+- 服务：`src/lib/discovery/`、`src/lib/analytics/`。
+- 应用：`src/app/page.tsx`、`src/app/globals.css`、`src/app/_components/analytics-events.tsx`、`src/app/_components/skill-actions.tsx`、`src/app/skills/[slug]/page.tsx`、`src/app/api/skills/[slug]/events/route.ts`。
+- 测试：`tests/discovery.test.ts`、`tests/analytics.test.ts`。
+- 文档：AGENTS、主要求、架构、分层契约、施工计划、测试指标、回滚、DEV_PROGRESS、LOG、HANDOFF 和 `05-search-discovery.md`。
+
+### 验证结果
+
+- `npm ci`、42 项单元测试、lint、typecheck、生产构建和 `git diff --check` 首轮成功。
+- 文档修正完成后已执行最终全量复测，所有门禁成功。
+
+### 测试日志
+
+- `npm ci`：退出码 0；安装/审计 363 个包，报告 12 个 high 漏洞、两组可选 peer 覆盖和四个 allowScripts 待审项。
+- `npm test`（首轮）：退出码 0，42/42 通过。
+- `npm run lint`（首轮）：退出码 0。
+- `npm run typecheck`（首轮）：退出码 0。
+- `git diff --check`（首轮）：退出码 0。
+- `npm run build`（首轮）：退出码 0；生成动态首页、事件 API、十个静态详情和既有管理/下载/导入路由。
+- 中间失败：无。
+- `npm test`（最终）：退出码 0，42/42 通过，并覆盖 20 次并发增量语义。
+- `npm run lint`（最终）：退出码 0。
+- `npm run typecheck`（最终）：退出码 0。
+- `git diff --check`（最终）：退出码 0。
+- `npm run build`（最终）：退出码 0；动态首页、事件 API和既有路由再次构建成功。
+
+### 测试指标判断
+
+关键词字段、组合筛选、隐藏/发布/推荐池/权重/置顶治理、随机注入与原数组不变、事件白名单、同源、未知资源和 Repository 隔离均已覆盖。当前不证明数据库全文搜索、唯一访客、抗机器人或生产分析准确性。
+
+### 文档漂移检查
+
+- 已核对目录与 ARCHITECTURE、依赖方向与 LAYER_CONTRACT、Phase 与 CONSTRUCTION_PLAN、脚本与 TEST_METRICS、Git 与 GITHUB_ROLLBACK、流程与 WORKFLOW、产品与 PRODUCT_REQUIREMENTS。
+- 修正 Phase 5 暂停描述为 Phase 6 完成，补充 Discovery/Analytics 职责、当前门禁、回滚要求和 Phase 7 交接。
+- 管理员始终为 Neil Bauman，GitHub 用户为 NeilBaumanMax，品牌为 Catnip 薄荷猫，Remote 保持指定 SSH 地址；未发现其他管理员姓名、正式 Logo/吉祥物、普通用户认证或真实密钥。
+- 未发现 PostgreSQL、Drizzle、对象存储、搜索/分析 SDK、Docker、代理、HTTPS 或其他 Phase 7 实现；案例仍只属于详情辅助内容。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 当前分支：main。
+- 开发前基线：`0962395111eb58abce18d2b71620b388472ec4bf`。
+- 开发前备份：`backup/pre-phase6-search-discovery-20260729-0018`，已 push 且远端核验指向基线。
+- 最终提交与 main push：待 Git 收尾回写。
+
+### 回滚判断
+
+当前验证未发现需要回滚的代码缺陷。交付后如需撤销，优先 `git revert <Phase-6-功能提交>`，随后执行 `npm test`、`npm run lint`、`npm run typecheck`、`npm run build`、`git diff --check` 及搜索/筛选/推荐/统计边界核对。
+
+### 当前风险
+
+- 进程内统计会随重启丢失且多实例不一致，也可能被重复请求或机器人放大。
+- 动态首页当前对十条种子全量排序；持久化目录扩大后需要有界查询策略。
+- npm 报告的 12 个 high 漏洞和四个 allowScripts 待审项未做破坏性自动修复。
+
+### 下一步
+
+本轮完成 Git 收尾后停止。收到 Neil Bauman 下一次明确继续指令，才可先评估部署目标与权限，再进入 Phase 7 Deployment。

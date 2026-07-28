@@ -37,6 +37,8 @@
 - Auth：仅管理员身份、会话与授权。
 - Import：固定来源的只读获取、输入限制和结构化预览；不依赖管理写服务。
 - Recommendations：公开线索验证和滥用限制；不依赖 Skill Repository 或发布流程。
+- Discovery：只读公开 Skill DTO 和治理字段，输出搜索/筛选/推荐结果；不写领域目录或统计状态。
+- Analytics：只接受稳定公开 slug 和事件枚举，依赖计数 Repository 端口；不依赖 React 或用户认证。
 
 ## Phase 4 已实现契约
 
@@ -54,6 +56,15 @@
 - ZIP 上传管理不等同 Phase 3 的下载打包；存储层不解压或修改上传内容，下载层仍独立负责 Catnip 标准 ZIP 生成。
 - 推荐服务只依赖独立线索 Repository；公开 API 不暴露列表，管理列表必须重新验证管理员身份。
 - 进程内限流、文件和线索均不适合多实例生产；部署适配不得绕过现有验证和服务边界。
+
+## Phase 6 已实现契约
+
+- 页面只传入 GET 查询参数并消费 `DiscoveryResult`；搜索匹配、分类/标签校验、推荐池、置顶、权重和随机排序不得复制到 React 卡片组件。
+- Discovery 只读取已发布可见资源，过滤结果不得改变种子或管理 Repository；随机函数必须可注入以便确定性测试。
+- 客户端事件组件只能发送 `view`、`download_click`、`install_copy`、`source_visit`，不得发送计数值、用户身份或动态指标名。
+- 事件 API 负责同源和公开资源校验，Analytics Service 负责事件枚举与 Repository 写入；页面不得直接导入运行时计数 Repository。
+- 当前进程内 Analytics Repository 返回副本且实例隔离；未来数据库实现必须提供原子增量语义，并明确机器人、代理、多实例和去重策略。
+- 搜索与统计层不得依赖数据库 SDK、外部搜索 SDK、分析 SDK 或普通用户认证。
 
 ## 变更检查
 

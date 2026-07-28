@@ -26,9 +26,9 @@ ZIP 与 Catnip 外层说明、下载授权与路径安全、下载 API，以及�
 
 GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill 线索表单已完成。导入仅生成固定 Commit 的受限预览，文件与线索使用可替换的进程内开发适配器；不误报为数据库、对象存储或自动发布。当前停在 Phase 5 与 Phase 6 之间，等待 Neil Bauman 下一次明确继续指令。
 
-## Phase 6：Search and Discovery
+## Phase 6：Search and Discovery（已完成）
 
-搜索、分类/标签筛选、随机推荐、阅读量和基础统计。
+公开搜索、分类/标签组合筛选、受推荐池/权重/置顶治理的随机展示，以及阅读、下载点击、安装复制和来源跳转四类进程内统计已完成。当前不误报为持久化分析或唯一访客统计，并停在 Phase 6 与 Phase 7 之间等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 7：Deployment
 

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SkillActions } from "@/app/_components/skill-actions";
+import { TrackedExternalLink, ViewTracker } from "@/app/_components/analytics-events";
+import { analyticsService } from "@/lib/analytics";
 import { getPublishedSkills, getRelatedSkills, getSkillBySlug } from "@/lib/domain/skills";
 import { buildInstallCommandMatrix } from "@/lib/install";
 
@@ -42,6 +44,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
   const relatedSkills = getRelatedSkills(skill);
   const cover = skill.images.find((image) => image.kind === "cover");
   const installCommands = buildInstallCommandMatrix(skill);
+  const counts = await analyticsService.get(skill.slug);
 
   return (
     <div className="site-shell detail-shell">
@@ -67,6 +70,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
               <span>原作者：{skill.author.name}</span>
               <span>{skill.category}</span>
               {skill.tags.map((tag) => <span key={tag}>{tag}</span>)}
+              <ViewTracker slug={skill.slug} initialViews={counts.views} />
             </div>
           </div>
 
@@ -100,6 +104,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
           commands={installCommands}
           downloadEnabled={skill.governance.downloadEnabled}
           downloadUrl={`/api/skills/${skill.slug}/download`}
+          skillSlug={skill.slug}
         />
 
         <div className="detail-columns">
@@ -191,7 +196,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
               <div><dt>License</dt><dd>{skill.source.license}</dd></div>
               <div><dt>下载状态</dt><dd>{skill.governance.downloadEnabled ? "管理员已开放" : "尚未开放"}</dd></div>
             </dl>
-            <a href={skill.source.sourceUrl} target="_blank" rel="noreferrer">查看来源仓库 ↗</a>
+            <TrackedExternalLink href={skill.source.sourceUrl} slug={skill.slug}>查看来源仓库 ↗</TrackedExternalLink>
           </aside>
         </div>
 

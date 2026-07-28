@@ -635,3 +635,72 @@ Phase 5 Storage and Import 已完成：安全 GitHub/SKILL.md 只读预览、ZIP
 - Phase 5 功能提交：`e82f54fff45b580ced8d6703b628738a06062e26`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 5 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 6
+
+## 2026-07-29 00:25 CST / Phase 6 -> Phase 7 / 完成交接
+
+### 当前状态
+
+Phase 6 Search and Discovery 已完成：公开搜索、分类/标签筛选、推荐治理随机排序和四类进程内匿名统计已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 建立纯服务层搜索，覆盖标题、原名、简介、作者、分类和标签。
+- 建立可分享的关键词、单分类、单标签组合筛选及空结果恢复。
+- 默认推荐遵守公开、隐藏、推荐池、正权重和置顶字段；随机源可测试且不修改种子。
+- 建立阅读、下载点击、安装复制和来源跳转事件 API与进程内计数端口。
+- 首页启用普通顶部搜索和阅读量低优先级显示；详情页上报访问及关键动作。
+- 未接数据库、外部搜索/分析服务、Cookie 用户追踪或部署栈。
+
+### 未完成
+
+- 搜索只作用于十条静态演示目录，没有数据库全文索引、拼音、同义词、模糊匹配或分页。
+- 统计在单个进程内，重启丢失、多实例分散，也不区分机器人或唯一访客。
+- CMS 进程内记录尚未联动公开目录；Phase 7 持久化前仍以版本化种子为公开事实。
+- PostgreSQL、Drizzle、数据迁移、对象存储、Docker Compose、反向代理、HTTPS、备份和部署验收尚未开始。
+
+### 下次优先任务
+
+1. 收到明确继续指令后，先评估并记录现有 npm 高危依赖、生产秘密、运行目标和数据迁移风险，再创建 Phase 7 远端备份。
+2. 定义 PostgreSQL/Drizzle 与对象存储适配器，使公开查询、CMS、文件、线索和统计通过现有端口持久化。
+3. 建立 Docker Compose、迁移、反向代理、HTTPS、备份和安全验收；不得在未确认部署目标与权限时擅自发布生产环境。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；Phase 7 当前层文件为 `docs/construction/progress/layers/07-deployment.md`。
+
+### 关键文件
+
+- `src/lib/discovery/`
+- `src/lib/analytics/`
+- `src/app/page.tsx`
+- `src/app/_components/analytics-events.tsx`
+- `src/app/_components/skill-actions.tsx`
+- `src/app/api/skills/[slug]/events/route.ts`
+- `src/app/skills/[slug]/page.tsx`
+- `tests/discovery.test.ts`
+- `tests/analytics.test.ts`
+
+### 测试基线
+
+- `npm ci`：成功，保留已记录的依赖安全警告。
+- `npm test`：42/42 成功。
+- `npm run lint`、`npm run typecheck`、`git diff --check`：首轮与收尾复测均成功。
+- `npm run build`：授权环境首轮与收尾复测均成功；动态首页、事件 API、十个静态详情和既有路由均构建成功。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`0962395111eb58abce18d2b71620b388472ec4bf`
+- 备份分支：`backup/pre-phase6-search-discovery-20260729-0018`，已 push 且远端核验指向开发前基线
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 统计 API 是原始计数，可能被重复请求或机器人放大；生产持久化前需定义可信代理、限流、去重和数据保留策略。
+- 动态首页每次请求执行推荐随机排序；当前十条种子成本很低，持久化后必须避免无界查询和全量内存排序。
+- npm 仍报告 12 个 high 漏洞和四个 allowScripts 待审项；Phase 7 应先专项审计，不得直接执行 breaking-change 自动修复。
+- Phase 7 涉及数据库、网络、证书和部署权限；缺少明确运行目标或权限时必须停止询问。

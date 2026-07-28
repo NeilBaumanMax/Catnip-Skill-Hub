@@ -24,6 +24,8 @@ Phase 4 Admin CMS 施工前基线：`c0ccd193c9a343cf101e5fe559251157d260bcad`�
 
 Phase 5 Storage and Import 施工前基线：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`；远端备份：`backup/pre-phase5-storage-import-20260728-2343`。
 
+Phase 6 Search and Discovery 施工前基线：`0962395111eb58abce18d2b71620b388472ec4bf`；远端备份：`backup/pre-phase6-search-discovery-20260729-0018`。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。
@@ -32,7 +34,7 @@ Phase 5 Storage and Import 施工前基线：`ca257f9fbf34e6c94091cfc7db603eb562
 
 单个错误提交优先 `git revert <bad-commit>`；连续错误提交可在审阅范围后使用 `git revert <oldest-bad-commit>^..<newest-bad-commit>`。回滚提交后执行对应 Phase 的全量验证并正常 push。
 
-当前文档基线回滚后最低复测：`git diff --check`、docs 结构检查和代码暂停检查。应用脚手架建立后，Phase 0 至 Phase 2 回滚最低复测再增加 `npm run lint`、`npm run typecheck`、`npm run build`；Phase 2 还需核对领域目录约束和静态详情路由。Phase 3 回滚还必须执行 `npm test`，并核对下载授权、路径安全、ZIP 原文件一致和四种安装命令。Phase 4 回滚必须再核对认证配置安全失败、会话验证、匿名 API 拒绝、草稿优先状态机和 Repository 隔离。Phase 5 回滚还必须核对 GitHub 固定来源/Commit、导入不写 Skill、文件魔数/大小/哈希、匿名管理拒绝和推荐线索隔离。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
+当前文档基线回滚后最低复测：`git diff --check`、docs 结构检查和代码暂停检查。应用脚手架建立后，Phase 0 至 Phase 2 回滚最低复测再增加 `npm run lint`、`npm run typecheck`、`npm run build`；Phase 2 还需核对领域目录约束和静态详情路由。Phase 3 回滚还必须执行 `npm test`，并核对下载授权、路径安全、ZIP 原文件一致和四种安装命令。Phase 4 回滚必须再核对认证配置安全失败、会话验证、匿名 API 拒绝、草稿优先状态机和 Repository 隔离。Phase 5 回滚还必须核对 GitHub 固定来源/Commit、导入不写 Skill、文件魔数/大小/哈希、匿名管理拒绝和推荐线索隔离。Phase 6 回滚还必须核对搜索组合、治理字段推荐排序、事件白名单、未知资源拒绝和计数 Repository 隔离。每轮 LOG 必须写是否需要回滚、目标、推荐命令及复测命令。
 
 ## 失败现场
 

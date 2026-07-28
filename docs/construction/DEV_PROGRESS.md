@@ -594,3 +594,81 @@ Phase 4 Admin CMS 已完成其进程内开发闭环和安全边界。按 Neil Ba
 ### 当前结论
 
 Phase 5 功能、边界与最终全量复测已完成，正处于 Git 收尾阶段。完成提交与 main push 后必须暂停，等待 Neil Bauman 明确指令再进入 Phase 6。
+
+## 2026-07-29 00:18 CST / Phase 6 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 6 Search and Discovery：建立公开搜索、主分类和标签筛选、推荐池随机展示，以及低优先级的页面阅读和基础事件统计；完成后停下汇报，不进入 Phase 7。
+
+### 涉及层
+
+- 搜索发现层：`src/lib/discovery`，负责查询规范化、中文/英文匹配、分类/标签过滤、推荐池与权重、随机排序和稳定 DTO。
+- 统计层：`src/lib/analytics`，负责页面阅读、ZIP 下载、安装命令复制和来源跳转的事件计数端口及进程内开发适配器。
+- 公共前台：主页通过 URL 查询参数消费发现服务；详情页通过轻量客户端事件组件写入统计 API。
+- API：仅接受已发布且未隐藏的资源 slug 和受限事件类型；不接受任意指标名或客户端绝对计数。
+- 测试层：覆盖空白查询、大小写/中文匹配、分类/标签组合、隐藏/推荐池/置顶/权重、随机边界、无效事件、未知资源与计数隔离。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净，`.DS_Store`、`.next` 和 `tsconfig.tsbuildinfo` 为已忽略或可再生产物。
+- 当前提交：`0962395111eb58abce18d2b71620b388472ec4bf`，与远端 main 一致。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+- 无 `.openai/hosting.json`、数据库、搜索引擎或统计 SDK；保留现有 Next.js、静态目录和进程内适配器策略。
+
+### 计划修改
+
+- 建立纯 TypeScript 发现服务，不引入搜索引擎或客户端状态库；搜索中文传播标题、原始名称、简介、作者、分类和标签。
+- 首页搜索、分类与标签使用可分享的 GET 查询参数；结果为空时明确反馈并允许清除条件。
+- 默认无筛选时从 `inRecommendationPool` 的已发布可见资源中随机排序；置顶优先，正权重影响抽取顺序；不修改原始目录数组。
+- 建立统计端口与进程内开发适配器；详情页访问、下载点击、安装复制和来源跳转只执行增量事件，不做用户追踪或唯一访客推断。
+- 首页卡片显示当前进程内阅读量作为低优先级信息；种子统计仅作初始值。
+- 不接数据库、外部搜索、分析 SDK、Cookie 追踪、用户画像、支付或部署设施。
+
+### 测试计划
+
+- `npm ci`
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 验证发现组合条件、推荐治理字段、随机函数注入、事件白名单、未知/隐藏资源拒绝、并发安全语义、UI 不直接改统计状态和 Phase 7 未越界。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`0962395111eb58abce18d2b71620b388472ec4bf`
+- 备份分支：`backup/pre-phase6-search-discovery-20260729-0018`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 6 交付提交；Phase 5 完成状态保存在远端备份分支。回滚后执行 npm test、lint、typecheck、build、搜索/筛选/推荐/统计边界检查和 `git diff --check`。
+
+## 2026-07-29 00:25 CST / Phase 6 / 完成记录
+
+### 完成范围
+
+- 建立纯 TypeScript 发现服务，支持中文/英文关键词、固定主分类、自由标签和组合过滤。
+- 默认首页使用推荐池、正权重和置顶治理字段进行可测试随机排序；筛选结果保持稳定排序。
+- 首页搜索框、分类胶囊和标签筛选已启用，状态写入 GET 参数，提供结果摘要、清除条件和空结果恢复。
+- 建立四事件统计端口、进程内开发 Repository、同源事件 API、详情阅读、下载点击、安装复制和来源跳转上报。
+- 首页卡片显示当前进程内阅读量；详情页显示并在客户端递增阅读计数。
+- 未增加 npm 依赖、数据库、搜索引擎、分析 SDK、用户追踪或部署配置。
+- 测试从 34 项扩展到 42 项，覆盖发现、治理字段、随机注入、统计白名单、匿名边界和 Repository 隔离。
+
+### 验证状态
+
+- `npm ci`：成功；保留 12 个 high 漏洞、可选 peer 覆盖和四个 allowScripts 待审项。
+- `npm test`：42/42 成功。
+- `npm run lint`、`npm run typecheck`、`git diff --check`：首轮与收尾复测均成功。
+- `npm run build`：授权环境首轮与收尾复测均成功；首页为动态服务端路由，新增事件 API，十个详情页继续静态生成。
+
+### 当前结论
+
+Phase 6 功能、边界和最终全量复测已完成，正处于 Git 收尾阶段。完成提交与 main push 后必须暂停，等待 Neil Bauman 明确指令再进入 Phase 7。

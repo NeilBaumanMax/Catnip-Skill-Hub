@@ -1,8 +1,35 @@
 import Link from "next/link";
-import { getPublishedSkills, MAIN_CATEGORIES } from "@/lib/domain/skills";
+import { analyticsService } from "@/lib/analytics";
+import { discoverSkills } from "@/lib/discovery";
+import { MAIN_CATEGORIES } from "@/lib/domain/skills";
 
-export default function Home() {
-  const skills = getPublishedSkills();
+interface HomeProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+export const dynamic = "force-dynamic";
+
+function first(value: string | string[] | undefined): string {
+  return Array.isArray(value) ? value[0] ?? "" : value ?? "";
+}
+
+function discoveryHref(filters: { query?: string; category?: string; tag?: string }): string {
+  const params = new URLSearchParams();
+  if (filters.query) params.set("q", filters.query);
+  if (filters.category) params.set("category", filters.category);
+  if (filters.tag) params.set("tag", filters.tag);
+  const query = params.toString();
+  return query ? `/?${query}#skill-grid` : "/#skill-grid";
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  const discovery = discoverSkills({
+    query: first(params.q),
+    category: first(params.category),
+    tag: first(params.tag),
+  });
+  const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
   return (
     <div className="site-shell">
@@ -22,16 +49,18 @@ export default function Home() {
           <a href="#categories">分类</a>
         </nav>
 
-        <div className="search-preview" role="search" aria-label="Skill 搜索预览">
+        <form className="search-preview" role="search" aria-label="Skill 搜索" action="/" method="get">
           <label htmlFor="skill-search">搜索 Skill</label>
           <input
             id="skill-search"
+            name="q"
             type="search"
-            placeholder="搜索 Skill"
-            disabled
-            title="搜索功能将在后续阶段接入"
+            placeholder="搜索标题、用途或标签"
+            defaultValue={discovery.filters.query}
+            maxLength={100}
           />
-        </div>
+          <button type="submit">搜索</button>
+        </form>
 
         <Link className="recommend-link" href="/recommend">
           推荐 Skill
@@ -57,9 +86,30 @@ export default function Home() {
           </div>
           <div className="category-list" aria-label="Skill 主分类">
             {MAIN_CATEGORIES.map((category) => (
-              <a href="#skill-grid" key={category}>
+              <Link
+                className={discovery.filters.category === category ? "active" : ""}
+                href={discoveryHref({
+                  query: discovery.filters.query,
+                  category: discovery.filters.category === category ? undefined : category,
+                  tag: discovery.filters.tag,
+                })}
+                key={category}
+              >
                 {category}
-              </a>
+              </Link>
+            ))}
+          </div>
+          <div className="tag-filter" aria-label="Skill 标签筛选">
+            {discovery.availableTags.map((tag) => (
+              <Link
+                className={discovery.filters.tag === tag ? "active" : ""}
+                href={discoveryHref({
+                  query: discovery.filters.query,
+                  category: discovery.filters.category,
+                  tag: discovery.filters.tag === tag ? undefined : tag,
+                })}
+                key={tag}
+              >{tag}</Link>
             ))}
           </div>
         </section>
@@ -67,14 +117,17 @@ export default function Home() {
         <section className="skill-section" aria-labelledby="skill-title">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Catnip 原创演示目录</p>
-              <h2 id="skill-title">今天想让 Agent 学会什么？</h2>
+              <p className="eyebrow">{discovery.mode === "recommended" ? "随机推荐" : "搜索结果"}</p>
+              <h2 id="skill-title">{discovery.mode === "recommended" ? "今天想让 Agent 学会什么？" : "找到这些 Skill"}</h2>
             </div>
-            <p className="section-note">{skills.length} 个静态精选资源</p>
+            <div className="result-summary">
+              <p className="section-note">{discovery.items.length} 个公开资源</p>
+              {discovery.mode === "filtered" ? <Link href="/#skill-grid">清除条件</Link> : null}
+            </div>
           </div>
 
           <div className="skill-grid" id="skill-grid">
-            {skills.map((skill, index) => (
+            {discovery.items.map((skill, index) => (
               <article className="skill-card" key={skill.slug}>
                 <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
                   <div className={`skill-cover cover-${skill.coverTheme} ${skill.coverSize}`}>
@@ -92,13 +145,20 @@ export default function Home() {
                     <p>{skill.summary}</p>
                     <footer>
                       <span>原作者：{skill.author.name}</span>
-                      <span aria-hidden="true">查看 →</span>
+                      <span>阅读 {stats[skill.slug]?.views ?? 0} · 查看 →</span>
                     </footer>
                   </div>
                 </Link>
               </article>
             ))}
           </div>
+          {discovery.items.length === 0 ? (
+            <div className="empty-results">
+              <h3>暂时没有匹配的 Skill</h3>
+              <p>可以缩短关键词、切换分类或清除筛选条件。</p>
+              <Link href="/#skill-grid">查看全部推荐</Link>
+            </div>
+          ) : null}
         </section>
       </main>
 

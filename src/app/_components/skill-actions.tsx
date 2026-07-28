@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import type { InstallAgent, InstallCommandMatrix, InstallScope } from "@/lib/install";
+import { reportSkillEvent } from "./analytics-events";
 
 interface SkillActionsProps {
   readonly commands: InstallCommandMatrix | null;
   readonly downloadEnabled: boolean;
   readonly downloadUrl: string;
+  readonly skillSlug: string;
 }
 
 const agentLabels: Record<InstallAgent, string> = {
@@ -19,7 +21,7 @@ const scopeLabels: Record<InstallScope, string> = {
   global: "全局安装",
 };
 
-export function SkillActions({ commands, downloadEnabled, downloadUrl }: SkillActionsProps) {
+export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug }: SkillActionsProps) {
   const [agent, setAgent] = useState<InstallAgent>("claude-code");
   const [scope, setScope] = useState<InstallScope>("project");
   const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
@@ -31,6 +33,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl }: SkillAc
     try {
       await navigator.clipboard.writeText(command);
       setCopyState("copied");
+      void reportSkillEvent(skillSlug, "install_copy");
     } catch {
       setCopyState("failed");
     }
@@ -82,7 +85,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl }: SkillAc
 
         <div className="action-buttons">
           {downloadEnabled ? (
-            <a href={downloadUrl}>下载 ZIP</a>
+            <a href={downloadUrl} onClick={() => void reportSkillEvent(skillSlug, "download_click")}>下载 ZIP</a>
           ) : (
             <button type="button" disabled>下载尚未开放</button>
           )}
