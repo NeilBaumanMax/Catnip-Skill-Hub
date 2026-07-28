@@ -301,3 +301,69 @@ Phase 1 Public Web 已完成：静态公共首页、文字品牌、分类胶囊�
 - Phase 1 Public Web 提交：`6ccf0f1d57030a46e2c932e702eb677f54396933`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 1 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 2
+
+## 2026-07-28 19:50 CST / Phase 2 -> Phase 3 / 完成交接
+
+### 当前状态
+
+Phase 2 Skill Domain 已完成：纯 TypeScript 领域模型、十条 Catnip 原创演示种子、三种 Skill 子类型、Pack 子项关系、首页领域供数和十个静态详情页均已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 建立资源类型、状态、分类标签、作者来源、版本、图片、下载治理和统计预留。
+- 建立单项 Skill、原生 Skill 包、编辑组合包和子项独立页面开关。
+- 首页移除 Phase 1 重复数组并使用领域查询。
+- 建立十个 SSG 详情页，覆盖图片集、功能、场景、子项、用法、Prompt、效果、风险、来源和相关 Skill。
+- 完成 npm ci、lint、typecheck、生产构建、Git 差异和领域边界核对。
+
+### 未完成
+
+- Phase 3 ZIP 打包、Catnip 外层说明文件和下载服务尚未开始。
+- Claude Code CLI、Codex CLI 的项目级/全局安装命令尚未核验或实现。
+- 演示种子未绑定真实 Skill 文件、已确认 License、Commit、仓库路径或下载对象；全部下载关闭。
+- 搜索、随机推荐、后台、数据库、认证、导入、统计写入和正式品牌视觉均未实现。
+- 单元测试脚本尚未建立。
+
+### 下次优先任务
+
+收到 Neil Bauman 明确继续指令后，先按 AGENTS 顺序检查文档与 Git，追加 Phase 3 开工计划并 push 新开发前备份；随后实际运行 `npx skills --help` 与 `npx skills add --help`，再设计下载/安装服务和测试夹具。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；下一个层文件为 `docs/construction/progress/layers/03-download-install.md`。
+
+### 关键文件
+
+- `src/lib/domain/skills/types.ts`
+- `src/lib/domain/skills/seeds.ts`
+- `src/lib/domain/skills/catalog.ts`
+- `src/app/skills/[slug]/page.tsx`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/LAYER_CONTRACT.md`
+
+### 测试基线
+
+- `npm ci`：成功；保留安全警告。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run build`：成功，生成十个静态 Skill 详情页。
+- `git diff --check`：成功。
+- npm test：脚本不存在，单元测试尚未建立。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`
+- 备份分支：`backup/pre-phase2-skill-domain-20260728-1942`，已 push
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 演示种子不得被误认为真实可下载内容；Phase 3 只能对具有真实文件、来源和管理员下载授权的资源开放操作。
+- 安装命令不得凭记忆实现，也不得依赖中文传播标题。
+- npm 安全警告需专项评估，不得直接执行 breaking-change 自动修复。
+- 下一轮不得越过 Phase 3，不得提前建立后台、数据库、认证或导入系统。

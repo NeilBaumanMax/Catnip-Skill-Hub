@@ -284,3 +284,77 @@ Phase 0 Foundation 已完成。按 Neil Bauman 的阶段汇报要求，本轮必
 ### 当前结论
 
 Phase 1 Public Web 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 2。
+
+## 2026-07-28 19:42 CST / Phase 2 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 2 Skill Domain：建立纯 TypeScript Skill 领域模型、Skill Pack 与子项关系、十条静态种子数据和静态详情页；完成后停下汇报，不进入 Phase 3。
+
+### 涉及层
+
+- Skill 领域层：`src/lib/domain/skills`。
+- 公共前台层：首页从领域查询读取公开种子，新增 `src/app/skills/[slug]` 详情路由。
+- 展示样式层：沿用 Phase 1 CSS 视觉语言，补充详情页、图片集和内容区样式。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`，与 `origin/main` 一致。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+
+### 计划修改
+
+- 定义资源类型、子类型、发布状态、五个主分类、标签、作者来源、版本、图片、下载权限、推荐控制和统计预留。
+- 表达单项 Skill、原生 Skill 包、编辑组合包、父子关系和子项独立页面开关。
+- 将首页临时数组替换为领域层公开查询结果。
+- 建立十条 Catnip 原创演示种子；明确关闭下载并避免虚构第三方作者、License、Commit 或仓库事实。
+- 建立静态详情页，按产品顺序展示标题、来源、图片集、Phase 3 操作占位、功能、场景、子项、用法、效果、风险、来源与相关 Skill。
+- 不实现 ZIP、安装命令、真实搜索、随机推荐、后台、数据库、认证、GitHub 导入或统计写入。
+
+### 测试计划
+
+- `npm ci`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 核验十条公开种子、三种子类型、Pack 子项关系、五个主分类和所有静态详情路由。
+- 检查 npm test 是否存在；不存在则记录“单元测试脚本尚未建立”。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`
+- 备份分支：`backup/pre-phase2-skill-domain-20260728-1942`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 2 交付提交；Phase 1 完成状态保存在远端备份分支。回滚后重新执行 lint、typecheck、build、种子边界检查和 `git diff --check`。
+
+## 2026-07-28 19:50 CST / Phase 2 / 完成记录
+
+### 完成范围
+
+- 建立纯 TypeScript Skill 领域类型、静态目录约束和公开查询。
+- 建立十条 Catnip 原创演示种子，覆盖五类目、单项 Skill、原生包和编辑组合包。
+- 建立 Pack 子项、独立页面开关、相关资源、图片来源、治理和统计预留。
+- 首页改由领域查询供数；建立十个静态详情页及其 CSS 图片集、内容模块和来源说明。
+- 下载与安装全部保持禁用并明确留给 Phase 3。
+
+### 验证状态
+
+- `npm ci`：成功；保留 12 个 high 漏洞、allowScripts 和可选 WASM peer 警告。
+- `npm run lint`、`npm run typecheck`、`npm run build`、`git diff --check`：首轮全部成功。
+- 构建静态生成 13 个页面，其中含首页、not-found 和十个 Skill 详情页。
+- 领域依赖、类型覆盖、下载关闭和 Phase 边界核对成功。
+- 单元测试脚本尚未建立；未执行或虚报 npm test 通过。
+
+### 当前结论
+
+Phase 2 Skill Domain 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 3。

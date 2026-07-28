@@ -354,3 +354,104 @@ Phase 1 工程门禁和静态产品边界门禁最终满足；中间构建失败
 - push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert 6ccf0f1d57030a46e2c932e702eb677f54396933`，随后执行 `npm run lint`、`npm run typecheck`、`npm run build` 和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 1 功能基线仍为上述 Public Web 提交。
+
+## 2026-07-28 19:50 CST / Phase 2 / Skill Domain
+
+### 本轮计划回放
+
+收到 Neil Bauman 明确继续指令后，完成必读文档、Git/SSH/远端核验、Phase 2 开工计划和远端备份，再建立纯领域模型、静态种子与详情页；验证、漂移检查、交接和 Git 交付后停下，不进入 Phase 3。
+
+### 实际修改
+
+- 创建并核验 `backup/pre-phase2-skill-domain-20260728-1942`，保存 Phase 1 完成基线。
+- 新建 Skill 类型、十条种子、目录约束、公开查询和统一导出。
+- 表达未来资源类型预留、两种公开类型、三种 Skill 子类型、五类目、Pack 子项、图片来源、下载治理和统计预留。
+- 首页从领域查询读取资源；新增动态段路由并用 `generateStaticParams` 生成十个详情页。
+- 详情页实现图片集、功能、场景、子项、用法、Prompt、效果、风险、来源和相关 Skill。
+- 下载与安装按钮禁用；未创建 ZIP 服务、命令生成、数据库、认证或外部 SDK。
+
+### 修改文件
+
+- 新增：`src/lib/domain/skills/{types,seeds,catalog,index}.ts`、`src/app/skills/[slug]/page.tsx`。
+- 修改：`src/app/page.tsx`、`src/app/globals.css`。
+- 规范：AGENTS、CODEX_MASTER_REQUIREMENTS、ARCHITECTURE、CONSTRUCTION_PLAN、TEST_METRICS、GITHUB_ROLLBACK。
+- 追加记录：DEV_PROGRESS、LOG、HANDOFF、`02-skill-domain.md`。
+
+### 验证结果
+
+- npm 锁文件安装、lint、typecheck、生产构建、Git 差异和领域边界核对成功。
+- 生产构建生成首页、not-found 和十个静态 Skill 详情页。
+- 目录加载断言在构建过程中通过；单元测试脚本尚未建立。
+
+### 测试日志
+
+1. `npm ci`：退出码 0，安装 357 个包并审计 358 个包；报告 12 个 high 漏洞、两个 allowScripts 待审项和可选 WASM peer 覆盖警告。
+2. `npm run lint`：退出码 0。
+3. `npm run typecheck`：退出码 0。
+4. `git diff --check`：退出码 0。
+5. `npm run build`：退出码 0；生成 13 个静态页面，`/skills/[slug]` 包含十个路径。
+6. 领域依赖核对：无 React、Next.js、数据库或对象存储依赖。
+7. 种子核对：十个 slug、五类目、两个原生包、一个编辑组合包，未出现 `downloadEnabled: true` 或虚构 Commit。
+8. npm test：脚本不存在，未执行且未写成通过。
+9. 核心工程命令无失败；收尾组合边界检查首次退出码 1，原因与复测见下方专项记录。
+
+### 测试指标判断
+
+Phase 2 工程、领域约束和静态路由门禁全部满足。单元测试门禁不适用，因为未建立 test 脚本；构建时目录断言属于替代验证而非单元测试。
+
+### 文档漂移检查
+
+- 将 AGENTS、主要求、架构和施工计划从“等待 Phase 2”修正为“Phase 2 完成、等待 Phase 3”。
+- 将当前架构事实更新为纯领域层、十条原创演示种子、SSG 详情页和禁用操作。
+- 为 Phase 2 增加测试门禁和远端备份基线。
+- 核对 PRODUCT_REQUIREMENTS、LAYER_CONTRACT、WORKFLOW 无需修改；实际依赖方向一致。
+- Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和指定 SSH Remote 均一致；未发现旧管理员姓名、真实密钥、正式品牌图像、普通用户认证或 Phase 3 实现。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`37d463ebe4b48ca1fd2d37f5e4b87c8d56e73996`。
+- 备份分支：`backup/pre-phase2-skill-domain-20260728-1942`，push 成功并经远端核验。
+- Phase 2 提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销，优先 revert Phase 2 交付提交；随后执行 lint、typecheck、build、目录约束检查和 `git diff --check`。
+
+### 当前风险
+
+- 十条内容是 Catnip 原创演示种子，不是已验证、可分发的第三方 Skill；正式内容接入前不得开放下载。
+- CSS 图片集是可替换视觉占位，不是团队正式 Logo、吉祥物或效果截图。
+- Phase 3 必须先实际核验 `npx skills --help` 与 `npx skills add --help`，并补齐真实来源、License、Commit、Skill 路径和文件后再实现操作。
+- npm 安全警告尚未专项处置；当前没有单元测试脚本，也未进行用户未要求的浏览器视觉验收。
+
+### 下一步
+
+停止施工并向 Neil Bauman 汇报 Phase 2。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 3 Download and Install。
+
+## 2026-07-28 19:53 CST / Phase 2 / 边界检查失败与修正
+
+### 首次失败
+
+- 命令：十条种子、三种子类型、下载关闭、领域依赖、禁止姓名和密钥的组合 shell 检查。
+- 结果：退出码 1，无错误输出；同批 lint、typecheck 和 build 均成功。
+- 原因：`^    slug:` 与 `^    category:` 同时匹配了 `createSeed` 工厂返回对象中的 `input.slug`、`input.category`，实际得到 11 而不是预期 10。失败来自检查表达式过宽，不是种子数量或领域代码错误。
+
+### 修正与复测计划
+
+- 将计数模式收紧为只匹配带字符串字面量的种子输入行。
+- 保留实际数据与领域实现不变。
+- 重新执行组合边界检查和 `git diff --check`；成功后在本记录追加最终复测结果。
+
+### 第二次失败
+
+- 收紧种子计数后组合检查仍退出码 1、无输出。
+- 原因：密钥文件检查使用 `! find ...`；`find` 在没有匹配文件时仍返回 0，逻辑取反后必然失败。
+- 修正：改为检查 `find` 输出字符串为空，再执行同一组边界核对。
+
+### 最终复测
+
+- 修正后的组合边界检查退出码 0，输出 `Phase 2 boundary checks passed`。
+- `git diff --check` 同批成功；确认十条种子、五类目、两个原生包、一个编辑组合包、下载关闭、领域依赖安全、禁止姓名和密钥文件检查全部通过。
+- 两次失败均为验证脚本表达式问题，未修改领域代码或测试标准。
+- 差异审阅后补充单张图片占满详情图片集网格的 CSS 规则；随后全量 lint、typecheck、build、边界检查和 `git diff --check` 再次全部成功。

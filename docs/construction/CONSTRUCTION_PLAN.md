@@ -8,11 +8,11 @@ SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定�
 
 ## Phase 1：Public Web（已完成）
 
-公共页面外壳、文字品牌占位、五类目胶囊、十张静态 Skill 卡片瀑布流、基础导航、CSS 封面和响应式均已完成；未接数据库。当前停在 Phase 1 与 Phase 2 之间，等待 Neil Bauman 下一次明确继续指令。
+公共页面外壳、文字品牌占位、五类目胶囊、十张静态 Skill 卡片瀑布流、基础导航、CSS 封面和响应式均已完成；未接数据库。
 
-## Phase 2：Skill Domain
+## Phase 2：Skill Domain（已完成）
 
-领域模型、Pack 和子项关系、详情页、静态种子数据、图片集、功能和场景。
+纯 TypeScript 领域模型、Pack 和子项关系、十条原创演示种子、十个静态详情页、CSS 图片集、功能、场景、用法、效果、风险和相关 Skill 均已完成。当前停在 Phase 2 与 Phase 3 之间，等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 3：Download and Install
 

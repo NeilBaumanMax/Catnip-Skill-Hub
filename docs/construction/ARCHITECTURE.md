@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录，公开路由位于 `src/app`；当前包含 Phase 1 静态公共首页，不接数据库或外部服务。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，当前不接数据库或外部服务。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -17,7 +17,7 @@
 - `src/lib/auth`：管理员认证、会话和权限；不包含普通用户认证。
 - `public/brand`：可替换 Logo、吉祥物、社交分享图及约定。
 
-Phase 1 仍只使用 `src/app`：页面中的常量是瀑布流排版用静态展示数据，不构成正式 Skill 领域模型。其余领域和基础设施路径在对应 Phase 出现真实职责时创建，不预建空目录。
+Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约束与公开查询组成。`src/app` 只能通过领域导出读取 Skill，不维护重复资源数组。其余基础设施路径在对应 Phase 出现真实职责时创建，不预建空目录。
 
 ## 服务边界
 
@@ -40,3 +40,12 @@ Phase 1 仍只使用 `src/app`：页面中的常量是瀑布流排版用静态�
 - `src/app/globals.css` 提供可替换 CSS 封面构图、瀑布流、响应式、键盘焦点和 reduced-motion 处理；未增加 UI 依赖或正式品牌图片。
 - 卡片链接预留 `/skills/<slug>`；Phase 2 前尚无详情路由，搜索、分类和推荐入口也不执行数据操作。
 - 无领域层、下载/安装层、数据层、存储层、认证层、数据库或外部服务。
+
+## Phase 2 事实
+
+- `src/lib/domain/skills/types.ts` 定义资源类型、三种子类型、发布状态、五个主分类、作者来源、版本、图片、Pack 子项、推荐控制、下载权限和统计预留。
+- `seeds.ts` 提供十条 Catnip 原创演示种子，覆盖五类目、单项 Skill、原生 Skill 包和编辑组合包；全部 `downloadEnabled: false`。
+- `catalog.ts` 在模块加载时验证唯一 ID/slug、公开类型、分类、单封面、八图上限、Pack 子项、独立子页、相关资源与待确认 License 下载禁令，并提供纯查询函数。
+- `src/app/page.tsx` 从领域查询读取首页资源；`src/app/skills/[slug]/page.tsx` 使用 `generateStaticParams` 生成十个详情页。
+- 详情页展示 CSS 图片集、功能、场景、子项、用法、Prompt、效果、风险、来源和相关 Skill；下载/安装仅为禁用的 Phase 3 说明。
+- 领域层不依赖 React、Next.js、数据库或对象存储；仍无下载/安装、数据、存储、认证层或外部服务。
