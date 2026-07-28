@@ -585,3 +585,14 @@ Phase 3 当前门禁满足：真实 test 脚本存在，四种命令、标题隔
 ### 下一步
 
 停止施工并向 Neil Bauman 汇报 Phase 3。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 4 Admin CMS。
+
+## 2026-07-28 22:48 CST / Phase 3 / Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`72cfd8cd954c2c044f10c93b454f4149be9dead7`。
+- 开发前备份：`backup/pre-phase3-download-install-20260728-2222`，已 push；远端核验仍指向开发前基线。
+- Phase 3 功能提交：`8cba5a6d8e4516d00550fac6fc1183d7246344d7`。
+- main push：成功；远端 `refs/heads/main` 已核验指向功能提交。
+- 功能提交 push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert 8cba5a6d8e4516d00550fac6fc1183d7246344d7`，随后执行 npm test、lint、typecheck、build、领域治理断言和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 3 功能基线仍为上述功能提交。

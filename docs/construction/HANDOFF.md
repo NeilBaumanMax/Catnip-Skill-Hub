@@ -449,3 +449,16 @@ Phase 3 Download and Install 已完成：独立下载/安装服务、动态下�
 - 全局安装命令依据真实 CLI help 与单元测试生成，但为避免改变用户全局环境，本轮只实装验证项目级范围。
 - 下载目前读取仓库内 `content/skills`；对象存储和上传属于后续 Phase，不得在 Phase 4 绕过存储契约临时耦合。
 - 下一轮不得越过 Phase 4，不得提前引入普通用户认证、支付、搜索或部署栈。
+
+## 2026-07-28 22:48 CST / Phase 3 / Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`72cfd8cd954c2c044f10c93b454f4149be9dead7`
+- 备份分支：`backup/pre-phase3-download-install-20260728-2222`，已 push 且远端核验
+- Phase 3 功能提交：`8cba5a6d8e4516d00550fac6fc1183d7246344d7`，已 push 到 main
+- 功能提交 push 后工作区：干净
+- 当前状态：Phase 3 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 4
