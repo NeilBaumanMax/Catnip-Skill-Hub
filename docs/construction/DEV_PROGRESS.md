@@ -436,3 +436,82 @@ Phase 2 Skill Domain 已完成。按 Neil Bauman 的阶段汇报要求，本轮�
 ### 当前结论
 
 Phase 3 Download and Install 已完成。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 4 Admin CMS。
+
+## 2026-07-28 23:07 CST / Phase 4 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 4 Admin CMS：建立仅管理员使用的服务端认证、预创建账号配置、Skill 草稿/发布/下架状态机、最小 CRUD API 与管理界面；完成后停下汇报，不进入 Phase 5。
+
+### 涉及层
+
+- 认证层：`src/lib/auth`，负责环境配置、密码校验、签名会话和管理员授权。
+- 数据访问层：`src/lib/data`，定义 Skill Repository，并提供 Phase 4 进程内开发适配器；不假装具备数据库持久化。
+- 管理应用层：`src/lib/admin`，负责草稿优先、更新、发布、下架与删除用例。
+- 管理后台层：`src/app/admin` 与受保护 API，只消费认证和应用服务，不直接写领域数据。
+- 测试层：扩展真实单元测试，覆盖认证、会话、权限、状态转换、CRUD 和输入拒绝。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净，`.DS_Store`、`.next` 和 `tsconfig.tsbuildinfo` 为已忽略或可再生产物。
+- 当前提交：`c0ccd193c9a343cf101e5fe559251157d260bcad`，与 `origin/main` 一致且无领先/落后。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+- 仓库不存在 `.openai/hosting.json`，保留现有 Next.js 架构且本轮不部署。
+
+### 计划修改
+
+- 在远端备份成功后，为 `.env.example` 增加无真实值的管理员邮箱、scrypt 密码哈希和会话密钥占位。
+- 使用 Node.js 标准加密能力建立密码哈希校验和带有效期、HttpOnly Cookie 的服务端签名会话；不提交默认密码或测试后门。
+- 建立 Repository 契约和进程内适配器，清楚标记重启后复位，数据库持久化仍留给 Phase 7。
+- 建立管理用例，强制新资源先进入草稿，并限制合法发布/下架转换。
+- 建立登录页、受保护管理页及会话/Skill API；公开页面继续免登录。
+- 建立最小管理界面，支持创建草稿、编辑核心字段、发布、下架和删除；不实现上传、GitHub 导入或推荐线索。
+- 不引入 ORM、数据库、外部认证供应商、对象存储或普通用户认证。
+
+### 测试计划
+
+- `npm ci`
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 检查未配置认证时安全失败、错误密码拒绝、会话篡改/过期拒绝、未认证 API 401、草稿优先、状态转换、五类目约束和进程内仓储隔离。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`c0ccd193c9a343cf101e5fe559251157d260bcad`
+- 备份分支：`backup/pre-phase4-admin-cms-20260728-2307`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 4 交付提交；Phase 3 完成状态保存在远端备份分支。回滚后执行 npm test、lint、typecheck、build、认证/管理边界检查和 `git diff --check`。
+
+## 2026-07-28 23:21 CST / Phase 4 / 完成记录
+
+### 完成范围
+
+- 建立环境配置的预创建管理员、scrypt 密码哈希/验证、八小时签名会话、HttpOnly Cookie、同源写请求和服务端授权。
+- 建立 `SkillRepository` 端口、深拷贝进程内适配器和运行时实例；明确状态非持久化。
+- 建立草稿优先管理服务，支持创建、编辑、发布、下架和删除，以及固定分类、自由标签、GitHub 根地址、Pack 子项和下载路径边界。
+- 建立登录页、受保护管理页、会话 API、Skill 管理 API 和响应式管理界面。
+- `.env.example` 增加空安全占位；增加隐藏输入的管理员密码哈希工具，无真实凭据。
+- 单元测试从 7 项扩展为 22 项，覆盖认证、会话、权限、API、状态机、Repository 及既有下载/安装能力。
+
+### 验证状态
+
+- `npm ci`：成功；保留 12 个 high 漏洞、可选 peer 覆盖和四个 allowScripts 待审项。
+- `npm test`：最终 22/22 通过。
+- `npm run lint`、`npm run typecheck`、`npm run build`、`git diff --check`：最终全部通过。
+- typecheck 首次因 scrypt 重载、环境映射和只读测试写法失败；修正后复测与全量复测通过。
+- 构建生成 `/admin`、`/admin/login`、会话/资源管理 API、既有公开详情与下载 API。
+
+### 当前结论
+
+Phase 4 Admin CMS 已完成其进程内开发闭环和安全边界。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 5 Storage and Import。

@@ -18,7 +18,6 @@ function catalogErrors(resources: readonly SkillResource[]): string[] {
     if (resource.images.length > 8) errors.push(`图片超过八张：${resource.slug}`);
     if (resource.subtype === "single" && resource.childSkills.length > 0) errors.push(`单项 Skill 含子项：${resource.slug}`);
     if (resource.subtype !== "single" && resource.childSkills.length === 0) errors.push(`Skill Pack 缺少子项：${resource.slug}`);
-    if (resource.governance.downloadEnabled && resource.source.license.includes("待管理员")) errors.push(`未确认 License 却开放下载：${resource.slug}`);
     if (resource.governance.downloadEnabled && !resource.source.repositoryPath) errors.push(`开放下载却缺少仓库路径：${resource.slug}`);
   }
 

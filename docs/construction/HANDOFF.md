@@ -462,3 +462,78 @@ Phase 3 Download and Install 已完成：独立下载/安装服务、动态下�
 - Phase 3 功能提交：`8cba5a6d8e4516d00550fac6fc1183d7246344d7`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 3 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 4
+
+## 2026-07-28 23:21 CST / Phase 4 -> Phase 5 / 完成交接
+
+### 当前状态
+
+Phase 4 Admin CMS 已完成：仅管理员认证、受保护管理页面/API、草稿优先状态机、Skill CRUD 和可替换 Repository 已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 从环境读取预创建管理员邮箱、scrypt 密码哈希和会话密钥；无默认凭据。
+- 建立签名会话、HttpOnly/SameSite Cookie、同源写请求检查和服务端 API 授权。
+- 建立进程内 Skill Repository、管理应用服务和创建/编辑/发布/下架/删除流程。
+- 建立固定五分类、自由标签、GitHub 根地址、空 Pack、下载路径和状态转换验证。
+- 建立登录页与 CMS 界面；普通公开页面继续免登录。
+- 建立密码哈希工具及 22 项测试基线。
+
+### 未完成
+
+- 当前 Repository 只在单个进程内有效，重启会恢复十条种子；没有数据库或跨实例一致性。
+- 管理端发布只改变进程内管理记录，尚未实时进入公开首页/详情查询。
+- 尚未配置或提交 Neil Bauman 的真实管理员邮箱、密码哈希和会话密钥；这些必须在部署环境安全设置。
+- Phase 5 GitHub 辅助导入、SKILL.md 读取、ZIP/图片管理和推荐线索表单均未开始。
+- 无文件上传、对象存储、搜索、统计、正式品牌视觉或普通用户认证。
+
+### 下次优先任务
+
+1. 收到明确继续指令后，按 AGENTS 顺序检查文档与 Git，追加 Phase 5 开工计划并 push 新开发前备份。
+2. 定义 GitHub/SKILL.md 导入端口和可替换文件存储接口，保持外部输入不自动发布。
+3. 建立 ZIP/图片元数据管理与推荐 Skill 线索收集，不越过搜索或部署范围。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；Phase 5 当前层文件按施工计划为 `docs/construction/progress/layers/06-storage-import.md`。
+
+### 关键文件
+
+- `src/lib/auth/`
+- `src/lib/data/skills/`
+- `src/lib/admin/skills/`
+- `src/app/admin/`
+- `src/app/api/admin/`
+- `scripts/hash-admin-password.ts`
+- `.env.example`
+- `tests/auth.test.ts`
+- `tests/admin.test.ts`
+- `tests/admin-api.test.ts`
+
+### 测试基线
+
+- `npm ci`：成功，保留已记录的依赖安全警告。
+- `npm test`：22/22 成功。
+- `npm run lint`：成功。
+- `npm run typecheck`：首次失败，修正后成功并完成全量复测。
+- `npm run build`：最终成功，生成管理员动态路由与既有公开路由。
+- `git diff --check`：成功。
+- 未执行用户未要求的浏览器视觉 QA，也未声称完成生产登录或持久化验证。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`c0ccd193c9a343cf101e5fe559251157d260bcad`
+- 备份分支：`backup/pre-phase4-admin-cms-20260728-2307`，已 push 且远端核验指向开发前基线
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 生产环境必须安全配置三项管理员变量；缺失时登录返回未配置，不得加入默认后门。
+- 进程内 Repository 不是持久化方案，不适合多实例或生产数据；公开发布联动仍待持久层查询适配。
+- 当前未实现登录速率限制、服务端会话撤销列表或密钥轮换；部署前需结合最终运行环境补齐。
+- npm 仍报告 12 个 high 漏洞和四个 allowScripts 待审项；不得直接执行 breaking-change 自动修复。
+- 下一轮不得越过 Phase 5，不得提前实现搜索、统计、PostgreSQL、部署或普通用户认证。

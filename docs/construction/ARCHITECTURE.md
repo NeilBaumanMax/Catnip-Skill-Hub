@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装和下载服务分别位于 `src/lib/install` 与 `src/lib/downloads`。ZIP 使用无供应商绑定的 `fflate`；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库或外部服务。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`。ZIP 使用 `fflate`；密码和会话只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库或外部服务。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -58,3 +58,13 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `src/app/api/skills/[slug]/download` 是 Node.js 下载入口；详情页客户端组件只消费预生成命令和下载 URL，不直接拼接命令或打包 ZIP。
 - `content/skills/project-brief` 是经 Skill 校验脚本验证的 Catnip 原创 MIT 夹具，也是当前唯一显式开放镜像下载的资源；其余九条演示资源继续关闭下载。
 - 当前无数据库、对象存储、管理员认证、GitHub 导入、统计写入、真实搜索或随机推荐。
+
+## Phase 4 事实
+
+- `src/lib/auth` 从 `CATNIP_ADMIN_EMAIL`、`CATNIP_ADMIN_PASSWORD_HASH` 和 `CATNIP_SESSION_SECRET` 读取预创建管理员配置；缺失时安全拒绝，不提供默认账号。
+- 管理员密码使用 scrypt 哈希验证；八小时会话使用 HMAC-SHA256 签名、HttpOnly、SameSite=Strict Cookie，写请求额外校验同源 Origin。
+- `src/lib/data/skills` 声明 Repository 契约并提供深拷贝的进程内适配器；它只用于 Phase 4 管理闭环验证，进程重启会恢复十条种子，不等同数据库。
+- `src/lib/admin/skills` 强制新记录先为草稿，允许编辑核心字段、分类标签和管理员下载开关；发布资源必须先下架才能删除，空 Skill Pack 不得发布。
+- `/admin/login` 与 `/admin` 为动态服务端页面；会话及资源 API 全部服务端授权，客户端不读取密码哈希或会话密钥，也不直接访问 Repository。
+- 管理端发布目前只改变进程内管理记录；公开首页和详情仍读取版本化静态种子，直到后续持久化与公共查询适配完成。
+- Phase 4 无数据库、ORM、外部认证供应商、普通用户认证、文件上传、对象存储、GitHub 导入、搜索或统计写入。

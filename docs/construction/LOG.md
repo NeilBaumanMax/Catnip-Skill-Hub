@@ -596,3 +596,116 @@ Phase 3 当前门禁满足：真实 test 脚本存在，四种命令、标题隔
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert 8cba5a6d8e4516d00550fac6fc1183d7246344d7`，随后执行 npm test、lint、typecheck、build、领域治理断言和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 3 功能基线仍为上述功能提交。
+
+## 2026-07-28 23:18 CST / Phase 4 / 首轮类型检查失败
+
+### 失败命令
+
+`npm run typecheck`
+
+### 失败摘要
+
+- `promisify(scrypt)` 的推断签名没有保留带 options 的 Node.js 重载，两个调用被判定参数过多。
+- `loadAdminAuthConfig` 参数使用 `NodeJS.ProcessEnv`，项目类型增强使测试字面量被要求包含 `NODE_ENV`。
+- 仓储隔离测试直接对 `readonly string[]` 调用 `push`，不符合领域只读契约。
+
+### 同批结果
+
+- `npm test`：19/19 通过。
+- `npm run lint`：通过。
+- `git diff --check`：通过。
+
+### 修复计划
+
+- 为 scrypt 写显式 Promise 包装器，保留 options 和回调类型。
+- 将认证配置输入收窄为只读字符串映射，不依赖完整进程环境类型。
+- 测试中显式创建受控可变视图来验证深拷贝隔离，不改变生产领域类型。
+- 复跑 typecheck，并在通过后执行全量测试。
+
+### 首次修复结果
+
+- 显式 Promise scrypt 包装、配置输入类型和只读隔离测试已修正。
+- `npm run typecheck` 复测退出码 0。
+- 随后 `npm test` 19/19、lint 和 `git diff --check` 全部通过；生产构建退出码 0并生成管理员动态路由。
+
+## 2026-07-28 23:21 CST / Phase 4 / Admin CMS
+
+### 本轮计划回放
+
+按开工计划完成远端开发前备份，建立仅管理员认证、Repository 端口、进程内适配器、草稿优先管理用例、受保护 API 和管理界面；严格停在 Phase 4，不接数据库、导入、上传或普通用户认证。
+
+### 实际修改
+
+- 新建认证层：环境配置、scrypt 密码哈希/校验、HMAC-SHA256 会话、八小时有效期、HttpOnly/SameSite Cookie、同源 Origin 和服务端身份检查。
+- 新建安全密码哈希工具；密码由隐藏 TTY 或标准输入读取，只输出哈希。
+- 新建 Skill Repository 契约、深拷贝进程内适配器和开发运行时实例。
+- 新建管理员应用服务：强制草稿创建、核心字段编辑、固定分类、自由标签、发布、下架、删除、GitHub 根地址、空 Pack 和下载路径验证。
+- 新建 `/admin/login`、`/admin`、会话 API、资源列表/创建 API、单项更新/转换/删除 API 和响应式界面。
+- `.env.example` 只增加三项空占位；没有把 Git 提交邮箱自动当作管理员账号。
+- 删除旧目录中“License 文本自动阻止下载”的断言，恢复由管理员显式决定的产品规则。
+
+### 修改文件
+
+- 认证：`src/lib/auth/*`、`scripts/hash-admin-password.ts`、`.env.example`。
+- 数据与管理用例：`src/lib/data/skills/*`、`src/lib/admin/skills/*`、领域目录约束。
+- Web：`src/app/admin/*`、`src/app/api/admin/*`、`src/app/globals.css`。
+- 测试：`tests/auth.test.ts`、`tests/admin.test.ts`、`tests/admin-api.test.ts`，并保留既有测试。
+- 规范与记录：AGENTS、主要求、架构、层契约、施工计划、测试指标、回滚、DEV_PROGRESS、LOG、HANDOFF 和 `04-admin-cms.md`。
+
+### 验证结果
+
+- 依赖锁文件重装成功。
+- 22 项单元/API 测试最终全部通过。
+- lint、typecheck、生产构建和 Git 空白检查最终通过。
+- 生产构建包含两个管理员动态页面、三组管理 API、既有公开页面和下载 API。
+
+### 测试日志
+
+1. `npm ci`：退出码 0，安装 362 个包并审计 363 个包；报告 12 个 high 漏洞、可选 peer 覆盖和 esbuild/fsevents/sharp/unrs-resolver 四个 allowScripts 待审项。
+2. 首轮 `npm test`：19/19 通过。
+3. 首轮 `npm run lint`：通过。
+4. 首轮 `git diff --check`：通过。
+5. 首轮 `npm run typecheck`：退出码 2；scrypt 重载、测试环境映射和 readonly 测试写法共六个类型错误，已在专项失败记录保留。
+6. 修复后 `npm run typecheck`：退出码 0。
+7. 首次全量复测：npm test 19/19、lint、diff check 和生产构建全部通过。
+8. 安全漂移检查后增加会话邮箱绑定、Pack 发布、GitHub 根地址和真实路由认证测试，并移除 License 自动决策断言。
+9. 最终 `npm test`：22/22 通过。
+10. 最终 `npm run lint`、`npm run typecheck`、`git diff --check`：全部通过。
+11. 最终 `npm run build`：退出码 0，无警告；生成 15 个页面数据单元及全部预期路由。
+
+### 测试指标判断
+
+Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/过期、邮箱绑定、同源请求、匿名 401、真实登录 Cookie、已认证 API、草稿优先、编辑、发布/下架/删除、Pack 与下载边界、License 非自动决策和 Repository 隔离均有测试。未将未配置的生产账号、未执行的浏览器 QA或未建立的数据库写成通过。
+
+### 文档漂移检查
+
+- 将 AGENTS、主要求、架构和施工计划从“等待 Phase 4”修正为“Phase 4 完成、等待 Phase 5”。
+- 将认证、管理员用例、数据端口、进程内限制、环境变量和动态路由写入当前架构与测试基线。
+- 修正静态目录中与产品规则冲突的 License 自动决定逻辑；管理员只保存信息并显式决定下载。
+- 明确进程内管理发布尚不驱动公开静态目录，防止把非持久化闭环误报为生产 CMS。
+- 移除施工计划中 Phase 3 的旧暂停点文字，并修正层契约排版；当前唯一暂停点为 Phase 4 与 Phase 5 之间。
+- 核对 PRODUCT_REQUIREMENTS、WORKFLOW 和 TOOL_POLICY 无需修改；LAYER_CONTRACT 增补已实现依赖事实。
+- 核对 Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和指定 SSH Remote 一致；未发现旧管理员姓名、真实密钥、默认密码、正式品牌图、普通用户认证、数据库、对象存储、导入、搜索、统计或 Phase 5 越界。
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`c0ccd193c9a343cf101e5fe559251157d260bcad`。
+- 备份分支：`backup/pre-phase4-admin-cms-20260728-2307`，已 push 且远端核验指向开发前基线。
+- Phase 4 提交和 main push：待 Git 收尾后追加状态回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销，优先 revert Phase 4 交付提交；随后执行 npm test、lint、typecheck、build、认证/管理边界检查和 `git diff --check`。
+
+### 当前风险
+
+- 真实管理员环境变量尚未在部署环境配置；当前缺失时安全拒绝登录。
+- 进程内 Repository 不持久、不可跨实例，管理端状态不会实时改变公开静态目录。
+- 尚无登录速率限制、服务端会话撤销列表或密钥轮换流程；必须在最终部署环境确定后补齐。
+- npm 仍报告 12 个 high 漏洞、可选 peer 覆盖和四个 allowScripts 待审项。
+- 未进行用户未要求的浏览器视觉 QA；生产构建和交互代码已验证，但未声称视觉验收。
+
+### 下一步
+
+停止施工并向 Neil Bauman 汇报 Phase 4。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 5 Storage and Import。

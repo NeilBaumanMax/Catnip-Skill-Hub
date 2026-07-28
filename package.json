@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "admin:hash-password": "tsx scripts/hash-admin-password.ts",
     "test": "tsx --test tests/*.test.ts",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"

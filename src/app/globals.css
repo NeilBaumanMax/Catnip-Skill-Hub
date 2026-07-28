@@ -1161,6 +1161,250 @@ input:focus-visible {
   }
 }
 
+.admin-shell {
+  min-height: 100vh;
+  padding: 28px clamp(18px, 4vw, 64px) 72px;
+  background: #f4f0e7;
+  color: #182018;
+}
+
+.admin-header,
+.admin-section-heading,
+.admin-skill-meta,
+.admin-card-actions,
+.admin-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-header {
+  border-bottom: 1px solid rgba(24, 32, 24, 0.15);
+  padding-bottom: 18px;
+}
+
+.admin-header p,
+.admin-intro p,
+.admin-login-card > p,
+.admin-section-heading p {
+  color: #596258;
+}
+
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-header-actions a,
+.quiet-button {
+  border: 1px solid rgba(24, 32, 24, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  padding: 9px 14px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.admin-intro {
+  max-width: 780px;
+  padding: 64px 0 32px;
+}
+
+.admin-intro h1,
+.admin-login-card h1 {
+  margin: 8px 0 14px;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.admin-dashboard {
+  display: grid;
+  gap: 24px;
+}
+
+.admin-panel,
+.admin-login-card {
+  border: 1px solid rgba(24, 32, 24, 0.13);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.68);
+  padding: clamp(20px, 3vw, 34px);
+  box-shadow: 0 18px 60px rgba(33, 48, 31, 0.07);
+}
+
+.admin-section-heading {
+  margin-bottom: 24px;
+}
+
+.admin-section-heading h2 {
+  margin-top: 4px;
+  font-size: clamp(1.4rem, 3vw, 2.25rem);
+}
+
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-create-grid,
+.admin-edit-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-form label {
+  display: grid;
+  gap: 7px;
+  color: #475047;
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+  width: 100%;
+  border: 1px solid rgba(24, 32, 24, 0.18);
+  border-radius: 12px;
+  background: #fffdf7;
+  color: #182018;
+  padding: 11px 12px;
+  font: inherit;
+}
+
+.admin-form textarea {
+  resize: vertical;
+}
+
+.admin-form button {
+  border: 0;
+  border-radius: 999px;
+  background: #1f4f34;
+  color: white;
+  padding: 10px 16px;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.admin-form button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.admin-span-2 {
+  grid-column: 1 / -1;
+}
+
+.form-message {
+  min-height: 1.25em;
+  color: #824c2d;
+  font-size: 0.85rem;
+}
+
+.admin-skill-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-skill-card {
+  border: 1px solid rgba(24, 32, 24, 0.13);
+  border-radius: 18px;
+  background: #fffdf8;
+  padding: 20px;
+}
+
+.admin-skill-meta {
+  margin-bottom: 18px;
+}
+
+.admin-skill-meta > div {
+  display: grid;
+  gap: 4px;
+}
+
+.admin-skill-meta code {
+  color: #737c72;
+}
+
+.status-badge {
+  display: inline-flex;
+  border-radius: 999px;
+  background: #e8eee5;
+  color: #31533b;
+  padding: 6px 10px;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.status-draft { background: #eee8d6; color: #725c27; }
+.status-unlisted { background: #eee1dd; color: #824c3c; }
+.status-archived { background: #e4e4e4; color: #626262; }
+
+.checkbox-label {
+  display: flex !important;
+  grid-template-columns: none;
+  align-items: center;
+  align-self: end;
+  min-height: 44px;
+  gap: 9px !important;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+.admin-card-actions {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.admin-form .quiet-button {
+  background: transparent;
+  color: #233426;
+  border: 1px solid rgba(24, 32, 24, 0.18);
+}
+
+.admin-form .danger-button {
+  background: #8a3d31;
+}
+
+.admin-login-shell {
+  display: grid;
+  align-content: start;
+  gap: min(16vh, 120px);
+}
+
+.admin-login-card {
+  width: min(100%, 520px);
+  justify-self: center;
+}
+
+.login-form {
+  margin-top: 28px;
+}
+
+@media (max-width: 700px) {
+  .admin-header,
+  .admin-section-heading,
+  .admin-skill-meta,
+  .admin-form-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-create-grid,
+  .admin-edit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-span-2 {
+    grid-column: auto;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
