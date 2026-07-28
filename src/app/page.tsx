@@ -33,9 +33,9 @@ export default function Home() {
           />
         </div>
 
-        <a className="recommend-link" href="#recommend">
+        <Link className="recommend-link" href="/recommend">
           推荐 Skill
-        </a>
+        </Link>
       </header>
 
       <main>
@@ -109,7 +109,7 @@ export default function Home() {
         </div>
         <div className="footer-note">
           <span>Logo 与吉祥物将在后续接入</span>
-          <span>推荐 Skill 表单将在后续阶段开放</span>
+          <Link href="/recommend">推荐一个 Skill</Link>
         </div>
       </footer>
     </div>

@@ -550,3 +550,75 @@ Phase 4 Admin CMS 已完成：仅管理员认证、受保护管理页面/API、�
 - Phase 4 功能提交：`127fe0ae7188298633cde7b22654922c1a3e7798`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 4 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 5
+
+## 2026-07-28 23:59 CST / Phase 5 -> Phase 6 / 完成交接
+
+### 当前状态
+
+Phase 5 Storage and Import 已完成：安全 GitHub/SKILL.md 只读预览、ZIP/图片进程内管理、公开推荐线索和管理读取均已建立。当前必须停下，等待 Neil Bauman 下一次明确继续指令。
+
+### 本轮完成
+
+- 固定 GitHub 官方 API 域名、禁用重定向、限制超时/响应/树/文件，并以真实 Commit 固定读取。
+- 有限解析 SKILL.md frontmatter，仅返回预览；不执行内容、不创建草稿、不发布。
+- 建立可替换文件端口和 ZIP/PNG/JPEG/GIF/WEBP 校验，保存原字节、大小和 SHA-256。
+- 建立受保护文件 API/管理面板和公开推荐表单；线索具备同源、蜜罐、字段校验和基本限流。
+- 保持现有 Next.js 架构，未接数据库、对象存储供应商、搜索、统计或普通用户认证。
+
+### 未完成
+
+- 文件、推荐线索、CMS 数据和限流状态均为进程内，重启丢失且不支持多实例。
+- GitHub 辅助导入尚不创建草稿；管理员需人工判断并手动录入。
+- 未实现 Phase 6 搜索、分类/标签筛选、随机推荐、阅读量或统计事件。
+- 未配置生产管理员凭据或可选 GitHub Token；无私有仓库导入验收。
+
+### 下次优先任务
+
+1. 收到明确继续指令后，按 AGENTS 必读顺序检查文档与 Git，追加 Phase 6 开工计划并 push 新开发前备份。
+2. 先定义公开查询、搜索与筛选的纯服务边界，再实现分类/标签筛选和普通搜索。
+3. 在不破坏推荐治理字段的前提下实现随机推荐；阅读量和统计保持低优先级。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的 10 项顺序读取；Phase 6 当前层文件按施工计划为 `docs/construction/progress/layers/05-search-discovery.md`。
+
+### 关键文件
+
+- `src/lib/import/github/`
+- `src/lib/storage/`
+- `src/lib/recommendations/`
+- `src/app/admin/import-storage-panel.tsx`
+- `src/app/recommend/`
+- `src/app/api/admin/import/github/route.ts`
+- `src/app/api/admin/assets/`
+- `src/app/api/recommendations/route.ts`
+- `tests/import.test.ts`
+- `tests/storage.test.ts`
+- `tests/recommendations.test.ts`
+
+### 测试基线
+
+- `npm ci`：成功，保留已记录的依赖安全警告。
+- `npm test`：最终 34/34 成功。
+- `npm run lint`、`npm run typecheck`、`git diff --check`：首轮与收尾复测均成功。
+- `npm run build`：沙箱内首次因端口权限失败；授权环境同命令两次成功，最终生成 20 个路由。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`
+- 备份分支：`backup/pre-phase5-storage-import-20260728-2343`，已 push 且远端核验指向开发前基线
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 生产环境必须用持久化数据库、对象存储和共享限流替换进程内适配器；当前实现只适合单进程开发验证。
+- `x-forwarded-for` 只有在可信反向代理重写时才可作为限流标识；部署时需校验代理配置。
+- GitHub 未配置 Token 时受匿名 API 限额影响；Token 必须仅放服务端秘密环境，不得进入客户端或仓库。
+- 上传在应用层限制到 ZIP 25 MB、图片 8 MB，但生产入口仍需配置反向代理/平台请求体上限。
+- npm 仍报告 12 个 high 漏洞和四个 allowScripts 待审项；不得直接执行 breaking-change 自动修复。
+- 下一轮不得越过 Phase 6，不得提前接 PostgreSQL、Drizzle、对象存储或部署栈。

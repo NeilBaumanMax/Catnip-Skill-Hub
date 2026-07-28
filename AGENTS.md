@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 4：Admin CMS 已完成，包含环境配置的预创建管理员、服务端签名会话、受保护管理路由、草稿优先状态机、Skill CRUD 和进程内开发 Repository。当前必须停下并向 Neil Bauman 汇报；只有收到下一次明确继续指令后，才可进入 Phase 5，且仍需先执行开工计划和开发前备份。
+Phase 5：Storage and Import 已完成，包含安全 GitHub/SKILL.md 只读预览、ZIP/图片进程内存储管理和公开推荐线索。当前必须停下并向 Neil Bauman 汇报；只有收到下一次明确继续指令后，才可进入 Phase 6，且仍需先执行开工计划和开发前备份。
 
 ## 禁止事项
 
@@ -42,4 +42,4 @@ Phase 4：Admin CMS 已完成，包含环境配置的预创建管理员、服务
 - 不提交密钥、Token、密码、SSH 私钥、真实凭据、`.env`、构建产物或依赖目录。
 - 不使用其他姓名替代 Neil Bauman 作为管理员、负责人或产品所有者。
 - 不伪造测试、远端备份、push 或完成状态。
-- 未收到 Neil Bauman 的下一次明确继续指令前，不开始 Phase 5 或后续功能。
+- 未收到 Neil Bauman 的下一次明确继续指令前，不开始 Phase 6 或后续功能。

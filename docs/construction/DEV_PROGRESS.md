@@ -515,3 +515,82 @@ Phase 3 Download and Install 已完成。按 Neil Bauman 的阶段汇报要求�
 ### 当前结论
 
 Phase 4 Admin CMS 已完成其进程内开发闭环和安全边界。按 Neil Bauman 的阶段汇报要求，本轮必须停下；只有收到下一次明确继续指令后才可进入 Phase 5 Storage and Import。
+
+## 2026-07-28 23:43 CST / Phase 5 / 开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的明确继续指令，完成 Phase 5 Storage and Import：建立安全 GitHub/SKILL.md 导入预览、可替换文件存储与 ZIP/图片管理、公开推荐 Skill 线索表单；完成后停下汇报，不进入 Phase 6。
+
+### 涉及层
+
+- 导入层：`src/lib/import`，负责 GitHub URL 规范化、固定 API 端点、超时/大小/数量限制、Commit 固定和 SKILL.md 安全解析。
+- 存储层：`src/lib/storage`，负责文件端口、运行时开发适配器、类型/魔数/大小/哈希验证和元数据。
+- 推荐线索层：`src/lib/recommendations`，负责字段验证、速率限制和非发布型线索记录。
+- 管理后台/API：只允许管理员调用导入与文件管理；导入结果只作预览，不自动创建草稿。
+- 公共前台/API：推荐表单无需登录，但需同源、蜜罐和限流；不会创建 Skill 页面。
+- 测试层：覆盖 SSRF/URL、重定向、超时、响应限制、树截断、Commit 固定、恶意 SKILL.md、文件魔数/大小、匿名管理拒绝和推荐线索隔离。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净，`.DS_Store`、`.next` 和 `tsconfig.tsbuildinfo` 为已忽略或可再生产物。
+- 当前提交：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`，与 `origin/main` 一致且无领先/落后。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+- 无 `.openai/hosting.json`、数据库或对象存储绑定；保留既有 Next.js 架构。
+
+### 计划修改
+
+- 在远端备份成功后，以原生 fetch 实现 GitHub REST 只读客户端，只访问 `api.github.com`，禁用重定向，支持可选服务端 Token。
+- 先读取仓库与默认分支 Commit，再以固定 SHA 枚举树和读取最多 20 个 SKILL.md；拒绝截断树、超限响应和异常内容。
+- 解析有限 frontmatter 字段，仅生成来源/名称/描述/路径预览；不执行仓库代码、不下载任意 URL、不自动创建草稿或发布。
+- 建立文件存储端口与进程内开发适配器；ZIP 只保存原始字节不解压，图片按 MIME、扩展名和魔数校验，记录 SHA-256。
+- 建立受保护的导入和文件管理 API及管理界面面板。
+- 建立公开推荐表单、同源/蜜罐/字段校验和进程内限流；线索独立保存，不进入 Skill Repository。
+- `.env.example` 只增加空的可选 GitHub Token 占位；不引入 GitHub SDK、上传库、数据库、对象存储 SDK、搜索或统计。
+
+### 测试计划
+
+- `npm ci`
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `git diff --check`
+- 验证 GitHub 固定域名/根仓库 URL、Commit 固定、超时/重定向/响应和树数量限制、SKILL.md 大小/NUL/frontmatter、文件类型/魔数/大小/哈希、匿名 401、推荐表单限流与不自动建草稿。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`
+- 备份分支：`backup/pre-phase5-storage-import-20260728-2343`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 5 交付提交；Phase 4 完成状态保存在远端备份分支。回滚后执行 npm test、lint、typecheck、build、导入/存储/推荐边界检查和 `git diff --check`。
+
+## 2026-07-28 23:59 CST / Phase 5 / 完成记录
+
+### 完成范围
+
+- 建立固定 GitHub API、禁重定向、超时/响应/树/文件限制、Commit 固定和 SKILL.md 有限解析的只读导入预览。
+- 建立 `AssetStorage` 端口、深拷贝进程内开发适配器、ZIP/图片校验、原字节保存、SHA-256 元数据和受保护管理 API。
+- 建立公开推荐页与线索 API，包含同源、蜜罐、字段验证和进程内限流；线索与 Skill Repository 隔离。
+- 管理页增加导入预览、文件管理和推荐线索面板；导入不会自动建稿或发布。
+- `.env.example` 增加空的可选服务端 GitHub Token 占位；未增加 SDK、数据库、对象存储、搜索或统计依赖。
+- 测试从 22 项扩展到 34 项，覆盖导入、存储、推荐和匿名管理边界。
+
+### 验证状态
+
+- `npm ci`：成功；保留 12 个 high 漏洞、可选 peer 覆盖和四个 allowScripts 待审项。
+- `npm test`：首轮 33/33 成功；补充匿名导入门禁后最终 34/34 成功。
+- `npm run lint`、`npm run typecheck`、`git diff --check`：首轮与收尾复测均成功。
+- `npm run build`：沙箱内首次因 Turbopack 绑定内部端口被拒绝而失败；非沙箱环境使用同一命令复测成功，生成 20 个路由。
+
+### 当前结论
+
+Phase 5 功能、边界与最终全量复测已完成，正处于 Git 收尾阶段。完成提交与 main push 后必须暂停，等待 Neil Bauman 明确指令再进入 Phase 6。

@@ -4,6 +4,9 @@ import { adminSkillService } from "@/lib/admin/skills";
 import { getAuthenticatedAdmin } from "@/lib/auth/server";
 import { AdminDashboard } from "./admin-dashboard";
 import { LogoutButton } from "./logout-button";
+import { ImportStoragePanel } from "./import-storage-panel";
+import { assetService } from "@/lib/storage";
+import { recommendationService } from "@/lib/recommendations";
 
 export const dynamic = "force-dynamic";
 
@@ -24,11 +27,15 @@ export default async function AdminPage() {
         </div>
       </header>
       <section className="admin-intro">
-        <p className="eyebrow">Admin CMS · Phase 4</p>
-        <h1>Skill 草稿与发布管理</h1>
-        <p>本阶段使用进程内开发仓储验证管理闭环；服务重启后恢复种子基线，数据库持久化将在后续阶段接入。</p>
+        <p className="eyebrow">Admin CMS · Phase 5</p>
+        <h1>Skill、来源与文件管理</h1>
+        <p>管理数据和文件仍使用进程内开发适配器；服务重启后恢复基线，数据库与对象存储将在部署阶段接入。</p>
       </section>
       <AdminDashboard initialSkills={await adminSkillService.list()} />
+      <ImportStoragePanel
+        initialAssets={await assetService.list()}
+        initialRecommendations={await recommendationService.list()}
+      />
     </main>
   );
 }

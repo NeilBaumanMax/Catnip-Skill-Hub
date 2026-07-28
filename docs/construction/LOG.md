@@ -720,3 +720,88 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert 127fe0ae7188298633cde7b22654922c1a3e7798`，随后执行 npm test、lint、typecheck、build、认证/管理边界检查和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 4 功能基线仍为上述功能提交。
+
+## 2026-07-28 23:58 CST / Phase 5 / 构建失败记录
+
+- 失败命令：`npm run build`
+- 首次结果：失败（退出码 1）。
+- 失败摘要：Next.js 16.2.12 Turbopack 在处理 `globals.css` 时需要创建内部进程并绑定端口，受当前沙箱限制返回 `Operation not permitted (os error 1)`；错误未指向 TypeScript、ESLint 或应用模块诊断。
+- 已通过的前置验证：`npm ci`、33/33 单元测试、lint、typecheck 与 `git diff --check`。
+- 处理计划：不扩展功能、不改用其他构建参数；在获准的非沙箱环境重新执行同一条 `npm run build`，并记录复测结果。
+
+## 2026-07-28 23:59 CST / Phase 5 / Storage and Import
+
+### 本轮计划回放
+
+按文档与 Git 检查、开工计划、远端开发前备份、安全导入、文件存储、推荐线索、管理/公开界面、测试失败循环、漂移检查和 Git 收尾执行。未实现 Phase 6 搜索/统计或 Phase 7 持久化/部署。
+
+### 实际修改
+
+- 新增固定 GitHub API 的只读客户端、仓库 URL 解析、Commit 固定、树与文件限制和 SKILL.md 有限解析。
+- 新增可替换文件存储端口、进程内适配器、ZIP/图片校验、SHA-256 和管理员文件 API。
+- 新增独立推荐线索 Repository/服务、公开表单/API、同源/蜜罐/限流和管理员读取。
+- 管理面板加入导入、文件和线索模块；首页推荐入口改为真实表单页面。
+- 增加空的可选 GitHub Token 环境占位；没有新增 npm 依赖。
+
+### 修改文件
+
+- 应用：`.env.example`、`src/app/page.tsx`、`src/app/globals.css`、`src/app/admin/`、`src/app/recommend/`、`src/app/api/admin/assets/`、`src/app/api/admin/import/`、`src/app/api/admin/recommendations/`、`src/app/api/recommendations/`。
+- 服务：`src/lib/import/github/`、`src/lib/storage/`、`src/lib/recommendations/`。
+- 测试：`tests/import.test.ts`、`tests/storage.test.ts`、`tests/recommendations.test.ts`。
+- 文档：AGENTS、主要求、架构、分层契约、施工计划、测试指标、回滚、DEV_PROGRESS、LOG、HANDOFF 和 `06-storage-import.md`。
+
+### 验证结果
+
+- 依赖安装、单元测试、lint、typecheck 和差异检查首轮成功。
+- 生产构建首次受沙箱端口权限阻塞；不修改代码，在获准环境使用同一命令复测成功并生成 20 个路由。
+- 补充匿名导入门禁及文档后完成最终全量复测，所有门禁成功。
+
+### 测试日志
+
+- `npm ci`：退出码 0；安装/审计 363 个包，报告 12 个 high 漏洞、两组可选 peer 覆盖和四个 allowScripts 待审项。
+- `npm test`（首轮）：退出码 0，33/33 通过。
+- `npm run lint`（首轮）：退出码 0。
+- `npm run typecheck`（首轮）：退出码 0。
+- `git diff --check`（首轮）：退出码 0。
+- `npm run build`（首次）：退出码 1；Turbopack 创建内部进程并绑定端口时被沙箱拒绝。
+- 修复/处置：记录失败，不扩展功能、不更换构建参数；在获准非沙箱环境复测同一命令。
+- `npm run build`（第二次）：退出码 0；编译、TypeScript、页面数据和 20 个路由生成成功。
+- `npm test`（最终）：退出码 0，34/34 通过。
+- `npm run lint`（最终）：退出码 0。
+- `npm run typecheck`（最终）：退出码 0。
+- `git diff --check`（最终）：退出码 0。
+- `npm run build`（最终）：退出码 0；授权环境同命令再次编译并生成 20 个路由。
+
+### 测试指标判断
+
+导入 URL/Commit/限制/异常内容、文件格式/大小/原字节/哈希、匿名管理拒绝、推荐 HTTPS/限流/隔离/蜜罐均已覆盖。当前证明的是单进程开发边界，不是持久化、多实例、生产代理或私有仓库验收。
+
+### 文档漂移检查
+
+- 已核对目录与 ARCHITECTURE、依赖方向与 LAYER_CONTRACT、Phase 与 CONSTRUCTION_PLAN、脚本与 TEST_METRICS、Git 与 GITHUB_ROLLBACK、流程与 WORKFLOW、产品与 PRODUCT_REQUIREMENTS。
+- 修正 Phase 4 暂停描述为 Phase 5 完成、补充三层职责/依赖、当前测试门禁、远端备份和 Phase 6 交接。
+- 管理员始终为 Neil Bauman，GitHub 用户为 NeilBaumanMax，品牌为 Catnip 薄荷猫，Remote 保持指定 SSH 地址；未发现其他管理员姓名、正式 Logo/吉祥物、普通用户认证或真实密钥。
+- 未发现 Phase 6 搜索/随机推荐/统计或 Phase 7 数据库/对象存储/部署实现；案例仍只属于详情辅助内容。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 当前分支：main。
+- 开发前基线：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`。
+- 开发前备份：`backup/pre-phase5-storage-import-20260728-2343`，已 push 且远端核验指向基线。
+- 最终提交与 main push：待 Git 收尾回写。
+
+### 回滚判断
+
+当前验证未发现需要回滚的代码缺陷。交付后如需撤销，优先 `git revert <Phase-5-功能提交>`，随后执行 `npm test`、`npm run lint`、`npm run typecheck`、`npm run build`、`git diff --check` 及导入/存储/推荐边界核对。
+
+### 当前风险
+
+- 所有新状态均为进程内且会随重启丢失；匿名 GitHub API 有限额，多实例限流无共享状态。
+- 转发 IP 依赖可信反向代理重写；生产入口仍需请求体上限。
+- npm 报告的 12 个 high 漏洞和四个 allowScripts 待审项未做破坏性自动修复。
+
+### 下一步
+
+本轮完成 Git 收尾后停止。收到 Neil Bauman 下一次明确继续指令，才可按新备份门禁进入 Phase 6 Search and Discovery。

@@ -47,7 +47,7 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 
 当前 `package.json` 已提供真实 `test` 脚本；不得再沿用“单元测试脚本尚未建立”的当前状态描述。历史 Phase 0 至 Phase 2 记录保持原事实。
 
-## Phase 4 Admin CMS 门禁（当前基线）
+## Phase 4 Admin CMS 门禁
 
 除既有全部工程与产品门禁外，还必须满足：
 
@@ -59,6 +59,19 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - `npm run build` 成功生成管理员动态页面、会话 API、管理 API、既有公开页面和下载 API。
 
 当前验收只证明进程内开发 CMS 和认证边界可用，不证明数据库持久化、跨实例一致性、公开目录实时发布、生产秘密配置或部署完成。
+
+## Phase 5 Storage and Import 门禁（当前基线）
+
+除既有全部工程与产品门禁外，还必须满足：
+
+- `npm test` 覆盖 GitHub 根地址/固定 API 域名/禁重定向、Commit 固定、树/响应/文件数量与大小限制、SKILL.md UTF-8/NUL/frontmatter 校验。
+- 导入预览显式声明不建稿、不发布，并且测试证明不会改变 Skill Repository；导入代码不执行仓库内容。
+- ZIP 与图片按扩展名、MIME、魔数和大小验证，保存原字节副本与 SHA-256；匿名文件管理请求返回 401。
+- 公开推荐只接受 HTTPS 链接，实施同源、蜜罐和每标识限流；线索独立存储，不创建 Skill 草稿且仅管理员可读取列表。
+- 管理 Token、会话密钥和真实凭据不进入客户端或仓库；`.env.example` 只保留空占位。
+- `npm run build` 成功生成导入/存储/推荐 API、管理动态页、公开 `/recommend` 页和既有路由。
+
+当前验收只证明进程内开发适配器及边界，不证明文件/线索持久化、多实例限流、生产对象存储、GitHub 私有仓库访问或部署完成。
 
 ## 失败记录格式
 

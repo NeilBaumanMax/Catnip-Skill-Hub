@@ -2,7 +2,7 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`。ZIP 使用 `fflate`；密码和会话只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库或外部服务。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储和推荐线索分别位于 `src/lib/import`、`src/lib/storage` 与 `src/lib/recommendations`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库或对象存储供应商。
 
 后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
 
@@ -12,7 +12,9 @@
 - `src/lib/domain/skills`：Skill、Pack、子 Skill、资源类型、发布状态、分类标签、作者来源、版本和下载权限等纯领域规则。
 - `src/lib/install`：两个 CLI、安装范围、参数验证和安装源选择。
 - `src/lib/downloads`：ZIP 元数据、打包、Catnip 外层说明、下载授权和事件。
+- `src/lib/import`：不可信外部来源的安全读取、规范化、限制和导入预览；不得自动写 Skill。
 - `src/lib/storage`：本地开发与对象存储的统一文件接口及供应商适配。
+- `src/lib/recommendations`：公开推荐字段验证、滥用限制、独立线索端口与管理读取。
 - `src/lib/data`：数据库访问、Repository、查询和事务边界。
 - `src/lib/auth`：管理员认证、会话和权限；不包含普通用户认证。
 - `public/brand`：可替换 Logo、吉祥物、社交分享图及约定。
@@ -68,3 +70,12 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `/admin/login` 与 `/admin` 为动态服务端页面；会话及资源 API 全部服务端授权，客户端不读取密码哈希或会话密钥，也不直接访问 Repository。
 - 管理端发布目前只改变进程内管理记录；公开首页和详情仍读取版本化静态种子，直到后续持久化与公共查询适配完成。
 - Phase 4 无数据库、ORM、外部认证供应商、普通用户认证、文件上传、对象存储、GitHub 导入、搜索或统计写入。
+
+## Phase 5 事实
+
+- `src/lib/import/github` 只接受 github.com HTTPS 仓库根地址，以固定 `api.github.com` 读取仓库、分支 Commit、递归树和原始 SKILL.md；禁用重定向，并限制超时、响应、树条目、文件数量和文件大小。
+- 导入以实际 Commit SHA 固定树和文件读取，只解析有限 frontmatter 字段，拒绝无效 UTF-8、NUL、异常名称和不完整文件；输出明确为不建稿、不发布的预览。
+- `src/lib/storage` 声明 `AssetStorage` 端口并提供深拷贝进程内适配器；ZIP 不解压，图片和 ZIP 按 MIME、扩展名、魔数、大小验证，原字节不改写并记录 SHA-256。
+- 受保护管理 API 和面板提供导入预览、文件上传/列表/下载/删除；管理员认证和同源写门禁沿用 Phase 4。
+- `/recommend` 与公开 API 收集 Skill 链接、发现渠道、推荐理由和选填联系方式，并带同源、蜜罐和进程内每标识限流；线索与 Skill Repository 完全隔离。
+- GitHub Token 仅为服务端可选空环境占位。当前文件、推荐线索和 CMS 数据仍不持久化；无对象存储、数据库、搜索、统计或自动发布。

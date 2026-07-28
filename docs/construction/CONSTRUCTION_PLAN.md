@@ -20,11 +20,11 @@ ZIP 与 Catnip 外层说明、下载授权与路径安全、下载 API，以及�
 
 ## Phase 4：Admin CMS（已完成）
 
-环境配置的预创建管理员认证、草稿/发布/下架、资源 CRUD、分类标签管理和受保护管理界面已完成；不增加普通用户认证。当前以可替换的进程内 Repository 验证闭环，不误报为持久化 CMS。当前停在 Phase 4 与 Phase 5 之间，等待 Neil Bauman 下一次明确继续指令。
+环境配置的预创建管理员认证、草稿/发布/下架、资源 CRUD、分类标签管理和受保护管理界面已完成；不增加普通用户认证。当前以可替换的进程内 Repository 验证闭环，不误报为持久化 CMS。
 
-## Phase 5：Storage and Import
+## Phase 5：Storage and Import（已完成）
 
-GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill 线索表单。
+GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill 线索表单已完成。导入仅生成固定 Commit 的受限预览，文件与线索使用可替换的进程内开发适配器；不误报为数据库、对象存储或自动发布。当前停在 Phase 5 与 Phase 6 之间，等待 Neil Bauman 下一次明确继续指令。
 
 ## Phase 6：Search and Discovery
 
