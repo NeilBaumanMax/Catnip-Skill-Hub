@@ -241,3 +241,14 @@ Phase 0 应用脚手架的安装、lint、typecheck、build 和 Git 差异门禁
 ### 下一步
 
 停止施工并向 Neil Bauman 汇报 Phase 0。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 1 Public Web。
+
+## 2026-07-28 18:43 CST / Phase 0 / 应用 Foundation Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`594639767d947e93de0a1556f9d640b7c9510f6f`。
+- 开发前备份：`backup/pre-phase0-app-scaffold-20260728-1832`，已 push 且远端指向开发前基线。
+- Phase 0 应用 Foundation 提交：`35cad34fa2f9c79a120368c896d20eef09dcc4f0`。
+- main push：成功；远端 `refs/heads/main` 已核验指向该提交。
+- push 后工作区：干净。
+- 推荐回滚：`git revert 35cad34fa2f9c79a120368c896d20eef09dcc4f0`，随后执行 docs-only 结构检查；恢复应用后执行 `npm run lint`、`npm run typecheck`、`npm run build`。
+- 本状态回写将形成独立文档提交并正常 push；应用功能基线仍为上述 Phase 0 提交。

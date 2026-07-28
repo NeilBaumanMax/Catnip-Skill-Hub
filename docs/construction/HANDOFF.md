@@ -210,3 +210,16 @@ Phase 0 Foundation 已完成：仓库与文档治理、产品/架构边界、品
 
 - npm 安装报告的漏洞与 allowScripts 警告尚待后续安全审阅；不得直接执行 breaking-change 自动修复。
 - 下一轮不得越过 Phase 1，也不得提前接数据库、认证、下载或安装服务。
+
+## 2026-07-28 18:43 CST / Phase 0 / 应用 Foundation Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`594639767d947e93de0a1556f9d640b7c9510f6f`
+- 开发前备份：`backup/pre-phase0-app-scaffold-20260728-1832`，已 push
+- Phase 0 应用提交：`35cad34fa2f9c79a120368c896d20eef09dcc4f0`，已 push 到 main
+- 应用提交 push 后工作区：干净
+- 当前状态：Phase 0 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 1
