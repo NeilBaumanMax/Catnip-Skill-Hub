@@ -288,3 +288,16 @@ Phase 1 Public Web 已完成：静态公共首页、文字品牌、分类胶囊�
 - 详情路由建立前卡片预留链接不可用；搜索框是明确禁用的后续能力占位。
 - npm 安全警告需专项评估，不得未经审阅直接执行 breaking-change 自动修复。
 - 下一轮不得越过 Phase 2，不得提前实现下载、安装、后台、数据库或认证。
+
+## 2026-07-28 19:17 CST / Phase 1 / Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`
+- 备份分支：`backup/pre-phase1-public-web-20260728-1853`，已 push 且远端已核验
+- Phase 1 Public Web 提交：`6ccf0f1d57030a46e2c932e702eb677f54396933`，已 push 到 main
+- 功能提交 push 后工作区：干净
+- 当前状态：Phase 1 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 2

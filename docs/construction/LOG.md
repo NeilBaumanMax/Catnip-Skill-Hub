@@ -343,3 +343,14 @@ Phase 1 工程门禁和静态产品边界门禁最终满足；中间构建失败
 ### 下一步
 
 停止施工并向 Neil Bauman 汇报 Phase 1。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 2 Skill Domain。
+
+## 2026-07-28 19:17 CST / Phase 1 / Public Web Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`8d7f2d0b4abe330bea44783b4bc69e50c2676a5b`。
+- 开发前备份：`backup/pre-phase1-public-web-20260728-1853`，已 push；远端指向开发前基线。
+- Phase 1 Public Web 提交：`6ccf0f1d57030a46e2c932e702eb677f54396933`。
+- main push：成功；远端 `refs/heads/main` 已核验指向该提交。
+- push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert 6ccf0f1d57030a46e2c932e702eb677f54396933`，随后执行 `npm run lint`、`npm run typecheck`、`npm run build` 和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 1 功能基线仍为上述 Public Web 提交。
