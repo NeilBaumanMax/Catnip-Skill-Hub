@@ -709,3 +709,14 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 ### 下一步
 
 停止施工并向 Neil Bauman 汇报 Phase 4。只有收到下一次明确继续指令后，才可按新一轮门禁进入 Phase 5 Storage and Import。
+
+## 2026-07-28 23:28 CST / Phase 4 / Git 状态回写
+
+- 当前分支：main。
+- 开发前基线：`c0ccd193c9a343cf101e5fe559251157d260bcad`。
+- 开发前备份：`backup/pre-phase4-admin-cms-20260728-2307`，已 push；远端核验仍指向开发前基线。
+- Phase 4 功能提交：`127fe0ae7188298633cde7b22654922c1a3e7798`。
+- main push：成功；远端 `refs/heads/main` 已核验指向功能提交。
+- 功能提交 push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert 127fe0ae7188298633cde7b22654922c1a3e7798`，随后执行 npm test、lint、typecheck、build、认证/管理边界检查和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 4 功能基线仍为上述功能提交。
