@@ -622,3 +622,16 @@ Phase 5 Storage and Import 已完成：安全 GitHub/SKILL.md 只读预览、ZIP
 - 上传在应用层限制到 ZIP 25 MB、图片 8 MB，但生产入口仍需配置反向代理/平台请求体上限。
 - npm 仍报告 12 个 high 漏洞和四个 allowScripts 待审项；不得直接执行 breaking-change 自动修复。
 - 下一轮不得越过 Phase 6，不得提前接 PostgreSQL、Drizzle、对象存储或部署栈。
+
+## 2026-07-29 00:08 CST / Phase 5 / Git 状态回写
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`
+- 备份分支：`backup/pre-phase5-storage-import-20260728-2343`，已 push 且远端核验
+- Phase 5 功能提交：`e82f54fff45b580ced8d6703b628738a06062e26`，已 push 到 main
+- 功能提交 push 后工作区：干净
+- 当前状态：Phase 5 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 6

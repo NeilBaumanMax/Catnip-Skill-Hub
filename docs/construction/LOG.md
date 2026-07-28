@@ -805,3 +805,16 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 ### 下一步
 
 本轮完成 Git 收尾后停止。收到 Neil Bauman 下一次明确继续指令，才可按新备份门禁进入 Phase 6 Search and Discovery。
+
+## 2026-07-29 00:08 CST / Phase 5 / Git 状态回写
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`ca257f9fbf34e6c94091cfc7db603eb5623c889f`。
+- 开发前备份：`backup/pre-phase5-storage-import-20260728-2343`，已 push；远端核验指向开发前基线。
+- Phase 5 功能提交：`e82f54fff45b580ced8d6703b628738a06062e26`。
+- main push：成功；远端 `refs/heads/main` 已核验指向功能提交。
+- 功能提交 push 后工作区：干净。
+- 当前不需要回滚；推荐回滚为 `git revert e82f54fff45b580ced8d6703b628738a06062e26`，随后执行 npm test、lint、typecheck、build、导入/存储/推荐边界检查和 `git diff --check`。
+- 本状态回写将形成独立文档提交并正常 push；Phase 5 功能基线仍为上述功能提交。
