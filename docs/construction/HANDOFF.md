@@ -912,3 +912,74 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 局域网入口是明文 HTTP 且 macOS 防火墙关闭，不在不可信网络使用，不设置路由器端口转发，不启用管理员真实秘密。
 - 本机私网 IP 可能随 DHCP 改变；变化时用既有安全脚本切换，不使用 `0.0.0.0`。
 - 服务器风险只是记录并暂停，并未解决；任何恢复部署必须重新获得明确指令和完成独立门禁。
+
+## 2026-07-30 02:21 CST / Public Web Apple UI 重设计文档 / 完成交接
+
+### 当前状态
+
+当前位于 `frontend/visual-optimization`。Neil Bauman 已授权推翻旧公共前端并采用 Apple UI 效果，但要求先写文档、汇报后再施工。Spatial Skill Gallery 方向、产品事实、设计 seed 和 Stage A 至 G 施工计划已经完成；真实页面、CSS、组件、依赖和运行配置仍未修改。服务器部署继续暂停。
+
+### 本轮完成
+
+- 新增 `PRODUCT.md`、seed `DESIGN.md` 和 `docs/construction/FRONTEND_REDESIGN_PLAN.md`。
+- 完成现有首页、详情、推荐页及全局 CSS 的源代码审计，明确保留、退役和不改变内容。
+- 首页定为 Experience，详情定为 Read 加 Operate，推荐表单定为 Operate；设计参数为 `7 / 5 / 5`。
+- 定义系统字体、单一 mint UI 强调色、有限材质、真实 Skill 图像、物理但克制的动效和完整可访问性/性能门禁。
+- 远端备份成功；45 项测试、lint、typecheck、db:check 和获准环境 build 成功；首次 build 权限失败已记录。
+
+### 未完成
+
+- 没有公共前台代码或视觉修改；没有安装 UI/动效/图标依赖。
+- 浏览器运行时没有可用实例，桌面/平板/移动截图、计算样式和视觉基线未完成。
+- 真实 Skill artwork 与来源清单未完成，不能把现有 CSS 假封面当正式素材。
+- Apple UI 的响应式、动效、浅深色、无障碍和性能没有实现或验收。
+- 服务器部署、生产漏洞、快照/异机备份、amd64 适配仍暂停且未解决。
+
+### 下次优先任务
+
+1. 等待 Neil Bauman 明确继续，不主动开始 UI 施工。
+2. 收到继续后，为 Stage A 追加 DEV_PROGRESS 和 01-public-web 开工计划并 push 新远端备份。
+3. 恢复浏览器实例，采集首页、详情、推荐页在桌面和移动端的视觉基线与 Skill artwork 清单，完成后停下汇报。
+
+### 必读文档
+
+按 `AGENTS.md` 十项顺序读取，并在公共前台施工前加读 `PRODUCT.md`、`DESIGN.md` 和 `docs/construction/FRONTEND_REDESIGN_PLAN.md`。按需读取 `docs/deployment/SERVER_DEPLOYMENT.md` 只用于确认禁止边界，不恢复部署。
+
+### 关键文件
+
+- `PRODUCT.md`
+- `DESIGN.md`
+- `docs/construction/FRONTEND_REDESIGN_PLAN.md`
+- `src/app/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/recommend/page.tsx`
+- `src/app/globals.css`
+- `src/app/_components/skill-actions.tsx`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run db:check`：成功。
+- `npm run build`：受限环境首次失败，获准环境同命令复测成功。
+- 浏览器视觉基线：未建立，原因是没有可用浏览器实例；不得写成通过。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：`frontend/visual-optimization`
+- 开发前基线：`50ed7dd0d2e4120182a98f55fd471969ebe99b69`
+- 备份分支：`backup/pre-apple-ui-plan-20260730-0214`
+- 最新提交：Git 收尾后回写
+- 已 push：备份已 push；文档提交待 Git 收尾
+- 工作区状态：本轮文档待提交；用户未跟踪文件保持原样且排除在提交外
+
+### 风险提醒
+
+- 下一轮不能跳过 Stage A 直接重写生产 UI，也不能把源代码审计冒充浏览器视觉审计。
+- 公共页和后台共用全局 CSS；后续必须先建立作用域或拆分策略，避免误伤后台。
+- 真实图像不足是当前设计质量的主要内容风险；不得继续用通用 blob 或假 UI 代替最终封面。
+- 局域网入口是明文 HTTP，管理员真实秘密继续禁用；不得恢复服务器写操作。

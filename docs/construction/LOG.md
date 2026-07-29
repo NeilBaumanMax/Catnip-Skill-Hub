@@ -1230,3 +1230,111 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - `http://192.168.120.107:3001/api/health` 返回 `process-memory`，首页返回 HTTP 200。
 - 热更新入口显式使用进程内数据；稳定 PostgreSQL/S3 容器入口继续为 `http://192.168.120.107:8080`。
 - 已在本地部署手册补充重启命令，并要求显式清空管理员变量；不得在明文开发入口启用真实管理员登录。
+
+## 2026-07-30 02:19 CST / Public Web Apple UI 重设计文档 / 测试失败记录
+
+### 失败命令
+
+- `npm run build`
+- 退出状态：1
+
+### 失败摘要
+
+Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时尝试创建内部进程并绑定端口，受当前文件系统/网络沙箱限制返回 `Operation not permitted (os error 1)`，随后以 `TurbopackInternalError: Failed to write app endpoint /page` 终止。
+
+### 原因判断
+
+本轮没有修改任何应用、CSS、依赖或构建配置；同类错误在前一轮相同环境中已由获准环境复测成功。当前证据指向执行环境权限，不指向本轮文档变更或现有代码回归。
+
+### 修复动作与复测计划
+
+- 不修改代码来规避环境门禁。
+- 在获准环境重新执行完全相同的 `npm run build`。
+- 若复测仍失败，停止收尾并进一步定位；不得把首次失败覆盖为成功。
+
+### 复测结果
+
+- 获准环境同一命令退出 0。
+- Next.js 16.2.12 Turbopack 编译、TypeScript、页面数据收集、9 个静态页面生成和路由输出均成功。
+- 失败判定关闭：环境权限问题已通过同命令复测，不需要代码修复。
+
+## 2026-07-30 02:21 CST / Public Web Apple UI 重设计 / 文档里程碑
+
+### 本轮计划回放
+
+读取项目施工文档和用户指定的 `design-taste-frontend`、Impeccable 与 Apple/animation skills，审计现有公共页面源代码，追加开工计划并复验 Git/SSH；成功 push 开发前备份后，只编写 Apple UI 重设计施工文档，执行全量回归、漂移检查、交接、提交和当前分支 push，停在 UI 施工前向 Neil Bauman 汇报。
+
+### 实际修改
+
+- 建立根 `PRODUCT.md`，把长期产品事实与视觉选择分离。
+- 建立 seed `DESIGN.md`，选定 Spatial Skill Gallery 视觉世界；明确这不是 Apple 品牌或资产复制。
+- 建立 `docs/construction/FRONTEND_REDESIGN_PLAN.md`，完成现状源代码审计、页面策略、设计系统、动效语法、Stage A 至 G、依赖、验收和回滚规则。
+- 修正 AGENTS、主要求、总体计划和测试指标中的当前工作流、审批停点、截图门禁、公共/后台隔离和服务器暂停事实。
+- 追加 DEV_PROGRESS、01-public-web、LOG 和 HANDOFF，保持历史不覆盖。
+- 本轮未修改 `src/`、package 文件、依赖、预览服务、数据库、部署或服务器。
+
+### 修改文件
+
+- `PRODUCT.md`
+- `DESIGN.md`
+- `AGENTS.md`
+- `docs/construction/FRONTEND_REDESIGN_PLAN.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/CONSTRUCTION_PLAN.md`
+- `docs/construction/TEST_METRICS.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- `npm test`：成功，45/45。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run db:check`：成功。
+- `npm run build`：受限环境首次失败；获准环境同命令复测成功。
+- `git diff --check`：提交前复核成功后方可提交。
+- 远端备份：`backup/pre-apple-ui-plan-20260730-0214` 已成功 push 并核验指向基线 `50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
+
+### 测试日志
+
+- 首次 build 的端口权限失败、原因判断、修复动作和成功复测保留在本轮前一条记录中。
+- 其他自动命令首次执行成功，无需修复。
+- 浏览器控制运行时返回无可用浏览器实例，因此没有截图、计算样式、真实断点或视觉通过记录。
+
+### 测试指标判断
+
+本轮文档变更没有引发应用回归，现有 45 项行为测试、lint、类型、数据库 schema 和生产构建基线成立。Apple UI 的视觉、动效、响应式、无障碍和性能尚未实现或通过；Stage A 必须先取得浏览器基线，之后每个可见 Stage 使用附加门禁验收。
+
+### 文档漂移检查
+
+- 将“等待具体视觉指令”的旧状态修正为“Apple UI 方向和施工计划已确定，但代码等待本轮汇报后的明确继续”。
+- 为原施工计划补充不改变既有 Phase 的独立公共前台替换工作流，避免误写成重新执行 Phase 1 或恢复 Phase 7 服务器施工。
+- 补充视觉测试、后台样式隔离和浏览器不可用停点；没有把源代码审计写成截图审计。
+- `PRODUCT.md`、`DESIGN.md`、重设计计划和产品需求对 Skill 主角、首页快速见内容、案例从属、下载/安装、权限、品牌资产约束一致。
+- 管理员为 Neil Bauman，GitHub 用户为 NeilBaumanMax，品牌为 Catnip 薄荷猫，Remote 为指定 SSH 地址；未发现其他负责人姓名、真实秘密、正式 Logo/吉祥物、服务器写操作或应用代码越界。
+- 用户未跟踪的 `.agents/`、`.codex/` 和 `skills-lock.json` 未修改、未暂存、未提交。
+
+### GitHub 状态
+
+- 当前分支：`frontend/visual-optimization`。
+- 开发前基线：`50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
+- 备份分支：`backup/pre-apple-ui-plan-20260730-0214`，已成功 push。
+- 文档提交与当前分支 push：Git 收尾后回写。
+
+### 回滚判断
+
+当前不需要回滚。若撤销本轮文档里程碑，优先 `git revert <本轮文档提交>`；开发前状态由已推送备份分支保留。回滚后复测 unit、lint、typecheck、build、db:check 和 `git diff --check`。
+
+### 当前风险
+
+- 浏览器实例不可用，渲染基线和视觉证据尚缺。
+- 演示目录缺乏足够真实 Skill artwork，图片驱动设计不能依赖继续伪造 CSS 封面。
+- 公共页与后台共用 `globals.css`，后续整体修改存在样式污染风险。
+- View Transitions、透明材质和可能的手势交互仍需浏览器、性能和兼容性验证。
+- 局域网 HTTP、服务器部署和生产依赖风险保持原状态，未被本轮解决或扩大。
+
+### 下一步
+
+完成 Git 收尾后停止并向 Neil Bauman 汇报。只有收到明确继续，才为 Stage A 另开闭环，恢复浏览器能力并采集桌面/移动基线和资产清单；不得直接修改生产 UI。

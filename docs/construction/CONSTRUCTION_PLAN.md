@@ -36,6 +36,12 @@ GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill
 
 当前先在 `frontend/visual-optimization` 专用分支优化前端，通过本地局域网入口实时验收。未来服务器施工仍属于 Phase 7，必须重新开工并依次完成依赖修复、多架构验证、云快照或明确批准的替代回滚、既有站点异机备份、资源与服务托管加固、隔离部署、旧站回归和新站验收。
 
+## Public Web Apple UI 替换式重设计（当前独立工作流，方案已确定，代码待批准）
+
+本工作流不新增产品 Phase，也不回退已完成的 Phase 1 至 Phase 7 功能。它只替换公共前台的视觉和交互表达，保持领域、下载、安装、数据、认证、统计和部署边界不变。选定方向、现状审计、Stage A 至 G、测试和回滚门禁见 `docs/construction/FRONTEND_REDESIGN_PLAN.md`；根产品事实见 `PRODUCT.md`，种子设计系统见 `DESIGN.md`。
+
+当前停点是文档汇报。Neil Bauman 明确继续后，先执行 Stage A 的浏览器桌面/移动视觉基线与资产清单，再按阶段施工；每个阶段完成后停下汇报，不连续越过多个阶段。管理员后台和服务器部署不属于本工作流。
+
 ## 层文件映射说明
 
 层进度文件名沿既定结构保留：`05-search-discovery.md` 跟踪 Search/Discovery（路线 Phase 6），`06-storage-import.md` 跟踪 Storage/Import（路线 Phase 5）。阶段编号以本计划标题为准。

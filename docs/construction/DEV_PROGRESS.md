@@ -898,3 +898,80 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 当前结论
 
 服务器部署讨论已完整落盘并暂停。完成 Git 收尾后创建并推送 `frontend/visual-optimization`，停在不修改前端代码的干净起点，等待 Neil Bauman 的具体前端修改指令。
+
+## 2026-07-30 02:14 CST / Public Web Apple UI 重设计 / 文档开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新指令，先完成公共前台 Apple 风格重设计的产品事实、设计方向、实施阶段、动效边界、测试门禁和回滚方案，只交付施工文档并汇报，不修改页面、样式、组件、依赖或运行配置；获得 Neil Bauman 后续明确批准后，才进入真实前端施工。
+
+### 涉及层
+
+- 公共前台层：首页、Skill 详情页、推荐 Skill 表单和共享公共导航的后续重设计范围。
+- 设计系统层：产品事实、视觉语言、空间材质、字体、色彩、形状和动效语法。
+- 施工治理层：分阶段验收、视觉基线、无障碍、性能、测试、文档漂移和 Git 回滚规则。
+- 明确排除：管理员后台、服务器部署、数据库、下载与安装领域逻辑、正式 Logo 和正式吉祥物。
+
+### 当前仓库状态
+
+- 当前分支：`frontend/visual-optimization`。
+- 基线提交：`50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- SSH 已复验为 `NeilBaumanMax`；Git 提交身份为 Neil·Baumann `<2091760192@qq.com>`。
+- 工作区没有已跟踪改动；存在用户未跟踪的 `.agents/`、`.codex/` 和 `skills-lock.json`，本轮不覆盖、不暂存、不提交。
+- 当前热更新预览与稳定容器入口保持不变；本轮不重启服务。
+- 浏览器控制运行时当前没有可用浏览器实例，因此尚未取得桌面和移动端截图基线；该项列为真实施工前置门禁，不虚报视觉审计完成。
+
+### 计划修改
+
+- 创建根目录 `PRODUCT.md`，固化可复用产品事实、用户、约束、证据状态和品牌资产边界。
+- 创建根目录 `DESIGN.md`，以种子设计系统形式记录选定的 Spatial Skill Gallery 视觉世界，不把未实现的数值写成既有事实。
+- 创建 `docs/construction/FRONTEND_REDESIGN_PLAN.md`，记录现状审计、保留与退役项、页面模式、实施分段、动效和测试门禁。
+- 修正 AGENTS、主施工要求、总体计划、测试指标和交接中的当前暂停点；追加本层进度和本轮日志。
+- 全部文档明确：本轮只完成方案，前端实现必须等待 Neil Bauman 明确继续。
+
+### 测试计划
+
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `npm run db:check`
+- `git diff --check`
+- 身份、品牌、Remote、服务器暂停、Phase 边界、用户未跟踪文件和秘密漂移检查。
+- 文档互相引用及“计划状态不冒充已实现”检查。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：`frontend/visual-optimization`
+- 基线提交：`50ed7dd0d2e4120182a98f55fd471969ebe99b69`
+- 备份分支：`backup/pre-apple-ui-plan-20260730-0214`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+本轮只修改文档；如需撤销，优先 `git revert <本轮文档提交>`。开发前状态由远端备份分支保留。回滚后复测 unit、lint、typecheck、build、db:check 和 `git diff --check`，并确认用户未跟踪文件仍未被纳入版本控制。
+
+## 2026-07-30 02:21 CST / Public Web Apple UI 重设计 / 文档完成记录
+
+### 完成范围
+
+- 创建 `PRODUCT.md`，固化目标用户、核心任务、范围、证据状态、品牌资产和运行约束。
+- 创建 seed `DESIGN.md`，选定 Spatial Skill Gallery，规定单一 mint UI 强调色、系统中文无衬线字体、有限材质、编辑式网格、图像优先和克制物理动效。
+- 创建 `docs/construction/FRONTEND_REDESIGN_PLAN.md`，完成源代码现状审计、保留/退役/不改变边界、页面模式、Stage A 至 G、测试、依赖和回滚计划。
+- 修正 AGENTS、主施工要求、总体计划和测试指标，使 Apple UI 文档停点、浏览器截图前置门禁、后台隔离和服务器暂停一致。
+- 没有修改页面、CSS、组件、依赖、后端、运行配置或服务器；没有生成正式 Logo、吉祥物或 Skill 图片。
+
+### 验证状态
+
+- `npm test`：45/45 成功。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`：成功。
+- `npm run build`：受限环境首次因 Turbopack 内部端口权限失败；完整记录后在获准环境使用同一命令复测成功。
+- `git diff --check`、文档存在性、身份/品牌/Remote/秘密/应用代码零修改和远端备份核验成功。
+- 浏览器实例仍不可用，未执行或声称截图视觉验收；该项保留为 Stage A 前置门禁。
+
+### 当前结论
+
+Apple UI 重设计文档里程碑完成。Git 收尾并成功 push 后停下汇报，等待 Neil Bauman 明确继续；下一轮不得跳过 Stage A 直接重写生产前端。
