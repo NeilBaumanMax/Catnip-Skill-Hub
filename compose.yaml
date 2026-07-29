@@ -1,0 +1,148 @@
+name: catnip-skill-hub
+
+services:
+  postgres:
+    image: catnip-postgres:18.4-alpine3.23
+    build:
+      context: .
+      dockerfile: deploy/postgres/Dockerfile
+    environment:
+      POSTGRES_DB: catnip
+      POSTGRES_USER: catnip
+      POSTGRES_PASSWORD: ${CATNIP_POSTGRES_PASSWORD:?CATNIP_POSTGRES_PASSWORD is required}
+    volumes:
+      - catnip_postgres_data:/var/lib/postgresql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catnip -d catnip"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  seaweedfs:
+    image: catnip-seaweedfs:4.29-alpine3.23-arm64
+    build:
+      context: .
+      dockerfile: deploy/seaweedfs/Dockerfile
+    command: mini -dir=/data
+    environment:
+      AWS_ACCESS_KEY_ID: ${CATNIP_S3_ACCESS_KEY_ID:?CATNIP_S3_ACCESS_KEY_ID is required}
+      AWS_SECRET_ACCESS_KEY: ${CATNIP_S3_SECRET_ACCESS_KEY:?CATNIP_S3_SECRET_ACCESS_KEY is required}
+      S3_BUCKET: catnip-assets
+    volumes:
+      - catnip_seaweed_data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:9333/cluster/status"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  migrate:
+    build:
+      context: .
+      target: migrator
+    environment:
+      DATABASE_URL: postgres://catnip:${CATNIP_POSTGRES_PASSWORD:?CATNIP_POSTGRES_PASSWORD is required}@postgres:5432/catnip
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+
+  app:
+    build:
+      context: .
+      target: runner
+    environment:
+      NODE_ENV: production
+      CATNIP_PERSISTENCE_MODE: postgres
+      DATABASE_URL: postgres://catnip:${CATNIP_POSTGRES_PASSWORD:?CATNIP_POSTGRES_PASSWORD is required}@postgres:5432/catnip
+      CATNIP_S3_ENDPOINT: http://seaweedfs:8333
+      CATNIP_S3_REGION: us-east-1
+      CATNIP_S3_BUCKET: catnip-assets
+      CATNIP_S3_ACCESS_KEY_ID: ${CATNIP_S3_ACCESS_KEY_ID:?CATNIP_S3_ACCESS_KEY_ID is required}
+      CATNIP_S3_SECRET_ACCESS_KEY: ${CATNIP_S3_SECRET_ACCESS_KEY:?CATNIP_S3_SECRET_ACCESS_KEY is required}
+      CATNIP_S3_FORCE_PATH_STYLE: "true"
+      CATNIP_ADMIN_EMAIL: ${CATNIP_ADMIN_EMAIL:-}
+      CATNIP_ADMIN_PASSWORD_HASH: ${CATNIP_ADMIN_PASSWORD_HASH:-}
+      CATNIP_SESSION_SECRET: ${CATNIP_SESSION_SECRET:?CATNIP_SESSION_SECRET is required}
+      CATNIP_GITHUB_TOKEN: ${CATNIP_GITHUB_TOKEN:-}
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      seaweedfs:
+        condition: service_healthy
+    networks:
+      - backend
+      - edge
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  integration:
+    profiles: ["test"]
+    build:
+      context: .
+      target: tester
+    environment:
+      CATNIP_DATABASE_TEST_URL: postgres://catnip:${CATNIP_POSTGRES_PASSWORD:?CATNIP_POSTGRES_PASSWORD is required}@postgres:5432/catnip
+      CATNIP_S3_ENDPOINT: http://seaweedfs:8333
+      CATNIP_S3_REGION: us-east-1
+      CATNIP_S3_BUCKET: catnip-assets
+      CATNIP_S3_ACCESS_KEY_ID: ${CATNIP_S3_ACCESS_KEY_ID:?CATNIP_S3_ACCESS_KEY_ID is required}
+      CATNIP_S3_SECRET_ACCESS_KEY: ${CATNIP_S3_SECRET_ACCESS_KEY:?CATNIP_S3_SECRET_ACCESS_KEY is required}
+      CATNIP_S3_FORCE_PATH_STYLE: "true"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      seaweedfs:
+        condition: service_healthy
+    networks:
+      - backend
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
+
+  caddy:
+    image: catnip-caddy:2.11.4-alpine3.23
+    build:
+      context: .
+      dockerfile: deploy/caddy/Dockerfile
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - edge
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  backend:
+    internal: true
+  edge:
+
+volumes:
+  catnip_postgres_data:
+    name: catnip_postgres_data
+  catnip_seaweed_data:
+    name: catnip_seaweed_data

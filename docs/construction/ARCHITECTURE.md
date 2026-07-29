@@ -2,9 +2,9 @@
 
 ## 技术基线
 
-当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储、推荐线索、发现查询和统计分别位于 `src/lib/import`、`src/lib/storage`、`src/lib/recommendations`、`src/lib/discovery` 与 `src/lib/analytics`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。当前不接数据库、对象存储、外部搜索或分析供应商。
+当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储、推荐线索、发现查询和统计分别位于 `src/lib/import`、`src/lib/storage`、`src/lib/recommendations`、`src/lib/discovery` 与 `src/lib/analytics`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。
 
-后续目标技术包括 PostgreSQL、Drizzle ORM、Docker Compose、可替换的 S3 兼容存储和仅管理员认证；这些不属于 Phase 0 依赖。
+Phase 7 本地运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 只向 `127.0.0.1:8080` 暴露应用。未启用该模式时仍保留进程内适配器用于单元测试和轻量开发。服务器部署与公网 HTTPS 尚未建立。
 
 ## 目录与职责
 
@@ -90,3 +90,14 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `src/lib/analytics` 声明四种事件和 Repository 端口，进程内适配器记录阅读、下载点击、安装复制和来源跳转；客户端只提交事件，不能提交绝对计数或任意指标名。
 - 详情页访问通过客户端轻量事件写入，首页和详情读取计数快照；写 API 强制同源且拒绝未知或未公开 slug。
 - 当前统计为匿名原始事件计数，不做 Cookie 追踪、唯一访客或去重保证；服务重启或多实例会丢失/分散。无数据库、搜索引擎、分析 SDK 或部署设施。
+
+## Phase 7 本地部署事实
+
+- `src/lib/data/db` 定义 Drizzle schema 与 postgres.js 连接；版本化 SQL 位于 `drizzle/`，迁移容器成功后应用才启动。
+- Skill、推荐线索与统计端口在持久模式下使用 PostgreSQL 适配器；统计增量使用数据库原子 upsert，公开首页、详情、下载与管理端读取同一运行时 Skill Repository。
+- `S3AssetStorage` 将文件元数据保存在 PostgreSQL、原始字节保存在 SeaweedFS S3，保持 Phase 5 的 `AssetStorage` 契约。
+- 本地镜像以 Alpine 3.23 为小型固定基础，从 Alpine 官方仓库安装 Node 24.17.0、PostgreSQL 18.4 与 Caddy 2.11.4；SeaweedFS 4.29 arm64 上游归档以固定 SHA-256 校验。该 SeaweedFS 镜像只用于当前 Apple Silicon 本地里程碑，服务器架构必须重新确认。
+- 长期进程实际以 UID 1001、Caddy 用户、UID 10001 和 PostgreSQL 用户运行；数据库/S3 无宿主端口，Caddy 只绑定回环地址。
+- `.env.local` 由脚本生成、权限为 `0600` 且被 Git 忽略；仓库只含空 `.env.example`。管理员邮箱和密码哈希为空时管理登录安全拒绝。
+- `scripts/backup-local.sh` 生成 PostgreSQL custom dump、SeaweedFS 归档与 manifest；恢复脚本有显式确认门禁。真实备份已在隔离数据库和临时卷恢复验证。
+- 当前完成的是本地生产式部署，不等于服务器、域名、公网 HTTPS、异机备份、监控或生产安全验收完成。

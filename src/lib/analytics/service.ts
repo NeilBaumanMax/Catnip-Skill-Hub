@@ -11,11 +11,11 @@ export class AnalyticsError extends Error {
 export class AnalyticsService {
   constructor(
     private readonly repository: AnalyticsRepository,
-    private readonly isPublicSkill: (slug: string) => boolean = (slug) => Boolean(getSkillBySlug(slug)),
+    private readonly isPublicSkill: (slug: string) => boolean | Promise<boolean> = (slug) => Boolean(getSkillBySlug(slug)),
   ) {}
 
   async get(slug: string): Promise<AnalyticsCounts> {
-    if (!this.isPublicSkill(slug)) throw new AnalyticsError("not_found", "Skill 不存在或未公开。");
+    if (!await this.isPublicSkill(slug)) throw new AnalyticsError("not_found", "Skill 不存在或未公开。");
     return this.repository.get(slug);
   }
 
@@ -25,7 +25,7 @@ export class AnalyticsService {
   }
 
   async record(slug: string, event: unknown): Promise<AnalyticsCounts> {
-    if (!this.isPublicSkill(slug)) throw new AnalyticsError("not_found", "Skill 不存在或未公开。");
+    if (!await this.isPublicSkill(slug)) throw new AnalyticsError("not_found", "Skill 不存在或未公开。");
     if (typeof event !== "string" || !ANALYTICS_EVENTS.includes(event as AnalyticsEvent)) {
       throw new AnalyticsError("invalid_event", "统计事件无效。");
     }

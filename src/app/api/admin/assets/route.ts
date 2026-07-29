@@ -1,5 +1,5 @@
 import { getRequestAdmin, isSameOriginMutation } from "@/lib/auth";
-import { assetService, AssetValidationError, MAX_ZIP_BYTES } from "@/lib/storage";
+import { assetPersistence, assetService, AssetValidationError, MAX_ZIP_BYTES } from "@/lib/storage";
 
 const MAX_MULTIPART_BYTES = MAX_ZIP_BYTES + 1024 * 1024;
 
@@ -9,7 +9,7 @@ function unauthorized() {
 
 export async function GET(request: Request) {
   if (!getRequestAdmin(request)) return unauthorized();
-  return Response.json({ assets: await assetService.list(), persistence: "process-memory" });
+  return Response.json({ assets: await assetService.list(), persistence: assetPersistence });
 }
 
 export async function POST(request: Request) {

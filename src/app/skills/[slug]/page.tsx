@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { SkillActions } from "@/app/_components/skill-actions";
 import { TrackedExternalLink, ViewTracker } from "@/app/_components/analytics-events";
 import { analyticsService } from "@/lib/analytics";
-import { getPublishedSkills, getRelatedSkills, getSkillBySlug } from "@/lib/domain/skills";
+import { runtimeSkillRepository } from "@/lib/data/skills";
 import { buildInstallCommandMatrix } from "@/lib/install";
 
 interface SkillPageProps {
@@ -17,17 +17,13 @@ const subtypeLabels = {
   editorial_pack: "编辑组合包",
 } as const;
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return getPublishedSkills().map((skill) => ({ slug: skill.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: SkillPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const skill = getSkillBySlug(slug);
+  const skill = await runtimeSkillRepository.findBySlug(slug);
 
-  if (!skill) return {};
+  if (!skill || skill.governance.publishStatus !== "published" || skill.governance.hidden) return {};
 
   return {
     title: `${skill.title} | Catnip Skill Hub`,
@@ -37,11 +33,15 @@ export async function generateMetadata({ params }: SkillPageProps): Promise<Meta
 
 export default async function SkillPage({ params }: SkillPageProps) {
   const { slug } = await params;
-  const skill = getSkillBySlug(slug);
+  const skill = await runtimeSkillRepository.findBySlug(slug);
 
-  if (!skill) notFound();
+  if (!skill || skill.governance.publishStatus !== "published" || skill.governance.hidden) notFound();
 
-  const relatedSkills = getRelatedSkills(skill);
+  const resources = await runtimeSkillRepository.list();
+  const relatedSkills = skill.relatedSlugs.flatMap((relatedSlug) => {
+    const related = resources.find((candidate) => candidate.slug === relatedSlug);
+    return related && related.governance.publishStatus === "published" && !related.governance.hidden ? [related] : [];
+  });
   const cover = skill.images.find((image) => image.kind === "cover");
   const installCommands = buildInstallCommandMatrix(skill);
   const counts = await analyticsService.get(skill.slug);

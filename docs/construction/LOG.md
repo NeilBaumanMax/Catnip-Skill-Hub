@@ -906,3 +906,84 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；推荐回滚为 `git revert dcce37226db251bbfd19714696ef0fcba1798177`，随后执行 npm test、lint、typecheck、build、搜索/筛选/推荐/统计边界检查和 `git diff --check`。
 - 本状态回写将形成独立文档提交并正常 push；Phase 6 功能基线仍为上述功能提交。
+
+## 2026-07-29 11:12 CST / Phase 7 / Local Deployment
+
+### 本轮计划回放
+
+按文档/Git 检查、开工计划、远端开发前备份、Docker 安装验收、持久化适配、镜像与 Compose、迁移、集成测试、备份恢复、重启验收和文档漂移检查执行。范围止于本地部署；未执行服务器、DNS、证书或公网发布。
+
+### 实际修改
+
+- 新增 PostgreSQL 18.4 / Drizzle 数据模型、首个版本化迁移与 Skill、推荐线索、统计持久化适配器；生产运行时从数据库读取公开目录并使用原子统计增量。
+- 新增 SeaweedFS 4.29 S3 兼容 StoragePort 适配器；管理员上传、下载和元数据通过现有服务边界持久化。
+- 新增固定 Alpine 3.23 构建的 PostgreSQL、SeaweedFS、Next.js 与 Caddy 镜像，Compose 编排、内部数据网络、回环代理入口、健康检查和非 root 运行。
+- 新增随机 `.env.local` 生成、数据库/对象数据备份恢复脚本、健康 API、集成测试和本地/服务器部署说明。
+- `next.config.ts` 启用 standalone 并关闭 `X-Powered-By`；未提交任何真实秘密。
+
+### 修改文件
+
+- 部署：`.dockerignore`、`Dockerfile`、`compose.yaml`、`deploy/`、`scripts/generate-local-env.mjs`、`scripts/backup-local.sh`、`scripts/restore-local.sh`。
+- 数据与存储：`drizzle.config.ts`、`drizzle/`、`src/lib/data/db/`、各 PostgreSQL Repository、`src/lib/storage/s3.ts` 及运行时适配文件。
+- 应用：健康 API、首页/详情/后台/下载路由的运行时 Repository 接入、`next.config.ts`。
+- 测试与文档：`tests/integration/persistence.test.ts`、package 文件、环境示例、README、部署手册和施工/交接文档。
+
+### 验证结果
+
+- 本地完整 Compose 栈运行健康；migration 退出 0，Caddy 只在 `127.0.0.1:8080` 暴露入口，PostgreSQL/S3 无宿主端口。
+- `/api/health` 返回 `{"status":"ok","persistence":"postgres-s3"}`；首页 200、包含 Catnip 文本与安全头且无 `X-Powered-By`。
+- Compose 内跨实例持久化测试 1/1 通过；停止/重启后十条 Skill 保留。
+- 有效备份 `backups/20260729-105916/` 创建成功；数据库恢复到隔离库并核验 10 Skill/5 public tables，对象归档恢复到隔离卷并核验关键文件与 188 个条目，临时目标已移除。
+
+### 测试日志
+
+- `npm ci`：成功；报告 16 个漏洞（4 moderate、12 high）和 6 个待批准安装脚本。未执行自动修复。
+- `npm audit --omit=dev --json`：未执行；授权审查因会向外部发送依赖清单而拒绝。本轮保留为明确风险，没有伪报审计完成。
+- `npm test`：42/42 通过。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`、shell 语法检查、`docker compose config --quiet` 与 `git diff --check`：成功。
+- 宿主 `npm run test:integration` 首次失败：受管沙箱禁止 tsx IPC pipe，报 `listen EPERM`；未改业务逻辑，改在 Compose tester 中运行，1/1 通过。
+- Docker 首次远端镜像拉取失败：认证端点超时；重试后又在默认 containerd 遇到较大 CloudFront blob 的 `httpReadSeeker ... EOF`。尝试 classic store 后重启出现 `Invalid virtual machine configuration`，立即恢复备份设置；最终用 Alpine 固定包与校验过的 arm64 SeaweedFS 产物本地构建，默认 containerd 下完整栈通过。
+- Alpine 构建首次失败：固定 `su-exec=0.2-r3` 不存在；核验仓库后改为 `0.3-r0` 并重建成功。
+- PostgreSQL 首启失败：临时密码文件权限不允许 postgres 用户读取；入口脚本将文件归属改为 postgres 后通过。
+- migration 首次失败：`pg_hba.conf` 未允许 Compose 内网；加入幂等 `host all all all scram-sha-256` 后迁移通过。
+- SeaweedFS 首启失败：非 root 用户无权写 `/data`；入口先以 root 修正卷归属，再用 `su-exec seaweed` 降权，健康检查通过。
+- Caddy/容器创建曾因 Docker runtime 与 `Documents` bind mount 卡住；清理卡住的运行时任务并把 Caddyfile COPY 入镜像、备份恢复改用 stdout/`docker cp` 后复测稳定。
+- 首次备份只生成 `backups/20260729-105621/postgres.dump` 后因对象卷 bind mount 卡住失败；保留该不完整目录作为失败证据。修复后 `backups/20260729-105916/` 三文件完整并完成恢复演练。
+- 宿主 `npm run build` 首次在沙箱因 Turbopack 端口权限 `EPERM` 失败；同一命令在授权环境成功。关闭 powered-by header 后容器内生产构建再次成功；收尾仍执行最终授权复测。
+- 收尾组合命令中的宿主 `npm test` 再次因同一 tsx IPC `listen EPERM` 失败，Docker socket 与 `127.0.0.1:8080` 也被沙箱拒绝；授权环境原样复跑后 42/42、Drizzle check、生产 build、Compose 状态和 HTTP 检查全部成功。
+- 最终 Compose 集成复测：1/1 通过；`docker top` 核验 app UID 1001、Caddy UID 100、SeaweedFS UID 10001、PostgreSQL UID 70，均非 root。
+
+### 测试指标判断
+
+迁移、跨实例 PostgreSQL/S3 持久化、非 root、网络隔离、健康检查、本地代理、秘密忽略、备份与隔离恢复均有真实证据。当前只证明单机 Docker Desktop；不证明公网生产、容量、灾备或供应链漏洞清零。
+
+### 文档漂移检查
+
+- 已核对 ARCHITECTURE、LAYER_CONTRACT、CONSTRUCTION_PLAN、TEST_METRICS、GITHUB_ROLLBACK、WORKFLOW 与 PRODUCT_REQUIREMENTS。
+- 修正早期把 classic image store 误写为最终方案的漂移；最终事实是恢复默认 containerd 并采用本地 Alpine 构建。
+- 当前管理员为 Neil Bauman、GitHub 用户为 NeilBaumanMax、品牌为 Catnip 薄荷猫、Remote 为指定 SSH 地址；未发现其他负责人姓名、真实秘密、正式 Logo/吉祥物或普通用户认证。
+- 未把本地部署误报为服务器、公网 HTTPS、异机备份或监控完成。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 当前分支：main。
+- 开发前基线：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`。
+- 开发前备份：`backup/pre-phase7-local-deployment-20260729-0913`，已 push 且远端核验指向基线。
+- 最终提交与 main push：待 Git 收尾回写。
+
+### 回滚判断
+
+当前不需要回滚。交付后如需撤销代码，优先 `git revert <Phase-7-本地部署提交>`；数据不要随代码盲目回退，先在隔离目标验证 `backups/20260729-105916/`。回滚后执行 unit、lint、typecheck、build、db:check、Compose 配置、迁移、集成测试和 HTTP 健康检查。
+
+### 当前风险
+
+- npm 安装仍报告 4 moderate、12 high 与 6 个待批准安装脚本；精确 audit 未获准，不能声称依赖风险已清零。
+- 本地备份位于同一磁盘，不能抵御磁盘故障；管理员登录尚未配置真实秘密，当前安全禁用。
+- 当前 SeaweedFS 产物固定为 arm64；服务器若为 amd64 必须在新施工轮次选择并校验对应产物。
+- 公网服务器、域名、DNS、证书、防火墙、限流、监控和异机备份均未完成。
+
+### 下一步
+
+Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后，再为 Phase 7 服务器里程碑创建新开工计划和远端备份。

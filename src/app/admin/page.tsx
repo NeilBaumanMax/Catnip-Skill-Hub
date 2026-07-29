@@ -27,9 +27,9 @@ export default async function AdminPage() {
         </div>
       </header>
       <section className="admin-intro">
-        <p className="eyebrow">Admin CMS · Phase 5</p>
+        <p className="eyebrow">Admin CMS · Phase 7</p>
         <h1>Skill、来源与文件管理</h1>
-        <p>管理数据和文件仍使用进程内开发适配器；服务重启后恢复基线，数据库与对象存储将在部署阶段接入。</p>
+        <p>本地部署使用 PostgreSQL 与 S3 兼容对象存储；未启用持久化环境变量时仍回退到进程内开发适配器。</p>
       </section>
       <AdminDashboard initialSkills={await adminSkillService.list()} />
       <ImportStoragePanel

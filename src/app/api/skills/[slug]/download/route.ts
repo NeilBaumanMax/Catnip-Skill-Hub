@@ -1,4 +1,4 @@
-import { getSkillBySlug } from "@/lib/domain/skills";
+import { runtimeSkillRepository } from "@/lib/data/skills";
 import { buildSkillArchive, SkillDownloadError } from "@/lib/downloads";
 
 interface DownloadRouteContext {
@@ -9,9 +9,9 @@ export const runtime = "nodejs";
 
 export async function GET(request: Request, { params }: DownloadRouteContext) {
   const { slug } = await params;
-  const skill = getSkillBySlug(slug);
+  const skill = await runtimeSkillRepository.findBySlug(slug);
 
-  if (!skill) {
+  if (!skill || skill.governance.publishStatus !== "published" || skill.governance.hidden) {
     return Response.json({ error: "Skill 不存在。" }, { status: 404 });
   }
 

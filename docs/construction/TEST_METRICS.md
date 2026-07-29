@@ -73,7 +73,7 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 
 当前验收只证明进程内开发适配器及边界，不证明文件/线索持久化、多实例限流、生产对象存储、GitHub 私有仓库访问或部署完成。
 
-## Phase 6 Search and Discovery 门禁（当前基线）
+## Phase 6 Search and Discovery 门禁
 
 除既有全部工程与产品门禁外，还必须满足：
 
@@ -85,6 +85,20 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - `npm run build` 成功生成动态首页、新事件 API、既有静态详情及管理/下载/导入路由。
 
 当前验收只证明静态目录搜索、服务端推荐和进程内匿名计数，不证明全文搜索质量、抗机器人、唯一访客、持久化、多实例一致性或生产分析准确性。
+
+## Phase 7 Deployment 本地门禁（当前基线）
+
+除既有门禁外，本地部署必须满足：
+
+- `npm run db:check` 成功，空数据库迁移退出 0；PostgreSQL Repository 与统计增量跨实例持久化。
+- S3 兼容适配器真实完成写、读、列、删，文件字节与元数据跨实例一致。
+- `docker compose config --quiet` 成功；迁移一次性成功，PostgreSQL、对象存储和应用健康，反向代理只绑定 `127.0.0.1:8080`，数据库与 S3 不暴露宿主端口。
+- 应用、代理、对象存储与数据库进程使用各自非 root 身份；客户端无秘密，`.env.local` 权限为 `0600` 且被 Git 忽略。
+- `/api/health` 返回 `postgres-s3`；首页经代理返回 200、品牌文本和安全响应头，不暴露 `X-Powered-By`。
+- 服务停止并重启后数据仍在；数据库和对象卷各完成一次非破坏性的隔离恢复演练。
+- `npm test`、lint、typecheck、生产 build、集成测试、shell 语法和 `git diff --check` 全部通过。
+
+本门禁只证明当前 Mac Docker Desktop 的本地部署，不证明服务器、DNS、防火墙、公网 HTTPS、异机备份、告警或生产容量完成。
 
 ## 失败记录格式
 

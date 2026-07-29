@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 6：Search and Discovery 已完成，包含公开搜索、分类/标签筛选、治理字段控制的随机推荐和进程内基础统计。当前必须停下并向 Neil Bauman 汇报；只有收到下一次明确继续指令后，才可进入 Phase 7，且仍需先执行开工计划和开发前备份。
+Phase 7：本地部署里程碑已完成，包含 Docker、PostgreSQL/Drizzle、S3 兼容存储、Compose、Caddy、本地备份恢复和安全验收。服务器、域名、公网 HTTPS、异机备份与生产监控仍未完成；当前必须停下并向 Neil Bauman 汇报，收到明确继续指令及服务器目标信息后才可继续 Phase 7 服务器部署。
 
 ## 禁止事项
 
@@ -42,4 +42,4 @@ Phase 6：Search and Discovery 已完成，包含公开搜索、分类/标签筛
 - 不提交密钥、Token、密码、SSH 私钥、真实凭据、`.env`、构建产物或依赖目录。
 - 不使用其他姓名替代 Neil Bauman 作为管理员、负责人或产品所有者。
 - 不伪造测试、远端备份、push 或完成状态。
-- 未收到 Neil Bauman 的下一次明确继续指令前，不开始 Phase 7 或后续功能。
+- 未收到 Neil Bauman 的下一次明确继续指令和服务器目标信息前，不执行公网部署、DNS、HTTPS、防火墙或生产秘密配置。

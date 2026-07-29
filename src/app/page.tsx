@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { analyticsService } from "@/lib/analytics";
 import { discoverSkills } from "@/lib/discovery";
+import { runtimeSkillRepository } from "@/lib/data/skills";
 import { MAIN_CATEGORIES } from "@/lib/domain/skills";
 
 interface HomeProps {
@@ -24,11 +25,12 @@ function discoveryHref(filters: { query?: string; category?: string; tag?: strin
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
+  const resources = await runtimeSkillRepository.list();
   const discovery = discoverSkills({
     query: first(params.q),
     category: first(params.category),
     tag: first(params.tag),
-  });
+  }, Math.random, resources);
   const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
   return (

@@ -672,3 +672,85 @@ Phase 5 功能、边界与最终全量复测已完成，正处于 Git 收尾阶�
 ### 当前结论
 
 Phase 6 功能、边界和最终全量复测已完成，正处于 Git 收尾阶段。完成提交与 main push 后必须暂停，等待 Neil Bauman 明确指令再进入 Phase 7。
+
+## 2026-07-29 09:13 CST / Phase 7 / 本地部署开工计划
+
+### 本轮目标
+
+响应 Neil Bauman 的继续与本地优先指令，完成 Phase 7 的本地部署里程碑：安装并验收 Docker Desktop，建立 PostgreSQL/Drizzle 持久层、S3 兼容对象存储适配、Docker Compose、迁移、备份恢复、本地反向代理与安全验收。真实服务器、域名和公网 HTTPS 在服务器目标与权限明确后继续，不在本轮伪报完成。
+
+### 涉及层
+
+- 数据访问层：用 PostgreSQL/Drizzle 适配现有 Skill、推荐线索和统计端口，提供迁移与原子增量语义。
+- 存储层：以 S3 兼容适配器替换进程内文件状态，同时保留可测试端口和本地开发适配器。
+- 运行与部署层：Next.js 生产镜像、Compose 服务、数据库/对象存储健康检查、本地反向代理、备份恢复和安全配置。
+- 文档与测试层：部署运行手册、秘密配置边界、迁移/备份验证、容器健康与既有 42 项回归基线。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`，与 `origin/main` 一致且无领先/落后。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已认证为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：Neil·Baumann `<2091760192@qq.com>`。
+- Docker Desktop 4.84.0、Engine 29.6.2、Compose 5.3.1 已安装；默认 containerd 镜像存储保留。较大远端镜像的 CDN EOF 通过本地 Alpine 固定版本构建解决，`hello-world` 最终拉取与运行成功；不稳定的 classic 尝试已撤销。
+- 尚无服务器地址、域名、DNS、生产证书或服务器 SSH 权限；本轮仅建立和验收本地部署。
+
+### 计划修改
+
+- 先完成官方文档与依赖安全审计，选择有版本约束的 PostgreSQL、Drizzle、S3 兼容服务和反向代理镜像。
+- 为现有 Repository/Storage 端口增加持久化适配器与运行时选择，不把 ORM、对象存储或秘密暴露到 UI。
+- 建立版本化数据库 schema、迁移、种子/初始目录策略及原子统计增量。
+- 建立多阶段非 root Next.js 镜像、Compose、健康检查、命名卷、内部网络和本地反向代理。
+- 建立无真实值的环境模板、数据库与对象存储备份/恢复命令及本地部署说明。
+- 不执行真实服务器发布、不申请域名/证书、不提交真实管理员凭据或存储密钥。
+
+### 测试计划
+
+- `npm ci`
+- `npm audit --omit=dev` 与必要的依赖风险记录（不自动执行 breaking-change 修复）
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- Drizzle schema/migration 检查与数据库集成测试
+- `docker compose config`
+- Docker 镜像构建、Compose 启动、健康检查、本地 HTTP 访问、持久化重启和备份/恢复演练
+- `git diff --check` 与 Phase 7 文档漂移检查
+
+### GitHub 备份计划
+
+- GitHub 仓库：
+  NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：
+  git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`
+- 备份分支：`backup/pre-phase7-local-deployment-20260729-0913`
+- 备份 push 状态：成功；远端已核验指向基线
+
+### 回滚预案
+
+本轮交付后如需撤销，优先 revert Phase 7 本地部署提交；开发前 Phase 6 完成状态保存在远端备份分支。回滚后执行 npm test、lint、typecheck、build、数据库迁移/Repository 集成、Compose 配置与本地健康检查。数据库和对象卷恢复必须使用本轮记录的显式备份流程，不以删除卷作为默认回滚手段。
+
+## 2026-07-29 11:12 CST / Phase 7 / 本地部署完成记录
+
+### 完成范围
+
+- 建立 PostgreSQL 18.4、Drizzle schema/迁移、Skill/推荐线索/统计持久化适配器与运行时选择；初始迁移写入十条公开 Skill。
+- 建立 SeaweedFS 4.29 S3 兼容存储适配器，文件元数据与原始字节跨应用实例和容器重启保持一致。
+- 建立非 root Next.js standalone、迁移、集成测试、数据库、对象存储与 Caddy 镜像，以及内部 backend 网络和仅回环暴露的 edge 入口。
+- 建立安全随机本地环境生成、健康检查、数据库/对象卷备份恢复脚本和本地/服务器部署手册。
+- 完成真实备份、隔离数据库恢复、隔离对象卷恢复、服务停止/重启持久化和本地 HTTP 安全头验收。
+- 真实服务器、域名、DNS、公网 HTTPS、异机备份和生产监控未开始。
+
+### 验证状态
+
+- 既有 42 项单元测试、lint、typecheck、Drizzle check、生产构建与 Git 差异门禁通过。
+- Compose 配置有效；migration 退出 0，PostgreSQL、SeaweedFS 与 app 健康，Caddy 在 `127.0.0.1:8080` 提供 200 响应。
+- Compose 内 PostgreSQL/S3 跨实例集成测试 1/1 通过；重启后十条 Skill 保留。
+- 有效备份为 `backups/20260729-105916/`；数据库与对象数据均完成隔离恢复验证。
+
+### 当前结论
+
+Phase 7 本地部署里程碑完成。完成 Git 收尾后停止；服务器部署必须在 Neil Bauman 明确继续并提供服务器、域名、DNS 和权限信息后另开施工轮次。

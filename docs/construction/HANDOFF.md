@@ -717,3 +717,71 @@ Phase 6 Search and Discovery 已完成：公开搜索、分类/标签筛选、�
 - Phase 6 功能提交：`dcce37226db251bbfd19714696ef0fcba1798177`，已 push 到 main
 - 功能提交 push 后工作区：干净
 - 当前状态：Phase 6 完成并暂停，等待 Neil Bauman 下一次明确继续指令后进入 Phase 7
+
+## 2026-07-29 11:12 CST / Phase 7 本地部署 / 完成交接
+
+### 当前状态
+
+Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通过 `http://127.0.0.1:8080` 运行。当前必须暂停；下一轮仍属于 Phase 7 服务器里程碑，未获得服务器目标与权限前不得发布公网。
+
+### 本轮完成
+
+- Docker Desktop 4.84.0、Engine 29.6.2 与 Compose 5.3.1 已安装验收，保留默认 containerd。
+- PostgreSQL 18.4 / Drizzle 持久化、SeaweedFS 4.29 S3 存储、迁移、健康检查与生产运行时接入完成。
+- 非 root Next.js standalone、Caddy 回环代理、内部网络、持久卷和秘密边界完成。
+- 42 项单元测试与 1 项真实 PostgreSQL/S3 集成测试通过。
+- 完整本地备份、隔离数据库恢复、隔离对象卷恢复和重启持久化验证完成。
+
+### 未完成
+
+- 服务器地址/系统/架构、SSH 权限、域名、DNS、公网 HTTPS、防火墙、异机备份、监控和生产秘密均未提供或实施。
+- npm 的 4 moderate、12 high 与 6 个待批准安装脚本尚未完成获准的精确安全审计。
+- 管理员真实邮箱/哈希未写入 `.env.local`，因此本地管理员登录保持安全禁用。
+
+### 下次优先任务
+
+1. 收集并核验服务器地址、操作系统、CPU 架构、SSH 用户/权限、域名和 DNS 控制权。
+2. 为服务器里程碑追加新开工计划并 push 新开发前备份，再适配架构、生产秘密、HTTPS、防火墙和数据目录。
+3. 建立异机备份、恢复演练、监控与上线验收；不得直接复制本机 arm64 SeaweedFS 产物到未知架构服务器。
+
+### 必读文档
+
+严格按 `AGENTS.md` 的十项顺序读取；当前层仍是 `docs/construction/progress/layers/07-deployment.md`，并读取 `docs/deployment/LOCAL_DEPLOYMENT.md` 与 `docs/deployment/SERVER_DEPLOYMENT.md`。
+
+### 关键文件
+
+- `compose.yaml`
+- `Dockerfile`
+- `deploy/`
+- `drizzle/0000_phase7_foundation.sql`
+- `src/lib/data/db/`
+- `src/lib/storage/s3.ts`
+- `scripts/backup-local.sh`
+- `scripts/restore-local.sh`
+- `docs/deployment/LOCAL_DEPLOYMENT.md`
+
+### 测试基线
+
+- `npm test`：42/42 成功。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`、最终授权 `npm run build`：成功。
+- Compose 集成测试：1/1 成功；PostgreSQL/S3 跨实例持久化已验证。
+- `docker compose config --quiet`、服务健康、本地首页/健康接口、安全头、重启持久化：成功。
+- 有效备份：`backups/20260729-105916/`；数据库与对象卷隔离恢复成功。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`
+- 备份分支：`backup/pre-phase7-local-deployment-20260729-0913`，已 push 且远端核验
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 本地备份与工作副本同盘，不是灾备；服务器上线前必须配置异机/远端备份。
+- `.env.local` 是本机真实秘密且已忽略，任何情况下不得提交或打印。
+- Docker Hub 大 blob 在本机曾出现 CDN EOF；最终方案依赖固定 Alpine 构建，切勿把 classic store 当作已认可方案。
+- 服务器架构未知；当前 SeaweedFS 构建产物是 arm64，必须按目标架构重新核验 checksum。

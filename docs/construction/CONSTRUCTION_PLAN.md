@@ -30,9 +30,9 @@ GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill
 
 公开搜索、分类/标签组合筛选、受推荐池/权重/置顶治理的随机展示，以及阅读、下载点击、安装复制和来源跳转四类进程内统计已完成。当前不误报为持久化分析或唯一访客统计，并停在 Phase 6 与 Phase 7 之间等待 Neil Bauman 下一次明确继续指令。
 
-## Phase 7：Deployment
+## Phase 7：Deployment（本地里程碑已完成，服务器里程碑待开始）
 
-PostgreSQL、Drizzle、迁移、Docker Compose、对象存储、反向代理、HTTPS、备份、安全与部署验收。
+本地已完成 PostgreSQL、Drizzle 迁移、Docker Compose、SeaweedFS S3、Caddy 回环反向代理、备份恢复、安全与重启持久化验收。服务器、正式域名、DNS、公网 HTTPS、异机备份、生产监控和部署验收待目标信息确认后继续。
 
 ## 层文件映射说明
 
