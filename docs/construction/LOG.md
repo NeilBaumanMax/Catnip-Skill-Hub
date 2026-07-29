@@ -1338,3 +1338,13 @@ Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时尝试创建内部�
 ### 下一步
 
 完成 Git 收尾后停止并向 Neil Bauman 汇报。只有收到明确继续，才为 Stage A 另开闭环，恢复浏览器能力并采集桌面/移动基线和资产清单；不得直接修改生产 UI。
+
+## 2026-07-30 02:24 CST / Public Web Apple UI 重设计文档 / Git 状态回写
+
+### GitHub 状态
+
+- 文档里程碑提交：`fbb4174a57d67014880cd75dcb992507961c239b`。
+- `frontend/visual-optimization` push：成功，远端分支已推进到该文档里程碑提交。
+- 开发前备份：`backup/pre-apple-ui-plan-20260730-0214`，已成功 push，保留基线 `50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
+- 本状态回写提交成功 push 后，本轮停止；不开始 Stage A 或 UI 代码施工。
+- 不需要回滚；如需撤销文档里程碑，优先 `git revert fbb4174a57d67014880cd75dcb992507961c239b` 并执行既有全量复测。
