@@ -1521,3 +1521,21 @@ Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时创建内部进程�
 ### 失败摘要与处理
 
 当前受限文件系统允许读取 `.git` 但不允许创建 `.git/index.lock`，Git 返回 `Operation not permitted`。本次没有产生暂存或提交。保持相同明确文件列表，在获准环境重试；继续排除 `.agents/`、`.codex/` 与 `skills-lock.json`。
+
+### 复测结果
+
+- 获准环境使用相同明确文件列表暂存成功，cached diff 检查无空白错误。
+- 功能提交：`122a5797a2f8a2723c02c856f623431a562d6203`。
+- `frontend/visual-optimization` 已成功 push，远端分支核验指向该功能提交。
+
+## 2026-07-30 02:55 CST / Public Web Apple UI 重设计 / Git 状态回写
+
+### GitHub 状态
+
+- 当前分支：`frontend/visual-optimization`。
+- 开发前基线：`bba5333a52c39c3ae8abaaddde9a851b4d6323ef`。
+- 开发前备份：`backup/pre-apple-ui-implementation-20260730-0232`，已成功 push。
+- 前端功能提交：`122a5797a2f8a2723c02c856f623431a562d6203`。
+- 前端功能 push：成功，`origin/frontend/visual-optimization` 已指向该提交。
+- 工作区：已跟踪文件干净；仅保留用户未跟踪的 `.agents/`、`.codex/`、`skills-lock.json`。
+- 本状态回写提交成功 push 后，本轮 Git 闭环完成。
