@@ -1357,3 +1357,167 @@ Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时尝试创建内部�
 - 使用 `git rev-parse fbb4174` 取得真实完整提交号 `fbb4174a519f0343f0a79d48a96ba1b86f4ce54b`，并同步修正 LOG 与 HANDOFF。
 - 远端 `frontend/visual-optimization` 已核验指向状态回写提交 `550b8787ae57c52af86129fad1327afa5ab3b63e`；备份分支仍指向基线 `50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
 - 本修正不改变设计方案、应用代码或测试结论；提交后再次 push 并复核。
+
+## 2026-07-30 02:51 CST / Public Web Apple UI 重设计 / 静态检查失败记录
+
+### 失败命令
+
+- `npm run typecheck`
+- 退出状态：2
+
+### 失败摘要
+
+`src/app/_components/skill-artwork.tsx` 从 `@/lib/domain/skills` 导入 `CoverTheme`，但领域聚合入口没有导出该类型，TypeScript 报 `TS2305`。
+
+### 原因与修复计划
+
+- 新组件选择了错误的类型导入入口，不是领域模型或运行行为缺陷。
+- 改为从现有 `@/lib/domain/skills/types` 直接导入 `CoverTheme`，不扩张公共领域 API。
+- 复测 typecheck，并重新执行 lint、diff 与可见文案检查；首次失败保留。
+
+### 复测结果
+
+- `npm run typecheck`：修正导入入口后退出 0。
+- `npm run lint` 与 `git diff --check`：重新执行成功。
+- 本次类型失败已关闭，不需要修改领域公共导出。
+
+## 2026-07-30 02:54 CST / Public Web Apple UI 重设计 / 热更新预览失败记录
+
+### 失败检查
+
+- `curl http://192.168.120.107:3001/api/health`
+- 首页、`/skills/project-brief`、`/recommend` HTTP 检查
+
+### 失败摘要
+
+端口 3001 当前没有监听进程，四项请求均返回 `curl: (7) Failed to connect`，页面状态码检查为 `000`。
+
+### 原因与修复计划
+
+- 上一轮热更新进程已停止；本轮尚未启动新进程。
+- 以 `CATNIP_PERSISTENCE_MODE=memory`、显式空管理员变量、私网主机 `192.168.120.107` 和端口 `3001` 启动 Next.js dev。
+- 等待 ready 后复测健康、首页、详情和推荐页，不改成 `0.0.0.0`。
+
+## 2026-07-30 02:52 CST / Public Web Apple UI 重设计 / 静态审计命令失败记录
+
+### 失败命令
+
+- 公共前台反模式组合 `rg` 审计命令
+- 退出状态：1
+
+### 失败摘要
+
+zsh 在包含多层单双引号的组合表达式中返回 `unmatched "`，命令没有完成任何代码判断。
+
+### 原因与修复计划
+
+- 失败来自检查命令的 shell 引号，不代表发现了前端反模式。
+- 将组合命令拆为多个无嵌套引号的明确 `rg` 命令，分别检查 `transition: all`、`scale(0)`、滚动监听、破折号、纯黑白和禁用姓名。
+- 每个子检查单独记录退出码；`rg` 无匹配时退出 1 属于预期的“未发现”，不再把它当作执行失败。
+
+### 复测结果
+
+- 六项静态检查均正常执行且无匹配：未发现 `transition: all`、`scale(0)`、公共页 scroll listener、可见长破折号、纯黑白色值或禁用姓名。
+- 动效清单复核只包含 120 至 240ms 的高频 transition、280ms 目录入场和 460ms 的低频首屏解释性入场；全部位移只用 transform 与 opacity。
+
+## 2026-07-30 02:53 CST / Public Web Apple UI 重设计 / 生产构建失败记录
+
+### 失败命令
+
+- `npm run build`
+- 退出状态：1
+
+### 失败摘要
+
+Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时创建内部进程并绑定端口，被当前受限执行环境以 `Operation not permitted` 拒绝，随后报 `Failed to write app endpoint /page`。
+
+### 原因与修复计划
+
+- 错误栈指向沙箱的内部端口权限，与本项目历史记录中的同类失败一致；lint、typecheck 和 45 项测试均已成功。
+- 不修改应用代码规避环境权限；在获准环境执行完全相同的 `npm run build`。
+- 若获准环境仍失败，再按真实编译错误定位；首次失败记录永久保留。
+
+### 复测结果
+
+- 获准环境执行同一 `npm run build` 退出 0；Next.js 16.2.12 编译、TypeScript、页面数据收集和 9 个静态页面生成成功。
+- 失败判定关闭，不需要为沙箱权限修改应用代码。
+
+## 2026-07-30 02:53 CST / Public Web Apple UI 重设计 / 第一轮实现里程碑
+
+### 本轮计划回放
+
+按最新授权连续完成公共前台 Apple UI 第一轮实现、测试、文档漂移、Git 收尾和局域网预览，不触碰管理员业务、服务器、正式品牌资产或用户未跟踪文件。
+
+### 实际修改
+
+- 用 Spatial Skill Gallery 替换首页、Skill 详情和推荐页的旧暖纸张、CSS 假封面、序号与重复 eyebrow 视觉。
+- 新增严格限定 `.public-site` 的浅深色视觉系统、编辑式响应网格、有限材质、可见焦点、reduced-motion 和 reduced-transparency 降级。
+- 新增十张 Catnip 自制几何演示封面与统一 `SkillArtwork` 映射；它们不是正式 Logo、吉祥物或真实效果证明。
+- 保持搜索参数、slug、下载、安装、事件、推荐提交、Repository、认证和部署行为不变；未新增依赖。
+- 按 animation skills 审计后，将高频动效限制为 120 至 240ms，目录入场为 280ms，首屏低频解释性入场为 460ms；不动画重复筛选、键盘导航或列表重排。
+
+### 修改文件
+
+- `AGENTS.md`、`DESIGN.md`
+- `src/app/public-web.css`
+- `src/app/page.tsx`、`src/app/skills/[slug]/page.tsx`、`src/app/recommend/page.tsx`
+- `src/app/_components/skill-artwork.tsx`、`skill-actions.tsx`、`recommend-form.tsx`、`layout.tsx`
+- `public/skill-art/README.md` 与十张 SVG 演示封面
+- 架构、总体计划、主要求、重设计计划、进度、层进度、日志与交接文档
+
+### 验证结果
+
+- `npm test`：45/45 成功。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`、Compose 配置与 `git diff --check`：成功。
+- `npm run build`：受限环境首次失败，获准环境同命令复测成功。
+- 局域网健康、首页、单项 Skill、Skill Pack、空搜索、推荐页、管理员登录和封面资源均返回 200；健康模式为 `process-memory`。
+- HTML 契约确认首页无直接下载，详情保留下载/安装、Pack 子项和来源结构，推荐状态具备 `role=status`，管理员页没有 `.public-site`。
+
+### 测试日志
+
+- 首次类型导入失败、热预览未运行、静态审计引号失败和沙箱 build 失败均已保留；每项完成修复或同命令复测。
+- 浏览器控制运行时没有任何浏览器实例，无法取得 1440/768/390 截图、键盘/200% 缩放/图片失败真机结果或 Core Web Vitals；不记为通过。
+
+### 测试指标判断
+
+行为、类型、样式编译、生产构建、数据库 schema、Compose 配置、公共路由契约和管理员作用域隔离通过。自动化视觉与性能证据门禁未完成，因此本轮只能判定“实现完成、视觉证据部分完成”，不能写成全部视觉验收通过。
+
+### 文档漂移检查
+
+- 将 `DESIGN.md` 从 seed 改为真实 token、组件和动效值；补充 `public-web.css` 与演示封面的架构职责。
+- 将等待施工的旧停点改为“第一轮已实现，等待局域网视觉反馈”，并保留浏览器证据缺口。
+- 核对管理员 Neil Bauman、GitHub 用户 NeilBaumanMax、品牌 Catnip 薄荷猫和指定 SSH Remote 一致；未发现禁用姓名、真实秘密、正式品牌图、服务器写操作或后端越界。
+- 用户未跟踪的 `.agents/`、`.codex/`、`skills-lock.json` 未覆盖、未暂存、未提交。
+
+### GitHub 状态
+
+- 当前分支：`frontend/visual-optimization`。
+- 开发前基线：`bba5333a52c39c3ae8abaaddde9a851b4d6323ef`。
+- 备份分支：`backup/pre-apple-ui-implementation-20260730-0232`，已成功 push 并远端核验。
+- 功能提交与分支 push：完成 Git 收尾后回写。
+
+### 回滚判断
+
+当前不需要回滚。若撤销本轮，优先 `git revert <本轮功能提交>`；开发前完整状态由远端备份分支保留。回滚后执行 test、lint、typecheck、build、db:check 和公共路由检查。
+
+### 当前风险
+
+- 自动化浏览器实例不可用，响应式、深浅色、交互、真机和 Core Web Vitals 尚缺可视证据。
+- 十张图片是可替换的演示内容艺术，不是正式来源素材；真实资源上线前仍需管理员提供或确认封面。
+- 局域网热更新入口是明文 HTTP 和进程内数据，仅用于公开前端检查；管理员真实秘密继续禁用。
+- 服务器部署与生产依赖风险保持暂停状态，本轮没有解决也没有扩大。
+
+### 下一步
+
+本轮提交、push 并打开预览后停止。Neil Bauman 先在同一局域网查看首页、详情和推荐页；下一轮只根据具体视觉反馈修改，并在浏览器能力恢复后优先补齐三断点与性能证据。
+
+## 2026-07-30 02:54 CST / Public Web Apple UI 重设计 / Git 暂存失败记录
+
+### 失败命令
+
+- 明确文件列表 `git add`
+- 退出状态：128
+
+### 失败摘要与处理
+
+当前受限文件系统允许读取 `.git` 但不允许创建 `.git/index.lock`，Git 返回 `Operation not permitted`。本次没有产生暂存或提交。保持相同明确文件列表，在获准环境重试；继续排除 `.agents/`、`.codex/` 与 `skills-lock.json`。

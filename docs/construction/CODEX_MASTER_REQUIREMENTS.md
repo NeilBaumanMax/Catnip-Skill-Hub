@@ -57,7 +57,7 @@
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
-- 当前主任务为专用前端分支上的视觉优化，并通过已验收的局域网入口实时预览；具体前端修改必须等待 Neil Bauman 的逐项指令，不得借机重构后端或部署栈。
-- Neil Bauman 已选定 Apple UI 替换式重设计方向；`PRODUCT.md`、`DESIGN.md` 与 `docs/construction/FRONTEND_REDESIGN_PLAN.md` 是该工作流的补充必读契约。当前只完成文档方案，首次真实 UI 修改必须等待本轮汇报后的明确继续，并先完成浏览器桌面/移动截图基线。
+- 当前主任务为专用前端分支上的视觉优化，并通过局域网热更新入口实时预览；不得借机重构后端或部署栈。
+- Neil Bauman 已选定 Apple UI 替换式重设计方向；`PRODUCT.md`、`DESIGN.md` 与 `docs/construction/FRONTEND_REDESIGN_PLAN.md` 是该工作流的补充必读契约。公共 UI 已完成第一轮实现，下一轮先收集 Neil Bauman 的局域网视觉反馈；浏览器自动化恢复后补齐桌面、平板、移动和性能证据，未补齐前不得声称视觉门禁通过。
 - 公共前台重设计范围为首页、Skill 详情、推荐表单和共享公共外壳；管理员后台、领域规则、下载/安装行为、数据、认证、部署和服务器不随视觉重设计自动进入范围。
 - 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。

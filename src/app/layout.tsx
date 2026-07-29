@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./public-web.css";
 
 export const metadata: Metadata = {
   title: "Catnip Skill Hub | 中文 Agent Skill 独立站",

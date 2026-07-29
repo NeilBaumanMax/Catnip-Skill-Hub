@@ -983,3 +983,65 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 公共页和后台共用全局 CSS；后续必须先建立作用域或拆分策略，避免误伤后台。
 - 真实图像不足是当前设计质量的主要内容风险；不得继续用通用 blob 或假 UI 代替最终封面。
 - 局域网入口是明文 HTTP，管理员真实秘密继续禁用；不得恢复服务器写操作。
+
+## 2026-07-30 02:53 CST / Public Web Apple UI 重设计 / 第一轮实现交接
+
+### 当前状态
+
+`frontend/visual-optimization` 已完成 Apple-inspired Spatial Skill Gallery 第一轮公共前台实现。进程内热更新预览保持在 `http://192.168.120.107:3001`；稳定容器入口 `http://192.168.120.107:8080` 未修改。服务器部署继续暂停。
+
+### 本轮完成
+
+- 重做首页、单项/Pack 详情、推荐表单和公共外壳；保持所有服务与数据边界。
+- 建立严格作用域的浅深色设计系统、响应网格、克制动效、可访问性偏好降级和十张演示封面。
+- 固化真实 `DESIGN.md` token，并同步架构、计划、进度和测试事实。
+- 45 项测试及全部非视觉工程门禁通过，局域网关键路由返回 200。
+
+### 未完成
+
+- 自动化浏览器无实例，1440/768/390 截图、深浅色、键盘、200% 缩放、图片失败、真机触摸和 Core Web Vitals 没有证据，不得写成通过。
+- 演示封面仍需在真实内容上线前由管理员替换或确认来源。
+- 服务器、域名、HTTPS、生产秘密、异机备份和依赖风险保持暂停。
+
+### 下次优先任务
+
+1. Neil Bauman 在同一局域网查看首页、`/skills/project-brief` 和 `/recommend` 并给出具体视觉反馈。
+2. 按反馈在同一专用分支继续修改，先追加新开工计划和远端备份。
+3. 浏览器控制恢复后补齐三断点、交互、偏好和性能证据。
+
+### 必读文档
+
+按 `AGENTS.md` 顺序读取，并加读 `PRODUCT.md`、`DESIGN.md`、`docs/construction/FRONTEND_REDESIGN_PLAN.md` 与 `01-public-web.md`。
+
+### 关键文件
+
+- `src/app/public-web.css`
+- `src/app/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/recommend/page.tsx`
+- `src/app/_components/skill-artwork.tsx`
+- `public/skill-art/README.md`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check、Compose config、获准环境生产 build、diff：成功。
+- 局域网健康：首页、单项、Pack、空搜索、推荐、管理员登录和封面资源均为 200。
+- 浏览器视觉证据：未完成，原因是运行时没有浏览器实例。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：`frontend/visual-optimization`
+- 开发前基线：`bba5333a52c39c3ae8abaaddde9a851b4d6323ef`
+- 备份分支：`backup/pre-apple-ui-implementation-20260730-0232`，已 push
+- 最新提交：Git 收尾后回写
+- 已 push：Git 收尾后回写
+- 工作区状态：Git 收尾后回写；用户未跟踪文件排除
+
+### 风险提醒
+
+- 未取得自动化视觉证据前，只能称“实现完成”，不能称视觉门禁全部通过。
+- 3001 是明文、进程内开发预览，不启用管理员真实秘密，不用于生产。
+- 不触碰 `.agents/`、`.codex/`、`skills-lock.json` 或服务器旧站工作区。

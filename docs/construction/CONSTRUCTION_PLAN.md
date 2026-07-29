@@ -38,9 +38,9 @@ GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill
 
 ## Public Web Apple UI 替换式重设计（当前独立工作流，方案已确定，代码待批准）
 
-本工作流不新增产品 Phase，也不回退已完成的 Phase 1 至 Phase 7 功能。它只替换公共前台的视觉和交互表达，保持领域、下载、安装、数据、认证、统计和部署边界不变。选定方向、现状审计、Stage A 至 G、测试和回滚门禁见 `docs/construction/FRONTEND_REDESIGN_PLAN.md`；根产品事实见 `PRODUCT.md`，种子设计系统见 `DESIGN.md`。
+本工作流不新增产品 Phase，也不回退已完成的 Phase 1 至 Phase 7 功能。它只替换公共前台的视觉和交互表达，保持领域、下载、安装、数据、认证、统计和部署边界不变。选定方向、现状审计、Stage A 至 G、测试和回滚门禁见 `docs/construction/FRONTEND_REDESIGN_PLAN.md`；根产品事实见 `PRODUCT.md`，已实现设计系统见 `DESIGN.md`。
 
-当前停点是文档汇报。Neil Bauman 明确继续后，先执行 Stage A 的浏览器桌面/移动视觉基线与资产清单，再按阶段施工；每个阶段完成后停下汇报，不连续越过多个阶段。管理员后台和服务器部署不属于本工作流。
+公共前台 Stage C 至 G 第一轮实现已完成并打开局域网热更新预览；Stage A 的自动化截图和 Core Web Vitals 证据因浏览器运行时无实例而未完成。当前停点是 Neil Bauman 的局域网视觉检查，下一轮根据反馈修改并在浏览器能力恢复后补齐三断点与性能门禁。管理员后台和服务器部署不属于本工作流。
 
 ## 层文件映射说明
 

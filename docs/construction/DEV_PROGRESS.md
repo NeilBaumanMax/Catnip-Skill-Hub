@@ -975,3 +975,81 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 当前结论
 
 Apple UI 重设计文档里程碑完成。Git 收尾并成功 push 后停下汇报，等待 Neil Bauman 明确继续；下一轮不得跳过 Stage A 直接重写生产前端。
+
+## 2026-07-30 02:32 CST / Public Web Apple UI 重设计 / 完整施工开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新明确指令，由 Codex 自主连续完成 `docs/construction/FRONTEND_REDESIGN_PLAN.md` 的 Stage A 至 G，并在公共前台设计完成、全量验证和文档闭环成功、局域网热更新预览打开后停止。最新指令取代先前“每个 Stage 等待人工批准”的停点，但不放宽 Git、安全、测试、漂移、服务器暂停或用户文件保护门禁。
+
+### 涉及层
+
+- 公共前台：首页、Skill 详情、推荐 Skill 表单和共享公共外壳。
+- 视觉系统：浅深色 token、系统中文字体、空间材质、图片、形状、响应式和状态。
+- 交互与动效：导航、筛选、卡片、复制/安装反馈，以及 reduced-motion/reduced-transparency 降级。
+- 回归边界：保持领域、搜索、下载、安装、统计、推荐线索、管理后台、数据库和部署行为。
+- 排除：服务器写操作、正式 Logo/吉祥物、管理员业务重构、路由/字段/事件命名变更。
+
+### 当前仓库状态
+
+- 当前分支：`frontend/visual-optimization`。
+- 基线提交：`bba5333a52c39c3ae8abaaddde9a851b4d6323ef`。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 身份：Neil·Baumann `<2091760192@qq.com>`；SSH 身份待本轮复验。
+- 已跟踪工作区干净；用户未跟踪的 `.agents/`、`.codex/`、`skills-lock.json` 保持原样且排除在本轮提交外。
+- 当前预览目标：`http://192.168.120.107:3001`；稳定容器入口 `http://192.168.120.107:8080` 不作为热更新数据源。
+
+### 计划修改
+
+- Stage A：连接浏览器并取得首页、详情、推荐页桌面/移动基线；记录实际问题和素材缺口。
+- Stage B：以真实现有中文内容和生成的非品牌 Skill artwork 建立视觉方向，禁止正式 Logo/吉祥物和假 dashboard。
+- Stage C：建立公共前台 token、主题、公共外壳和样式作用域，保护管理员页面。
+- Stage D：重做首页首屏、筛选、目录卡片、空状态和响应式，保留查询与推荐逻辑。
+- Stage E：重做详情页图像、阅读层级、来源与下载/安装操作呈现，保留服务行为。
+- Stage F：重做推荐表单及公共路由一致性。
+- Stage G：完成动效、浅深色、无障碍、性能、设计系统固化、浏览器全量验收和文档闭环。
+- 不默认新增 UI/动效依赖；只有原生 CSS/WAAPI 无法满足已证明需求时才评估依赖。
+
+### 测试计划
+
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `npm run db:check`
+- `git diff --check`
+- 浏览器 1440px、768px、390px；首页、单项 Skill、Skill Pack、推荐表单、搜索空结果。
+- 浅色/深色、键盘、200% 缩放、长文本、图片失败、reduced-motion、透明度降级和管理员样式隔离。
+- 局域网热更新入口健康、首页与受影响路由最终检查。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：`frontend/visual-optimization`
+- 基线提交：`bba5333a52c39c3ae8abaaddde9a851b4d6323ef`
+- 备份分支：`backup/pre-apple-ui-implementation-20260730-0232`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+开发前远端备份保留完整基线。按职责拆分实现提交，优先 `git revert <bad-commit>` 撤销；不得 reset、clean 或 force push。回滚后复测 unit、lint、typecheck、build、db:check、公共路由和管理员样式隔离。任何真实图片文件只删除本轮明确生成且已核对路径的资产。
+
+## 2026-07-30 02:53 CST / Public Web Apple UI 重设计 / 第一轮完成记录
+
+### 完成范围
+
+- 首页、Skill 详情、推荐页和公共外壳已替换为 Spatial Skill Gallery，公共 CSS 严格限定 `.public-site`。
+- 已建立浅深色 token、系统中文字体、编辑式响应网格、有限玻璃材质、焦点、reduced-motion 与 reduced-transparency。
+- 已加入十张可替换的 Catnip 演示封面，未创建正式 Logo、吉祥物或假效果证明。
+- 搜索、详情、下载、安装、统计、推荐提交、管理员后台、数据库与部署行为保持原边界。
+
+### 验证状态
+
+- 45/45 测试、lint、typecheck、db:check、Compose 配置、获准环境生产 build 和 diff 检查成功。
+- 局域网公共路由、空搜索、管理员登录与静态封面资源返回 200。
+- 自动化浏览器没有实例，三断点截图、真机交互和 Core Web Vitals 未完成，未写成通过。
+
+### 当前停点
+
+完成 Git push 并打开 `http://192.168.120.107:3001` 后停止，等待 Neil Bauman 在同一局域网查看并给出具体视觉反馈。服务器部署继续暂停。

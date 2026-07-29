@@ -1,7 +1,8 @@
-<!-- SEED: established with the user before implementation; re-run $impeccable document once there's code to capture the actual tokens and components. -->
 ---
 name: Catnip Skill Hub
 description: A spatial, editorial gallery for discovering Chinese Agent Skills.
+status: implemented
+source: src/app/public-web.css
 ---
 
 # Design System: Catnip Skill Hub
@@ -26,18 +27,21 @@ Motion communicates origin, continuity, and feedback. It remains brief and inter
 
 ## Colors
 
-The interface uses a neutral light and dark system with a single Catnip mint accent; exact color values remain to be resolved and contrast-tested during implementation.
+The interface uses a neutral light and dark system with a single Catnip mint accent. The implemented public tokens live under `.public-site`, preventing this visual system from leaking into the administrator interface.
 
 ### Primary
 
-- **Catnip Mint:** The only interface accent for primary actions, selection, focus, and restrained brand recognition. Skill artwork may contain its own authored colors without creating extra UI accents.
+- **Catnip Mint:** `#24764f`; primary actions, selection and restrained brand recognition.
+- **Catnip Mint Strong:** `#155c3a`; strong action state and high-contrast mint text.
+- **Focus:** `#0d7444`; three-pixel visible focus outline with a three-pixel offset.
 
 ### Neutral
 
-- **Porcelain:** Light-mode page background with a cool, clean character rather than the incumbent warm beige paper.
-- **Soft White:** Raised content surface and solid fallback for translucent chrome.
-- **Graphite:** Primary dark text and the dark-mode canvas; avoid pure black over large areas.
-- **Slate:** Secondary text, source metadata, dividers, and unavailable states.
+- **Porcelain:** `#f3f5f4`; light-mode canvas.
+- **Soft White:** `#fbfcfb` and `#fcfdfc`; raised content and opaque material fallback.
+- **Graphite:** `#18201c`; primary light-mode text.
+- **Slate:** `#526059`; secondary text, source metadata and unavailable states.
+- **Dark Canvas:** `#0d100f`; dark-mode canvas, with `#161a18` and `#1c211e` surfaces.
 
 **The One Accent Rule.** Mint is rare and functional. It does not become a full-page wash, gradient fog, or default card background.
 
@@ -91,9 +95,26 @@ Shadows are ambient and quiet. They indicate temporary elevation or interaction 
 
 The system combines gently rounded content surfaces with fully rounded functional controls. Large Skill artwork and reading containers use a consistent soft radius family; inputs and compact panels use a smaller related radius; pills are reserved for search, segmented choices, filters, and compact actions.
 
-Rounded forms must not erase information hierarchy. Nested surfaces step down in radius, and adjacent controls share geometry. Exact radii remain provisional until the first production pass establishes real tokens.
+Rounded forms must not erase information hierarchy. Nested surfaces step down in radius, and adjacent controls share geometry. The implemented radius family is 10px for compact fields, 16px for panels and 24px for primary artwork or feature surfaces. Functional pills use `999px` only for compact controls.
 
 **The Functional Pill Rule.** A pill shape indicates a compact control or state. Paragraph containers, arbitrary labels, and every card do not become pills.
+
+## Implemented Components
+
+- **Public header:** sticky 64px chrome with one translucent layer, solid reduced-transparency fallback and compact text brand placeholder.
+- **Featured Skill:** asymmetric artwork-and-copy composition, opaque surface, 24px radius and a rare explanatory entrance.
+- **Catalog card:** image-first, whole-card link with varied grid spans, 120ms press feedback and pointer-capability-gated hover.
+- **Skill artwork:** ten Catnip-authored geometric demo covers in `public/skill-art`; these are replaceable content artwork, not a logo, mascot or proof image.
+- **Detail action panel:** download and install controls that consume existing service outputs without constructing ZIPs or commands in the UI.
+- **Recommendation form:** focused single-task form with explicit status semantics and no automatic draft or publish implication.
+
+## Motion Tokens
+
+- Press feedback: 120ms ease-out at `scale(0.985)`.
+- Hover artwork transform: 240ms with `cubic-bezier(0.23, 1, 0.32, 1)` and only on fine pointers.
+- First-view editorial entrance: 460ms transform and opacity; first four catalog cards use a 280ms entrance with 55ms stagger steps.
+- Repeated navigation, filtering, segmented controls and form status remain immediate or use color-only transitions under 220ms.
+- `prefers-reduced-motion` removes effective movement; `prefers-reduced-transparency` replaces glass with opaque surfaces.
 
 ## Do's and Don'ts
 

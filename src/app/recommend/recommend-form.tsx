@@ -43,7 +43,7 @@ export function RecommendForm() {
       <label>联系方式（选填）<input name="contact" maxLength={200} /></label>
       <label className="form-honeypot" aria-hidden="true">Website<input name="website" tabIndex={-1} autoComplete="off" /></label>
       <button disabled={busy} type="submit">{busy ? "提交中…" : "提交推荐"}</button>
-      <p className="form-message" aria-live="polite">{message}</p>
+      <p className="form-message" aria-live="polite" role="status">{message}</p>
     </form>
   );
 }

@@ -42,9 +42,8 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
   return (
     <section className="action-panel skill-actions" aria-labelledby="action-title">
       <div className="action-copy">
-        <p className="eyebrow">获取 Skill</p>
         <h2 id="action-title">下载 ZIP 或安装到 Agent</h2>
-        <p>命令由服务层根据真实 skills CLI 1.5.20 参数生成，不使用中文传播标题。</p>
+        <p>选择目标 Agent 和安装范围。命令来自已核验的 skills CLI 参数。</p>
       </div>
 
       <div className="install-controls">
@@ -52,6 +51,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
           {Object.entries(agentLabels).map(([value, label]) => (
             <button
               className={agent === value ? "selected" : ""}
+              aria-pressed={agent === value}
               key={value}
               type="button"
               onClick={() => setAgent(value as InstallAgent)}
@@ -66,6 +66,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
           {Object.entries(scopeLabels).map(([value, label]) => (
             <button
               className={scope === value ? "selected" : ""}
+              aria-pressed={scope === value}
               key={value}
               type="button"
               onClick={() => setScope(value as InstallScope)}
@@ -76,7 +77,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
           ))}
         </div>
 
-        <div className="command-row">
+        <div className="command-row" aria-live="polite">
           <code>{command}</code>
           <button type="button" onClick={copyCommand} disabled={!commands}>
             {copyState === "copied" ? "已复制" : copyState === "failed" ? "复制失败" : "复制命令"}
@@ -89,7 +90,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
           ) : (
             <button type="button" disabled>下载尚未开放</button>
           )}
-          <button type="button" onClick={copyCommand} disabled={!commands}>安装到 Agent</button>
+          <button type="button" onClick={copyCommand} disabled={!commands}>复制安装命令</button>
         </div>
       </div>
     </section>
