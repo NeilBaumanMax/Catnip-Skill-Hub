@@ -753,7 +753,7 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - `compose.yaml`
 - `Dockerfile`
 - `deploy/`
-- `drizzle/0000_phase7_foundation.sql`
+- `drizzle/0000_open_spitfire.sql`
 - `src/lib/data/db/`
 - `src/lib/storage/s3.ts`
 - `scripts/backup-local.sh`
@@ -775,9 +775,9 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 当前分支：main
 - 开发前基线：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`
 - 备份分支：`backup/pre-phase7-local-deployment-20260729-0913`，已 push 且远端核验
-- 最新提交：Git 收尾后见 LOG 最新状态回写
-- 已 push：待 Git 收尾
-- 工作区状态：提交 push 后必须复核干净
+- 最新功能提交：`6d2abcdc508e0595e46c753de81580a777455f80`
+- 已 push：是；远端 main 已核验指向功能提交，状态回写文档提交完成后需再次核验
+- 工作区状态：功能提交 push 后干净；仅本状态回写等待提交
 
 ### 风险提醒
 

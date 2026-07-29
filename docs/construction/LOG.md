@@ -987,3 +987,16 @@ Phase 4 门禁满足：认证配置安全失败、密码正误、会话篡改/�
 ### 下一步
 
 Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后，再为 Phase 7 服务器里程碑创建新开工计划和远端备份。
+
+## 2026-07-29 11:21 CST / Phase 7 / Git 状态回写
+
+### GitHub 状态
+
+- 当前分支：main。
+- 开发前基线：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`。
+- 开发前备份：`backup/pre-phase7-local-deployment-20260729-0913`，已 push；远端核验指向开发前基线。
+- Phase 7 本地部署提交：`6d2abcdc508e0595e46c753de81580a777455f80`。
+- main push：成功；远端 `refs/heads/main` 已核验指向该功能提交。
+- 功能提交 push 后工作区：干净。
+- 当前不需要回滚；推荐代码回滚为 `git revert 6d2abcdc508e0595e46c753de81580a777455f80`，数据恢复需先用 `backups/20260729-105916/` 在隔离目标验证，再执行 unit、lint、typecheck、build、db:check、Compose、迁移、集成与 HTTP 健康复测。
+- 本状态回写将形成独立文档提交并正常 push；Phase 7 本地部署功能基线仍为上述功能提交。
