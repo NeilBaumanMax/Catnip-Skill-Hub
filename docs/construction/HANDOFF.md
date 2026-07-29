@@ -903,8 +903,8 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 当前分支：Git 收尾后为 `frontend/visual-optimization`
 - 开发前基线：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`
 - 备份分支：`backup/pre-frontend-docs-20260729-2233`
-- 最新提交：本轮文档提交，Git 收尾后见 LOG 状态回写
-- 已 push：备份已 push；main 与前端分支待 Git 收尾核验
+- 最新文档决策提交：`5eb788a902908c3d18c25f71c01b40630ee4673d`
+- 已 push：备份与文档决策 main 提交已 push；前端分支在状态回写 push 后创建并核验
 - 工作区状态：提交后必须干净
 
 ### 风险提醒

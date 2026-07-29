@@ -1204,3 +1204,13 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 ### 下一步
 
 等待 Neil Bauman 提供具体前端修改要求；在 `frontend/visual-optimization` 追加 Public Web 层开工计划和新的开发前备份后逐项实现，并保持局域网实时预览。
+
+## 2026-07-29 22:47 CST / Phase 7 / 服务器部署暂缓文档 Git 状态回写
+
+### GitHub 状态
+
+- 文档决策提交：`5eb788a902908c3d18c25f71c01b40630ee4673d`。
+- main push：成功，远端 main 已推进到该文档决策提交。
+- 开发前备份：`backup/pre-frontend-docs-20260729-2233`，已成功 push，保留基线 `d5b8cc6e9f504f58a1b2143c447feb40501eec36`。
+- 本状态回写提交正常 push 后，才从最新 main 创建并推送 `frontend/visual-optimization`。
+- 不需要回滚；如需撤销文档决策，优先 `git revert 5eb788a902908c3d18c25f71c01b40630ee4673d` 并执行既有全量复测。
