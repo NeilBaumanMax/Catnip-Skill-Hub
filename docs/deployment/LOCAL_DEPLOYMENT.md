@@ -1,6 +1,6 @@
 # 本地部署
 
-本地部署用于在单机 Docker Desktop 中验证接近生产的完整链路，不代表公网服务器已经部署。入口固定为 `http://127.0.0.1:8080`；PostgreSQL 与 S3 兼容对象存储只存在于内部 Docker 网络，不向宿主机开放端口。
+本地部署用于在单机 Docker Desktop 中验证接近生产的完整链路，不代表公网服务器已经部署。入口缺省为 `http://127.0.0.1:8080`，可以显式切换到单个 RFC1918 私网 IPv4；PostgreSQL 与 S3 兼容对象存储只存在于内部 Docker 网络，不向宿主机开放端口。
 
 ## 组成
 
@@ -8,7 +8,7 @@
 - PostgreSQL 18：保存 Skill、推荐线索、统计和对象元数据。
 - Drizzle 版本化迁移：应用启动前一次性执行，失败时阻止应用启动。
 - SeaweedFS S3：保存 ZIP 与图片原始字节。
-- Caddy：只监听本机回环地址，提供压缩、安全响应头、上传体积限制和反向代理。
+- Caddy：缺省只监听本机回环地址，局域网模式只监听显式私网地址；提供压缩、安全响应头、上传体积限制、健康检查和反向代理。
 
 镜像和 npm 依赖均在仓库配置中固定版本。当前 Apple Silicon 本地栈以 Alpine 3.23 为共同基础，在仓库 Dockerfile 中安装固定版本的 PostgreSQL、Node.js、Caddy，并用已核验 SHA-256 的上游 arm64 产物构建 SeaweedFS。部署不依赖仓库目录 bind mount，避免 Docker Desktop 对 `Documents` 目录文件共享的运行时阻塞。不要在未审阅的情况下改为 `latest`。
 
@@ -41,6 +41,28 @@
    ```
 
 健康响应中的 `persistence` 应为 `postgres-s3`。管理员变量为空时，公开站点仍可使用，但管理员登录会安全拒绝。
+
+## 同一局域网访问
+
+默认入口只绑定 `127.0.0.1`。需要让同一局域网设备访问时，先用 `ifconfig` 确认 Mac 当前活动网卡的 RFC1918 私网 IPv4，再执行：
+
+```sh
+npm run deploy:local:bind -- 192.168.120.107
+docker compose --env-file .env.local up -d --force-recreate --wait caddy
+```
+
+其他设备使用 `http://192.168.120.107:8080`。地址随网络变化时必须重新确认和设置；工具只接受 `127.0.0.1`、`10.0.0.0/8`、`172.16.0.0/12` 或 `192.168.0.0/16` 内的 IPv4，拒绝 `0.0.0.0`、公网、链路本地、组播、IPv6和无效输入，并且不会输出 `.env.local` 中的其他值。
+
+局域网入口使用明文 HTTP，只用于受信任的本地网络和公开浏览。管理员 Cookie 在 production 模式要求 HTTPS，因此不要在局域网 HTTP 上启用或测试真实管理员登录，也不要在公共 Wi-Fi、访客网络或路由器端口转发下开放该入口。macOS 防火墙策略由设备管理员控制；本工具不会擅自修改系统防火墙。
+
+恢复仅本机访问：
+
+```sh
+npm run deploy:local:bind -- 127.0.0.1
+docker compose --env-file .env.local up -d --force-recreate --wait caddy
+```
+
+恢复后确认 `127.0.0.1:8080` 可访问且私网地址不再监听。
 
 ## 验证与维护
 

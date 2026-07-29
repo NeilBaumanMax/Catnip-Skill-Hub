@@ -10,8 +10,9 @@
     "db:check": "drizzle-kit check",
     "db:migrate": "node scripts/migrate.mjs",
     "deploy:local:env": "node scripts/generate-local-env.mjs",
+    "deploy:local:bind": "node scripts/set-local-bind-address.mjs",
     "admin:hash-password": "tsx scripts/hash-admin-password.ts",
-    "test": "tsx --test tests/*.test.ts",
+    "test": "tsx --test tests/*.test.ts tests/*.test.mjs",
     "test:integration": "tsx --test tests/integration/*.test.ts",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"

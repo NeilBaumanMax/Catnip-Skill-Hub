@@ -28,11 +28,11 @@ GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill
 
 ## Phase 6：Search and Discovery（已完成）
 
-公开搜索、分类/标签组合筛选、受推荐池/权重/置顶治理的随机展示，以及阅读、下载点击、安装复制和来源跳转四类进程内统计已完成。当前不误报为持久化分析或唯一访客统计，并停在 Phase 6 与 Phase 7 之间等待 Neil Bauman 下一次明确继续指令。
+公开搜索、分类/标签组合筛选、受推荐池/权重/置顶治理的随机展示，以及阅读、下载点击、安装复制和来源跳转四类统计已完成；Phase 7 已把计数接入 PostgreSQL，但仍不误报为唯一访客或抗机器人分析。
 
-## Phase 7：Deployment（本地里程碑已完成，服务器里程碑待开始）
+## Phase 7：Deployment（本地与局域网里程碑已完成，服务器里程碑待开始）
 
-本地已完成 PostgreSQL、Drizzle 迁移、Docker Compose、SeaweedFS S3、Caddy 回环反向代理、备份恢复、安全与重启持久化验收。服务器、正式域名、DNS、公网 HTTPS、异机备份、生产监控和部署验收待目标信息确认后继续。
+本地已完成 PostgreSQL、Drizzle 迁移、Docker Compose、SeaweedFS S3、Caddy 反向代理、备份恢复、安全与重启持久化验收；局域网入口以显式 RFC1918 地址开放，并完成危险地址拒绝、Caddy 就绪等待和回环回滚。服务器、正式域名、DNS、公网 HTTPS、异机备份、生产监控和部署验收待目标信息确认后继续。
 
 ## 层文件映射说明
 

@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 7：本地部署里程碑已完成，包含 Docker、PostgreSQL/Drizzle、S3 兼容存储、Compose、Caddy、本地备份恢复和安全验收。服务器、域名、公网 HTTPS、异机备份与生产监控仍未完成；当前必须停下并向 Neil Bauman 汇报，收到明确继续指令及服务器目标信息后才可继续 Phase 7 服务器部署。
+Phase 7：本地部署和局域网访问里程碑已完成，包含 Docker、PostgreSQL/Drizzle、S3 兼容存储、Compose、Caddy、本地备份恢复、安全验收，以及显式私网地址绑定与回环回滚。服务器、域名、公网 HTTPS、异机备份与生产监控仍未完成；当前必须停下并向 Neil Bauman 汇报，收到明确继续指令及服务器目标信息后才可继续 Phase 7 服务器部署。
 
 ## 禁止事项
 

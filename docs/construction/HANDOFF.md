@@ -785,3 +785,65 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - `.env.local` 是本机真实秘密且已忽略，任何情况下不得提交或打印。
 - Docker Hub 大 blob 在本机曾出现 CDN EOF；最终方案依赖固定 Alpine 构建，切勿把 classic store 当作已认可方案。
 - 服务器架构未知；当前 SeaweedFS 构建产物是 arm64，必须按目标架构重新核验 checksum。
+
+## 2026-07-29 14:09 CST / Phase 7 局域网访问 / 完成交接
+
+### 当前状态
+
+本地完整栈正在 Docker Desktop 上运行，并只通过 `http://192.168.120.107:8080` 向当前局域网开放。Caddy、app、PostgreSQL 与 SeaweedFS 健康；服务器部署未开始。当前停下等待 Neil Bauman 从另一台同网设备进行人工访问确认。
+
+### 本轮完成
+
+- 建立默认回环、显式 RFC1918 地址的安全绑定机制，拒绝 `0.0.0.0` 和非私网地址。
+- 实际完成回环回滚和局域网恢复，Caddy 只监听一个地址。
+- 新增 Caddy 健康检查和 Compose `--wait`，修复启动就绪竞态。
+- 45项单元测试和1项持久化集成测试通过；生产构建与全部工程门禁通过。
+
+### 未完成
+
+- 尚未由另一台物理设备确认浏览器访问；当前 URL 已从本机私网接口验收。
+- macOS 应用防火墙关闭，未擅自修改；仅应在受信任局域网使用。
+- 管理员保持禁用；服务器、HTTPS、登录限流、异机备份、监控和依赖精确审计未完成。
+
+### 下次优先任务
+
+1. Neil Bauman 在同一局域网设备打开 `http://192.168.120.107:8080`，确认首页和详情访问。
+2. 若私网 IP 变化，重新确认地址并用 `npm run deploy:local:bind -- <新私网IPv4>` 安全切换。
+3. 局域网验收后，收集服务器架构、SSH、域名、DNS 和异机备份目标，再开服务器部署轮次。
+
+### 必读文档
+
+严格按 `AGENTS.md` 顺序读取，并重点读取 `docs/deployment/LOCAL_DEPLOYMENT.md`、`docs/deployment/SERVER_DEPLOYMENT.md` 和当前 `07-deployment.md`。
+
+### 关键文件
+
+- `compose.yaml`
+- `scripts/set-local-bind-address.mjs`
+- `tests/local-bind-address.test.mjs`
+- `docs/deployment/LOCAL_DEPLOYMENT.md`
+- `.env.local`（真实本机配置，已忽略，禁止读取输出或提交）
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check、生产 build：成功。
+- Compose config 与 PostgreSQL/S3 集成测试：成功，1/1。
+- Caddy、app、PostgreSQL、SeaweedFS：healthy；migration：退出 0。
+- 私网健康/首页/安全头、危险地址拒绝、回环回滚和局域网恢复：成功。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 开发前基线：`7727c2a871c50f90f978e6472f7cca234f2e8af1`
+- 备份分支：`backup/pre-phase7-lan-access-20260729-1400`，已 push 且远端核验
+- 最新提交：Git 收尾后见 LOG 最新状态回写
+- 已 push：待 Git 收尾
+- 工作区状态：提交 push 后必须复核干净
+
+### 风险提醒
+
+- 当前私网 IP 由 DHCP 提供，网络切换后可能变化；不要改成 `0.0.0.0`。
+- 当前是明文 HTTP，只用于公开浏览；不要填写真实管理员凭据或在不可信网络使用。
+- 需要立即收口时，执行 `npm run deploy:local:bind -- 127.0.0.1` 后以 `--wait` 重建 Caddy。

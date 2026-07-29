@@ -1000,3 +1000,74 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；推荐代码回滚为 `git revert 6d2abcdc508e0595e46c753de81580a777455f80`，数据恢复需先用 `backups/20260729-105916/` 在隔离目标验证，再执行 unit、lint、typecheck、build、db:check、Compose、迁移、集成与 HTTP 健康复测。
 - 本状态回写将形成独立文档提交并正常 push；Phase 7 本地部署功能基线仍为上述功能提交。
+
+## 2026-07-29 14:09 CST / Phase 7 / LAN Access
+
+### 本轮计划回放
+
+按最新指令将已验收本地栈开放给同一局域网设备：先读文档和检查 Git/网络，追加开工计划，push 远端备份，再实现显式私网绑定、回滚工具、Caddy 就绪门禁、测试、漂移检查和 Git 收尾。未开始服务器部署。
+
+### 实际修改
+
+- Compose Caddy 端口改为 `${CATNIP_BIND_ADDRESS:-127.0.0.1}:8080:8080`，默认安全边界不变。
+- 新增 `scripts/set-local-bind-address.mjs`：只接受 `127.0.0.1` 或 RFC1918 IPv4，拒绝全网卡/公网/链路本地/组播/IPv6/无效输入，原子保留其他环境值并维持 `0600`。
+- 新增3项测试，并把 `.mjs` 测试纳入 `npm test`。
+- Caddy 新增真实健康检查；运行手册使用 Compose `--wait`，避免端口已绑定但代理未就绪。
+- 更新环境示例、生成脚本、架构/分层/计划/测试/回滚/部署与交接文档。
+
+### 修改文件
+
+- 运行配置：`compose.yaml`、`.env.example`、`package.json`、`scripts/generate-local-env.mjs`。
+- 新工具与测试：`scripts/set-local-bind-address.mjs`、`tests/local-bind-address.test.mjs`。
+- 文档：AGENTS、主要求、架构、分层、施工计划、测试指标、回滚、DEV_PROGRESS、LOG、HANDOFF、部署层进度和本地部署手册。
+
+### 验证结果
+
+- 当前 Mac 私网为 `192.168.120.107/24`，Caddy 只监听 `192.168.120.107:8080`；回环地址在局域网模式不监听。
+- 私网健康接口返回 `{"status":"ok","persistence":"postgres-s3"}`；首页、品牌文本和安全响应头成功。
+- 实际切换到回环并复测后恢复局域网，两个入口互斥；`0.0.0.0` 实际调用被拒绝。
+- 管理员邮箱/哈希仍未配置；`.env.local` 为 `0600` 且未进入 Git。
+
+### 测试日志
+
+- 首轮 `npm run lint`、`npm run typecheck`：成功。
+- 首轮 `npm test`：受管沙箱因 tsx IPC `listen EPERM` 失败；授权环境复测 45/45 成功。
+- 首次 `docker compose config --quiet`：未携带 `.env.local`，按设计因缺少必需 S3 变量失败；改用 `docker compose --env-file .env.local config --quiet` 后成功。
+- 首次回环回滚组合验收：Caddy 重建后立即 curl，因服务尚未就绪而失败，并使组合命令在恢复局域网前停止。新增 Caddy healthcheck，将操作改为 `--wait` 后，回环健康、局域网不监听、恢复私网、私网健康和回环不监听全部通过。
+- `0.0.0.0` 实际负向测试：退出非零，拒绝成功；环境绑定保持不受危险输入影响。
+- 最终 `npm test`：45/45；lint、typecheck、db:check、生产 build、Compose config：全部成功。
+- 最终 Compose PostgreSQL/S3 集成测试：1/1 成功；Caddy、app、PostgreSQL、SeaweedFS healthy，migration 退出 0。
+- `git diff --check` 与秘密/身份/Phase 漂移检查：收尾复测后记录最终状态。
+
+### 测试指标判断
+
+默认回环、显式私网、危险输入拒绝、秘密保留、0600、单一监听、就绪等待、回滚恢复和既有持久化回归均有真实证据。未从另一台物理设备自动测试浏览器，也不证明公网安全。
+
+### 文档漂移检查
+
+- 修正架构、分层、施工计划和本地手册中“固定回环”的旧事实为“默认回环、显式单私网地址”。
+- 明确局域网 HTTP 不启用管理员登录、macOS 防火墙关闭且未被擅改、禁止公共 Wi-Fi 和路由器端口转发。
+- 管理员仍为 Neil Bauman，GitHub 用户为 NeilBaumanMax，品牌为 Catnip 薄荷猫，Remote 保持指定 SSH 地址；未发现真实秘密或服务器部署越界。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 当前分支：main。
+- 开发前基线：`7727c2a871c50f90f978e6472f7cca234f2e8af1`。
+- 开发前备份：`backup/pre-phase7-lan-access-20260729-1400`，已 push 且远端核验指向基线。
+- 最终提交与 main push：待 Git 收尾回写。
+
+### 回滚判断
+
+当前不需要回滚。即时收口命令为 `npm run deploy:local:bind -- 127.0.0.1`，随后用带 `--wait` 的 Caddy 重建命令恢复仅本机访问；代码交付后如需撤销，优先 revert 本轮功能提交。回滚后执行 45项测试、lint、typecheck、build、db:check、Compose config/集成测试和回环健康检查。
+
+### 当前风险
+
+- macOS 应用防火墙关闭；局域网内设备可以访问该公开入口，不能在不可信网络或端口转发环境使用。
+- 私网 DHCP 地址可能变化，变化后需要重新运行安全绑定工具。
+- 管理员登录在 HTTP 下不可用且保持禁用；服务器上线前仍需 HTTPS、登录限流、生产秘密、异机备份和依赖精确审计。
+
+### 下一步
+
+完成 Git 收尾后停止。Neil Bauman 先从同一局域网其他设备访问当前 URL；确认后再收集服务器目标信息并另开服务器部署施工轮次。

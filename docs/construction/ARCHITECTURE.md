@@ -4,7 +4,7 @@
 
 当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储、推荐线索、发现查询和统计分别位于 `src/lib/import`、`src/lib/storage`、`src/lib/recommendations`、`src/lib/discovery` 与 `src/lib/analytics`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。
 
-Phase 7 本地运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 只向 `127.0.0.1:8080` 暴露应用。未启用该模式时仍保留进程内适配器用于单元测试和轻量开发。服务器部署与公网 HTTPS 尚未建立。
+Phase 7 本地运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 缺省只向 `127.0.0.1:8080` 暴露应用。局域网模式必须显式选择一个 RFC1918 私网 IPv4，不能监听 `0.0.0.0`。未启用持久化模式时仍保留进程内适配器用于单元测试和轻量开发。服务器部署与公网 HTTPS 尚未建立。
 
 ## 目录与职责
 
@@ -97,7 +97,8 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - Skill、推荐线索与统计端口在持久模式下使用 PostgreSQL 适配器；统计增量使用数据库原子 upsert，公开首页、详情、下载与管理端读取同一运行时 Skill Repository。
 - `S3AssetStorage` 将文件元数据保存在 PostgreSQL、原始字节保存在 SeaweedFS S3，保持 Phase 5 的 `AssetStorage` 契约。
 - 本地镜像以 Alpine 3.23 为小型固定基础，从 Alpine 官方仓库安装 Node 24.17.0、PostgreSQL 18.4 与 Caddy 2.11.4；SeaweedFS 4.29 arm64 上游归档以固定 SHA-256 校验。该 SeaweedFS 镜像只用于当前 Apple Silicon 本地里程碑，服务器架构必须重新确认。
-- 长期进程实际以 UID 1001、Caddy 用户、UID 10001 和 PostgreSQL 用户运行；数据库/S3 无宿主端口，Caddy 只绑定回环地址。
+- 长期进程实际以 UID 1001、Caddy 用户、UID 10001 和 PostgreSQL 用户运行；数据库/S3 无宿主端口，Caddy 只绑定一个显式本机地址。默认回环，当前局域网入口为 `192.168.120.107:8080`。
+- `scripts/set-local-bind-address.mjs` 是本地暴露控制边界：只接受回环或 RFC1918 IPv4，原子更新被忽略的 `.env.local` 并保持 `0600`；Caddy 健康检查与 Compose `--wait` 防止切换后过早验收。
 - `.env.local` 由脚本生成、权限为 `0600` 且被 Git 忽略；仓库只含空 `.env.example`。管理员邮箱和密码哈希为空时管理登录安全拒绝。
 - `scripts/backup-local.sh` 生成 PostgreSQL custom dump、SeaweedFS 归档与 manifest；恢复脚本有显式确认门禁。真实备份已在隔离数据库和临时卷恢复验证。
 - 当前完成的是本地生产式部署，不等于服务器、域名、公网 HTTPS、异机备份、监控或生产安全验收完成。

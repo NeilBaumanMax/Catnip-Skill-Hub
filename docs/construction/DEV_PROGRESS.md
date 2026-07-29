@@ -754,3 +754,75 @@ Phase 6 功能、边界和最终全量复测已完成，正处于 Git 收尾阶�
 ### 当前结论
 
 Phase 7 本地部署里程碑完成。完成 Git 收尾后停止；服务器部署必须在 Neil Bauman 明确继续并提供服务器、域名、DNS 和权限信息后另开施工轮次。
+
+## 2026-07-29 14:00 CST / Phase 7 / 局域网访问开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新指令，先让当前 Mac 上的 Catnip Skill Hub 可由同一局域网其他设备访问，再停下验收；不进入公网服务器部署。保持默认回环绑定，只有显式配置本机私网 IPv4 时才开放局域网入口。
+
+### 涉及层
+
+- 部署配置：为 Caddy 端口绑定增加受验证的显式地址配置，禁止默认监听全部网卡。
+- 本地运维：增加不打印秘密的绑定地址切换工具和恢复回环流程。
+- 安全边界：公开浏览可通过局域网 HTTP 使用；管理员保持未配置和禁用，不在明文 HTTP 上启用管理会话。
+- 文档与测试：记录局域网 URL、macOS 防火墙现状、设备验收步骤和服务器部署停点。
+
+### 当前仓库状态
+
+- 当前分支：main；工作区干净。
+- 当前提交：`7727c2a871c50f90f978e6472f7cca234f2e8af1`，与 `origin/main` 无领先或落后。
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`；Git 身份为 Neil·Baumann `<2091760192@qq.com>`。
+- 本机活动私网地址：`192.168.120.107/24`；当前 8080 仅监听 `127.0.0.1`。
+- macOS 应用防火墙当前关闭；本轮只绑定指定私网地址，不使用 `0.0.0.0`，不修改系统防火墙设置。
+
+### 计划修改
+
+- Compose 端口绑定从固定回环地址改为经过环境变量提供的显式地址，缺省值继续为 `127.0.0.1`。
+- 新增安全切换脚本：只接受 loopback 或 RFC1918 IPv4，更新 `.env.local` 时不输出其他秘密，并可恢复回环绑定。
+- 更新 `.env.example`、package scripts、本地部署手册、测试门禁和交接文档。
+- 重新创建 Caddy 容器，验证只监听 `192.168.120.107:8080`，并用该地址检查健康接口、首页和安全响应头。
+
+### 测试计划
+
+- 配置脚本单元测试与输入拒绝测试。
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run build`、`npm run db:check`。
+- `docker compose config --quiet`、Compose 服务健康、监听地址检查。
+- `curl http://192.168.120.107:8080/api/health` 与首页/安全头检查。
+- 确认 `127.0.0.1:8080` 不再监听、数据库与 S3 仍无宿主端口、管理员配置仍为空。
+- `git diff --check`、秘密扫描和文档漂移检查。
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`7727c2a871c50f90f978e6472f7cca234f2e8af1`
+- 备份分支：`backup/pre-phase7-lan-access-20260729-1400`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+运行绑定工具恢复 `127.0.0.1` 并重新创建 Caddy，即可立即撤销局域网暴露；代码交付后如需整体撤销，优先 revert 本轮提交。回滚后复测 Compose 配置、回环健康接口、unit、lint、typecheck、build、db:check 和 `git diff --check`，不得删除数据卷。
+
+## 2026-07-29 14:09 CST / Phase 7 / 局域网访问完成记录
+
+### 完成范围
+
+- Compose 缺省仍绑定 `127.0.0.1`，显式配置后只绑定当前 RFC1918 私网地址 `192.168.120.107:8080`；未使用 `0.0.0.0`。
+- 新增局域网绑定工具，验证回环/RFC1918 IPv4、拒绝公网/链路本地/组播/IPv6/无效输入，原子更新 `.env.local` 并保持 `0600`。
+- 新增 Caddy 健康检查和 Compose `--wait` 操作，消除端口切换后的就绪竞态。
+- 实际完成危险地址拒绝、局域网健康/首页/安全头、回环回滚、局域网恢复和单一监听地址验收。
+- 管理员邮箱与哈希仍为空；局域网 HTTP 仅用于公开浏览，不启用管理员会话。
+
+### 验证状态
+
+- `npm test`：45/45 成功；新增3项绑定地址测试。
+- lint、typecheck、db:check、生产 build、Compose 配置和 1/1 PostgreSQL/S3 集成测试成功。
+- Caddy、app、PostgreSQL、SeaweedFS 均 healthy；migration 退出 0。
+- 私网健康接口返回 `postgres-s3`；首页 200 且安全头正常；`127.0.0.1:8080` 在局域网模式不监听。
+- 代码侧与本机入口验收完成；其他物理设备的浏览器验收需 Neil Bauman 使用同一局域网打开 URL 确认。
+
+### 当前结论
+
+Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107:8080`。Git 收尾后停止；服务器部署仍需独立开工计划、目标服务器信息和生产安全门禁。

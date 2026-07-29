@@ -126,10 +126,15 @@ services:
       context: .
       dockerfile: deploy/caddy/Dockerfile
     ports:
-      - "127.0.0.1:8080:8080"
+      - "${CATNIP_BIND_ADDRESS:-127.0.0.1}:8080:8080"
     depends_on:
       app:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/api/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     networks:
       - edge
     restart: unless-stopped
