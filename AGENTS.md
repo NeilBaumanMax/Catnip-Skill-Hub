@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 7：本地部署和局域网访问里程碑已完成，包含 Docker、PostgreSQL/Drizzle、S3 兼容存储、Compose、Caddy、本地备份恢复、安全验收，以及显式私网地址绑定与回环回滚。服务器、域名、公网 HTTPS、异机备份与生产监控仍未完成；当前必须停下并向 Neil Bauman 汇报，收到明确继续指令及服务器目标信息后才可继续 Phase 7 服务器部署。
+Phase 7：本地部署和局域网访问里程碑已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。当前工作流切换到 `frontend/visual-optimization` 专用分支上的前端优化，以 `http://192.168.120.107:8080` 作为受信任局域网实时预览入口。没有 Neil Bauman 新的明确部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
 
 ## 禁止事项
 
@@ -42,4 +42,5 @@ Phase 7：本地部署和局域网访问里程碑已完成，包含 Docker、Pos
 - 不提交密钥、Token、密码、SSH 私钥、真实凭据、`.env`、构建产物或依赖目录。
 - 不使用其他姓名替代 Neil Bauman 作为管理员、负责人或产品所有者。
 - 不伪造测试、远端备份、push 或完成状态。
-- 未收到 Neil Bauman 的下一次明确继续指令和服务器目标信息前，不执行公网部署、DNS、HTTPS、防火墙或生产秘密配置。
+- 不在当前前端优化工作流中执行服务器 Docker 安装、nginx 修改、公网部署、DNS、HTTPS、防火墙或生产秘密配置。
+- 不触碰目标服务器上的既有 `catnip-intro` 工作区、未提交文件、上传内容或现有进程。

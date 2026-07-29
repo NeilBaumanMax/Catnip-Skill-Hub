@@ -1084,3 +1084,123 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 功能提交 push 后工作区：干净。
 - 当前不需要回滚；即时暴露回滚使用安全绑定工具恢复 `127.0.0.1`，代码回滚优先 `git revert 1d128c772ba115965b65ee16c3d7f3a6e0803cec`，随后执行完整工程、Compose 和回环入口复测。
 - 本状态回写将形成独立文档提交并正常 push；局域网访问功能基线仍为上述功能提交。
+
+## 2026-07-29 22:38 CST / Phase 7 / 服务器部署暂缓与前端分支准备测试失败记录
+
+### 失败命令
+
+- `npm run build`
+
+### 失败摘要
+
+- Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时需要创建内部进程并绑定端口，当前受限执行环境返回 `Operation not permitted (os error 1)`。
+- 失败发生在沙箱能力边界，未出现 TypeScript、ESLint 或应用代码错误；本轮也没有修改应用代码。
+
+### 处理与复测计划
+
+- 不扩展前端或部署功能，不修改代码规避环境限制。
+- 在获准的非沙箱环境重新执行同一条 `npm run build`；通过后继续 Compose、局域网和文档漂移验证。
+- 首次失败必须保留在最终日志，不得只记录复测成功。
+
+## 2026-07-29 22:40 CST / Phase 7 / 本地部署复核失败记录
+
+### 失败命令
+
+- `docker compose config --quiet`
+- `docker compose ps`
+- `ipconfig getifaddr en0`
+
+### 失败摘要
+
+- 前两条命令未显式传入被忽略的 `.env.local`，Compose 按设计拒绝缺失的 S3 必填变量；没有打印秘密，也没有改变容器。
+- `ipconfig getifaddr en0` 在当前受限环境返回系统接口查询错误；既有私网 URL 的健康接口与首页仍分别返回 `postgres-s3` 和 HTTP 200。
+
+### 修复与复测计划
+
+- 按本地部署手册使用 `docker compose --env-file .env.local ...` 复测配置与服务状态，不输出展开后的配置。
+- 使用已验收且当前可访问的 `192.168.120.107` 作为本轮入口事实；不修改绑定配置。
+
+### 第一次复测
+
+- `docker compose --env-file .env.local config --quiet`：成功。
+- `docker compose --env-file .env.local ps`：受限环境无权访问 Docker socket，失败；将以同命令在获准环境复测，不通过修改 socket 权限绕过。
+
+## 2026-07-29 22:43 CST / Phase 7 / 服务器部署暂缓与前端分支准备
+
+### 本轮计划回放
+
+先读取施工文档并检查 Git，追加 main 与 Phase 7 开工计划，复验 SSH 身份，成功 push 开发前备份；随后只修改施工/部署文档，执行工程、Compose、局域网与漂移验证，最后提交并 push main，再创建专用前端分支。未执行任何服务器写操作或前端视觉修改。
+
+### 实际修改
+
+- 将服务器部署状态从“目标信息待收集”修正为“目标已只读核验、Neil Bauman 明确暂缓”。
+- 记录 Ubuntu/x86_64/资源、SSH 权限、现有 nginx 与 3000/4000 服务、旧站脏工作区、无 Swap/快照/可靠恢复点等事实。
+- 记录未来 `8080 -> host nginx -> 127.0.0.1:18080 -> Catnip Caddy` 直接 IP 共存拓扑及安全组收口边界。
+- 记录生产依赖 3 个 high、SeaweedFS arm64/amd64 不匹配和禁止 `npm audit fix` 自动降级。
+- 修正当前 Phase、架构、施工计划、测试命令与前端专用分支门禁。
+
+### 修改文件
+
+- `AGENTS.md`
+- `docs/construction/ARCHITECTURE.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/CONSTRUCTION_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/TEST_METRICS.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/07-deployment.md`
+- `docs/deployment/SERVER_DEPLOYMENT.md`
+
+### 验证结果
+
+- `npm test`：成功，45/45。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run db:check`：成功。
+- `npm run build`：受限环境首次失败；获准环境同命令成功。
+- `docker compose --env-file .env.local config --quiet`：成功。
+- `docker compose --env-file .env.local ps`：受限环境首次失败；获准只读复测成功，app、caddy、postgres、seaweedfs 均 healthy。
+- `curl http://192.168.120.107:8080/api/health`：成功，返回 `postgres-s3`。
+- 局域网首页：HTTP 200。
+- `git diff --check`：收尾复核成功后方可提交。
+
+### 测试日志
+
+- 首次 Turbopack 端口权限失败及复测已在 22:38 记录完整保留。
+- Compose 未带环境文件、接口查询和 Docker socket 权限失败及复测已在 22:40 记录完整保留。
+- 没有为通过测试修改应用代码；修复动作仅为使用文档规定参数或获准执行环境。
+
+### 测试指标判断
+
+当前代码回归、数据库 schema、生产构建、Compose 配置和局域网实时入口满足既有基线。本轮不包含前端视觉修改，因此没有伪报视觉验收；专用分支的视觉验收从 Neil Bauman 下一轮具体指令开始。
+
+### 文档漂移检查
+
+- 修正 AGENTS、主要求、架构和施工计划仍把服务器写成“目标未知、下一步立即部署”的过时状态。
+- 修正服务器手册中只描述域名/80/443、未记录直接 IP 与既有站点共存的漂移。
+- 修正 TEST_METRICS 中 Compose 未显式传入 `.env.local` 以及代理只允许回环的旧描述，使其与已验收 RFC1918 模式一致。
+- 产品定位、Neil Bauman、NeilBaumanMax、Catnip 薄荷猫、指定 SSH Remote、Skill 主体、管理员边界和品牌规则均无漂移。
+- 未发现其他负责人姓名、真实秘密、正式 Logo/吉祥物、用户文件覆盖、服务器写操作或超出本轮的前端修改。
+
+### GitHub 状态
+
+- 当前分支：main（Git 收尾后切换至 `frontend/visual-optimization`）。
+- 开发前基线：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`。
+- 备份分支：`backup/pre-frontend-docs-20260729-2233`，已成功 push。
+- 文档提交与 main push：Git 收尾后回写。
+- 前端分支 push：main 文档 push 成功后执行并核验。
+
+### 回滚判断
+
+当前不需要回滚。文档交付后如需撤销，优先 `git revert <本轮文档提交>`；前端分支未产生视觉改动时可停止使用。回滚后复测 unit、lint、typecheck、build、db:check、Compose config 和局域网健康入口。
+
+### 当前风险
+
+- 生产依赖仍有 3 个 high，不能在公开服务器部署前忽略，也不能直接使用 npm 建议的大版本降级。
+- 本地预览为明文 HTTP，macOS 防火墙关闭，只能在受信任局域网使用；管理员继续安全禁用。
+- 服务器没有快照、Swap 或稳定旧站恢复链；部署已暂停，风险未被虚报为已解决。
+
+### 下一步
+
+等待 Neil Bauman 提供具体前端修改要求；在 `frontend/visual-optimization` 追加 Public Web 层开工计划和新的开发前备份后逐项实现，并保持局域网实时预览。

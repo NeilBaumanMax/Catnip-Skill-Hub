@@ -826,3 +826,75 @@ Phase 7 本地部署里程碑完成。完成 Git 收尾后停止；服务器部�
 ### 当前结论
 
 Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107:8080`。Git 收尾后停止；服务器部署仍需独立开工计划、目标服务器信息和生产安全门禁。
+
+## 2026-07-29 22:33 CST / Phase 7 / 服务器部署暂缓与前端分支准备开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新指令暂停服务器部署，把已核验的目标服务器现状、共存方案、风险和恢复施工条件写入部署与交接文档；完成文档漂移修正、验证、提交和 main push 后，从干净基线创建并推送专用前端优化分支，但不在本轮擅自修改前端视觉。
+
+### 涉及层
+
+- 部署治理层：记录服务器只读评估、暂缓决定和未来直接 IP 隔离部署方案。
+- 公共前台施工治理：把当前主任务切换为局域网实时预览下的前端优化，并建立独立工作分支边界。
+- Git 与交接层：保留 main 的文档决策基线，建立开发前远端备份和可接力前端分支。
+
+### 当前仓库状态
+
+- 当前分支：`main`；工作区干净。
+- 当前提交：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`，与 `origin/main` 一致。
+- Node.js：v24.18.0；npm：11.16.0。
+- SSH 已复验为 NeilBaumanMax；Remote 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 本地完整栈继续通过 `http://192.168.120.107:8080` 向受信任局域网开放。
+
+### 计划修改
+
+- 修正 AGENTS、主要求、总体计划、架构、服务器部署手册、Phase 7 进度及交接中的当前暂停点。
+- 记录目标服务器 `118.195.247.102` 的只读核验事实、现有站点保护边界、无快照风险、依赖审计和 amd64 适配要求。
+- 明确未来临时直接 IP 方案为独立 `8080` 入口，保留现有 nginx/80/3000/4000 应用，不在本轮执行服务器安装或配置。
+- 完成文档提交和 main push 后创建并推送 `frontend/visual-optimization`，后续只按 Neil Bauman 的具体视觉指令修改前端。
+
+### 测试计划
+
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run build`
+- `npm run db:check`
+- `docker compose config --quiet`
+- 本地局域网健康接口与首页访问检查
+- `git diff --check`、身份/品牌/Remote/Phase/秘密/服务器暂缓决策文档漂移检查
+
+### GitHub 备份计划
+
+- GitHub 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：main
+- 基线提交：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`
+- 备份分支：`backup/pre-frontend-docs-20260729-2233`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+文档决策如需撤销，优先 revert 本轮文档提交；开发前状态由远端备份分支保留。前端分支尚未产生视觉变更时可直接停止使用而不影响 main。回滚或切换后复测 unit、lint、typecheck、build、db:check、Compose 配置和局域网健康入口，不删除数据卷。
+
+## 2026-07-29 22:43 CST / Phase 7 / 服务器部署暂缓与前端分支准备完成记录
+
+### 完成范围
+
+- 将目标服务器只读评估、旧站保护边界、无快照风险、生产依赖漏洞、amd64 门禁和未来直接 IP 隔离拓扑写入部署手册。
+- 修正 AGENTS、主要求、架构、施工计划和测试指标中的当前暂停点；服务器部署正式暂缓，当前主任务切换为独立前端分支。
+- 没有连接服务器执行写操作，没有安装 Docker、修改 nginx、防火墙或旧站文件，也没有修改任何前端页面、样式和应用代码。
+- 远端开发前备份 `backup/pre-frontend-docs-20260729-2233` 已成功 push，指向开发前基线。
+
+### 验证状态
+
+- `npm test`：45/45 成功；lint、typecheck、db:check 成功。
+- `npm run build`：受限环境首次因 Turbopack 内部端口权限失败，获准环境同命令复测成功。
+- Compose 配置首次因未传 `.env.local` 被必填变量门禁拒绝；使用手册规定命令复测成功。Docker 状态首次受 socket 权限限制，获准只读复测显示全部长期服务 healthy。
+- 局域网 `/api/health` 返回 `postgres-s3`，首页返回 HTTP 200；现有实时预览未中断。
+- 文档漂移检查已修正 Compose 门禁命令、当前 Phase、服务器事实和前端分支边界。
+
+### 当前结论
+
+服务器部署讨论已完整落盘并暂停。完成 Git 收尾后创建并推送 `frontend/visual-optimization`，停在不修改前端代码的干净起点，等待 Neil Bauman 的具体前端修改指令。

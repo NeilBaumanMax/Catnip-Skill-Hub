@@ -56,5 +56,6 @@
 - Phase 6 统计只接受阅读、ZIP 下载点击、安装命令复制和来源跳转四种增量事件；当前 Repository 为匿名进程内开发状态，不做唯一访客、用户画像或持久化承诺。
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
-- Phase 7 服务器部分尚未开始；没有服务器、域名、DNS、防火墙、生产秘密与异机备份目标时，不得执行或声称公网部署、HTTPS和生产验收完成。
-- 当前暂停点位于 Phase 7 本地与服务器里程碑之间；收到 Neil Bauman 下一次明确继续指令并核验目标信息后，仍需先执行新一轮开工计划和远端备份门禁。
+- Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
+- 当前主任务为专用前端分支上的视觉优化，并通过已验收的局域网入口实时预览；具体前端修改必须等待 Neil Bauman 的逐项指令，不得借机重构后端或部署栈。
+- 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。

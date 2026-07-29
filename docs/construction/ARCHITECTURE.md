@@ -4,7 +4,7 @@
 
 当前技术基线为 Next.js 16.2.12 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储、推荐线索、发现查询和统计分别位于 `src/lib/import`、`src/lib/storage`、`src/lib/recommendations`、`src/lib/discovery` 与 `src/lib/analytics`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。
 
-Phase 7 本地运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 缺省只向 `127.0.0.1:8080` 暴露应用。局域网模式必须显式选择一个 RFC1918 私网 IPv4，不能监听 `0.0.0.0`。未启用持久化模式时仍保留进程内适配器用于单元测试和轻量开发。服务器部署与公网 HTTPS 尚未建立。
+Phase 7 本地运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 缺省只向 `127.0.0.1:8080` 暴露应用。局域网模式必须显式选择一个 RFC1918 私网 IPv4，不能监听 `0.0.0.0`。未启用持久化模式时仍保留进程内适配器用于单元测试和轻量开发。服务器只读评估已完成但写施工明确暂缓；当前使用专用前端分支和既有局域网栈进行视觉迭代，服务器部署与公网 HTTPS 尚未建立。
 
 ## 目录与职责
 
@@ -102,3 +102,11 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `.env.local` 由脚本生成、权限为 `0600` 且被 Git 忽略；仓库只含空 `.env.example`。管理员邮箱和密码哈希为空时管理登录安全拒绝。
 - `scripts/backup-local.sh` 生成 PostgreSQL custom dump、SeaweedFS 归档与 manifest；恢复脚本有显式确认门禁。真实备份已在隔离数据库和临时卷恢复验证。
 - 当前完成的是本地生产式部署，不等于服务器、域名、公网 HTTPS、异机备份、监控或生产安全验收完成。
+
+## 服务器评估后的预定共存边界
+
+- 目标主机为 Ubuntu 22.04、x86_64、2 vCPU、约 3.6 GiB RAM、无 Swap；现有 nginx 独占宿主机 80，并代理既有 Next.js `3000` 与 Go `4000` 服务。
+- 未来无域名临时预览不得复用 80 或使用路径前缀；预定由 Catnip 容器入口仅绑定 `127.0.0.1:18080`，宿主 nginx 新增独立 `8080` server block，再以 `http://118.195.247.102:8080` 暴露。
+- Docker 不得直接绑定 `0.0.0.0`；PostgreSQL、S3、Next.js 均不得暴露宿主公网端口。现有 3000/4000 公网可达风险应通过腾讯云安全组收口，但变更前必须核对 80 回源。
+- 当前 SeaweedFS 构建固定为 arm64，服务器部署前必须建立 amd64 或多架构产物并核验 checksum；不得把本机产物直接搬到服务器。
+- 既有站点仓库含未提交及未跟踪内容，运行进程缺少完整 systemd 托管；部署工具不得进入、暂存、清理、重启或覆盖该工作区。

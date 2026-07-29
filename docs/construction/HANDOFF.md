@@ -847,3 +847,68 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 当前私网 IP 由 DHCP 提供，网络切换后可能变化；不要改成 `0.0.0.0`。
 - 当前是明文 HTTP，只用于公开浏览；不要填写真实管理员凭据或在不可信网络使用。
 - 需要立即收口时，执行 `npm run deploy:local:bind -- 127.0.0.1` 后以 `--wait` 重建 Caddy。
+
+## 2026-07-29 22:43 CST / Phase 7 暂缓 -> 前端视觉优化 / 完成交接
+
+### 当前状态
+
+服务器部署已由 Neil Bauman 明确暂停；服务器只读评估和未来恢复门禁已完整写入 `docs/deployment/SERVER_DEPLOYMENT.md`。本地完整栈继续在 `http://192.168.120.107:8080` 运行，全部长期服务 healthy。Git 收尾后当前工作分支应为 `frontend/visual-optimization`，尚无前端视觉改动。
+
+### 本轮完成
+
+- 记录目标服务器、既有独立站、无快照与恢复链、amd64、依赖漏洞、网络暴露及直接 IP 共存方案。
+- 修正 AGENTS、主要求、架构、总体计划、测试指标、Phase 7 进度和部署手册漂移。
+- 保持服务器零写入、旧站零触碰、应用代码零修改。
+- 完成 45 项测试、工程门禁、Compose 配置、服务健康和局域网入口复核。
+
+### 未完成
+
+- 生产依赖的 3 个 high 尚未修复；PostCSS/Sharp 覆盖方案必须单独测试，不运行自动 breaking fix。
+- 服务器 Docker、Swap、nginx 8080、腾讯云安全组、备份、监控和部署均未执行。
+- 尚未创建正式域名/HTTPS，也未启用真实管理员凭据。
+- 前端优化尚未开始，必须等待 Neil Bauman 的具体视觉指令。
+
+### 下次优先任务
+
+1. 严格读取施工文档，确认当前位于 `frontend/visual-optimization` 且工作区干净。
+2. 根据 Neil Bauman 的具体前端要求，在 `01-public-web.md` 和 DEV_PROGRESS 追加开工计划并 push 新开发前备份。
+3. 逐项修改、保持局域网实时预览，并执行 unit、lint、typecheck、build 和受影响页面浏览器验收。
+
+### 必读文档
+
+按 `AGENTS.md` 十项顺序读取；前端施工重点加读 `docs/construction/progress/layers/01-public-web.md`，部署风险只需按需查阅 `docs/deployment/SERVER_DEPLOYMENT.md`，不要恢复服务器施工。
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/_components/`
+- `docs/construction/progress/layers/01-public-web.md`
+- `docs/deployment/LOCAL_DEPLOYMENT.md`
+- `docs/deployment/SERVER_DEPLOYMENT.md`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check：成功。
+- 生产 build：受限环境首次失败，获准同命令复测成功。
+- Compose config：带 `.env.local` 成功；全部长期服务 healthy。
+- 局域网健康：`postgres-s3`；首页：HTTP 200。
+
+### GitHub 状态
+
+- 仓库：NeilBaumanMax/Catnip-Skill-Hub
+- Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
+- 当前分支：Git 收尾后为 `frontend/visual-optimization`
+- 开发前基线：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`
+- 备份分支：`backup/pre-frontend-docs-20260729-2233`
+- 最新提交：本轮文档提交，Git 收尾后见 LOG 状态回写
+- 已 push：备份已 push；main 与前端分支待 Git 收尾核验
+- 工作区状态：提交后必须干净
+
+### 风险提醒
+
+- 局域网入口是明文 HTTP 且 macOS 防火墙关闭，不在不可信网络使用，不设置路由器端口转发，不启用管理员真实秘密。
+- 本机私网 IP 可能随 DHCP 改变；变化时用既有安全脚本切换，不使用 `0.0.0.0`。
+- 服务器风险只是记录并暂停，并未解决；任何恢复部署必须重新获得明确指令和完成独立门禁。
