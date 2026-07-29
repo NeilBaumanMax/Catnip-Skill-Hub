@@ -1343,8 +1343,17 @@ Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时尝试创建内部�
 
 ### GitHub 状态
 
-- 文档里程碑提交：`fbb4174a57d67014880cd75dcb992507961c239b`。
+- 文档里程碑提交：`fbb4174a519f0343f0a79d48a96ba1b86f4ce54b`。
 - `frontend/visual-optimization` push：成功，远端分支已推进到该文档里程碑提交。
 - 开发前备份：`backup/pre-apple-ui-plan-20260730-0214`，已成功 push，保留基线 `50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
 - 本状态回写提交成功 push 后，本轮停止；不开始 Stage A 或 UI 代码施工。
-- 不需要回滚；如需撤销文档里程碑，优先 `git revert fbb4174a57d67014880cd75dcb992507961c239b` 并执行既有全量复测。
+- 不需要回滚；如需撤销文档里程碑，优先 `git revert fbb4174a519f0343f0a79d48a96ba1b86f4ce54b` 并执行既有全量复测。
+
+## 2026-07-30 02:27 CST / Public Web Apple UI 重设计文档 / SHA 漂移修正
+
+### 漂移与修正
+
+- 最终核验时发现状态回写中的文档里程碑短 SHA `fbb4174` 正确，但手工扩展的完整 SHA 不是有效 Git 对象。
+- 使用 `git rev-parse fbb4174` 取得真实完整提交号 `fbb4174a519f0343f0a79d48a96ba1b86f4ce54b`，并同步修正 LOG 与 HANDOFF。
+- 远端 `frontend/visual-optimization` 已核验指向状态回写提交 `550b8787ae57c52af86129fad1327afa5ab3b63e`；备份分支仍指向基线 `50ed7dd0d2e4120182a98f55fd471969ebe99b69`。
+- 本修正不改变设计方案、应用代码或测试结论；提交后再次 push 并复核。
