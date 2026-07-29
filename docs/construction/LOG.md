@@ -1214,3 +1214,19 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 开发前备份：`backup/pre-frontend-docs-20260729-2233`，已成功 push，保留基线 `d5b8cc6e9f504f58a1b2143c447feb40501eec36`。
 - 本状态回写提交正常 push 后，才从最新 main 创建并推送 `frontend/visual-optimization`。
 - 不需要回滚；如需撤销文档决策，优先 `git revert 5eb788a902908c3d18c25f71c01b40630ee4673d` 并执行既有全量复测。
+
+## 2026-07-29 22:50 CST / 前端视觉优化 / 分支与实时预览状态
+
+### GitHub 状态
+
+- main 状态回写提交：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`，已成功 push。
+- `frontend/visual-optimization` 已从该提交创建并成功 push，当前分支已切换至该分支。
+- 分支创建时工作区干净，尚无前端页面或样式修改。
+
+### 实时预览
+
+- 首次在受限环境启动 `CATNIP_PERSISTENCE_MODE=memory npm run dev -- --hostname 192.168.120.107 --port 3001`，因监听私网端口返回 `EPERM` 而失败。
+- 在获准环境执行同一启动方式成功，Next.js 16.2.12 Turbopack ready；没有修改代码或扩大到 `0.0.0.0`。
+- `http://192.168.120.107:3001/api/health` 返回 `process-memory`，首页返回 HTTP 200。
+- 热更新入口显式使用进程内数据；稳定 PostgreSQL/S3 容器入口继续为 `http://192.168.120.107:8080`。
+- 已在本地部署手册补充重启命令，并要求显式清空管理员变量；不得在明文开发入口启用真实管理员登录。

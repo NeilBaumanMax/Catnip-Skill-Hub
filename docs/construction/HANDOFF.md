@@ -852,7 +852,7 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 
 ### 当前状态
 
-服务器部署已由 Neil Bauman 明确暂停；服务器只读评估和未来恢复门禁已完整写入 `docs/deployment/SERVER_DEPLOYMENT.md`。本地完整栈继续在 `http://192.168.120.107:8080` 运行，全部长期服务 healthy。Git 收尾后当前工作分支应为 `frontend/visual-optimization`，尚无前端视觉改动。
+服务器部署已由 Neil Bauman 明确暂停；服务器只读评估和未来恢复门禁已完整写入 `docs/deployment/SERVER_DEPLOYMENT.md`。当前工作分支是已推送的 `frontend/visual-optimization`，尚无前端视觉改动。热更新预览运行于 `http://192.168.120.107:3001`（进程内数据），稳定完整栈继续运行于 `http://192.168.120.107:8080`（PostgreSQL/S3）。
 
 ### 本轮完成
 
@@ -900,12 +900,12 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 
 - 仓库：NeilBaumanMax/Catnip-Skill-Hub
 - Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git
-- 当前分支：Git 收尾后为 `frontend/visual-optimization`
+- 当前分支：`frontend/visual-optimization`
 - 开发前基线：`d5b8cc6e9f504f58a1b2143c447feb40501eec36`
 - 备份分支：`backup/pre-frontend-docs-20260729-2233`
 - 最新文档决策提交：`5eb788a902908c3d18c25f71c01b40630ee4673d`
-- 已 push：备份与文档决策 main 提交已 push；前端分支在状态回写 push 后创建并核验
-- 工作区状态：提交后必须干净
+- 已 push：备份、main 文档提交及前端分支均已 push
+- 工作区状态：本分支实时预览状态文档提交后必须干净
 
 ### 风险提醒
 

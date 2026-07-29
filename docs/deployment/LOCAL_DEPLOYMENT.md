@@ -64,6 +64,22 @@ docker compose --env-file .env.local up -d --force-recreate --wait caddy
 
 恢复后确认 `127.0.0.1:8080` 可访问且私网地址不再监听。
 
+## 前端热更新预览
+
+容器入口 `8080` 是稳定生产式构建，不会随源码自动更新。前端视觉施工时，在专用前端分支使用独立端口和进程内数据启动 Next.js 开发服务器：
+
+```sh
+CATNIP_PERSISTENCE_MODE=memory \
+CATNIP_ADMIN_EMAIL= \
+CATNIP_ADMIN_PASSWORD_HASH= \
+CATNIP_SESSION_SECRET= \
+npm run dev -- --hostname 192.168.120.107 --port 3001
+```
+
+同一局域网设备打开 `http://192.168.120.107:3001`，保存前端源码后可看到热更新。健康接口的 `persistence` 应为 `process-memory`；该入口不读取容器 PostgreSQL/S3 的持久数据，不能用于持久化或生产验收。必须使用当前实际 RFC1918 地址，不能改成 `0.0.0.0`。管理员变量显式清空，禁止在明文开发入口使用真实管理员秘密。
+
+稳定完整栈继续保留在 `http://192.168.120.107:8080`；如热更新进程停止，可按上述命令重新启动，不需要重建 Docker 服务。
+
 ## 验证与维护
 
 运行数据库和对象存储集成测试：
