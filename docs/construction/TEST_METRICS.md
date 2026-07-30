@@ -111,10 +111,13 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 
 ## 前端视觉优化分支门禁
 
-- 前端视觉修改只在 `frontend/visual-optimization` 或其明确后继分支实施；main 保持已验收的文档和运行基线。
+- 当前前端视觉修改只在 `SKill-hub-ui` 实施；该分支是指定基线 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 的后继。旧 `frontend/visual-optimization` 保留但不承接当前方案，main 保持既有验收基线。
 - 每轮先由 Neil Bauman 给出具体视觉目标，再记录 `01-public-web.md` 开工计划和开发前远端备份；不得把“优化前端”扩展成后端、数据、认证或部署重构。
 - 每次可见修改后至少执行 `npm test`、lint、typecheck、生产 build，并通过当前局域网 URL 检查首页及受影响路由。
 - 实时预览不替代提交前验证；不得在明文局域网环境启用真实管理员凭据。
+- 每个 UI 批次检查 1440、1024、768、390 视口；首页、详情和推荐页至少各检查一条真实路由。
+- 检查编辑式瀑布流 DOM/键盘顺序、焦点可见性、44px 触控目标、WCAG AA 对比、图片尺寸预留、空结果和 `prefers-reduced-motion`。
+- 检查首页无下载/安装按钮、无大型搜索 Hero、无案例主线、无专家/连接器/MCP/Prompt 市场，并核对五个固定主分类。
 
 ## 失败记录格式
 

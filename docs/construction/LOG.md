@@ -1214,3 +1214,83 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 开发前备份：`backup/pre-frontend-docs-20260729-2233`，已成功 push，保留基线 `d5b8cc6e9f504f58a1b2143c447feb40501eec36`。
 - 本状态回写提交正常 push 后，才从最新 main 创建并推送 `frontend/visual-optimization`。
 - 不需要回滚；如需撤销文档决策，优先 `git revert 5eb788a902908c3d18c25f71c01b40630ee4673d` 并执行既有全量复测。
+## 2026-07-30 08:32 CST / 前端视觉规划 / SKill-hub-ui
+
+### 本轮计划回放
+
+从 Neil Bauman 指定的提交 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 建立 `SKill-hub-ui`，在不修改页面代码的前提下分析 Marvis 与 WorkBuddy 参考截图，形成后续可分批施工的 Catnip UI 规划。
+
+### 实际修改
+
+- 新建 `SKILL_HUB_UI_PLAN.md`，记录设计判断、参数、参考证据、可借鉴与拒绝模式。
+- 规划全站顶部、首页、Skill 卡片、详情页、推荐页和编辑式瀑布流。
+- 规划视觉系统、动效、响应式、无障碍、性能、UI-1 至 UI-4 停点和回滚。
+- 修正 AGENTS、主要求、总体计划与测试指标中的当前前端分支漂移。
+- 更新 DEV_PROGRESS、公共前台层进度和 HANDOFF。
+- 未修改应用代码、依赖、数据库、认证、下载、安装、导入、统计、Docker 或服务器。
+
+### 修改文件
+
+- `AGENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/CONSTRUCTION_PLAN.md`
+- `docs/construction/TEST_METRICS.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- Git 分支、HEAD、origin、Git 身份和 SSH 账号核对一致。
+- 远端 `SKill-hub-ui` 与备份分支均核验指向指定基线。
+- 现有应用测试和工程门禁最终全部成功。
+- 本轮无可见页面变更，未执行 Catnip 新版 UI 浏览器验收，也未声称视觉通过。
+
+### 测试日志
+
+1. `npm test`：成功，45/45。
+2. `npm run lint`：成功。
+3. `npm run db:check`：成功。
+4. `git diff --check`：成功。
+5. `npm run typecheck`：成功。
+6. `npm run build` 首次失败：Turbopack 创建子进程时绑定内部端口被受限环境拒绝，`Operation not permitted`；没有修改代码。
+7. 获准环境执行相同 `npm run build`：成功，全部公开、管理和 API 路由生成完成。
+8. `git ls-remote` 首次在受限网络失败；获准环境同命令复测成功，两个目标远端分支均存在。
+
+### 测试指标判断
+
+- 本轮属于文档规划，不产生 UI 可见变化；工程回归证明没有伴随代码漂移。
+- UI-1 开始后必须补做 1440、1024、768、390 视口和首页/详情/推荐页浏览器验收。
+
+### 文档漂移检查
+
+- `AGENTS.md`、CODEX_MASTER_REQUIREMENTS、CONSTRUCTION_PLAN、TEST_METRICS 已从旧 `frontend/visual-optimization` 当前指向修正为 `SKill-hub-ui`；历史记录不改写。
+- PRODUCT_REQUIREMENTS、ARCHITECTURE、LAYER_CONTRACT、GITHUB_ROLLBACK、WORKFLOW 与 TOOL_POLICY 无需修改。
+- 产品仍只公开 Skill/Skill Pack；案例不进入首页主线，首页无直接下载/安装，不新增普通用户认证、正式 Logo、吉祥物或后续市场类型。
+- 管理员、品牌、GitHub 用户和 SSH Remote 均一致，无 Kyle、真实密钥或用户文件进入差异。
+
+### GitHub 状态
+
+- 当前分支：`SKill-hub-ui`。
+- 开发前基线：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
+- 备份分支：`backup/pre-skill-hub-ui-plan-20260730-0827`，已 push 并远端核验。
+- 规划提交：待收尾提交后回写。
+- main：本轮不修改、不 push。
+
+### 回滚判断
+
+- 当前不需要回滚。
+- 如需撤销本轮规划，使用 `git revert <本轮规划提交>`，随后执行 `git diff --check` 并核对 AGENTS、主要求、总体计划和 HANDOFF。
+
+### 当前风险
+
+- 参考截图只提供方向证据，不提供可复用品牌素材，也不能代替 Catnip 实际浏览器验收。
+- 编辑式瀑布流需要在真实内容与四个视口中验证视觉节奏，规划阶段不能证明最终效果。
+- 旧局域网 IP 可能因 DHCP 漂移；UI-1 开工前需重新核验实时预览地址。
+- `.agents/`、`.codex/`、`skills-lock.json` 是未跟踪用户工具文件，本轮保持不修改、不提交。
+
+### 下一步
+
+收到继续指令后启动 UI-1：建立视觉令牌与全站骨架，完成工程和浏览器闭环后停下汇报，不先做瀑布流代码。

@@ -912,3 +912,67 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 局域网入口是明文 HTTP 且 macOS 防火墙关闭，不在不可信网络使用，不设置路由器端口转发，不启用管理员真实秘密。
 - 本机私网 IP 可能随 DHCP 改变；变化时用既有安全脚本切换，不使用 `0.0.0.0`。
 - 服务器风险只是记录并暂停，并未解决；任何恢复部署必须重新获得明确指令和完成独立门禁。
+## 2026-07-30 08:32 CST / SKill-hub-ui 规划完成 / 交接
+
+### 当前状态
+
+当前分支为 `SKill-hub-ui`，基线来自 Neil Bauman 指定提交。Marvis 与 WorkBuddy 合成规划已落盘，应用代码尚未修改。服务器部署继续暂停，旧前端实验分支保留。
+
+### 本轮完成
+
+- 分析 Marvis 三张与 WorkBuddy 五张本机参考截图。
+- 建立 `SKILL_HUB_UI_PLAN.md`，确定 WorkBuddy 信息架构、Marvis 瀑布流节奏和 Catnip 中文策展身份。
+- 规划 UI-1 至 UI-4，每批完整闭环并停下汇报。
+- 修正当前前端分支和测试门禁文档漂移。
+- 45 项测试、lint、typecheck、db:check、授权 build 和 diff check 成功。
+
+### 未完成
+
+- 没有修改任何页面、组件或样式。
+- 没有生成 Catnip 新版浏览器截图或视觉验收结果。
+- UI-1 视觉令牌与全站骨架、UI-2 首页瀑布流、UI-3 详情/推荐页、UI-4 最终打磨均未开始。
+
+### 下次优先任务
+
+1. 按必读顺序读取文档，重点读取 `SKILL_HUB_UI_PLAN.md` 和 `01-public-web.md`。
+2. 核对 `SKill-hub-ui`、工作区用户文件、SSH、Remote 和当前预览地址，追加 UI-1 开工计划并 push 新备份。
+3. 只实现 UI-1 视觉令牌与全站骨架，完成测试和浏览器验收后停下汇报。
+
+### 必读文档
+
+严格按 AGENTS 十项顺序，并在 PRODUCT_REQUIREMENTS 后读取 `docs/construction/SKILL_HUB_UI_PLAN.md`；当前层为 `docs/construction/progress/layers/01-public-web.md`。
+
+### 关键文件
+
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `src/app/globals.css`
+- `src/app/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/recommend/page.tsx`
+- `src/app/_components/`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check：成功。
+- 生产 build：受限环境首次失败，获准环境同命令复测成功。
+- `git diff --check`：成功。
+- UI 视觉验证：尚未开始，因为本轮没有可见代码变化。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前基线：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`
+- 备份分支：`backup/pre-skill-hub-ui-plan-20260730-0827`
+- 最新提交：待收尾提交后回写
+- 已 push：备份分支是；规划提交待收尾
+- 工作区状态：仅本轮文档和未跟踪用户工具文件，收尾后回写
+
+### 风险提醒
+
+- `.agents/`、`.codex/`、`skills-lock.json` 不属于本轮提交，下一次继续保护。
+- 不复制参考产品的品牌、图片、图标或文案；截图不进入仓库。
+- 首页不能加入直接下载/安装、专家/连接器市场或案例主线。
+- 服务器部署仍暂停；不得在前端轮修改 Docker、nginx、DNS、HTTPS 或生产秘密。

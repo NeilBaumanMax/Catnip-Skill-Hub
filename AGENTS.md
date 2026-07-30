@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 7：本地部署和局域网访问里程碑已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。当前工作流切换到 `frontend/visual-optimization` 专用分支上的前端优化，以 `http://192.168.120.107:8080` 作为受信任局域网实时预览入口。没有 Neil Bauman 新的明确部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
+Phase 7：本地部署和局域网访问里程碑已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。当前位于指定基线 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 后继的 `SKill-hub-ui` 专用分支，先按 `docs/construction/SKILL_HUB_UI_PLAN.md` 完成前端规划，再逐批施工和汇报。旧 `frontend/visual-optimization` 分支保留但不作为当前开发分支。没有 Neil Bauman 新的明确部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
 
 ## 禁止事项
 

@@ -898,3 +898,79 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 当前结论
 
 服务器部署讨论已完整落盘并暂停。完成 Git 收尾后创建并推送 `frontend/visual-optimization`，停在不修改前端代码的干净起点，等待 Neil Bauman 的具体前端修改指令。
+## 2026-07-30 08:27 CST / 前端视觉规划 / 开工计划
+
+### 本轮目标
+
+在指定基线 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 的后继分支 `SKill-hub-ui` 上，完成 Marvis 与 WorkBuddy Skill 广场的对照分析，形成 Catnip 新一轮前端信息架构、视觉系统、瀑布流策略、响应式与验收规划。本轮只修改施工文档，不修改前端代码。
+
+### 涉及层
+
+- 公共前台层：规划首页、详情页与推荐页的统一体验。
+- Skill 领域层：只核对现有字段是否足以支持视觉表达，不修改领域逻辑。
+- 施工文档层：建立本轮可接力、可回滚、可测试的 UI 施工依据。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`。
+- 当前 HEAD：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
+- origin：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- SSH 认证：`NeilBaumanMax`。
+- Git 提交身份：`Neil·Baumann <2091760192@qq.com>`。
+- 未跟踪的 `.agents/`、`.codex/`、`skills-lock.json` 属于用户工具配置，本轮不读取业务内容、不修改、不暂存、不提交。
+
+### 计划修改
+
+- 新建 Catnip Skill Hub UI 专项规划文档。
+- 记录 Marvis 与 WorkBuddy 的可借鉴模式、拒绝模式和 Catnip 合成原则。
+- 明确首页信息架构、编辑式瀑布流、卡片内容、搜索筛选、详情页、视觉令牌、动效、响应式、无障碍和性能门禁。
+- 修正施工规范中的旧前端分支指向，并更新 LOG、HANDOFF 与公共前台层进度。
+
+### 测试计划
+
+- 文档结构、身份、品牌、Remote、Phase 边界和需求一致性检查。
+- `git diff --check`。
+- 本轮不改代码，因此不把既有应用测试写成本轮代码验证；收尾仍执行现有 `npm test`、lint、typecheck 与 build，确认文档施工没有伴随代码漂移。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`
+- 备份分支：`backup/pre-skill-hub-ui-plan-20260730-0827`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+- 本轮仅文档提交；如规划需撤销，优先 `git revert <本轮文档提交>`。
+- 不使用 reset、clean、force push，不删除旧前端分支。
+- 回滚后执行 `git diff --check`，并核对施工文档入口与 HANDOFF。
+
+### 开工门禁更新
+
+- 备份分支 `backup/pre-skill-hub-ui-plan-20260730-0827` 已成功 push 到 origin。
+- 首次创建备份分支因受限环境无法写 `.git/refs` 失败；未产生分支。获准后原命令复测成功，并已切回 `SKill-hub-ui`。
+
+## 2026-07-30 08:32 CST / 前端视觉规划 / 完成记录
+
+### 已完成
+
+- 建立 `SKILL_HUB_UI_PLAN.md`，形成 WorkBuddy 信息架构、Marvis 瀑布流节奏与 Catnip 产品边界的合成方案。
+- 明确 Design Read、设计参数、借鉴/拒绝清单、首页与详情信息架构、编辑式瀑布流、视觉令牌、动效、响应式、无障碍、性能和四个施工批次。
+- 将当前前端分支从旧实验分支修正为 `SKill-hub-ui`，旧分支保持不删除。
+- 本轮未修改 `src/`、依赖、数据库、部署或运行环境。
+
+### 验证结果
+
+- `npm test`：45/45 成功。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run db:check`：成功。
+- `npm run build`：受限环境首次因 Turbopack 无权绑定内部端口失败；获准环境同命令复测成功。
+- `git diff --check`：成功。
+- 浏览器视觉验收：本轮没有可见代码修改，因此只完成参考截图分析，不把它写成 Catnip 页面视觉通过。
+
+### 当前结论
+
+前端规划轮完成，停在 UI-1 代码施工前。下一轮必须重新执行开工计划与开发前备份，然后只实施视觉令牌和全站骨架；完成 UI-1 后停下汇报。
