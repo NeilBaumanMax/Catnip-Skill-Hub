@@ -1977,3 +1977,14 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 
 - Edge 刷新局域网预览，检查首页滚动四区域、推荐页和 `project-brief` 详情页。
 - 只根据真实视觉反馈调整选中阈值、分组间距、上下文栏或响应式，不进入后台或服务器施工。
+
+## 2026-07-31 06:05 CST / SKill-hub-ui / 公共外壳 Git 状态回写
+
+### GitHub 状态
+
+- 功能提交：`0880fbb63118f13861abce913feed2e10875c0c1`（`feat: unify public navigation shell`）。
+- `git push origin SKill-hub-ui`：成功，远端由 `bca3c29` 前进到 `0880fbb`。
+- 推送后 `origin/SKill-hub-ui...SKill-hub-ui`：`0 0`，本地与远端同步。
+- 开发前备份：`backup/pre-public-shell-navigation-20260731-0549`，已 push，指向开工计划提交 `bca3c293f15f47137ca03e929cd4d36f8146a051`。
+- 推送后工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件，均未暂存、未修改、未提交。
+- 当前无需回滚；功能回滚目标固定为 `0880fbb63118f13861abce913feed2e10875c0c1`。

@@ -1276,6 +1276,14 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 不得把工程成功写成自动视觉验收成功。
 - 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。
 
+## 2026-07-31 06:05 CST / 公共外壳 Git 状态回写
+
+- 功能提交：`0880fbb63118f13861abce913feed2e10875c0c1`，已成功 push 到 `origin/SKill-hub-ui`。
+- 本地与远端分歧：`0 0`。
+- 开工计划与备份：`bca3c293f15f47137ca03e929cd4d36f8146a051`；`backup/pre-public-shell-navigation-20260731-0549` 已成功 push。
+- 工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件。
+- 下一次接力以本条之后的纯文档收尾提交为最新 HEAD，以 `0880fbb` 作为功能回滚目标；先完成 Edge 视觉验收，不进入服务器或新业务。
+
 ## 2026-07-31 05:18 CST / 山景玻璃 Git 状态回写
 
 - 功能提交：`cef8f5d8f8a4868e52308006fd767d657cbd70fc`，已成功 push 到 `origin/SKill-hub-ui`。
