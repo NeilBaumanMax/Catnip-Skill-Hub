@@ -1129,3 +1129,11 @@ UI-1 深色公共外壳已经形成未提交代码，工程和 HTTP 验证通过
 - 不得把工程验证替代真实视觉验收。
 - `.agents/`、`.codex/`、`skills-lock.json` 是用户工具文件，不得暂存或修改。
 - 服务器部署继续暂停；不得触碰既有 `catnip-intro`、Docker、nginx、DNS、HTTPS 或生产秘密。
+
+## 2026-07-31 04:43 CST / SKill-hub-ui / Git 状态回写
+
+- 首页工程提交：`4c615ad5725c0f97aca19f49f33ff0b4cecdc4ff`，已 push 到 `origin/SKill-hub-ui`。
+- 本地与远端分歧：`0 0`。
+- 开发前备份：`backup/pre-unsplash-discovery-ui-20260731-0415`，远端快照 `824adf0a18b2fcc30273f15c675114f90c8a010b`。
+- 工作区：仅 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件；不得纳入后续提交。
+- 状态：工程检查点已远端保存，视觉门禁待 Neil Bauman 在 Edge 验收；下一轮不得把该状态误写为最终视觉通过。

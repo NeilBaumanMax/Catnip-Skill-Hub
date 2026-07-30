@@ -1528,3 +1528,19 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 将明确文件清单暂存后，`git diff --cached --check` 首次发现上游 `public/fonts/LXGW-WenKai-OFL.txt` 第 22 行存在一个行尾空格并退出失败。
 - 原因是未跟踪新文件不会进入此前普通 `git diff --check`；只移除行尾空格，不改变许可证文字、段落或法律含义。
 - 修复后必须重新暂存许可证与本条日志，并复跑 cached diff check；未复测前不提交。
+
+## 2026-07-31 04:43 CST / SKill-hub-ui / Git 状态回写
+
+### GitHub 状态
+
+- 首页工程提交：`4c615ad5725c0f97aca19f49f33ff0b4cecdc4ff`（`feat: rebuild Catnip skill discovery homepage`）。
+- `git push origin SKill-hub-ui`：成功，远端由 `7780c64` 前进到 `4c615ad`。
+- 推送后 `origin/SKill-hub-ui...SKill-hub-ui`：`0 0`，本地与远端同步。
+- 推送后工作区：只剩未跟踪用户工具文件 `.agents/`、`.codex/`、`skills-lock.json`，均未暂存、未修改、未提交。
+- 远端开发前备份：`backup/pre-unsplash-discovery-ui-20260731-0415`，快照 `824adf0a18b2fcc30273f15c675114f90c8a010b`，已核验。
+
+### 完成判断
+
+- 工程检查点已提交并远端备份；无需回滚。
+- 浏览器视觉门禁仍未完成，因此状态保持“部分完成 / 等待 Edge 视觉验收”，不标记最终前端设计完成。
+- 本条状态回写形成纯文档收尾提交并 push 后，以 Git log 第一条作为最新文档提交；可回滚功能提交固定为 `4c615ad5725c0f97aca19f49f33ff0b4cecdc4ff`。
