@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 7：本地部署和局域网访问里程碑已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。`frontend/visual-optimization` 已完成 Apple UI 公共前台实现，`http://192.168.120.107:3001` 是保持运行的进程内数据热更新预览，`http://192.168.120.107:8080` 是未改动的稳定容器完整栈。自动化浏览器实例仍不可用，因此三断点截图、真机和 Core Web Vitals 视觉证据尚未完成；下一轮应先由 Neil Bauman 在局域网检查设计，再按反馈修改。没有新的明确部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
+Phase 7：本地部署和局域网访问里程碑已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。当前工作流切换到 `frontend/visual-optimization` 专用分支上的前端优化，以 `http://192.168.120.107:8080` 作为受信任局域网实时预览入口。没有 Neil Bauman 新的明确部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
 
 ## 禁止事项
 
