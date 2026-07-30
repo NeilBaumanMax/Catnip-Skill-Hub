@@ -23,6 +23,14 @@ function discoveryHref(filters: { query?: string; category?: string; tag?: strin
   return query ? `/?${query}#skill-grid` : "/#skill-grid";
 }
 
+const utilityLinks = [
+  { href: "/", short: "首", label: "首页" },
+  { href: "#skill-grid", short: "探", label: "探索" },
+  { href: "#categories", short: "类", label: "分类" },
+  { href: "/recommend", short: "荐", label: "推荐" },
+  { href: "#about", short: "介", label: "关于" },
+] as const;
+
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const resources = await runtimeSkillRepository.list();
@@ -34,146 +42,180 @@ export default async function Home({ searchParams }: HomeProps) {
   const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
   return (
-    <div className="site-shell">
-      <header className="site-header">
-        <Link className="wordmark" href="/" aria-label="Catnip Skill Hub 首页">
-          <span className="brand-placeholder" aria-hidden="true">
-            C
-          </span>
-          <span>
-            <strong>Catnip</strong>
-            <small>薄荷猫</small>
-          </span>
+    <div className="discovery-page">
+      {/*
+        THESIS: Skill 封面是首页主体，拒绝大型 Hero 与通用市场卡片墙。
+        OWN-WORLD: 冷白画布、深墨工具栏、Catnip 薄荷焦点与多样内容封面。
+        STORY: 用户从搜索和分类进入瀑布流，在卡片上理解用途，再进入详情行动。
+        FIRST VIEWPORT: 左侧功能栏，顶部发现控制，紧凑标题，下方立即出现四列 Skill。
+        FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
+      */}
+      <aside className="utility-rail" aria-label="站点功能">
+        <Link className="rail-brand" href="/" aria-label="Catnip Skill Hub 首页">
+          C
         </Link>
-
-        <nav className="primary-nav" aria-label="主要导航">
-          <a href="#explore">探索</a>
-          <a href="#categories">分类</a>
+        <nav className="rail-nav" aria-label="快捷入口">
+          {utilityLinks.map((item, index) => (
+            <Link
+              aria-current={index === 0 ? "page" : undefined}
+              className={index === 0 ? "active" : ""}
+              href={item.href}
+              key={item.label}
+            >
+              <span aria-hidden="true">{item.short}</span>
+              <small>{item.label}</small>
+            </Link>
+          ))}
         </nav>
+        <span className="rail-signature" aria-hidden="true">CATNIP</span>
+      </aside>
 
-        <form className="search-preview" role="search" aria-label="Skill 搜索" action="/" method="get">
-          <label htmlFor="skill-search">搜索 Skill</label>
-          <input
-            id="skill-search"
-            name="q"
-            type="search"
-            placeholder="搜索标题、用途或标签"
-            defaultValue={discovery.filters.query}
-            maxLength={100}
-          />
-          <button type="submit">搜索</button>
-        </form>
+      <div className="discovery-main">
+        <header className="discovery-header">
+          <div className="discovery-topline">
+            <Link className="discovery-wordmark" href="/">
+              <strong>Catnip 薄荷猫</strong>
+              <span>中文 Agent Skill 独立站</span>
+            </Link>
 
-        <Link className="recommend-link" href="/recommend">
-          推荐 Skill
-        </Link>
-      </header>
+            <form className="discovery-search" role="search" aria-label="搜索 Skill" action="/" method="get">
+              <label htmlFor="discovery-search-input">搜索 Skill</label>
+              <input
+                id="discovery-search-input"
+                name="q"
+                type="search"
+                placeholder="搜索标题、用途、作者或标签"
+                defaultValue={discovery.filters.query}
+                maxLength={100}
+              />
+              <button type="submit">搜索</button>
+            </form>
 
-      <main>
-        <section className="intro" id="explore" aria-labelledby="page-title">
-          <p className="eyebrow">中文 Agent Skill 精选</p>
-          <h1 id="page-title">发现值得带进工作流的好 Skill</h1>
-          <p>
-            从创意编码到硬件原型，浏览由 Catnip 薄荷猫筛选、整理的实用能力。
-          </p>
-        </section>
-
-        <section className="category-section" id="categories" aria-labelledby="category-title">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">按兴趣开始</p>
-              <h2 id="category-title">探索分类</h2>
-            </div>
-            <span>5 个主分类</span>
+            <Link className="discovery-recommend" href="/recommend">
+              推荐 Skill
+            </Link>
           </div>
-          <div className="category-list" aria-label="Skill 主分类">
-            {MAIN_CATEGORIES.map((category) => (
+
+          <div className="discovery-filters" id="categories">
+            <nav className="discovery-categories" aria-label="Skill 主分类">
               <Link
-                className={discovery.filters.category === category ? "active" : ""}
-                href={discoveryHref({
-                  query: discovery.filters.query,
-                  category: discovery.filters.category === category ? undefined : category,
-                  tag: discovery.filters.tag,
-                })}
-                key={category}
+                aria-current={discovery.filters.category ? undefined : "page"}
+                className={discovery.filters.category ? "" : "active"}
+                href={discoveryHref({ query: discovery.filters.query, tag: discovery.filters.tag })}
               >
-                {category}
+                全部
               </Link>
-            ))}
-          </div>
-          <div className="tag-filter" aria-label="Skill 标签筛选">
-            {discovery.availableTags.map((tag) => (
-              <Link
-                className={discovery.filters.tag === tag ? "active" : ""}
-                href={discoveryHref({
-                  query: discovery.filters.query,
-                  category: discovery.filters.category,
-                  tag: discovery.filters.tag === tag ? undefined : tag,
-                })}
-                key={tag}
-              >{tag}</Link>
-            ))}
-          </div>
-        </section>
+              {MAIN_CATEGORIES.map((category) => (
+                <Link
+                  aria-current={discovery.filters.category === category ? "page" : undefined}
+                  className={discovery.filters.category === category ? "active" : ""}
+                  href={discoveryHref({
+                    query: discovery.filters.query,
+                    category: discovery.filters.category === category ? undefined : category,
+                    tag: discovery.filters.tag,
+                  })}
+                  key={category}
+                >
+                  {category}
+                </Link>
+              ))}
+            </nav>
 
-        <section className="skill-section" aria-labelledby="skill-title">
-          <div className="section-heading">
+            <nav className="discovery-tags" aria-label="Skill 标签">
+              <span>热门标签</span>
+              {discovery.availableTags.map((tag) => (
+                <Link
+                  aria-current={discovery.filters.tag === tag ? "page" : undefined}
+                  className={discovery.filters.tag === tag ? "active" : ""}
+                  href={discoveryHref({
+                    query: discovery.filters.query,
+                    category: discovery.filters.category,
+                    tag: discovery.filters.tag === tag ? undefined : tag,
+                  })}
+                  key={tag}
+                >
+                  {tag}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </header>
+
+        <main className="discovery-content">
+          <section className="discovery-intro" aria-labelledby="page-title">
             <div>
-              <p className="eyebrow">{discovery.mode === "recommended" ? "随机推荐" : "搜索结果"}</p>
-              <h2 id="skill-title">{discovery.mode === "recommended" ? "今天想让 Agent 学会什么？" : "找到这些 Skill"}</h2>
+              <h1 id="page-title">发现真正值得安装的 Skill</h1>
+              <p>由 Catnip 薄荷猫筛选、整理。先看见能力，再决定是否带进工作流。</p>
             </div>
-            <div className="result-summary">
-              <p className="section-note">{discovery.items.length} 个公开资源</p>
+            <div className="discovery-summary" aria-live="polite">
+              <strong>{discovery.items.length}</strong>
+              <span>{discovery.mode === "recommended" ? "个今日推荐" : "个匹配结果"}</span>
               {discovery.mode === "filtered" ? <Link href="/#skill-grid">清除条件</Link> : null}
             </div>
-          </div>
+          </section>
 
-          <div className="skill-grid" id="skill-grid">
-            {discovery.items.map((skill, index) => (
-              <article className="skill-card" key={skill.slug}>
-                <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
-                  <div className={`skill-cover cover-${skill.coverTheme} ${skill.coverSize}`}>
-                    <span className="cover-index">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="cover-kicker">CATNIP SKILL</span>
-                    <strong>{skill.title}</strong>
-                    <span className="cover-mark" aria-hidden="true" />
-                  </div>
-                  <div className="skill-copy">
-                    <div className="skill-meta">
-                      <span>{skill.category}</span>
-                      <span>{skill.tags[0]}</span>
-                    </div>
-                    <h3>{skill.title}</h3>
-                    <p>{skill.summary}</p>
-                    <footer>
-                      <span>原作者：{skill.author.name}</span>
-                      <span>阅读 {stats[skill.slug]?.views ?? 0} · 查看 →</span>
-                    </footer>
-                  </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-          {discovery.items.length === 0 ? (
-            <div className="empty-results">
-              <h3>暂时没有匹配的 Skill</h3>
-              <p>可以缩短关键词、切换分类或清除筛选条件。</p>
-              <Link href="/#skill-grid">查看全部推荐</Link>
+          <section className="waterfall-section" aria-labelledby="skill-grid-title">
+            <div className="waterfall-heading">
+              <h2 id="skill-grid-title">{discovery.mode === "recommended" ? "继续发现" : "搜索结果"}</h2>
+              <p>点击任意封面查看功能、来源、下载与安装说明。</p>
             </div>
-          ) : null}
-        </section>
-      </main>
 
-      <footer className="site-footer" id="recommend">
-        <div>
-          <strong>Catnip 薄荷猫</strong>
-          <p>由管理员筛选、整理和发布的中文 Agent Skill 独立站。</p>
-        </div>
-        <div className="footer-note">
-          <span>Logo 与吉祥物将在后续接入</span>
-          <Link href="/recommend">推荐一个 Skill</Link>
-        </div>
-      </footer>
+            <div className="skill-waterfall" id="skill-grid">
+              {discovery.items.map((skill) => (
+                <article className="waterfall-card" data-size={skill.coverSize} key={skill.slug}>
+                  <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
+                    <div
+                      className={`waterfall-cover cover-${skill.coverTheme}`}
+                      data-photo={skill.coverTheme === "brief" ? "mountain" : undefined}
+                      aria-hidden="true"
+                    >
+                      <span className="cover-original">{skill.originalName}</span>
+                      <span className="waterfall-art" />
+                    </div>
+                    <div className="waterfall-copy">
+                      <div className="waterfall-title-row">
+                        <h3>{skill.title}</h3>
+                        <span>{skill.category}</span>
+                      </div>
+                      <p>{skill.summary}</p>
+                      <footer>
+                        <span>{skill.author.name}</span>
+                        <span>{skill.tags[0]} / 阅读 {stats[skill.slug]?.views ?? 0}</span>
+                      </footer>
+                    </div>
+                  </Link>
+                </article>
+              ))}
+            </div>
+
+            {discovery.items.length === 0 ? (
+              <div className="discovery-empty">
+                <h2>没有找到匹配的 Skill</h2>
+                <p>试着缩短关键词，或清除当前分类与标签。</p>
+                <Link href="/#skill-grid">查看全部推荐</Link>
+              </div>
+            ) : null}
+          </section>
+        </main>
+
+        <footer className="discovery-footer" id="about">
+          <div>
+            <strong>Catnip 薄荷猫</strong>
+            <p>由管理员 Neil Bauman 筛选、整理和发布的中文 Agent Skill 独立站。</p>
+          </div>
+          <div>
+            <span>Logo 与吉祥物将在后续接入</span>
+            <a
+              href="https://unsplash.com/photos/mountain-landscape-with-a-calm-lake-at-dawn-JCqW61z2Sz0"
+              target="_blank"
+              rel="noreferrer"
+            >
+              山景摄影：Wolfgang Hasselmann / Unsplash
+            </a>
+            <Link href="/recommend">推荐一个 Skill</Link>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }

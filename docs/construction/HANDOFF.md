@@ -984,3 +984,148 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 备份分支：`backup/pre-skill-hub-ui-plan-20260730-0827`，已 push，指向 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
 - main：未修改。
 - 工作区：提交后只保留未跟踪用户工具文件 `.agents/`、`.codex/`、`skills-lock.json`；不得暂存。
+## 2026-07-30 10:29 CST / SKill-hub-ui UI-1 / 验证阻塞交接
+
+### 当前状态
+
+UI-1 深色公共外壳已经形成未提交代码，工程和 HTTP 验证通过，但浏览器列表为空，无法完成视觉门禁。当前不是完成版本，不得进入 UI-2。
+
+### 本轮完成
+
+- 深色令牌、公共背景、平整粘性导航、现代无衬线和首页紧凑引导已实现。
+- 详情与推荐页共享表面完成基础深色适配。
+- 外部案例研究和深色方向已写入专项计划。
+- 开发前备份已远端核验；45 项测试及工程门禁通过。
+
+### 未完成
+
+- 1440、1024、768、390 视觉截图与布局检查。
+- 首页、详情、推荐页真实浏览器交互与对比检查。
+- 必要视觉修正、最终漂移检查、UI-1 commit 和 push。
+
+### 下次优先任务
+
+1. 恢复浏览器入口，或读取 Neil Bauman 从 `http://192.168.0.109:3000` 提供的当前页面截图。
+2. 完成多视口视觉审查并修正问题，保持 UI-1 范围。
+3. 全量复测、更新本轮完成记录、明确暂存、提交并 push，然后停下汇报。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并读取 `SKILL_HUB_UI_PLAN.md` 最新深色修订及 `01-public-web.md` 最新 UI-1 记录。
+
+### 关键文件
+
+- `src/app/globals.css`
+- `src/app/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/recommend/page.tsx`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+
+### 测试基线
+
+- unit：45/45；lint、typecheck、db:check、生产 build：成功。
+- 首页、详情、推荐页：HTTP 200。
+- 浏览器视觉门禁：未完成，原因是可用浏览器列表为空。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前基线：`7780c645e702f20470305a2c96239516feb443bb`
+- 备份分支：`backup/pre-skill-hub-ui-1-dark-shell-20260730-1018`，已 push
+- 最新提交：仍为 `7780c645e702f20470305a2c96239516feb443bb`
+- 已 push：只 push 备份；UI-1 改动未提交、未 push
+- 工作区状态：UI-1 文档与代码修改，加未跟踪用户工具文件
+
+### 风险提醒
+
+- 不要在没有截图审查的情况下把 UI-1 写成完成。
+- 不要暂存 `.agents/`、`.codex/`、`skills-lock.json`。
+- 不进入瀑布流、精选推荐或服务器施工。
+
+### 2026-07-30 / 最新视觉反馈状态
+
+- 首版深色单色感已按 Neil Bauman 反馈修正为五类语义色系统。
+- 当前实时预览已热更新，地址仍为 `http://192.168.0.109:3000`。
+- lint、typecheck、diff check 通过；UI-1 仍未提交、未 push，等待最新视觉确认。
+
+### 2026-07-30 16:17 CST / 最新方向
+
+- Neil Bauman 已将首页方向进一步明确为“蓝调山峰风景画布 + 通透瀑布流毛玻璃”，不再使用深绿色主页背景。
+- 本地背景 `public/images/catnip-blue-mountain.jpg` 已接入；来源为 Wolfgang Hasselmann / Unsplash，署名与许可信息见首页页脚和 `public/images/README.md`。
+- 玻璃只用于首页导航、分类控制和 Skill 卡片，并包含实色降级；详情与推荐页没有套用照片背景。
+- unit 45/45、lint、typecheck、db:check 与获准生产 build 已通过；下一步只做 Neil Bauman 的 Edge 视觉反馈修正及多视口验收，不得提前提交为完成版本或进入 UI-2。
+- 当前局域网预览为 `http://192.168.0.109:3000`，首页与背景图片 HTTP 200；可控浏览器列表仍为空，需以 Neil Bauman 的 Edge 视觉反馈完成门禁。
+
+### 2026-07-31 / 最新标题反馈状态
+
+- Edge 实机截图确认旧标题列过窄；当前未提交版本已将 H1 展开到约 75% 内容宽度并稳定为两行。
+- H1 采用自托管霞鹜文楷粗体，字体文件、SIL OFL 1.1 和来源说明位于 `public/fonts/`；正文没有跟随改成书写体。
+- unit 45/45、lint、typecheck、db:check、获准生产 build、首页和字体 HTTP 200 已通过；预览仍为 `http://192.168.0.109:3000`。
+- 下一步只接收 Neil Bauman 对新标题位置、字形和尺度的 Edge 视觉反馈；确认前不提交、不 push、不进入 UI-2。
+
+## 2026-07-31 04:35 CST / SKill-hub-ui / Unsplash 首页工程交接
+
+### 当前状态
+
+`SKill-hub-ui` 已完成 Unsplash 式 Catnip 首页的工程实现，等待 Neil Bauman 在 Edge 对局域网实时预览进行视觉验收。该状态不是最终视觉通过，不得直接进入下一批公共页面重构。
+
+### 本轮完成
+
+- 首页信息架构改为左侧功能栏、顶部搜索/分类/标签、中央 Skill 瀑布流。
+- 保留 Catnip 中文策展、五分类、真实 GET 筛选、详情和推荐能力；排除普通用户登录、首页下载/安装。
+- 建立 `PRODUCT.md` 与 `DESIGN.md`，并将专项 UI 计划更新为最新方向。
+- 开发前 WIP 快照已推送到远端备份分支；工程、生产构建与 HTTP 验证完成。
+
+### 未完成
+
+- 1440、1024、768、390 四个真实视口截图、溢出、对比和交互视觉检查。
+- Neil Bauman 对新版首页的真实观感确认。
+- 详情页和推荐页尚未按新浅色发现系统重新统一；它们仅保持既有功能可用。
+- PostgreSQL/S3 集成测试环境未配置，1 项集成用例明确跳过。
+
+### 下次优先任务
+
+1. 打开 `http://192.168.0.109:3000`，获取 Neil Bauman 对首页结构、密度、封面和颜色的反馈。
+2. 若可控浏览器恢复，补做 1440/1024/768/390 视口和键盘路径视觉审查。
+3. 只修正首页视觉问题并全量复测；未确认前不进入详情视觉统一或服务器部署。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并额外读取 `PRODUCT.md`、`DESIGN.md` 与 `docs/construction/SKILL_HUB_UI_PLAN.md` 最新记录。
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `DESIGN.md`
+- `PRODUCT.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `public/fonts/README.md`
+- `public/images/README.md`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check、获准生产 build、diff check：成功。
+- `npm run test:integration`：1 项跳过，原因是未配置 PostgreSQL/S3 集成环境。
+- 首页、搜索、分类、详情、推荐、山景图和真实字体路径：HTTP 200。
+- 浏览器视觉门禁：未完成，可控浏览器列表为空。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前基线：`7780c645e702f20470305a2c96239516feb443bb`
+- 备份分支：`backup/pre-unsplash-discovery-ui-20260731-0415`，已 push；快照提交 `824adf0a18b2fcc30273f15c675114f90c8a010b`
+- 最新提交：本轮收尾提交后回写
+- 已 push：备份已 push；工作分支待收尾 push
+- 工作区状态：收尾提交前仅已知 UI WIP、本轮文件和未跟踪用户工具文件
+
+### 风险提醒
+
+- 不得把工程验证替代真实视觉验收。
+- `.agents/`、`.codex/`、`skills-lock.json` 是用户工具文件，不得暂存或修改。
+- 服务器部署继续暂停；不得触碰既有 `catnip-intro`、Docker、nginx、DNS、HTTPS 或生产秘密。

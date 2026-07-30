@@ -1269,7 +1269,7 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - `AGENTS.md`、CODEX_MASTER_REQUIREMENTS、CONSTRUCTION_PLAN、TEST_METRICS 已从旧 `frontend/visual-optimization` 当前指向修正为 `SKill-hub-ui`；历史记录不改写。
 - PRODUCT_REQUIREMENTS、ARCHITECTURE、LAYER_CONTRACT、GITHUB_ROLLBACK、WORKFLOW 与 TOOL_POLICY 无需修改。
 - 产品仍只公开 Skill/Skill Pack；案例不进入首页主线，首页无直接下载/安装，不新增普通用户认证、正式 Logo、吉祥物或后续市场类型。
-- 管理员、品牌、GitHub 用户和 SSH Remote 均一致，无 Kyle、真实密钥或用户文件进入差异。
+- 管理员、品牌、GitHub 用户和 SSH Remote 均一致，无旧管理员姓名、真实密钥或用户文件进入差异。
 
 ### GitHub 状态
 
@@ -1304,3 +1304,227 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 开发前备份：`backup/pre-skill-hub-ui-plan-20260730-0827`，远端保持基线 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
 - main：未修改，`origin/main` 仍为指定基线。
 - 本状态回写提交 push 后结束本轮；不开始 UI-1。
+## 2026-07-30 10:29 CST / SKill-hub-ui / UI-1 深色外壳验证暂停
+
+### 本轮计划回放
+
+依据 Neil Bauman 最新深色方向和外部案例研究，完成 UI-1 视觉令牌、全站公共外壳、顶部导航与首页紧凑引导，并在浏览器验收后停下汇报。
+
+### 实际修改
+
+- 把默认公共主题从暖色浅色改为中性炭黑、深灰绿表面与单一薄荷强调色。
+- 移除公共页面 Georgia/宋体展示风格，统一为现代无衬线与更明确字重。
+- 把漂浮玻璃导航改为平整粘性导航，重做品牌占位、搜索、推荐入口和焦点状态。
+- 收紧首页引导，改为非居中的两行编辑式标题；不添加大型 Hero。
+- 将详情与推荐页的公共表面、按钮、输入和来源卡同步到深色令牌。
+- 不修改搜索、领域、下载、安装、统计、认证、数据库、依赖或部署。
+
+### 修改文件
+
+- `src/app/globals.css`
+- `src/app/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/recommend/page.tsx`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm test`：45/45 成功。
+- `npm run db:check`：成功。
+- 获准环境 `npm run build`：成功。
+- 首页、`/skills/project-brief`、`/recommend`：获准本机网络复测均为 HTTP 200，目标文案存在。
+- `git diff --check`：成功。
+- 浏览器视觉验收：阻塞，未通过也未伪报通过。
+
+### 测试日志
+
+1. 浏览器运行时连接成功，但可用浏览器列表为空；按浏览器排障说明只读复核后仍为空，停止使用替代浏览器控制方案。
+2. 首次沙箱内 curl 三个私网 URL 因网络隔离失败；服务仍运行，获准环境相同 URL 复测全部 200。
+3. 开发服务生成的 `next-env.d.ts` 路径漂移已用原内容修正，不纳入本轮修改。
+
+### 测试指标判断
+
+- 工程与 HTTP 门禁通过。
+- 缺少真实浏览器多视口和视觉检查，因此 UI-1 尚未达到完成门禁，不能 commit/push 为完成版本。
+
+### 文档漂移检查
+
+- `SKILL_HUB_UI_PLAN.md` 已由浅色默认修订为深色默认，并明确蓝紫可以作为内容色但不能成为通用 AI 渐变语言。
+- 产品范围、首页无直接安装/下载、案例定位、五分类、品牌、管理员、Remote 和服务器暂停状态无漂移。
+- 尚未完成最终全量视觉漂移检查，需浏览器恢复后继续。
+
+### GitHub 状态
+
+- 当前分支：`SKill-hub-ui`。
+- 开发前基线：`7780c645e702f20470305a2c96239516feb443bb`。
+- 备份分支：`backup/pre-skill-hub-ui-1-dark-shell-20260730-1018`，已成功 push。
+- UI-1 提交：无；当前改动未提交、未 push。
+
+### 回滚判断
+
+当前无需回滚；工作区由远端备份保护。若方向被否决，不提交当前代码即可，且不使用破坏性恢复命令。
+
+### 当前风险
+
+- 没有真实截图，无法确认深色层级、标题尺度、封面与外壳色彩关系在真实渲染中是否达到设计标准。
+- 私网预览地址可能随 DHCP 变化；当前为 `192.168.0.109:3000`。
+- `.agents/`、`.codex/`、`skills-lock.json` 继续是未跟踪用户工具文件。
+
+### 下一步
+
+在 Edge 打开当前预览并提供截图，或恢复可控浏览器入口；完成四个视口与三个公开页面视觉检查、必要修正、全量复测、文档收尾、提交和 push 后停下汇报。
+
+### 2026-07-30 / 用户反馈后的色彩修正
+
+- 反馈：首版深色外壳颜色过少，整体观感奇怪。
+- 修正：新增五个类别语义色，应用到分类入口、卡片内容面、详情页强调和推荐入口；首页第二行标题改为暖琥珀。
+- 约束：颜色传达类别和层级，主操作仍为薄荷；没有增加紫蓝渐变、发光背景或玻璃堆叠。
+- 验证：lint、typecheck、`git diff --check` 成功；开发服务热更新成功。
+- 状态：仍未提交、未 push，等待实时视觉反馈。
+
+### 2026-07-30 16:17 CST / 蓝调山景与毛玻璃迭代
+
+- 用户反馈：主页不要深绿色背景，希望使用蓝色基调的山峰风景照，并让瀑布流具有毛玻璃通透感。
+- 方案修正：将首页改为固定山景环境画布；玻璃限定在导航、分类控制区和瀑布流卡片；详情页与推荐页不套用照片背景。
+- 新增本地图片 `public/images/catnip-blue-mountain.jpg`，来源为 Wolfgang Hasselmann 的 Unsplash 照片；页脚和图片来源文档保留署名与链接。
+- 首次受限环境下载因 DNS 隔离失败；获准网络环境使用相同 URL 重试成功。文件验证为 2400 × 3600 progressive JPEG，约 331 KB。
+- 新增 `backdrop-filter` 不支持和 `prefers-reduced-transparency` 场景的深蓝黑实色降级。
+- 验证：`npm run lint` 成功；`npm run typecheck` 成功；`git diff --check` 成功；开发服务重新编译且首页请求 200。
+- 全量复测：`npm test` 45/45 成功；`npm run lint`、`npm run typecheck`、`npm run db:check` 成功。
+- 生产构建第一次在受限环境失败：Turbopack 创建新进程时需要绑定内部端口，系统返回 `Operation not permitted`；获准环境执行相同 `npm run build` 复测成功，9 个静态页面生成完成。
+- 预览恢复后首页与背景图片均返回 HTTP 200；再次连接可控浏览器时可用浏览器列表仍为空，无法生成真实页面截图，继续保留人工视觉门禁。
+- 漂移修正：专项计划已从“禁止玻璃表面”修订为“只允许有环境作用的限定玻璃”；仍禁止蓝紫渐变、霓虹光晕和 AI 风格装饰堆叠。
+- 当前状态：视觉方向已热更新，但浏览器截图和多视口人工门禁未完成，因此不标记 UI-1 完成、不提交、不 push。
+
+### 2026-07-31 / UI-1 主标题版式与艺术字体修正
+
+- 输入证据：Neil Bauman 提供 Edge 实机截图，指出右侧主标题需要进一步向左展开，约占从右向左 75% 的空间，并建议艺术字体。
+- 版式修正：首页引导区由“左侧 3fr、右侧 0.9fr”改为“左侧 1fr、右侧 3fr”；主标题跨右侧约 75% 内容宽度与两行高度，宽屏不再挤成四行。
+- 字体修正：霞鹜文楷粗体只承担首页 H1；正文、导航和控件继续使用既有无衬线。引入 `lxgw-wenkai-webfont@1.1.0` 的 116-119 四个 WOFF2 分片，共约 175 KB，并保存上游 SIL OFL 1.1 许可证和来源说明。
+- 响应式：900px 以下标题、眉题和说明回归单列自然文档流；620px 以下保留响应式字号并把字距修正为 `-0.025em`，避免过度挤压。
+- 机械字体扫描仍提示全站正文 Arial 为常见字体；该警告已审查，本轮明确保留既有正文角色，艺术字体只用于用户指定的主标题，不属于标题遗漏。
+- 测试：unit 45/45、lint、typecheck、db:check 成功；受限环境生产 build 因 Turbopack 内部端口权限失败，获准环境相同命令复测成功；`git diff --check` 成功。
+- 运行验证：首页 HTTP 200，WOFF2 字体资源返回 HTTP 200 和 `font/woff2`；局域网预览已恢复至 `http://192.168.0.109:3000`。
+- 文档漂移：补充字体许可、分片覆盖和标题变更边界；Next 开发服务生成的 `next-env.d.ts` 路径漂移已恢复，不纳入修改。
+- 当前状态：等待 Neil Bauman 刷新 Edge 进行标题位置和字形视觉确认；UI-1 仍未提交、未 push，不进入 UI-2。
+
+## 2026-07-31 04:17 CST / SKill-hub-ui / Unsplash 重构备份首次失败
+
+### 失败命令
+
+使用隔离 `GIT_INDEX_FILE` 从当前已知 UI-1 WIP 生成备份树和快照提交。
+
+### 失败摘要
+
+- Git 在写入对象库临时文件时返回 `Operation not permitted`，随后 `git add` 报告无法写入对象数据库并退出 128。
+- 失败发生在受限环境的 `.git/objects` 写权限门禁；没有生成备份提交或分支，没有修改当前 index、HEAD 或工作区文件。
+
+### 修复与复测计划
+
+- 不改变备份范围，不把用户工具文件纳入快照。
+- 在获准写 Git 元数据的环境中复跑同一隔离 index 命令，检查快照文件清单，再 push `backup/pre-unsplash-discovery-ui-20260731-0415` 并以远端引用核验。
+- 备份 push 成功前不修改真实页面代码。
+
+## 2026-07-31 04:31 CST / SKill-hub-ui / Unsplash 首页生产构建首次失败
+
+### 失败命令
+
+`npm run build`
+
+### 失败摘要
+
+- 45 项单元测试与 `npm run db:check` 同批成功。
+- Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时需要创建内部进程并绑定端口，受限沙箱返回 `Operation not permitted (os error 1)`，构建退出 1。
+- 错误属于已识别的沙箱网络权限门禁；没有发现 TypeScript、ESLint 或 CSS 语法错误，未修改构建配置，也未伪报通过。
+
+### 修复与复测计划
+
+- 在获准环境执行完全相同的 `npm run build`，只放宽构建进程所需的端口权限。
+- 若复测仍失败，停止扩展功能并按真实错误定位；复测成功后再执行 HTTP 与文档漂移检查。
+
+### 后续复测记录
+
+- 获准环境相同 `npm run build` 成功：编译、TypeScript、页面数据收集与 9 个静态页面生成全部完成。
+- HTTP 首轮检查中手工输入了不存在的 `/fonts/lxgw-wenkai-catnip-116.woff2`，因此得到预期 404；核对 `@font-face` 与仓库文件后，以页面真实引用 `/fonts/lxgwwenkai-bold-116.woff2` 复测为 HTTP 200、`font/woff2`。这是验证路径误写，不是页面资源缺失。
+- 追加执行 `npm run test:integration` 时，`tsx` 在受限沙箱创建 IPC 管道返回 `listen EPERM`，命令退出 1；需在获准环境用同一命令复测。
+
+## 2026-07-31 04:35 CST / SKill-hub-ui / Unsplash 首页重构
+
+### 本轮计划回放
+
+在已远端备份的 UI-1 WIP 上，用 Unsplash 式发现框架替换大型山景 Hero：左侧功能栏、顶部搜索/分类/标签、中部 Skill 瀑布流；保留真实产品能力且不扩展用户系统、后端或部署。
+
+### 实际修改
+
+- 首页重构为浅色内容画布、84px 深色工具栏、粘性发现控制、紧凑介绍与 4/3/2/1 列有限跨度 Skill 网格。
+- 卡片保持整卡进入详情，封面承担主要色彩；移除通用玻璃卡片，山景只保留为可追溯内容封面。
+- 搜索、五分类、标签、空结果、作者、阅读量和推荐入口保留真实数据路径；首页没有普通用户登录、下载或安装。
+- 补齐筛选当前状态语义与 44px 触控目标；全局正文改为系统字体栈，艺术字体仅用于短展示标题。
+- 创建 `PRODUCT.md`、`DESIGN.md` 并更新专项计划、进度和交接。
+
+### 修改文件
+
+- 首页与公共样式：`src/app/page.tsx`、`src/app/globals.css`。
+- 既有 UI-1 共享适配：`src/app/skills/[slug]/page.tsx`、`src/app/recommend/page.tsx`。
+- 设计与来源：`PRODUCT.md`、`DESIGN.md`、`public/fonts/`、`public/images/`。
+- 施工记录：`DEV_PROGRESS.md`、`LOG.md`、`HANDOFF.md`、`SKILL_HUB_UI_PLAN.md`、`01-public-web.md`。
+
+### 验证结果
+
+- `npm test` 45/45、lint、typecheck、db:check、获准生产 build 与 `git diff --check` 成功。
+- Impeccable 新首页 JSX 检测无输出、退出 0；全局旧路由样式的既有令牌建议未为静默扫描而批量重写。
+- 首页、搜索、分类、详情、推荐、山景图片和真实字体路径均为 HTTP 200。
+- 可控浏览器列表为 `[]`，真实截图和四视口视觉门禁未完成。
+
+### 测试日志
+
+1. 受限 `npm run build` 因 Turbopack 内部端口权限失败；先记录，获准环境同命令复测成功。
+2. 首轮字体探测手工使用错误文件名得到 404；核对 CSS 后真实引用复测为 200 `font/woff2`。
+3. 受限 `npm run test:integration` 因 `tsx` IPC 管道权限失败；获准环境正常启动，但 PostgreSQL/S3 环境未配置，1 项明确跳过。
+4. 本轮尝试新开开发服务时端口已由既有预览占用，返回 `EADDRINUSE`；未终止用户正在使用的服务，原服务首页持续 HTTP 200 并热更新。
+
+### 测试指标判断
+
+- 工程与运行态门禁通过。
+- 集成环境用例没有执行，不能写成集成测试通过。
+- 缺少真实浏览器视觉结果，本轮为可回滚工程检查点，不是最终视觉完成。
+
+### 文档漂移检查
+
+- 实际 84px 工具栏、系统字体、颜色、响应式列数、44px 触控与 `DESIGN.md` 对齐。
+- 产品范围、五分类、首页无下载/安装、案例非主线、Neil Bauman、NeilBaumanMax、Catnip 薄荷猫和 SSH Remote 均无漂移。
+- 未增加普通用户登录、正式 Logo/吉祥物、真实秘密、服务器操作或 Phase 外业务。
+- 详情与推荐页仍使用既有 UI-1 表面，已在 HANDOFF 明确为后续而非伪装统一。
+
+### GitHub 状态
+
+- 当前分支：`SKill-hub-ui`；开发前基线：`7780c645e702f20470305a2c96239516feb443bb`。
+- 备份：`backup/pre-unsplash-discovery-ui-20260731-0415` 已 push，远端快照 `824adf0a18b2fcc30273f15c675114f90c8a010b`。
+- 工作分支提交与 push：待收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚；若 Neil Bauman 否决本方向，优先 `git revert <本轮提交>`，或从远端备份分支只读比对恢复方案。
+- 回滚后复测：`npm test`、lint、typecheck、db:check、build、首页/详情/推荐 HTTP 与四视口视觉检查。
+
+### 当前风险
+
+- 无自动截图证据，瀑布流密度、封面比例、视觉层级和移动端观感仍需 Edge 人工确认。
+- 私网地址由 DHCP 决定，当前为 `192.168.0.109:3000`，后续可能变化。
+- 集成测试依赖的 PostgreSQL/S3 环境未配置。
+
+### 下一步
+
+打开 Edge 预览并只接收首页视觉反馈；完成真实多视口验收前不进入详情视觉统一、后台或服务器施工。
+
+### 提交前差异失败与修复
+
+- 将明确文件清单暂存后，`git diff --cached --check` 首次发现上游 `public/fonts/LXGW-WenKai-OFL.txt` 第 22 行存在一个行尾空格并退出失败。
+- 原因是未跟踪新文件不会进入此前普通 `git diff --check`；只移除行尾空格，不改变许可证文字、段落或法律含义。
+- 修复后必须重新暂存许可证与本条日志，并复跑 cached diff check；未复测前不提交。
