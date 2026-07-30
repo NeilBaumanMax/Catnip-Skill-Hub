@@ -1794,7 +1794,7 @@ select:focus-visible {
 .recommend-shell {
   min-height: 100vh;
   padding: 28px clamp(18px, 5vw, 72px) 72px;
-  background: var(--paper);
+  background: transparent;
   color: var(--ink);
 }
 
@@ -1803,9 +1803,11 @@ select:focus-visible {
   margin: 72px auto 0;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: var(--panel);
+  background: rgb(7 20 33 / 0.76);
   padding: clamp(24px, 5vw, 52px);
-  box-shadow: none;
+  box-shadow: 0 24px 68px rgb(0 5 12 / 0.24);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
 }
 
 .recommend-card .eyebrow {
@@ -1925,6 +1927,11 @@ select:focus-visible {
   --gallery-mint: #96dfa8;
   --rail-ink: #07111c;
   --rail-text: #f4f8f6;
+  --paper: transparent;
+  --panel: var(--gallery-surface);
+  --panel-raised: rgb(12 29 44 / 0.84);
+  --line: var(--gallery-line);
+  --line-strong: rgb(255 255 255 / 0.24);
   --mint: var(--gallery-mint);
   --ink: var(--gallery-ink);
   --muted: var(--gallery-muted);
@@ -1978,6 +1985,18 @@ select:focus-visible {
   width: 100%;
   gap: 6px;
   margin-top: 32px;
+}
+
+.rail-nav-sections,
+.rail-nav-actions {
+  display: grid;
+  gap: 6px;
+}
+
+.rail-nav-actions {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gallery-line);
 }
 
 .rail-nav a {
@@ -2044,6 +2063,16 @@ select:focus-visible {
   color: var(--gallery-mint);
 }
 
+.rail-nav a.active::before {
+  position: absolute;
+  left: -8px;
+  width: 2px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--gallery-mint);
+  content: "";
+}
+
 .rail-signature {
   margin-top: auto;
   color: color-mix(in srgb, var(--rail-text) 40%, transparent);
@@ -2056,6 +2085,13 @@ select:focus-visible {
 .discovery-main {
   min-width: 0;
   margin-left: 64px;
+}
+
+.navigation-sentinel {
+  display: block;
+  width: 1px;
+  height: 1px;
+  scroll-margin-top: 1px;
 }
 
 @keyframes discovery-header-materialize {
@@ -2208,6 +2244,40 @@ select:focus-visible {
   gap: 14px;
   align-items: center;
   padding-bottom: 8px;
+}
+
+.public-context {
+  display: flex;
+  width: min(100% - 48px, 1560px);
+  min-height: 44px;
+  gap: 9px;
+  align-items: center;
+  margin-inline: auto;
+  border-top: 1px solid var(--gallery-line);
+  color: var(--gallery-muted);
+  font-size: 0.76rem;
+}
+
+.public-context a {
+  color: var(--gallery-mint);
+  font-weight: 720;
+}
+
+.public-context strong {
+  overflow: hidden;
+  color: var(--gallery-ink);
+  font-weight: 720;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.discovery-recommend.active {
+  background: var(--gallery-mint);
+}
+
+.public-inner {
+  position: relative;
+  z-index: 1;
 }
 
 .discovery-categories,
@@ -2648,6 +2718,10 @@ select:focus-visible {
     width: min(100% - 36px, 1560px);
   }
 
+  .public-context {
+    width: min(100% - 36px, 1560px);
+  }
+
   .discovery-topline {
     grid-template-columns: auto minmax(260px, 1fr) auto;
     gap: 14px;
@@ -2700,6 +2774,28 @@ select:focus-visible {
     width: auto;
     gap: 4px;
     margin: 0;
+  }
+
+  .rail-nav-sections,
+  .rail-nav-actions {
+    display: flex;
+    gap: 4px;
+  }
+
+  .rail-nav-actions {
+    margin-top: 0;
+    margin-left: 6px;
+    padding-top: 0;
+    padding-left: 10px;
+    border-top: 0;
+    border-left: 1px solid var(--gallery-line);
+  }
+
+  .rail-nav a.active::before {
+    inset: auto auto -8px 50%;
+    width: 18px;
+    height: 2px;
+    transform: translateX(-50%);
   }
 
   .rail-nav a {
@@ -2773,6 +2869,10 @@ select:focus-visible {
   .discovery-filters,
   .discovery-content,
   .discovery-footer {
+    width: min(100% - 28px, 1560px);
+  }
+
+  .public-context {
     width: min(100% - 28px, 1560px);
   }
 
@@ -2854,6 +2954,10 @@ select:focus-visible {
   .discovery-footer > div:last-child {
     justify-items: start;
   }
+
+  .recommend-shell {
+    padding-inline: 14px;
+  }
 }
 
 @media (prefers-reduced-transparency: reduce) {
@@ -2864,6 +2968,12 @@ select:focus-visible {
   .discovery-footer {
     background: #0a1b2b;
     animation: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .recommend-card {
+    background: #0a1b2b;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

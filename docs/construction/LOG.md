@@ -1831,3 +1831,149 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - `git push origin SKill-hub-ui`：成功，远端由 `a492fef` 前进到 `098b3e9`。
 - 开发前备份：`backup/pre-adaptive-header-rail-20260731-0524`，已 push，指向开工计划基线 `a492fef`。
 - 本条状态回写形成纯文档收尾提交并 push；功能回滚目标固定为 `098b3e9`。
+
+## 2026-07-31 05:55 CST / SKill-hub-ui / 公共导航首次 lint 失败
+
+### 失败命令
+
+`npm run lint`
+
+### 失败摘要
+
+- `src/app/_components/public-rail-nav.tsx` 第 31 行触发 `react-hooks/set-state-in-effect`。
+- 原因是 effect 主体在建立浏览器订阅前同步执行 `setHash(readHash())`，React 规则认为这会产生额外级联渲染。
+- 同批 `npm run typecheck` 成功，`npm test` 48/48 成功；没有隐藏 lint 失败，也未继续扩展功能。
+
+### 修复与复测计划
+
+- 将初始 hash 同步移入 `requestAnimationFrame` 回调，让 effect 只负责向浏览器外部系统订阅并由回调更新状态。
+- 保留 `hashchange` 监听、路径优先级和滚动观察行为，不以禁用 ESLint 规则绕过问题。
+- 修复后先复测 `npm run lint`，成功后再执行全量工程门禁。
+
+### lint 修复与复测
+
+- 将初始 hash 和布局同步移入 `requestAnimationFrame` 回调；effect 只建立 `IntersectionObserver`、`hashchange` 与帧订阅。
+- 没有关闭或忽略 `react-hooks/set-state-in-effect`。
+- `npm run lint` 复测成功。
+
+## 2026-07-31 05:57 CST / SKill-hub-ui / 公共外壳生产构建首次失败
+
+### 失败命令
+
+`npm run build`
+
+### 失败摘要
+
+- Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时创建内部进程并尝试绑定端口，受限环境返回 `Operation not permitted (os error 1)`，构建退出 1。
+- 错误与本仓库此前多轮记录的受限环境门禁一致；同批 `npm run db:check` 成功，Impeccable 新增布局检测返回空数组，`git diff --check` 成功。
+- 未把失败写成通过，也未修改 CSS 或构建配置来规避沙箱。
+
+### 修复与复测计划
+
+- 在获准环境执行完全相同的 `npm run build`，只放宽 Turbopack 内部进程所需的端口权限。
+- 若获准复测出现新的代码错误，停止扩展并继续定位；成功后再执行公开路由和导航语义 HTTP 检查。
+
+### 构建复测
+
+- 获准环境执行完全相同的 `npm run build` 成功；编译、TypeScript、页面数据收集和 9 个静态页面生成完成。
+- `/`、`/recommend` 与 `/skills/[slug]` 路由均进入最终构建清单。
+
+## 2026-07-31 06:00 CST / SKill-hub-ui / 中文分类 HTTP 检查首次失败
+
+### 失败检查
+
+直接请求 `http://192.168.0.109:3000/?category=前端设计#skill-grid`。
+
+### 失败摘要
+
+- curl 验证脚本把中文分类直接拼入 URL，没有进行百分号编码，开发服务器返回 HTTP 400。
+- 同批首页、搜索、空结果、推荐页、详情页、Logo 与山景资源均返回 200；这次失败属于验证请求格式，不是页面 Link 生成或分类服务错误。
+
+### 修复与复测计划
+
+- 使用 `curl --get --data-urlencode 'category=前端设计'` 生成标准查询字符串后复测。
+- 同时核对响应中存在“前端设计”和筛选结果，复测前不把分类路径写成通过。
+
+### HTTP 复测
+
+- 使用 `curl --get --data-urlencode 'category=前端设计'` 复测返回 HTTP 200。
+- 响应包含选中的“前端设计”、2 个匹配结果和对应 Skill 卡片，分类路径通过。
+
+## 2026-07-31 06:02 CST / SKill-hub-ui / 公共外壳与导航语义修正
+
+### 本轮计划回放
+
+- 把首页区域定位和独立推荐任务从同一扁平按钮组中拆开。
+- 让首页导航根据真实滚动/哈希状态高亮，并让推荐与详情页继续显示 Catnip 左栏、顶栏、搜索和山景环境。
+- 保持现有搜索、推荐线索、详情、下载、安装、后台、数据库和部署边界不变。
+
+### 实际修改
+
+- 新建 `PublicShell` 与 `PublicHeader`，首页、推荐页和 Skill 详情页共享同一个公开外壳。
+- 新建客户端 `PublicRailNav`：首页、探索、分类、关于组成位置组；推荐 Skill 通过分隔线进入独立操作组。
+- 使用绝对首页锚点保证从内页可返回对应区域；`IntersectionObserver` 与哈希事件共同维护首页选中状态。
+- 页面位置使用 `aria-current="location"`，推荐页使用 `aria-current="page"`；详情页以探索作为父级选中上下文。
+- 推荐页保留原线索表单，详情页保留原数据、下载和安装结构，只替换外壳与上下文顶栏。
+- 新增 3 项导航纯逻辑测试；单元测试总数从 45 增至 48。
+- 修正 DESIGN 与 UI 专项计划中“五个等价入口”和推荐/详情不统一的规范漂移。
+
+### 修改文件
+
+- 公共组件：`public-shell.tsx`、`public-rail-nav.tsx`、`public-navigation.ts`。
+- 公开路由：首页、推荐页、`skills/[slug]` 详情页与 `globals.css`。
+- 测试：`tests/public-navigation.test.ts`。
+- 规范与施工：`DESIGN.md`、`SKILL_HUB_UI_PLAN.md`、DEV_PROGRESS、LOG、HANDOFF、`01-public-web.md`。
+
+### 验证结果
+
+- `npm test`：48/48 成功；新增首页区域、推荐路径、详情父级和未知路径覆盖。
+- lint、typecheck、db:check、获准环境生产 build、diff check 与 Impeccable 新增布局检测成功。
+- 首页、搜索、正确编码分类、空结果、推荐、详情、Logo 和山景资源 HTTP 200。
+- 推荐页服务端输出推荐 `aria-current="page"`；详情页输出探索 `aria-current="location"`，两页都有公共导航与当前位置。
+- Browser 连接排障后浏览器列表仍为 `[]`，未完成自动截图或真实滚动点击，不把 HTTP/源码验证写成视觉像素通过。
+
+### 测试日志
+
+1. 初次 typecheck 成功，unit 48/48 成功；lint 因 effect 同步 setState 失败。
+2. 将初始 hash/布局同步移入浏览器帧回调，lint 复测成功。
+3. 初次受限 `npm run build` 因 Turbopack 内部端口绑定权限失败；获准环境同命令复测成功。
+4. 初次中文分类 curl 因验证命令未编码返回 400；使用 `--data-urlencode` 复测 200。
+5. 最终 unit 48/48、lint、typecheck、db:check、diff check 与布局检测再次成功。
+
+### 测试指标判断
+
+- 单元、静态、类型、数据库结构、生产构建和 HTTP 功能门禁通过。
+- 自动浏览器视觉门禁未完成；Edge 仍需检查自然滚动高亮、锚点点击、推荐/详情实际布局和四个视口。
+- PostgreSQL/S3 集成环境本轮未配置，未执行也未写成通过。
+
+### 文档漂移检查
+
+- `DESIGN.md` 与专项 UI 计划已修正为四个首页位置入口、一个独立推荐操作和三条公开路由共享外壳。
+- 实际目录仍符合公共前台、领域、下载、安装、数据、认证和存储分层；UI 没有直接写数据库、打包 ZIP 或拼接安装命令。
+- Neil Bauman、NeilBaumanMax、Catnip 品牌、指定 SSH Remote、五分类、Skill 主体和服务器暂停状态无漂移。
+- 未加入普通用户登录、案例主线、新市场、密钥、服务器操作或 Phase 外业务。
+- `.agents/`、`.codex/`、`skills-lock.json` 始终未修改、未暂存。
+
+### GitHub 状态
+
+- 开发前代码基线：`e5fc35576c5f2c0210300688b5feab1043c1de22`。
+- 开工计划提交：`bca3c293f15f47137ca03e929cd4d36f8146a051`，已 push。
+- 备份分支：`backup/pre-public-shell-navigation-20260731-0549`，已 push 并远端核验指向 `bca3c29`。
+- 功能提交与工作分支 push：待收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 如 Edge 验收发现公共外壳或导航回归，优先 `git revert <本轮功能提交>`。
+- 回滚后复测 unit、lint、typecheck、db:check、build、首页/推荐/详情 HTTP、哈希和导航语义；禁止 reset、clean、restore 或 force push。
+
+### 当前风险
+
+- 自动浏览器不可用，IntersectionObserver 在真实 Edge 的阈值切换、tooltip、断点密度和玻璃层级仍需人工确认。
+- 当前公共外壳以共享组件实现；视觉与语义一致，但路由切换时组件会正常重建，不承诺保留页面表单或滚动状态。
+- 既有 `globals.css` 仍有大量历史颜色/字号未完全令牌化；本轮新增布局检测无问题，未为清空扫描而越界重写全站。
+
+### 下一步
+
+- Edge 刷新局域网预览，检查首页滚动四区域、推荐页和 `project-brief` 详情页。
+- 只根据真实视觉反馈调整选中阈值、分组间距、上下文栏或响应式，不进入后台或服务器施工。

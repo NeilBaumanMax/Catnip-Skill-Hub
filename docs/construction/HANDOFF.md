@@ -1350,3 +1350,70 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 功能提交：`098b3e9`，已成功 push 到 `origin/SKill-hub-ui`。
 - 开发前备份：`backup/pre-adaptive-header-rail-20260731-0524`，已成功 push，基线为 `a492fef`。
 - 下一次接力以本条之后的纯文档收尾提交为最新 HEAD，以 `098b3e9` 作为本轮功能回滚目标。
+
+## 2026-07-31 06:02 CST / SKill-hub-ui / 公共外壳与导航语义修正交接
+
+### 当前状态
+
+首页、推荐页和 Skill 详情页已完成统一公共外壳与导航语义的工程实现和验证，等待 Neil Bauman 在 Edge 检查真实滚动高亮、分组和跨路由视觉。服务器部署继续暂停。
+
+### 本轮完成
+
+- 新建共享 `PublicShell`、`PublicHeader`、`PublicRailNav` 和纯导航解析逻辑。
+- 首页/探索/分类/关于组成位置组，推荐 Skill 通过分隔线成为独立操作组。
+- 首页使用 hash、点击反馈和 `IntersectionObserver` 更新选中；推荐页按路径选中，详情页表达探索父级。
+- 推荐和详情页保留左栏、顶栏、搜索、山景与上下文路径，不再跳入无关视觉页面。
+- 新增 3 项导航测试，修正 DESIGN 和专项 UI 计划漂移。
+
+### 未完成
+
+- Browser 控制后端列表为空，未完成真实 Edge 自动点击、滚动和截图。
+- 1440、1024、768、390 四视口下的 tooltip、分组间距、上下文栏和表单/详情视觉仍需人工确认。
+- PostgreSQL/S3 集成测试环境本轮未配置；本轮没有执行集成测试。
+
+### 下次优先任务
+
+1. 在 Edge 打开首页，依次点击并滚动首页、探索、分类、关于，检查唯一持久高亮。
+2. 打开 `/recommend` 和 `/skills/project-brief`，检查公共外壳、推荐/探索选中和上下文栏。
+3. 只修正真实视觉或阈值反馈并全量复测，不恢复服务器或扩展业务。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并额外读取 `DESIGN.md` Navigation、`SKILL_HUB_UI_PLAN.md` 的公共外壳覆盖和本条交接。
+
+### 关键文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/_components/public-rail-nav.tsx`
+- `src/app/_components/public-navigation.ts`
+- `src/app/page.tsx`
+- `src/app/recommend/page.tsx`
+- `src/app/skills/[slug]/page.tsx`
+- `src/app/globals.css`
+- `tests/public-navigation.test.ts`
+
+### 测试基线
+
+- `npm test`：48/48 成功。
+- lint、typecheck、db:check、获准生产 build、diff check、Impeccable 新增布局检测：成功。
+- 首页、搜索、分类、空结果、推荐、详情、Logo、背景：HTTP 200。
+- 首次 lint、受限 build、未编码分类 curl 失败及其修复/复测均保存在 LOG。
+- 自动浏览器视觉门禁：未完成，浏览器列表为空。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前代码基线：`e5fc35576c5f2c0210300688b5feab1043c1de22`
+- 开工计划提交：`bca3c293f15f47137ca03e929cd4d36f8146a051`，已 push
+- 备份分支：`backup/pre-public-shell-navigation-20260731-0549`，已 push
+- 最新提交：功能提交后回写
+- 已 push：计划与备份已 push；功能提交待收尾 push
+- 工作区状态：本轮受控代码/测试/规范/施工文档改动，加三项受保护未跟踪用户工具文件
+
+### 风险提醒
+
+- `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
+- 不得把 HTTP、源码或单元测试写成 Edge 视觉像素验收。
+- 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。

@@ -1,12 +1,5 @@
 import Link from "next/link";
-import {
-  Compass,
-  GridFour,
-  House,
-  Info,
-  Sparkle,
-} from "@phosphor-icons/react/ssr";
-import { BrandLogo } from "@/app/_components/brand-logo";
+import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { analyticsService } from "@/lib/analytics";
 import { discoverSkills } from "@/lib/discovery";
 import { runtimeSkillRepository } from "@/lib/data/skills";
@@ -31,14 +24,6 @@ function discoveryHref(filters: { query?: string; category?: string; tag?: strin
   return query ? `/?${query}#skill-grid` : "/#skill-grid";
 }
 
-const utilityLinks = [
-  { href: "/", icon: House, label: "首页" },
-  { href: "#skill-grid", icon: Compass, label: "探索" },
-  { href: "#categories", icon: GridFour, label: "分类" },
-  { href: "/recommend", icon: Sparkle, label: "推荐" },
-  { href: "#about", icon: Info, label: "关于" },
-] as const;
-
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
   const resources = await runtimeSkillRepository.list();
@@ -50,7 +35,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
   return (
-    <div className="discovery-page">
+    <PublicShell>
       {/*
         THESIS: Skill 封面是首页主体，拒绝大型 Hero 与通用市场卡片墙。
         OWN-WORLD: 蓝调山景环境、深蓝玻璃工具层、Catnip 薄荷焦点与多样内容封面。
@@ -58,57 +43,8 @@ export default async function Home({ searchParams }: HomeProps) {
         FIRST VIEWPORT: 左侧功能栏，顶部发现控制，紧凑标题，下方立即出现四列 Skill。
         FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
       */}
-      <aside className="utility-rail" aria-label="站点功能">
-        <Link className="rail-brand" href="/" aria-label="Catnip Skill Hub 首页">
-          <BrandLogo className="brand-logo" priority />
-        </Link>
-        <nav className="rail-nav" aria-label="快捷入口">
-          {utilityLinks.map((item, index) => (
-            <Link
-              aria-current={index === 0 ? "page" : undefined}
-              className={index === 0 ? "active" : ""}
-              href={item.href}
-              key={item.label}
-              aria-label={item.label}
-            >
-              <item.icon aria-hidden="true" size={22} weight="regular" />
-              <span className="rail-tooltip" aria-hidden="true">{item.label}</span>
-            </Link>
-          ))}
-        </nav>
-        <span className="rail-signature" aria-hidden="true">CATNIP</span>
-      </aside>
-
-      <div className="discovery-main">
-        <header className="discovery-header">
-          <div className="discovery-topline">
-            <Link className="discovery-wordmark" href="/">
-              <BrandLogo className="brand-logo" priority />
-              <span className="discovery-wordmark-copy">
-                <strong>Catnip Skill Hub</strong>
-                <small>Curated Agent Skills</small>
-              </span>
-            </Link>
-
-            <form className="discovery-search" role="search" aria-label="搜索 Skill" action="/" method="get">
-              <label htmlFor="discovery-search-input">搜索 Skill</label>
-              <input
-                id="discovery-search-input"
-                name="q"
-                type="search"
-                placeholder="搜索标题、用途、作者或标签"
-                defaultValue={discovery.filters.query}
-                maxLength={100}
-              />
-              <button type="submit">搜索</button>
-            </form>
-
-            <Link className="discovery-recommend" href="/recommend">
-              推荐 Skill
-            </Link>
-          </div>
-
-          <div className="discovery-filters" id="categories">
+      <span className="navigation-sentinel" id="page-top" aria-hidden="true" />
+      <PublicHeader query={discovery.filters.query}>
             <nav className="discovery-categories" aria-label="Skill 主分类">
               <Link
                 aria-current={discovery.filters.category ? undefined : "page"}
@@ -150,8 +86,7 @@ export default async function Home({ searchParams }: HomeProps) {
                 </Link>
               ))}
             </nav>
-          </div>
-        </header>
+      </PublicHeader>
 
         <main className="discovery-content">
           <section className="discovery-intro" aria-labelledby="page-title">
@@ -227,7 +162,6 @@ export default async function Home({ searchParams }: HomeProps) {
             <Link href="/recommend">推荐一个 Skill</Link>
           </div>
         </footer>
-      </div>
-    </div>
+    </PublicShell>
   );
 }

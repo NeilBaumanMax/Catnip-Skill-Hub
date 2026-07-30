@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SkillActions } from "@/app/_components/skill-actions";
-import { BrandLogo } from "@/app/_components/brand-logo";
+import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { TrackedExternalLink, ViewTracker } from "@/app/_components/analytics-events";
 import { analyticsService } from "@/lib/analytics";
 import { runtimeSkillRepository } from "@/lib/data/skills";
@@ -48,17 +48,9 @@ export default async function SkillPage({ params }: SkillPageProps) {
   const counts = await analyticsService.get(skill.slug);
 
   return (
-    <div className="site-shell detail-shell" data-category={skill.category}>
-      <header className="detail-header">
-        <Link className="wordmark" href="/" aria-label="返回 Catnip Skill Hub 首页">
-          <BrandLogo className="brand-logo" priority />
-          <span>
-            <strong>Catnip Skill Hub</strong>
-            <small>CURATED AGENT SKILLS</small>
-          </span>
-        </Link>
-        <Link className="back-link" href="/">← 返回探索</Link>
-      </header>
+    <PublicShell>
+      <PublicHeader context={{ parent: "探索", current: skill.title }} />
+      <div className="site-shell detail-shell public-inner" data-category={skill.category}>
 
       <main>
         <section className="detail-intro">
@@ -228,6 +220,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
           <span>其他演示种子继续保持下载关闭</span>
         </div>
       </footer>
-    </div>
+      </div>
+    </PublicShell>
   );
 }
