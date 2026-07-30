@@ -1283,3 +1283,64 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 功能推送后本地与远端分歧：`0 0`。
 - 工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件。
 - 下一次接力以本条之后的纯文档收尾提交为最新 HEAD，以 `cef8f5d` 作为本轮功能回滚目标。
+## 2026-07-31 05:29 CST / SKill-hub-ui / 自适应顶栏与窄侧栏交接
+
+### 当前状态
+
+`SKill-hub-ui` 已完成桌面窄侧栏、压缩顶栏和随滚动实体化的玻璃材质实现，工程门禁通过，等待 Neil Bauman 在 Edge 确认实际曲线和密度。服务器部署继续暂停。
+
+### 本轮完成
+
+- 84px 桌面侧栏改为 64px，Logo 改为 40px，入口热区保持 48px。
+- 76px 顶部主行改为 62px；宽屏分类与标签同处一条 44px 行。
+- 顶栏背景随 0–240px 根滚动从 38% 过渡到 96%，无 React 滚动监听。
+- 24px blur 固定，旧浏览器默认 90% 背景，减少透明度/动效时直接近不透明。
+- 锚点 scroll margin、1180px 拆行和移动端规则已同步。
+
+### 未完成
+
+- Neil Bauman 尚未确认 Edge 中顶部、滚动中段、240px 后三种透明度状态。
+- 自动多视口截图仍不可用；1180px 断点需实机观察。
+- PostgreSQL/S3 集成环境本轮未配置。
+
+### 下次优先任务
+
+1. 刷新 `http://192.168.0.109:3000/`，分别观察顶部、约 120px、约 240px 滚动状态。
+2. 根据反馈只调整顶栏高度、透明度端点/范围、1180px 断点或 64px 侧栏。
+3. 视觉确认前不进入详情统一、后台或服务器部署。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并额外读取 `DESIGN.md` 的 Layout、Elevation、Scroll Material Rule 和 `SKILL_HUB_UI_PLAN.md` 最新覆盖。
+
+### 关键文件
+
+- `src/app/globals.css`
+- `src/app/page.tsx`
+- `DESIGN.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check、获准生产 build、diff check：成功。
+- 首页、搜索、分类、空结果、详情、推荐：HTTP 200。
+- 首次受限 build 权限失败已记录；获准复测和最终 build 均成功。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前代码基线：`15ae235e56ab610f9dc4525263bb99436a9ff2bc`
+- 开工计划提交：`a492fef`，已 push
+- 备份分支：`backup/pre-adaptive-header-rail-20260731-0524`，已 push
+- 最新提交：本轮功能提交后回写
+- 已 push：开工计划和备份已 push；功能提交待收尾 push
+- 工作区状态：本轮受控 CSS/规范/施工文档改动，加三项受保护未跟踪用户工具文件
+
+### 风险提醒
+
+- 老版本浏览器将使用 90% 安全背景而没有渐变透明度，这是有意降级。
+- `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
+- 不得恢复服务器 Docker、nginx、DNS、HTTPS 或生产秘密配置。

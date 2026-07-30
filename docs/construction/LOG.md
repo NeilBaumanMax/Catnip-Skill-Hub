@@ -1739,3 +1739,88 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 开发前备份：`backup/pre-glass-icon-navigation-20260731-0504`，已 push，指向开工计划基线 `ced4fab`。
 - 推送后工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件，均未暂存、未修改、未提交。
 - 本条状态回写形成纯文档收尾提交并 push；功能回滚目标固定为 `cef8f5d8f8a4868e52308006fd767d657cbd70fc`。
+## 2026-07-31 05:29 CST / SKill-hub-ui / 自适应顶栏与窄侧栏
+
+### 本轮计划回放
+
+- 根据 Edge 实机截图降低粘性顶栏高度，避免主内容穿透后与工具文字重叠。
+- 让顶栏透明度随根滚动位置连续变化，而不是固定玻璃透明度。
+- 将桌面左栏从 84px 缩小约 25%，保持图标、焦点和 tooltip 可用。
+- 完成开发前备份、测试、漂移、交接、提交与远端推送。
+
+### 实际修改
+
+- 桌面左栏宽度改为 64px，约减少 24%；主内容偏移同步为 64px。
+- 桌面 Logo 48px 改为 40px，导航入口由 56px 高改为 48px，高于 44px 触控底线。
+- 宽屏顶部主行由 76px 压缩到 62px；分类和标签在同一条 44px 控制行中，1180px 以下再拆行。
+- 新增 `discovery-header-materialize` 滚动关键帧：0px 为 38% 深蓝背景，240px 为 96%，边线和阴影同步增厚。
+- 使用 CSS `animation-timeline: scroll(root block)`，没有新增 React 客户端组件、滚动监听或依赖。
+- 固定 24px blur，避免在宽屏滚动时逐帧重算大面积模糊。
+- 不支持 scroll timeline 时以 90% 深蓝背景回退；减少透明度或减少动效时直接使用近不透明状态。
+- 为分类、Skill 网格和页脚设置桌面、窄屏、移动端对应的 scroll margin。
+
+### 修改文件
+
+- `src/app/globals.css`
+- `DESIGN.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/progress/layers/01-public-web.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+
+### 验证结果
+
+- unit 45/45、lint、typecheck、db:check、生产 build 与 diff check 最终成功。
+- 首页、搜索、分类、空结果、详情和推荐路径均为 HTTP 200。
+- 源码核验存在 64px 侧栏、64px 内容偏移、0–240px scroll timeline 与 38%→96% 两端状态。
+- Edge 实际视觉仍由 Neil Bauman 在局域网预览确认，不把源码检查写成像素验收。
+
+### 测试日志
+
+1. `npm test`：45/45 成功。
+2. `npm run lint`：成功；最终性能调整后复测成功。
+3. `npm run typecheck`：成功；最终性能调整后复测成功。
+4. `npm run db:check`：成功。
+5. `git diff --check`：成功；最终性能调整后复测成功。
+6. `npm run build` 首次在受限沙箱失败：Turbopack 内部端口绑定 `Operation not permitted`。
+7. 获准环境复跑相同 `npm run build`：成功。
+8. 移除滚动 blur 插值、固定 24px 后，再次在获准环境执行 `npm run build`：成功。
+9. 六条局域网公开路径 HTTP 回归：全部 200。
+
+### 测试指标判断
+
+- 单元、静态、类型、数据库结构、生产构建与 HTTP 回归通过。
+- 本轮未执行 PostgreSQL/S3 集成测试，未将外部环境未配置写成通过。
+- Edge 顶部和滚动后两个视觉状态等待 Neil Bauman 人工确认。
+
+### 文档漂移检查
+
+- `DESIGN.md` 的 84px 侧栏、76px 顶行和固定玻璃描述已修正为 64px、62px 与滚动材质规则。
+- `SKILL_HUB_UI_PLAN.md` 已追加本轮最终覆盖，明确尺寸、时间线、回退与锚点契约。
+- 产品功能、管理员 Neil Bauman、品牌、GitHub、Remote、服务器暂停和受保护用户文件无漂移。
+- 未修改搜索业务、数据、详情、下载、安装、后台、认证、数据库或部署。
+
+### GitHub 状态
+
+- 开发前代码基线：`15ae235e56ab610f9dc4525263bb99436a9ff2bc`。
+- 开工计划提交：`a492fef`，已 push。
+- 备份分支：`backup/pre-adaptive-header-rail-20260731-0524`，已成功 push，指向 `a492fef`。
+- 功能提交与工作分支 push：待收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 若滚动材质或尺寸不符合预期，优先 `git revert <本轮功能提交>`。
+- 回滚后复测 unit、lint、typecheck、db:check、build 和局域网公开路径。
+
+### 当前风险
+
+- 老版本浏览器不支持 CSS scroll timeline 时不会渐变透明度，但会安全回退到 90% 不透明，不发生内容穿透。
+- 自动 Browser 和 Computer Use 在上一轮不可用，本轮视觉仍依赖 Neil Bauman 的 Edge 截图反馈。
+- 1180px 附近分类与标签从一行切换到两行，需在 Edge 实机留意该断点的密度感。
+
+### 下一步
+
+- 在 Edge 刷新 `http://192.168.0.109:3000/`，检查页面顶部、滚动约 120px 和 240px 后三种状态。
+- 只处理顶栏高度、透明度曲线、断点和侧栏宽度的真实视觉反馈。
