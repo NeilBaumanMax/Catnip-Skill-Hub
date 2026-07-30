@@ -1275,3 +1275,11 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - npm 当前报告 16 项依赖审计风险；不要在视觉反馈轮执行 `npm audit fix --force`。
 - 不得把工程成功写成自动视觉验收成功。
 - 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。
+
+## 2026-07-31 05:18 CST / 山景玻璃 Git 状态回写
+
+- 功能提交：`cef8f5d8f8a4868e52308006fd767d657cbd70fc`，已成功 push 到 `origin/SKill-hub-ui`。
+- 开发前备份：`backup/pre-glass-icon-navigation-20260731-0504`，已成功 push，基线为 `ced4fab`。
+- 功能推送后本地与远端分歧：`0 0`。
+- 工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件。
+- 下一次接力以本条之后的纯文档收尾提交为最新 HEAD，以 `cef8f5d` 作为本轮功能回滚目标。
