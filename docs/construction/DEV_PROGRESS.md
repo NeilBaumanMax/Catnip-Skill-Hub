@@ -1205,3 +1205,51 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 停点
 
 本轮只交付正式品牌资产与站点命名，不进入详情视觉统一、瀑布流再设计、后台或服务器。Git 收尾并打开 Edge 后停下等待 Neil Bauman 视觉确认。
+## 2026-07-31 05:04 CST / SKill-hub-ui / 山景玻璃与线性导航开工计划
+
+### 本轮目标
+
+在保留 Unsplash 式发现结构和真实搜索/筛选能力的前提下，恢复蓝调山景环境画布，将左侧功能栏、顶部发现控制和瀑布流信息层改为克制的网页磨砂玻璃；导航只显示与正式 Catnip Logo 线条气质一致的简约线性图标，文字仅在悬停或键盘聚焦时出现。
+
+### 涉及层
+
+- Phase 1 公共前台：首页发现框架、响应式导航、Skill 瀑布流视觉层。
+- 品牌表现：只延续正式 Logo 的简约线条气质，不修改或派生 Logo 图形。
+- 施工文档：同步当前视觉约束、验证结论与接力状态。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`。
+- 基线提交：`133cdfe10d234ec2ce53d59da043d8f7eead0f9e`，与 `origin/SKill-hub-ui` 一致。
+- 已知未跟踪用户工具文件：`.agents/`、`.codex/`、`skills-lock.json`；本轮不修改、不暂存。
+- GitHub SSH 已验证为 `NeilBaumanMax`，origin 为指定 SSH Remote，远端历史可读。
+
+### 计划修改
+
+- 使用允许的线性图标库替换左栏“首/探/类/荐/介”文字缩写，补齐 hover/focus tooltip 与可访问名称。
+- 以 `public/images/catnip-blue-mountain.jpg` 作为固定环境背景，并通过深蓝遮罩保证文字对比。
+- 将左栏、顶部栏、筛选控制和卡片信息层收敛为分级玻璃材质，提供无 blur 与减少透明度降级。
+- 保持五分类、标签、搜索、推荐入口、瀑布流 DOM 顺序和所有后端边界不变。
+- 更新 `DESIGN.md` 与专项 UI 计划，消除“浅色不透明画布”与最新指令之间的文档漂移。
+
+### 测试计划
+
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`。
+- 首页、详情页、推荐页、山景图片的 HTTP 回归；检查搜索、分类、标签与空结果路径。
+- 检查图标 aria-label、tooltip 键盘路径、44px 触控目标、响应式和 reduced-transparency 降级。
+- 尝试真实浏览器视觉复核；若浏览器控制仍不可用，明确保留 Edge 人工视觉门禁。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`133cdfe10d234ec2ce53d59da043d8f7eead0f9e`
+- 备份分支：`backup/pre-glass-icon-navigation-20260731-0504`
+- 备份 push 状态：待开工计划提交后创建并核验。
+
+### 回滚预案
+
+- 本轮提交若产生回归，优先使用 `git revert <本轮提交>`，不得 reset、clean 或 force push。
+- 回滚后至少复测 unit、lint、typecheck、db:check、build 和首页 HTTP。
+- 不删除现有失败前端分支或任何历史备份分支。
