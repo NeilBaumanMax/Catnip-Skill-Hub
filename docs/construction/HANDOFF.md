@@ -1201,3 +1201,11 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 浏览器可能缓存旧 favicon；真实判断前可关闭旧标签页并重新打开。
 - `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
 - 不得恢复服务器部署或触碰既有服务器工作区。
+
+## 2026-07-31 04:57 CST / SKill-hub-ui / 正式 Logo Git 状态回写
+
+- 品牌功能提交：`e5e0e12e219f6de1769eb289c5c31a22c98003c9`，已 push 到 `origin/SKill-hub-ui`。
+- 本地与远端分歧：`0 0`。
+- 开发前备份：`backup/pre-brand-logo-20260731-0444`，已 push，指向 `201b5e4036a464221bd87106f7822645eda9916b`。
+- 工作区：仅 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件。
+- 当前停点：正式 Logo 工程接入已远端保存，等待 Edge 人工确认；不进入下一批 UI 或服务器施工。
