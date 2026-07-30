@@ -1340,3 +1340,54 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 停点
 
 提交并推送后在 Edge 打开局域网预览，等待 Neil Bauman 检查顶部、滚动中段和近不透明三种状态；不进入新业务或服务器施工。
+
+## 2026-07-31 05:49 CST / SKill-hub-ui / 公共外壳与导航语义修正开工计划
+
+### 本轮目标
+
+按 Neil Bauman 对当前导航割裂问题的确认方案，建立首页、推荐页与 Skill 详情页共享的公共发现外壳；把首页区域定位与独立推荐操作分组，并让左栏选中状态由真实路径和首页滚动位置驱动。
+
+### 涉及层
+
+- Phase 1 公共前台层：公共外壳、左栏、顶部发现控制和响应式导航。
+- 首页发现层：顶部、探索、分类、关于四个页面内区域的滚动定位与选中状态。
+- 推荐与详情公开路由：保留现有业务，只接入持续存在的公共外壳和上下文内容区。
+- 测试与施工治理：导航状态纯逻辑测试、工程门禁、HTTP、可访问性和文档漂移。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`；HEAD `e5fc35576c5f2c0210300688b5feab1043c1de22`，与 `origin/SKill-hub-ui` 分歧 `0 0`。
+- SSH 输出确认账号为 `NeilBaumanMax`；origin 为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- Git 提交身份：`Neil·Baumann <2091760192@qq.com>`。
+- 工作区只有 `.agents/`、`.codex/`、`skills-lock.json` 三项已知未跟踪用户工具文件；本轮不修改、不暂存、不提交。
+
+### 计划修改
+
+- 抽取 `PublicShell`、公共左栏和顶部发现栏，让 `/`、`/recommend` 与 `/skills/[slug]` 保持同一山景、玻璃、品牌和导航上下文。
+- 左栏上半组只放首页、探索、分类、关于四个位置；推荐入口以间隔和独立操作区分组。
+- 建立客户端导航状态叶组件：路径决定独立页面状态，首页使用 `IntersectionObserver` 跟随当前区域；点击时即时反馈，观察器负责最终校正。
+- 页面内位置使用 `aria-current="location"`，独立推荐页使用 `aria-current="page"`；hover、focus 与持久选中状态分别表达。
+- 推荐页保留公共搜索和外壳，在内容区显示上下文路径与原有线索表单；详情页保留公共外壳并以探索作为父级上下文。
+- 保持搜索、分类、标签、推荐 API、详情数据、下载、安装、统计、后台、数据库和部署逻辑不变。
+
+### 测试计划
+
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`。
+- 新增导航状态测试：首页顶部/区域、推荐路径、详情父级、未知路径和哈希目标。
+- 首页、搜索、分类、空结果、推荐、详情和品牌/背景资源 HTTP 回归。
+- 检查直接访问哈希、前进后退、固定栏遮挡、键盘焦点、`aria-current`、44px 触控和 1440/1024/768/390 响应式结构。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`e5fc35576c5f2c0210300688b5feab1043c1de22`
+- 备份分支：`backup/pre-public-shell-navigation-20260731-0549`
+- 备份 push 状态：待开工计划提交并 push 后执行。
+
+### 回滚预案
+
+- 如公共外壳或导航状态产生回归，优先 `git revert <本轮功能提交>`，不使用 reset、clean、restore 或 force push。
+- 回滚后复测 unit、lint、typecheck、db:check、build、首页/推荐/详情 HTTP、哈希导航和公共外壳状态。
+- 开发前基线由远端备份分支保存；三项用户工具文件始终不纳入回滚或提交范围。
