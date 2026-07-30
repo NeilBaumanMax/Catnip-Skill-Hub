@@ -1344,3 +1344,9 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 老版本浏览器将使用 90% 安全背景而没有渐变透明度，这是有意降级。
 - `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
 - 不得恢复服务器 Docker、nginx、DNS、HTTPS 或生产秘密配置。
+
+## 2026-07-31 05:32 CST / 自适应顶栏 Git 状态回写
+
+- 功能提交：`098b3e9`，已成功 push 到 `origin/SKill-hub-ui`。
+- 开发前备份：`backup/pre-adaptive-header-rail-20260731-0524`，已成功 push，基线为 `a492fef`。
+- 下一次接力以本条之后的纯文档收尾提交为最新 HEAD，以 `098b3e9` 作为本轮功能回滚目标。

@@ -1824,3 +1824,10 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 
 - 在 Edge 刷新 `http://192.168.0.109:3000/`，检查页面顶部、滚动约 120px 和 240px 后三种状态。
 - 只处理顶栏高度、透明度曲线、断点和侧栏宽度的真实视觉反馈。
+
+## 2026-07-31 05:32 CST / SKill-hub-ui / 自适应顶栏 Git 状态回写
+
+- 功能提交：`098b3e9`（`fix: adapt discovery chrome to scroll`）。
+- `git push origin SKill-hub-ui`：成功，远端由 `a492fef` 前进到 `098b3e9`。
+- 开发前备份：`backup/pre-adaptive-header-rail-20260731-0524`，已 push，指向开工计划基线 `a492fef`。
+- 本条状态回写形成纯文档收尾提交并 push；功能回滚目标固定为 `098b3e9`。
