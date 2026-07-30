@@ -150,18 +150,13 @@ select:focus-visible {
   min-width: max-content;
 }
 
-.brand-placeholder {
-  display: grid;
+.brand-logo {
+  display: block;
   width: 40px;
   height: 40px;
-  place-items: center;
-  border: 1px solid var(--line-strong);
-  border-radius: 13px 5px 13px 5px;
-  background: var(--panel-raised);
-  color: var(--mint);
-  font-size: 0.92rem;
-  font-weight: 850;
-  letter-spacing: -0.04em;
+  flex: none;
+  border-radius: 12px;
+  object-fit: cover;
 }
 
 .wordmark > span:last-child {
@@ -1954,16 +1949,18 @@ select:focus-visible {
 }
 
 .rail-brand {
-  display: grid;
+  display: block;
   width: 48px;
   height: 48px;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--rail-text) 22%, transparent);
   border-radius: 14px;
-  color: var(--rail-text);
-  font-size: 1.15rem;
-  font-weight: 850;
-  letter-spacing: -0.04em;
+  overflow: hidden;
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--rail-ink) 50%, transparent);
+}
+
+.rail-brand .brand-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
 }
 
 .rail-nav {
@@ -2043,8 +2040,21 @@ select:focus-visible {
 
 .discovery-wordmark {
   display: grid;
-  gap: 3px;
+  grid-template-columns: 38px auto;
+  gap: 10px;
+  align-items: center;
   min-width: max-content;
+}
+
+.discovery-wordmark .brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+}
+
+.discovery-wordmark-copy {
+  display: grid;
+  gap: 3px;
 }
 
 .discovery-wordmark strong {
@@ -2053,7 +2063,7 @@ select:focus-visible {
   letter-spacing: -0.025em;
 }
 
-.discovery-wordmark span {
+.discovery-wordmark small {
   color: var(--gallery-muted);
   font-size: 0.68rem;
 }
@@ -2583,7 +2593,7 @@ select:focus-visible {
     top: 64px;
   }
 
-  .discovery-wordmark span {
+  .discovery-wordmark small {
     display: none;
   }
 

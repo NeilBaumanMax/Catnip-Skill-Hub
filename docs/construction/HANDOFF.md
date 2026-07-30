@@ -1137,3 +1137,67 @@ UI-1 深色公共外壳已经形成未提交代码，工程和 HTTP 验证通过
 - 开发前备份：`backup/pre-unsplash-discovery-ui-20260731-0415`，远端快照 `824adf0a18b2fcc30273f15c675114f90c8a010b`。
 - 工作区：仅 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件；不得纳入后续提交。
 - 状态：工程检查点已远端保存，视觉门禁待 Neil Bauman 在 Edge 验收；下一轮不得把该状态误写为最终视觉通过。
+
+## 2026-07-31 04:53 CST / SKill-hub-ui / 正式 Logo 接入交接
+
+### 当前状态
+
+Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品牌入口的工程接入，等待 Edge 视觉确认。服务器部署继续暂停。
+
+### 本轮完成
+
+- 正式 Logo 稳定保存为 `public/brand/logo.png`，与上传原图和运行态返回文件哈希一致。
+- 首页、详情、推荐页统一使用共享 `BrandLogo`；字母 `C` 占位已从公共页面移除。
+- 标签页 title 精确为 `Catnip Skill Hub`，icon 与 apple-touch-icon 使用同一 Logo。
+- 公开品牌文案和当前规范已移除旧语言市场定位与旧标题术语。
+- 工程、构建、HTTP、metadata、静态资源与文档漂移门禁完成。
+
+### 未完成
+
+- Edge 标签栏中 favicon 的真实像素可辨识度与缓存刷新确认。
+- 1440、1024、768、390 四视口下 Logo 与文字关系的真实浏览器截图检查。
+- favicon 仍直接使用约 1 MB 原图，尚未由 Neil Bauman 提供专用小尺寸版本。
+
+### 下次优先任务
+
+1. 检查 `http://192.168.0.109:3000` 的网页 Logo 与 Edge 标签栏图标。
+2. 根据 Neil Bauman 反馈只调整 Logo 尺寸、裁切、圆角或文字关系。
+3. 如需优化 favicon 文件体积，先获得派生品牌资产的明确授权或由 Neil Bauman 提供专用图标。
+
+### 必读文档
+
+按 AGENTS 顺序读取；额外读取 `DESIGN.md` Brand Mark、`public/brand/README.md` 和 `SKILL_HUB_UI_PLAN.md` 顶部品牌覆盖规则。
+
+### 关键文件
+
+- `public/brand/logo.png`
+- `src/app/_components/brand-logo.tsx`
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `DESIGN.md`
+
+### 测试基线
+
+- unit 45/45、lint、typecheck、db:check、获准 build、diff check：成功。
+- 首页、详情、推荐、Logo：HTTP 200。
+- HTML title、icon、apple-touch-icon：精确匹配。
+- 浏览器视觉门禁：未完成，浏览器列表为空。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前基线：`201b5e4036a464221bd87106f7822645eda9916b`
+- 备份分支：`backup/pre-brand-logo-20260731-0444`，已 push
+- 最新提交：本轮收尾后回写
+- 已 push：备份已 push；工作分支待收尾 push
+- 工作区状态：本轮受控品牌/文档改动，加三项受保护用户工具文件
+
+### 风险提醒
+
+- 不得重新生成或擅自改变正式 Logo 图形。
+- 浏览器可能缓存旧 favicon；真实判断前可关闭旧标签页并重新打开。
+- `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
+- 不得恢复服务器部署或触碰既有服务器工作区。

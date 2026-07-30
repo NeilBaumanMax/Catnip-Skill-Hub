@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/app/_components/brand-logo";
 import { analyticsService } from "@/lib/analytics";
 import { discoverSkills } from "@/lib/discovery";
 import { runtimeSkillRepository } from "@/lib/data/skills";
@@ -52,7 +53,7 @@ export default async function Home({ searchParams }: HomeProps) {
       */}
       <aside className="utility-rail" aria-label="站点功能">
         <Link className="rail-brand" href="/" aria-label="Catnip Skill Hub 首页">
-          C
+          <BrandLogo className="brand-logo" priority />
         </Link>
         <nav className="rail-nav" aria-label="快捷入口">
           {utilityLinks.map((item, index) => (
@@ -74,8 +75,11 @@ export default async function Home({ searchParams }: HomeProps) {
         <header className="discovery-header">
           <div className="discovery-topline">
             <Link className="discovery-wordmark" href="/">
-              <strong>Catnip 薄荷猫</strong>
-              <span>中文 Agent Skill 独立站</span>
+              <BrandLogo className="brand-logo" priority />
+              <span className="discovery-wordmark-copy">
+                <strong>Catnip Skill Hub</strong>
+                <small>Curated Agent Skills</small>
+              </span>
             </Link>
 
             <form className="discovery-search" role="search" aria-label="搜索 Skill" action="/" method="get">
@@ -200,11 +204,11 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <footer className="discovery-footer" id="about">
           <div>
-            <strong>Catnip 薄荷猫</strong>
-            <p>由管理员 Neil Bauman 筛选、整理和发布的中文 Agent Skill 独立站。</p>
+            <strong>Catnip Skill Hub</strong>
+            <p>由管理员 Neil Bauman 筛选、整理和发布。</p>
           </div>
           <div>
-            <span>Logo 与吉祥物将在后续接入</span>
+            <span>Catnip 品牌图形已正式接入</span>
             <a
               href="https://unsplash.com/photos/mountain-landscape-with-a-calm-lake-at-dawn-JCqW61z2Sz0"
               target="_blank"

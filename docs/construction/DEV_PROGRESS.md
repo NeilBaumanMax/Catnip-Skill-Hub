@@ -1130,3 +1130,78 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 停点
 
 本轮不进入详情页视觉统一、后台界面或服务器部署。Edge 打开当前局域网预览后，由 Neil Bauman 进行真实观感反馈；下一轮只处理该反馈或完成多视口视觉验收。
+
+## 2026-07-31 04:44 CST / SKill-hub-ui / 正式 Logo 与站点命名开工计划
+
+### 本轮目标
+
+接入 Neil Bauman 本轮提供的正式 Catnip 图形作为网页 Logo 和浏览器标签页图标；将浏览器标题统一为 `Catnip Skill Hub`，移除公开界面中“中文 Agent Skill 独立站”“中文传播标题”等定位性表述。
+
+### 涉及层
+
+- 公共前台层：首页、详情页、推荐页的共享品牌入口和公开文案。
+- 应用 metadata 层：站点 title、description 与 favicon。
+- 品牌资源层：`public/brand` 的正式图片和来源约定。
+- 产品与设计文档层：把“仅文字占位”修正为“正式 Logo 已由 Neil Bauman 提供”。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`；HEAD `201b5e4036a464221bd87106f7822645eda9916b`，与 `origin/SKill-hub-ui` 一致。
+- SSH 已复验为 `NeilBaumanMax`；origin 为指定 SSH Remote；Git 身份为 `Neil·Baumann <2091760192@qq.com>`。
+- 工作区只有 `.agents/`、`.codex/`、`skills-lock.json` 三项已知用户工具文件，本轮继续不修改、不暂存。
+- 用户提供图片为 1078 × 1080 RGBA PNG，适合作为正方形品牌图；不重新生成、不改变图形内容。
+
+### 计划修改
+
+- 保存正式 Logo 到稳定公开路径，并使用同一资源生成网页 Logo 与浏览器 icon metadata。
+- 建立共享品牌组件，替换首页字母 `C`、详情和推荐页的文字占位图形；保留可访问名称和稳定首页链接。
+- 浏览器标签页只显示 `Catnip Skill Hub`；公开副标题改为不含“中文 Agent Skill 独立站”的产品描述。
+- 更新 `public/brand/README.md`、PRODUCT、DESIGN 与产品需求的品牌事实；保留中文内容能力，不把品牌定位写成“中文 Skill”。
+- 不修改路由、搜索、Skill 数据标题、后台字段、下载、安装、数据库、认证或部署。
+
+### 测试计划
+
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`。
+- 首页、详情、推荐、Logo 和 favicon HTTP 检查；核对页面 metadata title。
+- 检查 Logo 替代文本、尺寸预留、圆角、触控、浅深背景可读性和公开文案扫描。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`201b5e4036a464221bd87106f7822645eda9916b`
+- 备份分支：`backup/pre-brand-logo-20260731-0444`
+- 备份 push 状态：待执行
+
+### 回滚预案
+
+- 如需撤销，优先 `git revert <本轮品牌提交>`；开发前状态由远端备份分支保存。
+- 回滚后复测 unit、lint、typecheck、db:check、build、三个公开路由、Logo/favicon 和 metadata。
+- 不使用 reset、clean、restore 或 force push。
+
+## 2026-07-31 04:53 CST / SKill-hub-ui / 正式 Logo 与站点命名工程完成
+
+### 已完成
+
+- 将 Neil Bauman 提供的 1078 × 1080 RGBA PNG 原样保存为 `public/brand/logo.png`；仓库文件、运行态返回文件与上传原图 SHA-256 均为 `ccce8d284a7323d0353c5939045f6de8be3b656bc4ba87fd21000545b5798f2f`。
+- 新建共享 `BrandLogo` 组件，替换首页左栏、顶部文字标识、详情页和推荐页的字母占位。
+- 根 metadata title 精确改为 `Catnip Skill Hub`，icon 与 apple-touch-icon 统一使用正式 Logo。
+- 公开副标题、页脚和安装说明移除旧语言市场定位与旧标题术语；搜索、数据标题和后台业务不变。
+- 品牌资源、产品需求、PRODUCT、DESIGN、专项计划和施工入口已按最新正式品牌事实修正。
+
+### 验证摘要
+
+- `npm test` 45/45、lint、typecheck、db:check、获准环境 build 和 diff check 成功。
+- 受限 build 首次因 Turbopack 内部端口权限失败，已记录并在获准环境同命令复测成功。
+- 首页、详情、推荐和 Logo 均为 HTTP 200；HTML title、icon、apple-touch-icon 精确匹配；公开禁用表述扫描为空。
+- Impeccable 技术审计为 18/20；可控浏览器列表为空，真实标签栏像素和多视口视觉检查仍需 Edge 人工验收。
+
+### GitHub 备份
+
+- 开发前基线：`201b5e4036a464221bd87106f7822645eda9916b`。
+- 备份分支：`backup/pre-brand-logo-20260731-0444`，已成功 push 并远端核验。
+
+### 停点
+
+本轮只交付正式品牌资产与站点命名，不进入详情视觉统一、瀑布流再设计、后台或服务器。Git 收尾并打开 Edge 后停下等待 Neil Bauman 视觉确认。

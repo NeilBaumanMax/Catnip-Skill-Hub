@@ -2,8 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Catnip Skill Hub | 中文 Agent Skill 独立站",
-  description: "发现由 Catnip 薄荷猫筛选、整理和发布的中文 Agent Skill。",
+  title: "Catnip Skill Hub",
+  description: "Curated Agent Skills for real workflows.",
+  icons: {
+    icon: [{ url: "/brand/logo.png", type: "image/png" }],
+    apple: [{ url: "/brand/logo.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

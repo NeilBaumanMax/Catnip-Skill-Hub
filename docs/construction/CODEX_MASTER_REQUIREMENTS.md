@@ -35,7 +35,7 @@
 ## 当前前端专项要求
 
 - 当前前端开发分支为 `SKill-hub-ui`，基线为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`；旧前端实验分支保留，不删除、不继续追加当前方案。
-- 前端施工以 `docs/construction/SKILL_HUB_UI_PLAN.md` 为专项依据：使用 WorkBuddy 的成熟信息架构、Marvis 的封面驱动浏览节奏和 Catnip 的中文策展身份。
+- 前端施工以 `docs/construction/SKILL_HUB_UI_PLAN.md` 为专项依据：使用 WorkBuddy 的成熟信息架构、Marvis 的封面驱动浏览节奏和 Catnip 的管理员策展身份。
 - 首次规划轮只写文档，不改 UI 代码；后续 UI-1 至 UI-4 每批完成施工闭环后必须停下向 Neil Bauman 汇报，未经继续指令不得进入下一批。
 - 不因参考产品扩展专家、连接器、MCP、Prompt、社区、用户安装库或首页直接安装；Skill 仍是主角，下载和安装仍在详情页。
 

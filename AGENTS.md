@@ -2,7 +2,7 @@
 
 ## 项目身份
 
-- 产品：Catnip Skill Hub，Catnip 薄荷猫 Agent Skill 独立站
+- 产品：Catnip Skill Hub，Catnip 薄荷猫 Agent Skill 发现站
 - 项目负责人和管理员：Neil Bauman
 - GitHub：NeilBaumanMax/Catnip-Skill-Hub
 - SSH Remote：git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git

@@ -187,3 +187,44 @@
 ### 下一状态
 
 停在首页视觉验收点。不要进入服务器、后台或新业务；下一轮优先读取 Neil Bauman 的 Edge 反馈并仅修正公共首页。
+
+## 2026-07-31 04:44 CST / SKill-hub-ui / 正式 Logo 与站点命名开工计划
+
+### 当前目标
+
+把 Neil Bauman 提供的正式 Catnip 图形接入公共网页与浏览器标签页，并将公开站点名称收敛为 `Catnip Skill Hub`。
+
+### 计划改动
+
+- 将 1078 × 1080 RGBA PNG 保存为稳定品牌资源，不生成替代图形。
+- 以共享品牌组件替换首页、详情和推荐页的 `C` 占位。
+- 浏览器 title 改为 `Catnip Skill Hub`，favicon 使用同一 Logo。
+- 移除公开页面的“中文 Agent Skill 独立站”“中文传播标题”等定位性文案。
+- 更新品牌资源、产品与设计规范；不改业务、数据、后端和部署。
+
+### 验收指标
+
+- 首页、详情、推荐页展示相同 Logo，图片有尺寸预留且首页链接和可访问名称正确。
+- 标签页 title 精确为 `Catnip Skill Hub`，favicon 请求成功。
+- 公开 UI 与 metadata 不再出现“中文 Agent Skill 独立站”或“中文传播标题”。
+- unit、lint、typecheck、db:check、build、diff check 和相关 HTTP 验证成功。
+
+## 2026-07-31 04:53 CST / SKill-hub-ui / 正式 Logo 与站点命名验收
+
+### 实际改动
+
+- 正式 Logo 原图保存到 `public/brand/logo.png`，共享组件用于首页、详情和推荐页。
+- 标签页 title 统一为 `Catnip Skill Hub`，icon 与 apple-touch-icon 复用正式 Logo。
+- 公开品牌文字统一到 `Catnip Skill Hub` 与 `Curated Agent Skills`，移除旧语言市场定位和旧标题术语。
+- 保留中文界面内容、五分类、搜索、详情、下载、安装与后台字段，不扩大产品范围。
+
+### 验收结果
+
+- Logo 原图、仓库文件和 HTTP 返回文件哈希一致；三个公开路由与 Logo HTTP 200。
+- HTML metadata 精确包含 `<title>Catnip Skill Hub</title>` 及两个 `/brand/logo.png` 图标链接。
+- unit 45/45、lint、typecheck、db:check、获准 build、diff check 和 Impeccable 检测成功。
+- 浏览器控制后端列表仍为空，真实标签栏图标和四视口视觉验收保留为人工门禁，未伪报通过。
+
+### 下一状态
+
+停在 Edge 品牌视觉确认点。下一轮只处理 Logo 尺寸、裁切、文字关系或 favicon 缓存等真实反馈，不进入新 UI 批次。

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/app/_components/brand-logo";
 import { RecommendForm } from "./recommend-form";
 
 export default function RecommendPage() {
@@ -6,8 +7,8 @@ export default function RecommendPage() {
     <main className="recommend-shell">
       <header className="detail-nav">
         <Link className="wordmark" href="/">
-          <span className="brand-placeholder" aria-hidden="true">C</span>
-          <span><strong>Catnip</strong><small>薄荷猫 · SKILL HUB</small></span>
+          <BrandLogo className="brand-logo" priority />
+          <span><strong>Catnip Skill Hub</strong><small>CURATED AGENT SKILLS</small></span>
         </Link>
         <Link className="back-link" href="/">← 返回探索</Link>
       </header>

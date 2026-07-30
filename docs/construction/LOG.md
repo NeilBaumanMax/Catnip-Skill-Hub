@@ -1544,3 +1544,87 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 工程检查点已提交并远端备份；无需回滚。
 - 浏览器视觉门禁仍未完成，因此状态保持“部分完成 / 等待 Edge 视觉验收”，不标记最终前端设计完成。
 - 本条状态回写形成纯文档收尾提交并 push 后，以 Git log 第一条作为最新文档提交；可回滚功能提交固定为 `4c615ad5725c0f97aca19f49f33ff0b4cecdc4ff`。
+
+## 2026-07-31 04:47 CST / SKill-hub-ui / 正式 Logo 构建首次失败
+
+### 失败命令
+
+`npm run build`
+
+### 失败摘要
+
+- 同批 `npm test` 45/45 与 `npm run db:check` 成功。
+- Next.js 16.2.12 Turbopack 在处理 `src/app/globals.css` 时需要创建内部进程并绑定端口，受限沙箱返回 `Operation not permitted (os error 1)`，构建退出 1。
+- 该错误与前轮已记录的沙箱门禁一致；lint、typecheck、Impeccable 检测和 diff check 均已成功，没有发现 Logo 组件、metadata 或 CSS 编译错误。
+
+### 修复与复测计划
+
+- 不修改构建配置；在获准环境执行完全相同的 `npm run build`。
+- 复测成功后检查首页、详情、推荐、`/brand/logo.png`、HTML title 和 icon link；若仍失败则停止施工并按新错误定位。
+
+## 2026-07-31 04:53 CST / SKill-hub-ui / 正式 Logo 与站点命名
+
+### 本轮计划回放
+
+接入 Neil Bauman 提供的正式 Catnip 图形，统一网页 Logo、favicon 与站点 title，并移除公开界面的旧语言市场定位和旧标题术语；不修改业务、后端或部署。
+
+### 实际修改
+
+- 原样复制用户提供 PNG 到 `public/brand/logo.png`，调整文件为公开可读权限，不重绘、不下载替代图、不改变像素。
+- 新增 `src/app/_components/brand-logo.tsx`，以 Next Image 提供稳定尺寸和页面内图片优化。
+- 首页左栏和顶部、详情页、推荐页统一使用共享品牌组件；保留链接可见文字或 aria 名称。
+- 根 metadata title 精确为 `Catnip Skill Hub`，description 改为中性英文，icon 与 apple-touch-icon 指向正式 Logo。
+- 公开页脚和安装命令说明移除旧定位术语；PRODUCT、DESIGN、产品需求、专项计划、AGENTS 和主要求修正当前品牌事实。
+
+### 修改文件
+
+- 品牌：`public/brand/logo.png`、`public/brand/README.md`、`src/app/_components/brand-logo.tsx`。
+- 公共前台：`layout.tsx`、`page.tsx`、`globals.css`、详情页、推荐页、`skill-actions.tsx`。
+- 规范与施工：AGENTS、CODEX_MASTER_REQUIREMENTS、PRODUCT_REQUIREMENTS、PRODUCT、DESIGN、SKILL_HUB_UI_PLAN、DEV_PROGRESS、LOG、HANDOFF、01-public-web。
+
+### 验证结果
+
+- 原图、仓库 Logo 与 HTTP Logo SHA-256 一致：`ccce8d284a7323d0353c5939045f6de8be3b656bc4ba87fd21000545b5798f2f`。
+- 首页、详情、推荐、Logo HTTP 200；首页 HTML title 精确为 `Catnip Skill Hub`，icon 与 apple-touch-icon 都指向 `/brand/logo.png`。
+- 公开 HTML 与源码目标禁用表述扫描为空。
+
+### 测试日志
+
+1. `npm run lint`、`npm run typecheck`、`git diff --check` 和 Impeccable detector 首轮成功。
+2. `npm test` 45/45、`npm run db:check` 成功。
+3. 受限 `npm run build` 因 Turbopack 内部进程绑定端口返回 `Operation not permitted`；先记录，获准环境同命令复测成功，9 个静态页面生成完成。
+4. 浏览器插件初始路径指向已被替换的旧版本，排障文档读取失败；找到当前 26.727.40816 版本并重建连接后，浏览器列表仍为 `[]`，按技能规则停止替代浏览器控制。
+
+### 测试指标判断
+
+- 工程、生产构建、HTTP、metadata、静态资源一致性与公开文案门禁通过。
+- Impeccable audit：Accessibility 4、Performance 3、Responsive 4、Theming 3、Implementation Integrity 4，总计 18/20。扣分来自 1 MB 原始 favicon 资源和缺少真实浏览器像素验收；页面内 Logo 由 Next Image 优化。
+- 浏览器视觉门禁未完成，不能写成最终视觉通过。
+
+### 文档漂移检查
+
+- 最新正式 Logo 事实已覆盖旧“文字品牌占位”规范；历史追加记录保留原事实。
+- 当前规范统一使用 `Catnip Skill Hub`、展示标题和管理员策展；公开定位不再使用语言市场限定。
+- Neil Bauman、NeilBaumanMax、Catnip 品牌、SSH Remote、五分类、Skill 主体、服务器暂停和业务边界无漂移。
+- 未增加依赖、路由、普通用户认证、数据库、服务器操作、密钥或正式吉祥物。
+
+### GitHub 状态
+
+- 当前分支：`SKill-hub-ui`；开发前基线：`201b5e4036a464221bd87106f7822645eda9916b`。
+- 备份分支：`backup/pre-brand-logo-20260731-0444`，已 push 并远端核验为基线提交。
+- 工作分支提交与 push：待收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚；若正式 Logo 版本需撤销，优先 `git revert <本轮品牌提交>`。
+- 回滚后复测 unit、lint、typecheck、db:check、build、首页/详情/推荐、Logo、metadata 与公开文案扫描。
+
+### 当前风险
+
+- favicon 直接引用 1 MB 原图，标签页加载成本高于专用小图标；未在本轮派生或重绘品牌资产。
+- 可控浏览器为空，无法自动确认 Edge 标签栏缓存刷新和小尺寸可辨识度。
+- `.agents/`、`.codex/`、`skills-lock.json` 继续是受保护用户工具文件。
+
+### 下一步
+
+完成 Git 提交与 push，使用 Edge 打开局域网首页并停下；等待 Neil Bauman 检查 Logo 尺寸、裁切和标签页图标。

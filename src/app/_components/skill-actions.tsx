@@ -44,7 +44,7 @@ export function SkillActions({ commands, downloadEnabled, downloadUrl, skillSlug
       <div className="action-copy">
         <p className="eyebrow">获取 Skill</p>
         <h2 id="action-title">下载 ZIP 或安装到 Agent</h2>
-        <p>命令由服务层根据真实 skills CLI 1.5.20 参数生成，不使用中文传播标题。</p>
+        <p>命令由服务层根据真实 skills CLI 1.5.20 参数生成，不使用展示标题。</p>
       </div>
 
       <div className="install-controls">

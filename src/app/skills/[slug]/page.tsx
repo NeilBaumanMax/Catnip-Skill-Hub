@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SkillActions } from "@/app/_components/skill-actions";
+import { BrandLogo } from "@/app/_components/brand-logo";
 import { TrackedExternalLink, ViewTracker } from "@/app/_components/analytics-events";
 import { analyticsService } from "@/lib/analytics";
 import { runtimeSkillRepository } from "@/lib/data/skills";
@@ -50,10 +51,10 @@ export default async function SkillPage({ params }: SkillPageProps) {
     <div className="site-shell detail-shell" data-category={skill.category}>
       <header className="detail-header">
         <Link className="wordmark" href="/" aria-label="返回 Catnip Skill Hub 首页">
-          <span className="brand-placeholder" aria-hidden="true">C</span>
+          <BrandLogo className="brand-logo" priority />
           <span>
-            <strong>Catnip</strong>
-            <small>薄荷猫 · SKILL HUB</small>
+            <strong>Catnip Skill Hub</strong>
+            <small>CURATED AGENT SKILLS</small>
           </span>
         </Link>
         <Link className="back-link" href="/">← 返回探索</Link>
@@ -219,8 +220,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
 
       <footer className="site-footer">
         <div>
-          <strong>Catnip 薄荷猫</strong>
-          <p>由管理员筛选、整理和发布的中文 Agent Skill 独立站。</p>
+          <strong>Catnip Skill Hub</strong>
+          <p>由管理员筛选、整理和发布。</p>
         </div>
         <div className="footer-note">
           <span>当前目录含一个可下载 Catnip 原创 Skill</span>

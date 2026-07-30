@@ -1,6 +1,6 @@
 ---
 name: Catnip Skill Hub
-description: 中文 Agent Skill 的内容发现画廊
+description: Curated Agent Skill discovery gallery
 colors:
   gallery-canvas: "#f4f5f2"
   gallery-surface: "#ffffff"
@@ -61,7 +61,7 @@ components:
 
 **Creative North Star: "策展工作台旁的影像墙"**
 
-公共首页像一个专注于 Skill 的内容画廊：操作入口稳定地退到左侧和顶部，封面流成为页面主体。它借鉴 Unsplash 的发现效率和内容优先，但保留 Catnip 的中文策展、来源可信与明确分类。界面不依赖大型 Hero、蓝紫渐变、通用玻璃卡片或技术控制台装饰来制造氛围。
+公共首页像一个专注于 Skill 的内容画廊：操作入口稳定地退到左侧和顶部，封面流成为页面主体。它借鉴 Unsplash 的发现效率和内容优先，但保留 Catnip 的人工策展、来源可信与明确分类。界面不依赖大型 Hero、蓝紫渐变、通用玻璃卡片或技术控制台装饰来制造氛围。
 
 **Key Characteristics:**
 
@@ -69,6 +69,14 @@ components:
 - 图片和封面承担页面主要色彩。
 - 搜索、分类和标签持续可见但不压过内容。
 - 首页只负责发现，详情页才出现下载与安装。
+- 正式 Catnip 图形与 `Catnip Skill Hub` 文字标识共同承担品牌识别。
+
+## Brand Mark
+
+- 唯一正式网页图形为 `/brand/logo.png`，来源是 Neil Bauman 于 2026-07-31 提供的 1078 × 1080 RGBA PNG。
+- 左侧工具栏使用 48px 图形，移动端使用 44px，顶部文字标识使用 38px；均保持原始比例并以 `object-fit: cover` 填充软圆角容器。
+- 浏览器 icon 与 apple-touch-icon 使用同一稳定资源，标签页 title 精确为 `Catnip Skill Hub`。
+- 不以字母、emoji、网络图片或重新生成的近似图形替代；Logo 链接必须提供可见文字或 aria 名称。
 
 ## Colors
 
@@ -91,7 +99,7 @@ components:
 ## Typography
 
 **Display Font:** LXGW WenKai Catnip，仅用于首页短标题。
-**Body Font:** 系统无衬线中文字体栈。
+**Body Font:** 系统无衬线字体栈。
 
 展示字体提供有限的人格，工作型文字保持中性、紧凑和高识读。展示字体不能进入搜索、筛选、正文或元数据。
 
