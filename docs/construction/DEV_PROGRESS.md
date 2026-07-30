@@ -1274,3 +1274,50 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 停点
 
 本轮工程实现、测试和文档闭环完成后打开 Edge 预览并停下。等待 Neil Bauman 对透明度、背景、卡片和图标的视觉反馈，不进入新业务或服务器施工。
+## 2026-07-31 05:24 CST / SKill-hub-ui / 自适应顶栏与窄侧栏开工计划
+
+### 本轮目标
+
+根据 Neil Bauman 的 Edge 实机截图压缩首页粘性顶部控制层，并让其透明度随页面滚动由透明逐步过渡到近不透明，避免标题与筛选内容穿透重叠；桌面左侧工具栏宽度缩小约 25%。
+
+### 涉及层
+
+- Phase 1 公共前台：首页粘性发现控制、桌面工具栏、锚点与响应式尺寸。
+- 设计规范：滚动材质状态、顶栏高度和侧栏宽度令牌。
+- 施工文档：测试、漂移、回滚与接力记录。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`，HEAD `15ae235e56ab610f9dc4525263bb99436a9ff2bc`，与远端一致。
+- SSH 已复验为 `NeilBaumanMax`，origin 为指定 SSH Remote。
+- 工作区仅 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件。
+
+### 计划修改
+
+- 桌面侧栏由 84px 收窄到 64px，主内容偏移、Logo、图标热区与 tooltip 位置同步校准。
+- 压缩顶栏品牌行、分类行、标签行的高度与间距，保持 44px 触控目标和可横向浏览能力。
+- 使用 CSS scroll-driven animation 让顶栏在页面顶部保持较透明，前 240px 滚动内平滑增厚至近不透明。
+- 为不支持滚动时间线的浏览器提供高不透明度安全回退；减少透明度偏好始终使用实色。
+- 调整锚点 scroll margin，避免分类或 Skill 锚点被压缩后的粘性栏遮挡。
+
+### 测试计划
+
+- `npm test`、lint、typecheck、db:check、build、diff check。
+- 首页、搜索、分类、空结果、详情、推荐和背景资源 HTTP 回归。
+- 检查 64px 侧栏、44px 热区、顶栏压缩尺寸、scroll timeline 支持分支与回退规则。
+- Edge 打开局域网预览，由 Neil Bauman 检查顶部/滚动两种材质状态。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`15ae235e56ab610f9dc4525263bb99436a9ff2bc`
+- 备份分支：`backup/pre-adaptive-header-rail-20260731-0524`
+- 备份 push 状态：待开工计划提交后执行。
+
+### 回滚预案
+
+- 如滚动材质或尺寸产生回归，优先 `git revert <本轮功能提交>`。
+- 回滚后复测 unit、lint、typecheck、db:check、build 与局域网首页 HTTP。
+- 不使用 reset、clean、restore 或 force push，不删除现有 UI 分支。
