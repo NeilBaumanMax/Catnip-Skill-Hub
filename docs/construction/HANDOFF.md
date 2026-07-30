@@ -976,3 +976,11 @@ Phase 7 本地部署里程碑已完成，完整栈正在 Docker Desktop 上通�
 - 不复制参考产品的品牌、图片、图标或文案；截图不进入仓库。
 - 首页不能加入直接下载/安装、专家/连接器市场或案例主线。
 - 服务器部署仍暂停；不得在前端轮修改 Docker、nginx、DNS、HTTPS 或生产秘密。
+
+## 2026-07-30 08:35 CST / SKill-hub-ui / Git 状态回写
+
+- 最新规划提交：`d9be06a102dd299c850a549bf083c227b4ec86fa`。
+- `origin/SKill-hub-ui`：已成功 push 到该规划提交。
+- 备份分支：`backup/pre-skill-hub-ui-plan-20260730-0827`，已 push，指向 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
+- main：未修改。
+- 工作区：提交后只保留未跟踪用户工具文件 `.agents/`、`.codex/`、`skills-lock.json`；不得暂存。
