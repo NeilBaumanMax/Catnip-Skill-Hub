@@ -2,14 +2,14 @@
 name: Catnip Skill Hub
 description: Curated Agent Skill discovery gallery
 colors:
-  gallery-canvas: "#f4f5f2"
-  gallery-surface: "#ffffff"
-  gallery-ink: "#171a18"
-  gallery-muted: "#6b716d"
-  gallery-line: "#dde1dc"
-  catnip-mint: "#2f7d53"
-  rail-ink: "#111512"
-  rail-text: "#f2f5f2"
+  gallery-canvas: "#071421"
+  gallery-surface: "rgb(9 23 37 / 0.72)"
+  gallery-ink: "#f4f7f7"
+  gallery-muted: "#bbc9cf"
+  gallery-line: "rgb(255 255 255 / 0.16)"
+  catnip-mint: "#96dfa8"
+  rail-ink: "#07111c"
+  rail-text: "#f4f8f6"
 typography:
   display:
     fontFamily: "LXGW WenKai Catnip, PingFang SC, sans-serif"
@@ -34,7 +34,8 @@ typography:
     lineHeight: 1.5
 rounded:
   control: "12px"
-  media: "14px"
+  media: "15px"
+  panel: "16px"
   pill: "999px"
 spacing:
   xs: "6px"
@@ -59,13 +60,13 @@ components:
 
 ## Overview
 
-**Creative North Star: "策展工作台旁的影像墙"**
+**Creative North Star: "山谷上方的策展影像墙"**
 
-公共首页像一个专注于 Skill 的内容画廊：操作入口稳定地退到左侧和顶部，封面流成为页面主体。它借鉴 Unsplash 的发现效率和内容优先，但保留 Catnip 的人工策展、来源可信与明确分类。界面不依赖大型 Hero、蓝紫渐变、通用玻璃卡片或技术控制台装饰来制造氛围。
+公共首页像一个悬浮在蓝调山谷上方的 Skill 内容画廊：操作入口稳定地退到左侧和顶部，封面流成为页面主体。它借鉴 Unsplash 的发现效率和内容优先，但保留 Catnip 的人工策展、来源可信与明确分类。山景负责环境，玻璃只负责功能层级；界面不依赖大型 Hero、蓝紫渐变、霓虹光晕或技术控制台装饰来制造氛围。
 
 **Key Characteristics:**
 
-- 紧凑工具框架包围开放内容画布。
+- 半透明工具框架浮在同一张山景环境上。
 - 图片和封面承担页面主要色彩。
 - 搜索、分类和标签持续可见但不压过内容。
 - 首页只负责发现，详情页才出现下载与安装。
@@ -80,19 +81,20 @@ components:
 
 ## Colors
 
-冷中性浅色画布承载多样封面，深色工具栏提供稳定锚点，Catnip 薄荷绿只用于品牌、焦点和关键选中状态。
+低饱和蓝调山景承载多样封面，深蓝黑玻璃工具层提供稳定锚点，Catnip 薄荷绿只用于品牌、焦点和关键选中状态。
 
 ### Primary
 
-- **Catnip Mint** (`#2f7d53`)：品牌识别、键盘焦点与少量关键状态。
+- **Catnip Mint** (`#96dfa8`)：品牌识别、键盘焦点与少量关键状态。
 
 ### Neutral
 
-- **Gallery Canvas** (`#f4f5f2`)：首页连续内容画布。
-- **Gallery Surface** (`#ffffff`)：搜索、控制和需要明确边界的表面。
-- **Gallery Ink** (`#171a18`)：标题与主要操作。
-- **Gallery Muted** (`#6b716d`)：作者、阅读量和辅助说明。
-- **Rail Ink** (`#111512`)：桌面工具栏与强对比控制。
+- **Gallery Canvas** (`#071421`)：图片加载失败或减少透明度时的深蓝底色。
+- **Gallery Surface** (`rgb(9 23 37 / 0.72)`)：卡片信息与功能面板玻璃底。
+- **Gallery Ink** (`#f4f7f7`)：标题与主要操作。
+- **Gallery Muted** (`#bbc9cf`)：作者、阅读量和辅助说明。
+- **Rail Ink** (`#07111c`)：强对比控制和实色回退。
+- **Gallery Line** (`rgb(255 255 255 / 0.16)`)：玻璃边缘与内容分隔。
 
 **The Content Color Rule.** 页面色彩主要来自 Skill 封面。固定 UI 不使用蓝紫渐变、霓虹光晕或随机多色状态点。
 
@@ -117,42 +119,42 @@ components:
 
 ## Elevation & Depth
 
-系统以平面和间距为主。粘性顶部控制可使用轻微背景模糊和单一环境阴影，Skill 卡片静止时不悬浮；Hover 只增强封面遮罩和标题关联，不大幅上移。
+系统用三种材质权重表达层级：左栏最厚、顶部控制次之、Skill 卡片信息层最轻。全部使用同一深蓝黑半透明家族、白色细边与带方向的柔和阴影。Hover 最多上移 3px，不使用发光边框。
 
-**The Flat Content Rule.** Skill 内容在画布上自然排列，不把每个条目包进通用玻璃面板。
+**The Environmental Glass Rule.** 玻璃必须让同一张山景在栏、控制与卡片之间保持连续，只用于承载工具和文字；标签、元数据与封面内部不得继续套玻璃。
 
 ## Shapes
 
-控件使用 12px 圆角，媒体使用 14px 圆角，筛选使用全圆角。桌面左栏接近方正并以间距组织，避免全站所有元素都变成胶囊。
+控件使用 12px 圆角，媒体使用 15px 圆角，玻璃面板使用 16px 圆角，筛选使用全圆角。桌面左栏接近方正并以间距组织，避免全站所有元素都变成胶囊。
 
 ## Components
 
 ### Buttons
 
 - **Shape:** 12px；标签不得换行。
-- **Primary:** 深墨背景、浅色文字，最小高度 44px。
+- **Primary:** 近白实底、深蓝文字，最小高度 44px。
 - **Hover / Focus:** 只调整亮度与边线；焦点使用 Catnip Mint 外轮廓。
 
 ### Chips
 
-- **Style:** 未选中为浅色画布上的文本与细边线。
-- **State:** 选中为深墨实底；类别名称必须与固定五分类一致。
+- **Style:** 未选中为玻璃工具层上的高对比文本。
+- **State:** 选中为近白实底与深蓝文字；类别名称必须与固定五分类一致。
 
 ### Cards / Containers
 
-- **Corner Style:** 媒体 14px。
-- **Background:** 卡片文字区与页面同底，不额外制造容器。
-- **Shadow Strategy:** 默认无阴影。
-- **Internal Padding:** 封面下使用 10-14px 的纵向信息节奏。
+- **Corner Style:** 外壳 16px，媒体顶部 15px。
+- **Background:** 封面保持内容实色或图片；文字区使用轻量深蓝玻璃底。
+- **Shadow Strategy:** 单一向下柔和阴影，不使用零偏移彩色光晕。
+- **Internal Padding:** 文字区使用 14-15px 的信息节奏。
 
 ### Inputs / Fields
 
-- **Style:** 白色表面、1px 冷灰边线、12px 圆角、44px 最小高度。
+- **Style:** 深蓝半透明表面、1px 白色低透明边线、12px 圆角、44px 最小高度。
 - **Focus:** Catnip Mint 双层可见焦点，不只改变颜色。
 
 ### Navigation
 
-桌面工具栏使用图形缩写与可见文字提示；顶部控制保持一行。移动端保留品牌、探索、分类和推荐的等价入口，不显示普通用户登录。
+桌面工具栏使用 Phosphor `regular` 线性图标，统一为 22px；默认只显示图标，悬停或键盘聚焦时在栏外显示中文提示。链接必须保留中文 `aria-label`。移动端保留全部五个等价入口，不显示普通用户登录。
 
 ### Skill Waterfall
 
@@ -166,11 +168,12 @@ components:
 - **Do** 保持搜索、分类、标签与清除条件真实可用。
 - **Do** 使用来源明确的图片或清楚标记的演示封面。
 - **Do** 在移动端明确重排工具栏与瀑布流。
+- **Do** 为 `backdrop-filter` 不可用和 `prefers-reduced-transparency` 提供深蓝实色回退。
 
 ### Don't:
 
 - **Don't** 放置占据首屏的大型搜索 Hero 或海报式标题。
 - **Don't** 在首页加入下载、安装、收藏、普通用户登录或账户系统。
 - **Don't** 复制 Unsplash 的品牌、图标、图片或文案。
-- **Don't** 使用蓝紫渐变、霓虹光晕、装饰状态点或玻璃卡片堆叠。
+- **Don't** 使用蓝紫渐变、霓虹光晕、装饰状态点或玻璃嵌套。
 - **Don't** 让案例、专家、连接器、MCP 或 Prompt 成为首页主线。

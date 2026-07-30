@@ -1917,20 +1917,26 @@ select:focus-visible {
 
 /* Catnip discovery gallery: Unsplash-inspired structure, Catnip-owned visual language. */
 .discovery-page {
-  --gallery-canvas: #f4f5f2;
-  --gallery-surface: #ffffff;
-  --gallery-ink: #171a18;
-  --gallery-muted: #6b716d;
-  --gallery-line: #dde1dc;
-  --gallery-mint: #2f7d53;
-  --rail-ink: #111512;
-  --rail-text: #f2f5f2;
+  --gallery-canvas: #071421;
+  --gallery-surface: rgb(9 23 37 / 0.72);
+  --gallery-ink: #f4f7f7;
+  --gallery-muted: #bbc9cf;
+  --gallery-line: rgb(255 255 255 / 0.16);
+  --gallery-mint: #96dfa8;
+  --rail-ink: #07111c;
+  --rail-text: #f4f8f6;
   --mint: var(--gallery-mint);
   --ink: var(--gallery-ink);
   --muted: var(--gallery-muted);
-  color-scheme: light;
+  color-scheme: dark;
   min-height: 100dvh;
-  background: var(--gallery-canvas);
+  background-color: var(--gallery-canvas);
+  background-image:
+    linear-gradient(rgb(3 12 23 / 0.48), rgb(3 13 24 / 0.76)),
+    url("/images/catnip-blue-mountain.jpg");
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
   color: var(--gallery-ink);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
@@ -1944,8 +1950,12 @@ select:focus-visible {
   flex-direction: column;
   align-items: center;
   padding: 18px 10px 16px;
-  background: var(--rail-ink);
+  border-right: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(5 15 25 / 0.56);
   color: var(--rail-text);
+  box-shadow: 18px 0 48px rgb(0 5 12 / 0.18);
+  backdrop-filter: blur(26px) saturate(145%);
+  -webkit-backdrop-filter: blur(26px) saturate(145%);
 }
 
 .rail-brand {
@@ -1971,6 +1981,7 @@ select:focus-visible {
 }
 
 .rail-nav a {
+  position: relative;
   display: grid;
   min-height: 56px;
   place-items: center;
@@ -1978,23 +1989,59 @@ select:focus-visible {
   gap: 3px;
   border-radius: 12px;
   color: color-mix(in srgb, var(--rail-text) 66%, transparent);
-  transition: background-color 160ms ease-out, color 160ms ease-out;
+  outline: none;
+  transition: background-color 160ms ease-out, color 160ms ease-out, transform 160ms ease-out;
 }
 
-.rail-nav a span {
-  font-size: 0.95rem;
-  font-weight: 800;
+.rail-nav a svg {
+  display: block;
+  flex: none;
 }
 
-.rail-nav a small {
-  font-size: 0.62rem;
-  font-weight: 650;
+.rail-tooltip {
+  position: absolute;
+  z-index: 80;
+  left: calc(100% + 14px);
+  top: 50%;
+  min-width: max-content;
+  padding: 7px 10px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 9px;
+  background: rgb(5 15 25 / 0.9);
+  color: var(--rail-text);
+  box-shadow: 0 10px 28px rgb(0 5 12 / 0.28);
+  font-size: 0.72rem;
+  font-weight: 680;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-6px, -50%);
+  transition: opacity 140ms ease-out, transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rail-nav a:hover .rail-tooltip,
+.rail-nav a:focus-visible .rail-tooltip {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
 .rail-nav a:hover,
+.rail-nav a:focus-visible,
 .rail-nav a.active {
-  background: var(--rail-text);
-  color: var(--rail-ink);
+  background: rgb(255 255 255 / 0.12);
+  color: var(--rail-text);
+}
+
+.rail-nav a:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--gallery-mint);
+}
+
+.rail-nav a:active {
+  transform: scale(0.96);
+}
+
+.rail-nav a.active {
+  color: var(--gallery-mint);
 }
 
 .rail-signature {
@@ -2015,11 +2062,11 @@ select:focus-visible {
   position: sticky;
   z-index: 40;
   top: 0;
-  border-bottom: 1px solid var(--gallery-line);
-  background: color-mix(in srgb, var(--gallery-canvas) 92%, transparent);
-  box-shadow: 0 16px 44px color-mix(in srgb, var(--gallery-ink) 8%, transparent);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  border-bottom: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(7 20 33 / 0.48);
+  box-shadow: 0 18px 48px rgb(0 5 12 / 0.2);
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
 }
 
 .discovery-topline,
@@ -2092,13 +2139,13 @@ select:focus-visible {
   padding: 0 16px;
   border: 1px solid var(--gallery-line);
   border-radius: 12px;
-  background: var(--gallery-surface);
+  background: rgb(4 14 24 / 0.58);
   color: var(--gallery-ink);
   font: inherit;
 }
 
 .discovery-search input::placeholder {
-  color: color-mix(in srgb, var(--gallery-muted) 84%, var(--gallery-surface));
+  color: #a9bac2;
 }
 
 .discovery-search button,
@@ -2107,10 +2154,10 @@ select:focus-visible {
   min-height: 44px;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--rail-ink);
+  border: 1px solid rgb(255 255 255 / 0.18);
   border-radius: 12px;
-  background: var(--rail-ink);
-  color: var(--rail-text);
+  background: rgb(244 248 246 / 0.92);
+  color: var(--rail-ink);
   padding: 0 16px;
   font: inherit;
   font-size: 0.8rem;
@@ -2122,7 +2169,7 @@ select:focus-visible {
 
 .discovery-search button:hover,
 .discovery-recommend:hover {
-  background: color-mix(in srgb, var(--rail-ink) 88%, var(--gallery-mint));
+  background: var(--gallery-mint);
 }
 
 .discovery-search button:active,
@@ -2167,14 +2214,14 @@ select:focus-visible {
 
 .discovery-categories a:hover,
 .discovery-tags a:hover {
-  background: var(--gallery-surface);
+  background: rgb(255 255 255 / 0.1);
   color: var(--gallery-ink);
 }
 
 .discovery-categories a.active,
 .discovery-tags a.active {
-  background: var(--gallery-ink);
-  color: var(--gallery-surface);
+  background: rgb(244 248 247 / 0.92);
+  color: var(--rail-ink);
 }
 
 .discovery-tags {
@@ -2217,6 +2264,7 @@ select:focus-visible {
   line-height: 1.02;
   letter-spacing: -0.025em;
   text-wrap: balance;
+  text-shadow: 0 3px 24px rgb(0 4 10 / 0.34);
 }
 
 .discovery-intro p {
@@ -2308,13 +2356,32 @@ select:focus-visible {
   height: 100%;
   grid-template-rows: minmax(0, 1fr) auto;
   align-content: start;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 0.17);
+  border-radius: 16px;
+  background: rgb(7 20 33 / 0.54);
+  box-shadow: 0 18px 44px rgb(0 5 12 / 0.2);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  transition: transform 190ms cubic-bezier(0.16, 1, 0.3, 1), border-color 160ms ease-out, background-color 160ms ease-out;
+}
+
+.waterfall-card > a:hover {
+  border-color: rgb(255 255 255 / 0.28);
+  background: rgb(9 24 39 / 0.66);
+  transform: translateY(-3px);
+}
+
+.waterfall-card > a:focus-visible {
+  outline: 2px solid var(--gallery-mint);
+  outline-offset: 3px;
 }
 
 .waterfall-cover {
   position: relative;
   min-height: 250px;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: 15px 15px 0 0;
   isolation: isolate;
   transition: filter 180ms ease-out;
 }
@@ -2401,7 +2468,7 @@ select:focus-visible {
 
 .waterfall-copy {
   min-width: 0;
-  padding: 11px 2px 0;
+  padding: 14px 14px 15px;
 }
 
 .waterfall-title-row {
@@ -2461,7 +2528,12 @@ select:focus-visible {
   justify-items: start;
   gap: 8px;
   padding: clamp(44px, 8vw, 96px) 0;
-  border-top: 1px solid var(--gallery-line);
+  border: 1px solid var(--gallery-line);
+  border-radius: 16px;
+  background: rgb(7 20 33 / 0.62);
+  padding-inline: clamp(20px, 4vw, 46px);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
 }
 
 .discovery-empty h2,
@@ -2491,8 +2563,13 @@ select:focus-visible {
   gap: 40px;
   justify-content: space-between;
   margin-top: 68px;
-  padding: 34px 0 46px;
-  border-top: 1px solid var(--gallery-line);
+  margin-bottom: 28px;
+  padding: 28px 30px;
+  border: 1px solid var(--gallery-line);
+  border-radius: 16px;
+  background: rgb(7 20 33 / 0.54);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
 }
 
 .discovery-footer strong {
@@ -2521,8 +2598,12 @@ select:focus-visible {
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .discovery-header {
-    background: var(--gallery-canvas);
+  .utility-rail,
+  .discovery-header,
+  .waterfall-card > a,
+  .discovery-empty,
+  .discovery-footer {
+    background: #0a1b2b;
   }
 }
 
@@ -2553,6 +2634,8 @@ select:focus-visible {
     flex-direction: row;
     justify-content: space-between;
     padding: 8px 14px;
+    border-right: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 0.16);
   }
 
   .rail-brand {
@@ -2573,12 +2656,15 @@ select:focus-visible {
     padding-inline: 7px;
   }
 
-  .rail-nav a span {
-    display: none;
+  .rail-tooltip {
+    left: 50%;
+    top: calc(100% + 10px);
+    transform: translate(-50%, -5px);
   }
 
-  .rail-nav a small {
-    font-size: 0.68rem;
+  .rail-nav a:hover .rail-tooltip,
+  .rail-nav a:focus-visible .rail-tooltip {
+    transform: translate(-50%, 0);
   }
 
   .rail-signature {
@@ -2617,10 +2703,6 @@ select:focus-visible {
 
   .rail-nav a {
     min-width: 42px;
-  }
-
-  .rail-nav a:nth-child(5) {
-    display: none;
   }
 
   .discovery-header {
@@ -2716,8 +2798,12 @@ select:focus-visible {
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  .discovery-header {
-    background: var(--gallery-canvas);
+  .utility-rail,
+  .discovery-header,
+  .waterfall-card > a,
+  .discovery-empty,
+  .discovery-footer {
+    background: #0a1b2b;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -2726,7 +2812,9 @@ select:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .waterfall-art,
   .waterfall-cover,
+  .waterfall-card > a,
   .rail-nav a,
+  .rail-tooltip,
   .discovery-search button,
   .discovery-recommend {
     transition: none;

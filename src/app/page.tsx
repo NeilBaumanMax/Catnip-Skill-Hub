@@ -1,4 +1,11 @@
 import Link from "next/link";
+import {
+  Compass,
+  GridFour,
+  House,
+  Info,
+  Sparkle,
+} from "@phosphor-icons/react/ssr";
 import { BrandLogo } from "@/app/_components/brand-logo";
 import { analyticsService } from "@/lib/analytics";
 import { discoverSkills } from "@/lib/discovery";
@@ -25,11 +32,11 @@ function discoveryHref(filters: { query?: string; category?: string; tag?: strin
 }
 
 const utilityLinks = [
-  { href: "/", short: "首", label: "首页" },
-  { href: "#skill-grid", short: "探", label: "探索" },
-  { href: "#categories", short: "类", label: "分类" },
-  { href: "/recommend", short: "荐", label: "推荐" },
-  { href: "#about", short: "介", label: "关于" },
+  { href: "/", icon: House, label: "首页" },
+  { href: "#skill-grid", icon: Compass, label: "探索" },
+  { href: "#categories", icon: GridFour, label: "分类" },
+  { href: "/recommend", icon: Sparkle, label: "推荐" },
+  { href: "#about", icon: Info, label: "关于" },
 ] as const;
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -46,7 +53,7 @@ export default async function Home({ searchParams }: HomeProps) {
     <div className="discovery-page">
       {/*
         THESIS: Skill 封面是首页主体，拒绝大型 Hero 与通用市场卡片墙。
-        OWN-WORLD: 冷白画布、深墨工具栏、Catnip 薄荷焦点与多样内容封面。
+        OWN-WORLD: 蓝调山景环境、深蓝玻璃工具层、Catnip 薄荷焦点与多样内容封面。
         STORY: 用户从搜索和分类进入瀑布流，在卡片上理解用途，再进入详情行动。
         FIRST VIEWPORT: 左侧功能栏，顶部发现控制，紧凑标题，下方立即出现四列 Skill。
         FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
@@ -62,9 +69,10 @@ export default async function Home({ searchParams }: HomeProps) {
               className={index === 0 ? "active" : ""}
               href={item.href}
               key={item.label}
+              aria-label={item.label}
             >
-              <span aria-hidden="true">{item.short}</span>
-              <small>{item.label}</small>
+              <item.icon aria-hidden="true" size={22} weight="regular" />
+              <span className="rail-tooltip" aria-hidden="true">{item.label}</span>
             </Link>
           ))}
         </nav>

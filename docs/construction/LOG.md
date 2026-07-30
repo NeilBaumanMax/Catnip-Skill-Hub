@@ -1637,3 +1637,96 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 推送后工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件，均未暂存、未修改、未提交。
 - 远端施工前备份：`backup/pre-brand-logo-20260731-0444`，指向 `201b5e4036a464221bd87106f7822645eda9916b`，已核验。
 - 本条状态回写以纯文档提交 push 后收尾；可回滚品牌功能提交固定为 `e5e0e12e219f6de1769eb289c5c31a22c98003c9`。
+## 2026-07-31 05:15 CST / SKill-hub-ui / 山景玻璃与线性导航
+
+### 本轮计划回放
+
+- 保留 Unsplash 式左栏、顶部发现控制和中央瀑布流，不改产品信息架构。
+- 恢复蓝调山景环境，并让左栏、顶部栏和 Skill 卡片形成连续而克制的网页磨砂玻璃。
+- 将首页、探索、分类、推荐、关于改为统一线宽图标；默认隐藏文字，hover/focus 显示提示。
+- 完成依赖、工程、HTTP、文档漂移、Git 备份、提交与远端推送闭环。
+
+### 实际修改
+
+- 新增并固定 `@phosphor-icons/react@2.1.10`，首页 Server Component 使用官方 SSR 导出。
+- 左栏五个汉字缩写替换为 House、Compass、GridFour、Sparkle、Info 的 22px regular 线性图标。
+- 每个图标链接保留中文 `aria-label`、44px 以上触控目标和可见键盘焦点；文字 tooltip 仅在 hover/focus 出现。
+- 首页以本地 `catnip-blue-mountain.jpg` 作为固定环境画布，使用深蓝遮罩保证动态背景上的可读性。
+- 左栏、顶部栏、Skill 卡片、空结果和页脚使用同色系分级玻璃；提供 blur 不可用与减少透明度实色回退。
+- 保留搜索、分类、标签、推荐、详情、下载、安装、数据和后台逻辑，不进入服务器部署。
+- `DESIGN.md` 和专项 UI 计划已从“浅色平面画布”修正为当前山景玻璃与线性图标契约。
+
+### 修改文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `package.json`
+- `package-lock.json`
+- `DESIGN.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/progress/layers/01-public-web.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+
+### 验证结果
+
+- 45 项单元测试全部成功；lint、typecheck、db:check、生产 build 与 diff check 最终成功。
+- 局域网首页、详情、推荐、搜索、分类、空结果和山景资源返回 200。
+- 运行态首页包含精确 title、五个中文导航 `aria-label` 与对应 SVG 图标。
+- 自动浏览器后端没有可用浏览器；Computer Use 原生通道启动失败，因此没有伪报四视口截图通过。
+
+### 测试日志
+
+1. `git add ... && git commit ...` 首次在受限沙箱因 `.git/index.lock: Operation not permitted` 失败；使用获准的 Git 写权限对相同明确文件复测成功。
+2. `npm install @phosphor-icons/react` 成功；npm 报告既有依赖树 16 项审计风险和若干未批准安装脚本，未执行破坏性 `audit fix --force`。
+3. `npm run lint` 首轮成功。
+4. `npm run typecheck` 首轮成功。
+5. `npm test`：45/45 成功。
+6. `npm run db:check`：成功。
+7. `git diff --check`：成功。
+8. `npm run build` 首次失败：Turbopack 内部进程绑定端口被沙箱拒绝，`Operation not permitted`。
+9. 在获准环境复跑同一 `npm run build`：成功，全部路由生成完成。
+10. 本地预览首次以 `127.0.0.1:3000` 检查失败，确认现有服务只绑定 `192.168.0.109:3000`；改用真实局域网地址后公开路径成功。
+11. Browser 插件清单路径漂移到旧版本；只读定位实际版本后按技能连接，返回 `No browser is available`。
+12. Computer Use 只读视觉检查返回 `Sky Computer Use native pipe startup failed`；保留 Edge 人工视觉门禁。
+13. Impeccable 手动检测执行一次，发现大量历史 CSS 与旧 `DESIGN.md` 令牌不一致的 advisory；本轮相关视觉令牌、16px 面板、图标与玻璃规则已写入 `DESIGN.md`，未借机重构整份历史 CSS。
+
+### 测试指标判断
+
+- 功能与工程门禁：通过。
+- 单元测试：通过，不是“尚未建立测试”。
+- 集成环境测试：本轮未执行，未配置 PostgreSQL/S3 的已知外部条件不因纯前端改造改变。
+- 真实多视口自动截图：未完成，不能写成视觉最终通过；由 Neil Bauman 在 Edge 预览验收。
+
+### 文档漂移检查
+
+- `DESIGN.md` 原“浅色画布、卡片无玻璃、汉字缩写”与最新实现冲突，已整体修正为山景环境、分级玻璃、Phosphor 线性图标和透明度降级。
+- `SKILL_HUB_UI_PLAN.md` 追加最新覆盖规则，明确上一版浅色替换不再生效。
+- 产品边界、管理员 Neil Bauman、品牌 Catnip 薄荷猫、GitHub 用户 NeilBaumanMax、SSH Remote 和服务器暂停状态均未漂移。
+- 未实现普通用户登录、后台新功能、下载/安装新逻辑、数据库、认证或服务器部署。
+- `.agents/`、`.codex/`、`skills-lock.json` 未修改、未暂存。
+
+### GitHub 状态
+
+- 开发前代码基线：`133cdfe10d234ec2ce53d59da043d8f7eead0f9e`。
+- 开工计划提交：`ced4fab`，已 push 到 `origin/SKill-hub-ui`。
+- 开发前备份：`backup/pre-glass-icon-navigation-20260731-0504`，已成功 push，指向 `ced4fab`。
+- 最终功能提交与 main 工作分支 push：待本轮提交后回写。
+
+### 回滚判断
+
+- 当前不需要回滚。
+- 如 Neil Bauman 否定本轮视觉，优先 `git revert <本轮功能提交>`，不删除分支、不 reset、不 force push。
+- 回滚后复测：`npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build` 与局域网首页 HTTP。
+
+### 当前风险
+
+- 自动浏览器和 Computer Use 均不可用，四视口像素、tooltip 实际位置和玻璃强度仍需 Edge 人工视觉确认。
+- npm 报告 16 项依赖审计风险；本轮新增 Phosphor 包本身无已报告安装脚本，风险治理应独立评估，不能在视觉批次中强制升级。
+- 背景图片固定定位在移动浏览器上可能被平台降级；CSS 已保留 cover 和实色背景，不影响基本阅读。
+
+### 下一步
+
+- 在 Edge 打开 `http://192.168.0.109:3000/`，由 Neil Bauman 评估山景明暗、玻璃透明度、图标线条和 tooltip。
+- 只处理本轮真实视觉反馈；确认前不进入详情页统一、后台或服务器部署。

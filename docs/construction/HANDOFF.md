@@ -1209,3 +1209,69 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 开发前备份：`backup/pre-brand-logo-20260731-0444`，已 push，指向 `201b5e4036a464221bd87106f7822645eda9916b`。
 - 工作区：仅 `.agents/`、`.codex/`、`skills-lock.json` 三项未跟踪用户工具文件。
 - 当前停点：正式 Logo 工程接入已远端保存，等待 Edge 人工确认；不进入下一批 UI 或服务器施工。
+## 2026-07-31 05:15 CST / SKill-hub-ui / 山景玻璃与线性导航交接
+
+### 当前状态
+
+`SKill-hub-ui` 已完成首页山景玻璃与线性图标导航的工程实现、测试和文档漂移修正，等待 Neil Bauman 在 Edge 对实际视觉进行确认。服务器部署继续暂停。
+
+### 本轮完成
+
+- 首页恢复本地蓝调山景背景，左栏、顶部栏、Skill 卡片、空结果和页脚采用分级深蓝玻璃。
+- 五个左栏入口改用 Phosphor 22px regular 线性图标，静止时只有图标，hover/focus 显示中文 tooltip。
+- 所有图标入口保留中文 aria-label、可见焦点、44px 以上触控目标，移动端不隐藏“关于”。
+- 新增并固定 `@phosphor-icons/react@2.1.10`，通过 SSR 导出避免客户端边界。
+- `DESIGN.md` 与 `SKILL_HUB_UI_PLAN.md` 已按最新视觉事实修正。
+
+### 未完成
+
+- 自动 Browser 返回无可用浏览器，Computer Use 原生通道启动失败，未完成 1440/1024/768/390 自动截图。
+- Neil Bauman 尚未对山景明暗、玻璃透明度、卡片纵深、图标线条与 tooltip 位置作最终视觉确认。
+- PostgreSQL/S3 集成测试环境未在本轮配置；未把集成测试写成通过。
+
+### 下次优先任务
+
+1. 打开 `http://192.168.0.109:3000/`，读取 Neil Bauman 的 Edge 视觉反馈。
+2. 只微调背景遮罩、玻璃透明度、图标尺寸/线宽、tooltip 或卡片间距。
+3. 视觉确认后再决定是否进入详情页视觉统一；不得恢复服务器部署。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并额外读取 `DESIGN.md`、`PRODUCT.md`、`docs/construction/SKILL_HUB_UI_PLAN.md` 最新覆盖和 `public/images/README.md`。
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `package.json`
+- `DESIGN.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `public/images/catnip-blue-mountain.jpg`
+- `public/brand/logo.png`
+
+### 测试基线
+
+- `npm test`：45/45 成功。
+- lint、typecheck、db:check、获准生产 build、diff check：成功。
+- 首次受限 build 因 Turbopack 内部端口权限失败；相同命令获准复测成功。
+- 首页、详情、推荐、搜索、分类、空结果、山景资源：HTTP 200。
+- 自动视觉门禁：未完成，必须以 Edge 人工验收补足。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前代码基线：`133cdfe10d234ec2ce53d59da043d8f7eead0f9e`
+- 开工计划提交：`ced4fab`，已 push
+- 备份分支：`backup/pre-glass-icon-navigation-20260731-0504`，已 push
+- 最新提交：本轮功能提交后回写
+- 已 push：备份与开工计划已 push；功能提交待收尾 push
+- 工作区状态：本轮受控 UI/依赖/文档改动，加三项受保护未跟踪用户工具文件
+
+### 风险提醒
+
+- `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
+- npm 当前报告 16 项依赖审计风险；不要在视觉反馈轮执行 `npm audit fix --force`。
+- 不得把工程成功写成自动视觉验收成功。
+- 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。
