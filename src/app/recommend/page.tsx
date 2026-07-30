@@ -7,7 +7,7 @@ export default function RecommendPage() {
       <header className="detail-nav">
         <Link className="wordmark" href="/">
           <span className="brand-placeholder" aria-hidden="true">C</span>
-          <span><strong>Catnip</strong><small>薄荷猫</small></span>
+          <span><strong>Catnip</strong><small>薄荷猫 · SKILL HUB</small></span>
         </Link>
         <Link className="back-link" href="/">← 返回探索</Link>
       </header>

@@ -34,7 +34,8 @@ export default async function Home({ searchParams }: HomeProps) {
   const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
   return (
-    <div className="site-shell">
+    <div className="home-scene">
+      <div className="site-shell">
       <header className="site-header">
         <Link className="wordmark" href="/" aria-label="Catnip Skill Hub 首页">
           <span className="brand-placeholder" aria-hidden="true">
@@ -42,7 +43,7 @@ export default async function Home({ searchParams }: HomeProps) {
           </span>
           <span>
             <strong>Catnip</strong>
-            <small>薄荷猫</small>
+            <small>薄荷猫 · SKILL HUB</small>
           </span>
         </Link>
 
@@ -61,7 +62,7 @@ export default async function Home({ searchParams }: HomeProps) {
             defaultValue={discovery.filters.query}
             maxLength={100}
           />
-          <button type="submit">搜索</button>
+          <button type="submit">检索</button>
         </form>
 
         <Link className="recommend-link" href="/recommend">
@@ -71,10 +72,13 @@ export default async function Home({ searchParams }: HomeProps) {
 
       <main>
         <section className="intro" id="explore" aria-labelledby="page-title">
-          <p className="eyebrow">中文 Agent Skill 精选</p>
-          <h1 id="page-title">发现值得带进工作流的好 Skill</h1>
+          <p className="eyebrow">CATNIP CURATED / 中文 Agent Skill 精选</p>
+          <h1 id="page-title">
+            <span>发现真正</span>
+            <span>值得安装的 Skill</span>
+          </h1>
           <p>
-            从创意编码到硬件原型，浏览由 Catnip 薄荷猫筛选、整理的实用能力。
+            从创意编码到硬件原型。由 Catnip 薄荷猫筛选、整理，只留下能进入真实工作流的实用能力。
           </p>
         </section>
 
@@ -90,6 +94,7 @@ export default async function Home({ searchParams }: HomeProps) {
             {MAIN_CATEGORIES.map((category) => (
               <Link
                 className={discovery.filters.category === category ? "active" : ""}
+                data-category={category}
                 href={discoveryHref({
                   query: discovery.filters.query,
                   category: discovery.filters.category === category ? undefined : category,
@@ -130,7 +135,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
           <div className="skill-grid" id="skill-grid">
             {discovery.items.map((skill, index) => (
-              <article className="skill-card" key={skill.slug}>
+              <article className="skill-card" data-category={skill.category} key={skill.slug}>
                 <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
                   <div className={`skill-cover cover-${skill.coverTheme} ${skill.coverSize}`}>
                     <span className="cover-index">{String(index + 1).padStart(2, "0")}</span>
@@ -171,9 +176,17 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
         <div className="footer-note">
           <span>Logo 与吉祥物将在后续接入</span>
+          <a
+            href="https://unsplash.com/photos/mountain-landscape-with-a-calm-lake-at-dawn-JCqW61z2Sz0"
+            target="_blank"
+            rel="noreferrer"
+          >
+            背景摄影：Wolfgang Hasselmann / Unsplash ↗
+          </a>
           <Link href="/recommend">推荐一个 Skill</Link>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

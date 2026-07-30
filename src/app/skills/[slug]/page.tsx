@@ -47,13 +47,13 @@ export default async function SkillPage({ params }: SkillPageProps) {
   const counts = await analyticsService.get(skill.slug);
 
   return (
-    <div className="site-shell detail-shell">
+    <div className="site-shell detail-shell" data-category={skill.category}>
       <header className="detail-header">
         <Link className="wordmark" href="/" aria-label="返回 Catnip Skill Hub 首页">
           <span className="brand-placeholder" aria-hidden="true">C</span>
           <span>
             <strong>Catnip</strong>
-            <small>薄荷猫</small>
+            <small>薄荷猫 · SKILL HUB</small>
           </span>
         </Link>
         <Link className="back-link" href="/">← 返回探索</Link>
