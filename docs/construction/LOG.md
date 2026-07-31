@@ -1,5 +1,82 @@
 # 施工日志
 
+## 2026-08-01 00:26 CST / UI Fix Top Logo Removal / 公共品牌图形去重
+
+### 本轮计划回放
+
+先读取施工与设计规范，检查 Git、SSH、远端和用户改动，生成修改前 12 张截图；提交并 push 开工计划、成功 push 开发前备份后，只删除顶部重复 Logo 并清理专用样式，最后执行 DOM、工程、HTTP、截图和文档漂移门禁。
+
+### 实际修改
+
+- `PublicHeader` 的 `.discovery-wordmark` 删除 `BrandLogo` 节点，文字品牌链接保持不变。
+- 清理桌面、旧响应式和当前响应式三组顶部 Logo 网格/尺寸样式，wordmark 改为单列。
+- 左侧/移动工具栏继续复用 `BrandLogo`；favicon、apple-touch-icon、品牌文件、首页标题和所有业务行为不变。
+- `DESIGN.md` 与 UI 专项规划新增单一图形品牌锚点规则。
+
+### 修改文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/globals.css`
+- `DESIGN.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 修改前截图 12/12：桌面与手机均同时显示工具栏和顶部图形 Logo，确认反馈基线。
+- 修改后截图 12/12：桌面、1024、768、390 的首页、详情和推荐均无错位；顶部只有文字品牌。
+- Playwright DOM：三个公共路由 `.discovery-header .brand-logo = 0`、`.utility-rail .brand-logo = 1`，wordmark 文本完整。
+- 首页、详情和推荐 HTTP 最终均为 `200`。
+
+### 测试日志
+
+- `npm test`：57/57 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：通过，Next.js 编译、TypeScript 与 9 个页面生成完成。
+- `git diff --check`：通过。
+- build 临时改写 `next-env.d.ts` 后已恢复施工前用户 dev routes 内容。
+- 本轮无中间应用测试失败。
+
+### 测试指标判断
+
+结构、交互回归、静态质量、生产构建、HTTP 与四视口视觉门禁达到本轮指标。自动截图不等于 Neil Bauman 已主观确认。
+
+### 文档漂移检查
+
+- `DESIGN.md` 已删除“顶部使用 34px 图形”的过期事实，改为顶部只显示文字品牌。
+- UI 专项计划与施工主要求同步当前单一图形品牌锚点；产品、架构、脚本和服务器暂停状态无漂移。
+- 管理员为 Neil Bauman，品牌为 Catnip 薄荷猫，Remote 为指定 SSH；未增加秘密或越过前端范围。
+- 既有用户工具改动未覆盖、未暂存。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开工前基线：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`。
+- 计划提交：`e961cd8672f1e36030e802704d144f7e176135d7`，已 push。
+- 备份分支：`backup/pre-ui-top-logo-removal-20260801-0019`，已 push。
+- 实现提交：待提交后回写；main 与服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 推荐回滚：`git revert <本轮实现提交>`。
+- 回滚后复测：unit、lint、typecheck、db:check、build、HTTP 和截图。
+
+### 当前风险
+
+- 自动视觉验收不等于 Neil Bauman 已接受最终品牌密度。
+- 既有用户工具改动继续隔离，工作区全局不会显示为干净。
+
+### 下一步
+
+保持局域网预览，等待 Neil Bauman 验收顶部 Logo 去重；未获新指令前不合并、不部署服务器。
+
 ## 2026-08-01 00:11 CST / UI Fix Header Distill / 公共顶栏单层化
 
 ### 本轮计划回放

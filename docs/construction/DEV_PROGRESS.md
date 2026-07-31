@@ -2,6 +2,27 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-01 00:26 CST / UI Fix Top Logo Removal / 完成记录
+
+### 完成状态
+
+- 公共 header 已删除重复图形 Logo，保留可点击的 `Catnip Skill Hub / Curated Agent Skills` 文字品牌。
+- 桌面左栏和移动工具栏继续保留正式 Logo；favicon、品牌资产与首页大标题均未修改。
+- wordmark 布局收敛为单列并清除三处失效的顶部 Logo 尺寸规则，搜索与推荐位置保持稳定。
+
+### 验证摘要
+
+- DOM 对首页、详情、推荐逐页确认：公共 header Logo 数量为 0，工具栏 Logo 数量为 1，文字品牌完整。
+- 修改后 12/12 标准截图生成并读图通过；桌面、手机及公共内页未发生错位。
+- `npm test` 57/57、lint、typecheck、db:check、build 与 `git diff --check` 通过。
+- 自动截图通过不等于 Neil Bauman 已主观验收。
+
+### GitHub 与回滚
+
+- 开工基线：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`；计划提交：`e961cd8672f1e36030e802704d144f7e176135d7`，已 push。
+- 远端备份：`backup/pre-ui-top-logo-removal-20260801-0019`，已 push。
+- 实现提交待提交后回写；需要恢复时优先 `git revert <本轮实现提交>` 并复测全部门禁。
+
 ## 2026-08-01 00:19 CST / UI Fix Top Logo Removal / 开工计划
 
 ### 本轮目标

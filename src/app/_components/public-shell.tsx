@@ -33,7 +33,6 @@ export function PublicHeader({
     <header className="discovery-header">
       <div className="discovery-topline">
         <Link className="discovery-wordmark" href="/#page-top">
-          <BrandLogo className="brand-logo" priority />
           <span className="discovery-wordmark-copy">
             <strong>Catnip Skill Hub</strong>
             <small>Curated Agent Skills</small>

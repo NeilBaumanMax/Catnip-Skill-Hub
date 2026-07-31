@@ -1961,14 +1961,8 @@ select:focus-visible {
 }
 
 .discovery-wordmark {
-  grid-template-columns: 40px auto;
-  gap: 11px;
-}
-
-.discovery-wordmark .brand-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 13px;
+  grid-template-columns: auto;
+  gap: 0;
 }
 
 .discovery-wordmark strong {
@@ -2380,13 +2374,8 @@ select:focus-visible {
   }
 
   .discovery-wordmark {
-    grid-template-columns: 36px minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     min-width: 0;
-  }
-
-  .discovery-wordmark .brand-logo {
-    width: 36px;
-    height: 36px;
   }
 
   .discovery-wordmark-copy {
@@ -2734,16 +2723,10 @@ select:focus-visible {
 
 .discovery-wordmark {
   display: grid;
-  grid-template-columns: 34px auto;
-  gap: 9px;
+  grid-template-columns: auto;
+  gap: 0;
   align-items: center;
   min-width: max-content;
-}
-
-.discovery-wordmark .brand-logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
 }
 
 .discovery-wordmark-copy {

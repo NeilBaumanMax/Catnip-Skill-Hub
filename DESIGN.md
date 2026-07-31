@@ -154,7 +154,7 @@ Neil Bauman 明确认可上一轮的 Catnip 大字标、中央任务搜索台、
 ## Brand Mark
 
 - 唯一正式网页图形为 `/brand/logo.png`，来源是 Neil Bauman 于 2026-07-31 提供的 1078 × 1080 RGBA PNG。
-- 桌面左侧工具栏使用 40px 图形，移动端使用 44px，顶部文字标识使用 34px；均保持原始比例并以 `object-fit: cover` 填充软圆角容器。
+- 桌面左侧工具栏使用 40px 图形，移动工具栏使用 44px，均保持原始比例并以 `object-fit: cover` 填充软圆角容器；顶部公共品牌行只显示文字品牌，不重复渲染图形 Logo。
 - 浏览器 icon 与 apple-touch-icon 使用同一稳定资源，标签页 title 精确为 `Catnip Skill Hub`。
 - 不以字母、emoji、网络图片或重新生成的近似图形替代；Logo 链接必须提供可见文字或 aria 名称。
 

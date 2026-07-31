@@ -2,6 +2,70 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-01 00:26 CST / UI_fix 顶部 Logo 去重交接
+
+### 当前状态
+
+`UI_fix` 已删除公共顶部品牌行的重复图形 Logo，左侧或移动工具栏成为当前视区唯一图形品牌锚点；全部自动门禁通过。局域网预览继续为 `http://192.168.110.9:3000`，服务器部署暂停。
+
+### 本轮完成
+
+- 首页、详情和推荐共享 header 只显示文字品牌，不再重复图形 Logo。
+- 桌面左栏、移动工具栏、favicon 和正式品牌资产保持不变。
+- wordmark 专用 CSS 已精简；搜索、推荐、分类和标签没有功能变化。
+- 12 张截图、三路由 DOM、57 项测试与工程门禁通过。
+
+### 未完成
+
+- Neil Bauman 尚未主观确认去重后的品牌平衡。
+- `UI_fix` 未合并，服务器未部署，历史 CSS 债务未清理。
+
+### 下次优先任务
+
+1. 让 Neil Bauman 检查桌面和手机顶部文字品牌与唯一工具栏 Logo。
+2. 只按明确反馈调整文字品牌宽度或位置。
+3. 视觉确认后再决定是否合并 `UI_fix`。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/globals.css`
+- `DESIGN.md`
+
+### 测试基线
+
+- `npm test`：57/57 通过。
+- lint、typecheck、db:check、build、diff check：通过。
+- 首页、详情和推荐 HTTP：`200`。
+- DOM：header Logo 0、工具栏 Logo 1；截图 12/12 读图通过。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`
+- 计划提交：`e961cd8672f1e36030e802704d144f7e176135d7`，已 push
+- 备份分支：`backup/pre-ui-top-logo-removal-20260801-0019`，已 push
+- 最新实现提交：待提交后回写
+- 已 push：计划和备份已 push；实现与收尾状态待提交
+- 工作区状态：本轮文件待提交；既有用户工具改动隔离，因此全局工作区不是干净状态
+
+### 风险提醒
+
+- 不得暂存 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`。
+- 不得把自动截图写成 Neil Bauman 已验收。
+- 不得恢复服务器写操作。
+
 ## 2026-08-01 00:11 CST / UI_fix 公共顶栏单层化交接
 
 ### 当前状态

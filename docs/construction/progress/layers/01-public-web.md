@@ -2,6 +2,21 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-08-01 00:26 CST / UI Fix Top Logo Removal / 完成记录
+
+### 实际完成
+
+- 从共享 `PublicHeader` 删除图形 Logo，首页、详情和推荐同步生效。
+- 保留顶部文字品牌链接、桌面左栏 Logo、移动工具栏 Logo 与浏览器图标。
+- wordmark CSS 改为单列，并移除桌面与响应式中的顶部图片专用规则。
+
+### 验收结果
+
+- 三个公共路由 DOM 均为 header 0 个 Logo、工具栏 1 个 Logo。
+- 12 张四视口截图读图通过，无品牌、搜索、推荐或分类错位。
+- 57 项测试、lint、typecheck、db:check、build、HTTP 和 diff check 最终通过。
+- 后端、数据、内容主库和服务器未修改。
+
 ## 2026-08-01 00:19 CST / UI Fix Top Logo Removal / 开工计划
 
 ### 当前目标
