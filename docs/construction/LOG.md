@@ -2257,3 +2257,12 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 
 - Neil Bauman 重新运行哈希命令，使用新的 12 位以上密码并把输出写入本机忽略文件。
 - 配置完成后重启开发服务，再从 `http://127.0.0.1:3000/admin/login` 登录。
+
+## 2026-07-31 14:25 CST / 管理员密码哈希工具最终 Git 回写
+
+- 功能提交：`9c6deb23ccc05dceb518bad84accd6fd407d57db`（`fix: restore admin password hash tool`）。
+- `git push origin backend-server-deployment`：成功；推送后本地与远端分歧为 `0 0`。
+- 开工计划提交：`84b8d763c217476a0ef547b66842cd6ad87f4b1c`，已 push。
+- 备份分支：`backup/pre-admin-hash-tool-fix-20260731-1413`，远端核验指向 `84b8d763c217476a0ef547b66842cd6ad87f4b1c`。
+- 工作区剩余 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 均为本轮开始前已有的 Claude 浏览器工具改动；未暂存、未覆盖、未提交。
+- 当前无需回滚；如需撤回功能，使用 `git revert 9c6deb23ccc05dceb518bad84accd6fd407d57db`，再复测专项 CLI、unit、lint、typecheck、db:check 和 build。

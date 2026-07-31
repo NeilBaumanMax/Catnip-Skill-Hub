@@ -1654,3 +1654,12 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 不读取、输出或提交 `.env.local`、哈希、会话密钥或其他真实秘密。
 - Claude 浏览器工具的 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 改动不得混入本轮提交。
 - 服务器部署继续暂停；管理员登录只在本机开发入口使用。
+
+## 2026-07-31 14:25 CST / 管理员密码工具最终 Git 状态
+
+- 当前分支：`backend-server-deployment`。
+- 功能提交：`9c6deb23ccc05dceb518bad84accd6fd407d57db`，已成功 push。
+- 本地与 `origin/backend-server-deployment` 分歧：`0 0`。
+- 开发前备份：`backup/pre-admin-hash-tool-fix-20260731-1413`，已 push，指向开工计划提交 `84b8d763c217476a0ef547b66842cd6ad87f4b1c`。
+- 工作区仅保留本轮开始前已有的 Claude 浏览器工具改动；管理员哈希工具修复文件已全部提交。
+- 下一步仍是 Neil Bauman 在本机重新运行哈希命令并自行配置忽略文件，不要把密码或哈希发到聊天。
