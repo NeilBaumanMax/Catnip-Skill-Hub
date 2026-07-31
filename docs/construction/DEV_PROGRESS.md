@@ -2,6 +2,58 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-07-31 23:56 CST / UI Fix Header Distill / 开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新截图反馈消除公共顶栏“框中框”：让公共 header 成为唯一毛玻璃表面，移除内部 topline 和 breadcrumb 的重复卡片材质，同时保持品牌、搜索、推荐、分类、标签与内页导航功能完整。
+
+### 涉及层
+
+- 公共前台：共享顶栏、分类行、标签入口和内页 breadcrumb 的视觉层级与响应式。
+- 设计规范：补充单层材质和去容器化规则，修正当前实现与视觉契约漂移。
+- 不修改发现服务、标签 AND 逻辑、后台、下载、安装、认证、数据库、内容主库或服务器部署。
+
+### 当前仓库状态
+
+- 当前分支：`UI_fix`；基线：`6c4edcf8a561e47505e60b8caed0e34de0d911da`，与 `origin/UI_fix` 分歧 `0 0`。
+- Git 身份：`Neil·Baumann <2091760192@qq.com>`；网站 Remote 保持指定 SSH 地址。
+- 修改前 12 张 Playwright 截图已生成，桌面与移动首页读图确认顶部内层圆角卡片造成重复材质。
+- 施工前已有用户工具改动继续隔离，不覆盖、不暂存。
+
+### 计划修改
+
+- 去除 `.discovery-topline` 的独立背景、边框、圆角、阴影和 backdrop blur，只保留布局与必要留白。
+- 公共 `.discovery-header` 继续承担唯一的滚动自适应毛玻璃材质。
+- 分类行使用单条 hairline 分隔和空间组织；标签入口默认透明，仅 hover、focus、展开或已选状态出现反馈。
+- 内页 `.public-context` 取消四边卡片、背景和 blur，仅保留单条分隔与 breadcrumb 信息。
+- 保持搜索输入、搜索按钮、推荐入口和标签下拉的真实行为与 44px 热区。
+
+### 测试计划
+
+- 修改后执行首页、详情、推荐 3 页面 × 4 视口截图并逐张读图；额外验证标签展开态。
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run db:check`
+- `npm run build`
+- `git diff --check`
+- HTTP 验证首页、详情、推荐与标签组合查询。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 基线提交：`6c4edcf8a561e47505e60b8caed0e34de0d911da`
+- 备份分支：`backup/pre-ui-header-distill-20260731-2356`
+- 备份 push 状态：待本计划提交并 push 后创建、核验。
+
+### 回滚预案
+
+- 本轮使用独立实现提交；需要撤销时优先 `git revert <本轮实现提交>`，不移动或删除 `UI_fix`。
+- 回滚后复测 unit、lint、typecheck、db:check、build、HTTP 和截图。
+
 ## 2026-07-31 23:29 CST / UI Fix Tag Dropdown / 完成记录
 
 ### 完成状态
