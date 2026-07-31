@@ -22,7 +22,7 @@
 
 - 开工前基线：`6c4edcf8a561e47505e60b8caed0e34de0d911da`；计划提交：`f545cb69b7e9ecaf2941b777d01732b895d78c77`，已 push。
 - 远端备份：`backup/pre-ui-header-distill-20260731-2356`，已 push。
-- 本轮实现和收尾文档将以明确文件提交到 `UI_fix`；最终提交号与远端状态在 LOG 回写。
+- 实现提交：`263222f62ae19000309d6b61706f08449663b299`，已成功 push 到 `origin/UI_fix`；最终状态回写为其直接后继纯文档提交。
 - 回滚优先 `git revert <本轮实现提交>`，随后复测全量门禁、HTTP 和截图。
 
 ## 2026-07-31 23:56 CST / UI Fix Header Distill / 开工计划
