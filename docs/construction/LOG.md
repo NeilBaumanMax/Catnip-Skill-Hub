@@ -1,5 +1,108 @@
 # 施工日志
 
+## 2026-07-31 21:48 CST / Public Web UI Fix / 搜索画廊施工
+
+### 本轮计划回放
+
+先写并 push 施工文档，创建远端备份，再完成公共外壳、搜索舞台、生态兼容带和瀑布流衔接；最后执行全量测试、视觉截图、文档漂移、提交与 push。
+
+### 实际修改
+
+- 公共外壳从固定左栏改为单一悬浮顶栏，提供探索、分类、热门、搜索与推荐入口。
+- 首页建立 Catnip 自有品牌搜索舞台，搜索继续提交现有 `q` 参数，场景快捷入口继续使用现有标签过滤。
+- 新增彩色生态兼容带，仅表达工具工作流语境；使用已有 Phosphor SSR 图标和一个 CSS marquee。
+- 分类、标签、瀑布流、推荐表单、详情、下载重定向与后台边界保持不变。
+- 新增 `ui-fix.css` 作为后加载覆盖层，避免破坏历史管理/详情 CSS；视觉方向确认后可单独做机械清理。
+
+### 修改文件
+
+- `src/app/page.tsx`
+- `src/app/layout.tsx`
+- `src/app/_components/public-shell.tsx`
+- `src/app/_components/ecosystem-marquee.tsx`
+- `src/app/globals.css`
+- `src/app/ui-fix.css`
+- `DESIGN.md`
+- `PRODUCT.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 自动截图：修改前 12/12、最终 12/12；最终全部逐张读图通过，无布局断裂、文字重叠或页面横向溢出。
+- HTTP：首页、详情、推荐 `200`；project-brief 下载 `307` 到固定 `v0.1.0` GitHub Release。
+- 自动截图通过不代表 Neil Bauman 已完成主观设计确认。
+
+### 测试日志
+
+- `npm test`：56/56 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `git diff --check`：通过。
+- `npm run build` 第一次：失败，Turbopack 子进程在沙箱中绑定内部端口被拒绝。
+- 修复动作：不修改代码，改在获准宿主环境执行同一命令。
+- `npm run build` 第二次：通过，编译、TypeScript、页面数据与 9 个静态页面生成全部完成。
+
+### 测试指标判断
+
+- 单元测试、静态质量、数据库 schema、生产构建、HTTP 与多视口视觉门禁全部最终通过。
+- 中间失败已保留，未把首次失败覆盖为单次成功。
+
+### 文档漂移检查
+
+- 修正 `CODEX_MASTER_REQUIREMENTS.md` 中仍指向 `SKill-hub-ui` 的当前分支描述。
+- 修正 `PRODUCT.md` 仍声称没有正式 Logo 的旧事实。
+- `PRODUCT_REQUIREMENTS.md` 已记录紧凑搜索舞台对旧“大型搜索 Hero”规则的有限覆盖。
+- `DESIGN.md` 已记录新字标、生态品牌色、受控圆角与动效边界。
+- 管理员保持 Neil Bauman，仓库/Remote 正确；未加入普通用户认证、后续市场类型或服务器施工。
+- `AGENTS.md` 仍含历史 `SKill-hub-ui` 描述，但该文件包含既有未提交截图工具改动，本轮为避免擅自纳入或覆盖而不修改；下一次获明确授权后应单独整理。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开发前基线：`fcf12d128caa7e0e0af76192781f0b5555ba1501`。
+- 备份分支：`backup/pre-ui-fix-cocoloop-20260731-2111`，远端 push 成功。
+- 最终实现提交：待提交后回写。
+- main 未修改；服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 如 Neil Bauman 否决本版，推荐 `git revert <本轮实现提交>`，不删除 `UI_fix` 或备份分支。
+- 回滚后复测：`npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build` 和 12 张截图。
+
+### 当前风险
+
+- 视觉质量仍需 Neil Bauman 主观验收。
+- 历史公共 CSS 尚未机械清理；当前末端覆盖明确且已通过构建与截图，但继续迭代时应只改 `ui-fix.css` 或先获准清理。
+- 生态图标是统一图标库表达，不是第三方官方资产认证。
+
+### 下一步
+
+等待 Neil Bauman 浏览局域网预览并给出 UI 反馈；本轮不进入服务器部署。
+
+## 2026-07-31 21:36 CST / Public Web UI Fix / 中间测试失败
+
+### 失败命令
+
+- `npm run build`
+
+### 失败摘要
+
+- Next.js 16.2.12 Turbopack 在处理 `globals.css` 的 PostCSS 子进程时尝试绑定内部端口，受当前 Codex 沙箱限制返回 `Operation not permitted (os error 1)`。
+- 同轮 `npm test` 56/56、`npm run lint`、`npm run typecheck`、`npm run db:check` 与 `git diff --check` 均通过；错误没有指向 TypeScript、CSS 语法或应用测试断言。
+
+### 修复与复测计划
+
+- 不修改业务代码规避权限门禁；在获准的宿主执行环境重新运行同一 `npm run build`。
+- 若宿主复测仍失败，再按真实编译错误定位并修复；在复测成功前不提交实现、不报告完成。
+
 本文件按时间追加每轮实际施工与验证记录，不覆盖历史。
 
 ## 2026-07-27 05:05 CST / Phase 0 / 验证失败记录

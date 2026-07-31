@@ -2,6 +2,74 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-07-31 21:48 CST / UI_fix 搜索画廊交接
+
+### 当前状态
+
+`UI_fix` 已完成 CocoLoop 启发的 Catnip 搜索画廊实现、自动截图和工程验收。局域网开发进程继续监听 `192.168.110.9:3000`，供 Neil Bauman 实时预览。服务器部署继续暂停。
+
+### 本轮完成
+
+- 施工计划、产品覆盖规则和 `DESIGN.md` 视觉契约已先行写入并 push。
+- 首页改为单一悬浮顶栏、Catnip 品牌字标、任务搜索台、真实场景标签、彩色生态带、分类/标签和瀑布流。
+- 推荐页与详情页共享相同顶栏、背景与上下文条；后端、管理、下载、安装和部署未改动。
+- 修改前后均完成 3 页面 × 4 视口自动截图；最终 12 张逐张读图通过。
+
+### 未完成
+
+- Neil Bauman 尚未对本版视觉进行主观确认。
+- 生态图标当前使用 Phosphor 图形与受控品牌色表达，未引入第三方官方 Logo 资产包。
+- `globals.css` 保留历史公共 UI 样式，当前通过末端 `ui-fix.css` 明确覆盖；后续仅在视觉方向确认后再做无行为变化的 CSS 清理。
+
+### 下次优先任务
+
+1. 由 Neil Bauman 在局域网预览检查首页桌面和移动端。
+2. 根据明确反馈只调整 UI，不扩展后端或服务器。
+3. 视觉方向确认后再决定是否合并 `UI_fix` 或清理历史 CSS。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/_components/public-shell.tsx`
+- `src/app/_components/ecosystem-marquee.tsx`
+- `src/app/globals.css`
+- `src/app/ui-fix.css`
+
+### 测试基线
+
+- `npm test`：56/56 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：宿主权限环境通过；沙箱首次失败记录保留在 LOG。
+- 自动截图：12/12 生成并逐张读图通过；不等于 Neil Bauman 已确认。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`fcf12d128caa7e0e0af76192781f0b5555ba1501`
+- 备份分支：`backup/pre-ui-fix-cocoloop-20260731-2111`，已 push
+- 最新提交：待收尾提交后回写
+- 已 push：施工计划与备份已 push；实现待收尾 push
+- 工作区状态：本轮文件待提交；既有浏览器截图工具改动继续隔离保留
+
+### 风险提醒
+
+- 不得提交或覆盖 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 的既有工具改动，除非 Neil Bauman 另行授权整理。
+- 不得把生态工具图标解释为新增正式安装支持。
+- 不得恢复服务器写操作。
+
 ## 2026-07-27 05:07 CST / Phase 0 -> Phase 1
 
 ### 当前状态

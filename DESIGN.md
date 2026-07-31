@@ -10,7 +10,21 @@ colors:
   catnip-mint: "#96dfa8"
   rail-ink: "#07111c"
   rail-text: "#f4f8f6"
+  ecosystem-claude: "#d97757"
+  ecosystem-codex: "#74d8ad"
+  ecosystem-notion: "#f2f1ed"
+  ecosystem-figma: "#ff7262"
+  ecosystem-arduino: "#18a8a8"
+  ecosystem-raspberry: "#c51a4a"
+  ecosystem-docker: "#2496ed"
+  ecosystem-terminal: "#b6a8ff"
 typography:
+  brandDisplay:
+    fontFamily: "ui-rounded, SF Pro Rounded, system-ui, sans-serif"
+    fontSize: "clamp(3.7rem, 7.2vw, 6.7rem)"
+    fontWeight: 800
+    lineHeight: 0.92
+    letterSpacing: "-0.075em"
   display:
     fontFamily: "LXGW WenKai Catnip, PingFang SC, sans-serif"
     fontSize: "clamp(2.1rem, 4.2vw, 4.5rem)"
@@ -33,9 +47,16 @@ typography:
     fontWeight: 500
     lineHeight: 1.5
 rounded:
+  compact: "9px"
+  chip: "10px"
   control: "12px"
+  wordmark: "13px"
+  action: "14px"
   media: "15px"
   panel: "16px"
+  filter: "18px"
+  navigation: "22px"
+  stage: "24px"
   pill: "999px"
 spacing:
   xs: "6px"
@@ -71,6 +92,7 @@ components:
 - 品牌搜索舞台高度受控，1440 × 900 首屏必须露出内容入口。
 - 玻璃只用于导航和搜索台；Skill 卡片以图片、边线和空间组织为主。
 - Catnip Mint 是唯一固定强调色；生态图标可以使用其原生颜色，蓝紫 AI 渐变禁止作为主题。
+- 生态品牌色只允许出现在生态兼容带的图标、边线和名称中：Claude `#d97757`、Codex `#74d8ad`、Notion `#f2f1ed`、Figma `#ff7262`、Arduino `#18a8a8`、Raspberry Pi `#c51a4a`、Docker `#2496ed`、Terminal `#b6a8ff`；GitHub 使用既有近白文字色。
 - 只允许一个缓慢生态图标 marquee；hover/focus 暂停，reduced-motion 静止。
 - 生态标识不改变产品支持范围，正式安装目标仍为 Claude Code CLI 与 Codex CLI。
 - 首页、推荐页和 Skill 详情页保持同一公共顶栏与环境背景；后台不采用该外壳。

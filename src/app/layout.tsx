@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./ui-fix.css";
 
 export const metadata: Metadata = {
   title: "Catnip Skill Hub",

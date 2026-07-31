@@ -1,18 +1,17 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import {
+  Compass,
+  Fire,
+  MagnifyingGlass,
+  Sparkle,
+  SquaresFour,
+} from "@phosphor-icons/react/dist/ssr";
 import { BrandLogo } from "./brand-logo";
-import { PublicRailNav } from "./public-rail-nav";
 
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
     <div className="discovery-page public-shell">
-      <aside className="utility-rail" aria-label="Catnip Skill Hub">
-        <Link className="rail-brand" href="/#page-top" aria-label="Catnip Skill Hub 首页">
-          <BrandLogo className="brand-logo" priority />
-        </Link>
-        <PublicRailNav />
-        <span className="rail-signature" aria-hidden="true">CATNIP</span>
-      </aside>
       <div className="discovery-main">{children}</div>
     </div>
   );
@@ -29,6 +28,10 @@ export function PublicHeader({
   context?: { parent: string; current: string; parentHref?: string };
   recommendationPage?: boolean;
 }) {
+  const searchHref = query
+    ? `/?q=${encodeURIComponent(query)}#search-stage`
+    : "/#search-stage";
+
   return (
     <header className="discovery-header">
       <div className="discovery-topline">
@@ -40,26 +43,27 @@ export function PublicHeader({
           </span>
         </Link>
 
-        <form className="discovery-search" role="search" aria-label="搜索 Skill" action="/" method="get">
-          <label htmlFor="public-search-input">搜索 Skill</label>
-          <input
-            id="public-search-input"
-            name="q"
-            type="search"
-            placeholder="搜索标题、用途、作者或标签"
-            defaultValue={query}
-            maxLength={100}
-          />
-          <button type="submit">搜索</button>
-        </form>
+        <nav className="discovery-primary-nav" aria-label="主要导航">
+          <Link href="/#skill-grid"><Compass aria-hidden="true" size={17} />探索</Link>
+          <Link href="/#categories"><SquaresFour aria-hidden="true" size={17} />分类</Link>
+          <Link href="/#popular-tags"><Fire aria-hidden="true" size={17} />热门</Link>
+        </nav>
 
-        <Link
-          aria-current={recommendationPage ? "page" : undefined}
-          className={`discovery-recommend${recommendationPage ? " active" : ""}`}
-          href="/recommend"
-        >
-          推荐 Skill
-        </Link>
+        <div className="discovery-header-actions">
+          <Link className="discovery-search-link" href={searchHref}>
+            <MagnifyingGlass aria-hidden="true" size={18} />
+            <span>搜索</span>
+            <kbd>⌘ K</kbd>
+          </Link>
+          <Link
+            aria-current={recommendationPage ? "page" : undefined}
+            className={`discovery-recommend${recommendationPage ? " active" : ""}`}
+            href="/recommend"
+          >
+            <Sparkle aria-hidden="true" size={17} />
+            推荐 Skill
+          </Link>
+        </div>
       </div>
 
       {children ? <div className="discovery-filters" id="categories">{children}</div> : null}

@@ -1917,6 +1917,621 @@ select:focus-visible {
   }
 }
 
+/* UI_fix: Catnip search gallery. This block intentionally supersedes the legacy rail layout above. */
+.discovery-page {
+  --gallery-canvas: #061019;
+  --gallery-surface: rgb(8 20 31 / 0.82);
+  --gallery-ink: #f5f8f6;
+  --gallery-muted: #b7c4c8;
+  --gallery-line: rgb(255 255 255 / 0.13);
+  --gallery-mint: #96dfa8;
+  background-image:
+    linear-gradient(180deg, rgb(2 9 16 / 0.62) 0%, rgb(4 14 23 / 0.78) 48%, rgb(3 11 19 / 0.94) 100%),
+    url("/images/catnip-blue-mountain.jpg");
+  background-position: center top;
+}
+
+.discovery-main {
+  margin-left: 0;
+}
+
+.discovery-header {
+  position: sticky;
+  top: 0;
+  padding: 10px 18px 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  animation: none;
+}
+
+.discovery-topline {
+  grid-template-columns: minmax(188px, auto) minmax(270px, 1fr) auto;
+  width: min(100%, 1240px);
+  min-height: 62px;
+  padding: 8px 10px 8px 14px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 22px;
+  background: rgb(8 17 26 / 0.66);
+  box-shadow: 0 18px 54px rgb(0 4 10 / 0.28), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.discovery-wordmark {
+  grid-template-columns: 40px auto;
+  gap: 11px;
+}
+
+.discovery-wordmark .brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+}
+
+.discovery-wordmark strong {
+  font-size: 1.03rem;
+  font-weight: 850;
+}
+
+.discovery-wordmark small {
+  font-size: 0.64rem;
+  letter-spacing: 0.04em;
+}
+
+.discovery-primary-nav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.discovery-primary-nav a,
+.discovery-search-link,
+.discovery-recommend {
+  display: inline-flex;
+  min-height: 44px;
+  gap: 7px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  color: var(--gallery-muted);
+  padding: 0 13px;
+  font-size: 0.79rem;
+  font-weight: 720;
+  white-space: nowrap;
+  transition: color 160ms ease-out, background-color 160ms ease-out, transform 140ms ease-out;
+}
+
+.discovery-primary-nav a:hover,
+.discovery-primary-nav a:focus-visible,
+.discovery-search-link:hover,
+.discovery-search-link:focus-visible {
+  background: rgb(255 255 255 / 0.08);
+  color: var(--gallery-ink);
+}
+
+.discovery-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.discovery-search-link {
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(2 9 16 / 0.26);
+}
+
+.discovery-search-link kbd {
+  margin-left: 5px;
+  color: color-mix(in srgb, var(--gallery-muted) 72%, transparent);
+  font: 600 0.64rem ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.discovery-recommend {
+  border: 1px solid rgb(150 223 168 / 0.38);
+  background: rgb(150 223 168 / 0.12);
+  color: var(--gallery-ink);
+  padding-inline: 15px;
+}
+
+.discovery-recommend:hover,
+.discovery-recommend:focus-visible,
+.discovery-recommend.active {
+  background: var(--gallery-mint);
+  color: #061019;
+}
+
+.discovery-primary-nav a:focus-visible,
+.discovery-search-link:focus-visible,
+.discovery-recommend:focus-visible,
+.hero-search input:focus-visible,
+.hero-search button:focus-visible,
+.scene-shortcuts a:focus-visible,
+.ecosystem-marquee:focus-within {
+  outline: 2px solid var(--gallery-mint);
+  outline-offset: 2px;
+}
+
+.public-context {
+  width: min(100% - 36px, 1200px);
+  margin-top: 8px;
+  border: 1px solid var(--gallery-line);
+  border-radius: 13px;
+  background: rgb(6 16 25 / 0.78);
+  padding-inline: 15px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.discovery-content,
+.discovery-footer {
+  width: min(100% - 40px, 1200px);
+}
+
+.discovery-content {
+  padding-top: 0;
+}
+
+.search-stage {
+  display: grid;
+  min-height: 515px;
+  justify-items: center;
+  align-content: center;
+  padding: 62px 0 34px;
+  text-align: center;
+}
+
+.search-stage-copy {
+  display: grid;
+  justify-items: center;
+}
+
+.search-stage-kicker {
+  color: var(--gallery-mint);
+  font-size: 0.7rem;
+  font-weight: 820;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.search-stage h1 {
+  display: flex;
+  gap: 0.22em;
+  justify-content: center;
+  margin: 12px 0 0;
+  color: var(--gallery-ink);
+  font-family: ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  font-size: clamp(3.7rem, 7.2vw, 6.7rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.075em;
+  text-shadow: 0 14px 44px rgb(0 3 8 / 0.42);
+}
+
+.search-stage h1 span:last-child {
+  color: color-mix(in srgb, var(--gallery-ink) 76%, var(--gallery-mint));
+}
+
+.search-stage-copy > p {
+  margin: 18px 0 0;
+  color: var(--gallery-muted);
+  font-size: clamp(0.92rem, 1.5vw, 1.08rem);
+  line-height: 1.55;
+}
+
+.search-console {
+  width: min(100%, 700px);
+  margin-top: 28px;
+  padding: 13px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 24px;
+  background: rgb(6 16 25 / 0.64);
+  box-shadow: 0 24px 70px rgb(0 3 8 / 0.34), inset 0 1px 0 rgb(255 255 255 / 0.08);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+
+.search-mode {
+  display: inline-flex;
+  gap: 3px;
+  margin-bottom: 11px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.055);
+  padding: 3px;
+  color: var(--gallery-muted);
+  font-size: 0.72rem;
+  font-weight: 720;
+}
+
+.search-mode span {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border-radius: 9px;
+  padding: 0 13px;
+}
+
+.search-mode .active {
+  background: rgb(245 248 246 / 0.94);
+  color: #061019;
+}
+
+.hero-search {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.hero-search label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.hero-search input {
+  min-width: 0;
+  min-height: 54px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 15px;
+  background: rgb(2 9 16 / 0.62);
+  color: var(--gallery-ink);
+  padding: 0 18px;
+  font: inherit;
+  font-size: 0.93rem;
+}
+
+.hero-search input::placeholder {
+  color: #94a6ad;
+}
+
+.hero-search button {
+  min-width: 88px;
+  min-height: 54px;
+  border: 0;
+  border-radius: 15px;
+  background: var(--gallery-mint);
+  color: #061019;
+  padding: 0 20px;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 820;
+  cursor: pointer;
+  transition: filter 150ms ease-out, transform 140ms ease-out;
+}
+
+.hero-search button:hover {
+  filter: brightness(1.06);
+}
+
+.hero-search button:active,
+.discovery-recommend:active,
+.discovery-search-link:active {
+  transform: scale(0.98);
+}
+
+.scene-shortcuts {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  overflow-x: auto;
+  margin-top: 10px;
+  padding: 2px;
+  scrollbar-width: none;
+}
+
+.scene-shortcuts::-webkit-scrollbar {
+  display: none;
+}
+
+.scene-shortcuts a {
+  flex: none;
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 10px;
+  background: rgb(255 255 255 / 0.055);
+  color: var(--gallery-muted);
+  padding: 0 11px;
+  font-size: 0.69rem;
+  font-weight: 650;
+}
+
+.scene-shortcuts a:hover {
+  background: rgb(255 255 255 / 0.1);
+  color: var(--gallery-ink);
+}
+
+.ecosystem-marquee {
+  width: min(100%, 790px);
+  overflow: hidden;
+  margin-top: 25px;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.ecosystem-track {
+  display: flex;
+  width: max-content;
+  animation: ecosystem-scroll 36s linear infinite;
+}
+
+.ecosystem-track-set {
+  display: flex;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+.ecosystem-item {
+  display: inline-flex;
+  flex: none;
+  min-height: 42px;
+  gap: 9px;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--ecosystem-color) 30%, transparent);
+  border-radius: 14px;
+  background: rgb(3 12 20 / 0.62);
+  color: color-mix(in srgb, var(--ecosystem-color) 72%, white);
+  padding: 6px 12px 6px 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.ecosystem-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--ecosystem-color) 18%, rgb(255 255 255 / 0.04));
+  color: var(--ecosystem-color);
+}
+
+.ecosystem-icon strong {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.ecosystem-marquee:hover .ecosystem-track,
+.ecosystem-marquee:focus-within .ecosystem-track {
+  animation-play-state: paused;
+}
+
+@keyframes ecosystem-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.discovery-filter-panel {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--gallery-line);
+  border-radius: 18px;
+  background: rgb(5 15 24 / 0.76);
+  box-shadow: 0 16px 48px rgb(0 4 10 / 0.2);
+}
+
+.discovery-tags {
+  padding-top: 2px;
+  padding-left: 0;
+  border-top: 1px solid var(--gallery-line);
+  border-left: 0;
+}
+
+.discovery-intro {
+  padding: 24px 2px 18px;
+}
+
+.discovery-intro h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.8vw, 2.3rem);
+  font-weight: 820;
+  letter-spacing: -0.045em;
+}
+
+.waterfall-heading {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.waterfall-card > a {
+  background: rgb(5 15 24 / 0.86);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+#search-stage,
+#categories,
+#popular-tags,
+#skill-grid,
+#about {
+  scroll-margin-top: 92px;
+}
+
+@media (max-width: 980px) {
+  .discovery-topline {
+    grid-template-columns: minmax(180px, auto) 1fr auto;
+  }
+
+  .discovery-primary-nav a {
+    width: 44px;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .discovery-primary-nav a svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .discovery-search-link kbd,
+  .discovery-search-link > span {
+    display: none;
+  }
+
+  .discovery-search-link {
+    width: 44px;
+    padding: 0;
+  }
+
+  .search-stage {
+    min-height: 500px;
+  }
+
+  .skill-waterfall {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .discovery-header {
+    position: sticky;
+    top: 0;
+    padding: 8px 10px 0;
+  }
+
+  .discovery-topline {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    min-height: 58px;
+    padding: 7px 8px 7px 10px;
+    border-radius: 18px;
+  }
+
+  .discovery-wordmark {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .discovery-wordmark .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .discovery-wordmark-copy {
+    min-width: 0;
+  }
+
+  .discovery-wordmark strong {
+    overflow: hidden;
+    font-size: 0.88rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .discovery-wordmark small,
+  .discovery-primary-nav,
+  .discovery-recommend svg {
+    display: none;
+  }
+
+  .discovery-recommend {
+    min-height: 42px;
+    padding-inline: 12px;
+    font-size: 0.72rem;
+  }
+
+  .public-context {
+    width: min(100% - 20px, 1200px);
+    margin-top: 6px;
+  }
+
+  .discovery-content,
+  .discovery-footer {
+    width: min(100% - 24px, 1200px);
+  }
+
+  .search-stage {
+    min-height: 500px;
+    padding: 54px 0 26px;
+  }
+
+  .search-stage h1 {
+    display: grid;
+    gap: 0;
+    font-size: clamp(3.5rem, 19vw, 5rem);
+  }
+
+  .search-stage-copy > p {
+    max-width: 28ch;
+  }
+
+  .search-console {
+    margin-top: 24px;
+    padding: 10px;
+    border-radius: 20px;
+  }
+
+  .hero-search input,
+  .hero-search button {
+    min-height: 50px;
+  }
+
+  .hero-search button {
+    min-width: 72px;
+    padding-inline: 14px;
+  }
+
+  .scene-shortcuts {
+    justify-content: flex-start;
+  }
+
+  .ecosystem-marquee {
+    width: calc(100vw - 24px);
+    margin-top: 22px;
+  }
+
+  .discovery-filter-panel {
+    margin-top: 8px;
+  }
+
+  .discovery-intro {
+    gap: 12px;
+  }
+
+  .skill-waterfall {
+    display: block;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .discovery-topline,
+  .search-console,
+  .public-context,
+  .discovery-filter-panel {
+    background: #0a1b2b;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .discovery-topline,
+  .search-console,
+  .public-context,
+  .discovery-filter-panel {
+    background: #0a1b2b;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecosystem-track {
+    width: 100%;
+    overflow-x: auto;
+    animation: none;
+  }
+
+  .ecosystem-track-set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 /* Catnip discovery gallery: Unsplash-inspired structure, Catnip-owned visual language. */
 .discovery-page {
   --gallery-canvas: #071421;

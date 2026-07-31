@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
+import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
 import { analyticsService } from "@/lib/analytics";
 import { discoverSkills } from "@/lib/discovery";
 import { runtimeSkillRepository } from "@/lib/data/skills";
@@ -44,7 +45,47 @@ export default async function Home({ searchParams }: HomeProps) {
         FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
       */}
       <span className="navigation-sentinel" id="page-top" aria-hidden="true" />
-      <PublicHeader query={discovery.filters.query}>
+      <PublicHeader query={discovery.filters.query} />
+
+        <main className="discovery-content">
+          <section className="search-stage" id="search-stage" aria-labelledby="page-title">
+            <div className="search-stage-copy">
+              <span className="search-stage-kicker">Curated Agent Skills</span>
+              <h1 id="page-title" aria-label="Catnip Skill Hub">
+                <span>Catnip</span>
+                <span>Skill Hub</span>
+              </h1>
+              <p>更快找到真正能进入工作流的 Agent Skill。</p>
+            </div>
+
+            <div className="search-console">
+              <div className="search-mode" aria-label="搜索方式">
+                <span className="active">搜索 Skill</span>
+                <span>按场景发现</span>
+              </div>
+              <form className="hero-search" role="search" aria-label="搜索 Skill" action="/" method="get">
+                <label htmlFor="hero-search-input">搜索 Skill</label>
+                <input
+                  id="hero-search-input"
+                  name="q"
+                  type="search"
+                  placeholder="描述你想完成的任务"
+                  defaultValue={discovery.filters.query}
+                  maxLength={100}
+                />
+                <button type="submit">搜索</button>
+              </form>
+              <nav className="scene-shortcuts" aria-label="常用场景">
+                {discovery.availableTags.slice(0, 6).map((tag) => (
+                  <Link href={discoveryHref({ tag })} key={tag}>{tag}</Link>
+                ))}
+              </nav>
+            </div>
+
+            <EcosystemMarquee />
+          </section>
+
+          <section className="discovery-filter-panel" id="categories" aria-label="Skill 分类与标签">
             <nav className="discovery-categories" aria-label="Skill 主分类">
               <Link
                 aria-current={discovery.filters.category ? undefined : "page"}
@@ -69,7 +110,7 @@ export default async function Home({ searchParams }: HomeProps) {
               ))}
             </nav>
 
-            <nav className="discovery-tags" aria-label="Skill 标签">
+            <nav className="discovery-tags" id="popular-tags" aria-label="Skill 标签">
               <span>热门标签</span>
               {discovery.availableTags.map((tag) => (
                 <Link
@@ -86,13 +127,12 @@ export default async function Home({ searchParams }: HomeProps) {
                 </Link>
               ))}
             </nav>
-      </PublicHeader>
+          </section>
 
-        <main className="discovery-content">
           <section className="discovery-intro" aria-labelledby="page-title">
             <div>
-              <h1 id="page-title">发现真正值得安装的 Skill</h1>
-              <p>由 Catnip 薄荷猫筛选、整理。先看见能力，再决定是否带进工作流。</p>
+              <h2>今日精选</h2>
+              <p>由 Catnip 筛选、整理。先看见能力，再决定是否带进工作流。</p>
             </div>
             <div className="discovery-summary" aria-live="polite">
               <strong>{discovery.items.length}</strong>

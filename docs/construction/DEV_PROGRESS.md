@@ -2,6 +2,33 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-07-31 21:48 CST / Public Web UI Fix / 完成记录
+
+### 完成状态
+
+- CocoLoop 启发的 Catnip 搜索画廊已实现并通过自动视觉与工程门禁，等待 Neil Bauman 在局域网预览中进行主观验收。
+- 公共首页现在由单一悬浮顶栏、Catnip 品牌搜索舞台、真实场景快捷标签、彩色生态兼容带、固定分类/标签与 Skill 瀑布流组成。
+- 推荐页和 Skill 详情页继续复用同一公共外壳；未修改其业务行为。
+
+### 验证摘要
+
+- 修改前基线截图：12/12 成功。
+- 修改后最终截图：12/12 成功并逐张读图，无布局断裂、文字重叠或页面横向溢出；自动截图通过不等于 Neil Bauman 已确认设计。
+- `npm test`：56/56 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：沙箱首次因 Turbopack 内部端口权限失败；宿主权限环境复测通过。
+- `git diff --check`：通过。
+- HTTP：首页、详情、推荐页 `200`；project-brief 下载保持受信 Release `307`。
+
+### GitHub 与回滚
+
+- 开发前基线：`fcf12d128caa7e0e0af76192781f0b5555ba1501`。
+- 备份分支：`backup/pre-ui-fix-cocoloop-20260731-2111`，已 push 并核验远端引用。
+- 实现提交与 `UI_fix` push：待完成最终差异审阅后回写。
+- 推荐回滚：`git revert <本轮实现提交>`，随后复测全量门禁和 12 张截图。
+
 ## 2026-07-31 21:11 CST / Public Web UI Fix / 开工计划
 
 ### 本轮目标

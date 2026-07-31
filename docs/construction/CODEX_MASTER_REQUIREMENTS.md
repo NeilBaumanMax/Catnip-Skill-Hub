@@ -34,7 +34,7 @@
 
 ## 当前前端专项要求
 
-- 当前前端开发分支为 `SKill-hub-ui`，基线为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`；旧前端实验分支保留，不删除、不继续追加当前方案。
+- 当前前端开发分支为 `UI_fix`，施工前文档基线为 `fcf12d128caa7e0e0af76192781f0b5555ba1501`，开发前远端备份为 `backup/pre-ui-fix-cocoloop-20260731-2111`；旧 `SKill-hub-ui` 与 `frontend/visual-optimization` 分支保留，不删除。
 - 前端施工以 `docs/construction/SKILL_HUB_UI_PLAN.md` 为专项依据：使用 WorkBuddy 的成熟信息架构、Marvis 的封面驱动浏览节奏和 Catnip 的管理员策展身份。
 - 首次规划轮只写文档，不改 UI 代码；后续 UI-1 至 UI-4 每批完成施工闭环后必须停下向 Neil Bauman 汇报，未经继续指令不得进入下一批。
 - 不因参考产品扩展专家、连接器、MCP、Prompt、社区、用户安装库或首页直接安装；Skill 仍是主角，下载和安装仍在详情页。
@@ -64,5 +64,5 @@
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
-- 当前主任务为专用前端分支上的视觉优化，并通过已验收的局域网入口实时预览；具体前端修改必须等待 Neil Bauman 的逐项指令，不得借机重构后端或部署栈。
+- 当前主任务是在 `UI_fix` 分支完成 CocoLoop 启发的 Catnip 搜索画廊视觉优化，并通过已验收的局域网入口实时预览；不得借机重构后端或部署栈。
 - 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。
