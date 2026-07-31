@@ -2,6 +2,51 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-01 00:19 CST / UI Fix Top Logo Removal / 开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新反馈删除公共顶部品牌行中的重复图形 Logo，只保留左侧/移动工具栏中的主 Logo 与顶部文字品牌，降低同一视区内的品牌冗余。
+
+### 涉及层
+
+- 公共前台：`PublicHeader` 顶部文字品牌结构和对应响应式布局。
+- 设计规范：明确公共外壳中图形 Logo 的单一锚点规则。
+- 不修改浏览器 favicon、左侧/移动工具栏 Logo、搜索、筛选、后台、数据、主库或部署。
+
+### 当前仓库状态
+
+- 当前分支：`UI_fix`；基线：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`，与 `origin/UI_fix` 分歧 `0 0`。
+- SSH 已确认为 `NeilBaumanMax`，Remote 为指定 SSH 地址，Git 身份为 `Neil·Baumann <2091760192@qq.com>`。
+- 修改前截图 12/12 已生成；桌面与手机读图确认工具栏 Logo 和顶部 Logo 同时可见。
+- 施工前既有用户工具改动继续隔离，不覆盖、不暂存。
+
+### 计划修改
+
+- 从 `PublicHeader` 的 `.discovery-wordmark` 中删除 `BrandLogo`，保留可点击的 `Catnip Skill Hub / Curated Agent Skills` 文字品牌。
+- 将 wordmark 网格收敛为单列，删除仅服务于顶部图片的尺寸样式；保持搜索和推荐入口位置稳定。
+- 左侧桌面工具栏、移动工具栏、favicon 与品牌资产文件保持不变。
+
+### 测试计划
+
+- 修改后执行首页、详情、推荐 3 页面 × 4 视口截图并逐张读图。
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`。
+- HTTP 验证首页、详情和推荐；DOM 验证公共 header 不再含 `.brand-logo`，工具栏仍保留一个。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 基线提交：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`
+- 备份分支：`backup/pre-ui-top-logo-removal-20260801-0019`
+- 备份 push 状态：待计划提交 push 后创建并核验。
+
+### 回滚预案
+
+- 使用独立实现提交；如需恢复顶部 Logo，优先 `git revert <本轮实现提交>`。
+- 回滚后复测 unit、lint、typecheck、db:check、build、HTTP 与 12 张截图。
+
 ## 2026-08-01 00:11 CST / UI Fix Header Distill / 完成记录
 
 ### 完成状态
