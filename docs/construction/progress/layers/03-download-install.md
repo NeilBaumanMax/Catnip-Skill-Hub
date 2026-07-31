@@ -72,3 +72,21 @@ Phase 3 完成并暂停。下一轮只有在 Neil Bauman 明确继续后，才�
 - 页面组件不拼下载 URL；下载服务不修改原 Skill；管理员关闭下载仍优先拒绝。
 - Release 重定向和本地 ZIP 兼容路径均有自动化验证。
 - unit、lint、typecheck、db:check、build 与 diff check 全部成功。
+
+## 2026-07-31 19:05 CST / Phase 3 运维扩展 / 完成记录
+
+### 实际完成
+
+- 下载来源增加受信 Catnip 内容主库 Release，并保留本地归档兼容路径。
+- 管理服务在创建和编辑时校验 Release owner/repo、Tag、slug、版本和 ZIP 文件名。
+- `project-brief` 固定到 `v0.1.0`，下载 API 以 `307` 交给 GitHub Release。
+
+### 验收结果
+
+- 受信、非受信、latest、文件名不匹配、API 重定向和本地回退均有自动化测试。
+- 56/56 单元测试、lint、typecheck、db:check、生产 build 与 diff check成功。
+- 自动截图 12/12 成功并读图；截图验收：通过（自动验收，不等同 Neil Bauman 已确认）。
+
+### 下一状态
+
+下载集成完成；后续新增公开资源应从内容主库新版本 Release 选择精确资产，不移动既有 Tag。服务器部署保持暂停。

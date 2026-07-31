@@ -42,6 +42,8 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - 两个目标 Agent 与两个安装范围共四种命令严格来自实际核验的 skills CLI 参数，安装源为稳定仓库地址和原始 Skill 名称，不依赖中文传播标题。
 - ZIP 包含完整原 Skill 文件夹，原 `SKILL.md` 字节一致；Catnip 安装说明和来源 JSON 只位于归档外层。
 - 管理员关闭下载、未知资源、缺少来源、路径逃逸、符号链接和异常文件类型被服务端拒绝。
+- 远端 Release 只接受固定内容主库、不可变 SemVer Tag 和与 slug/version 匹配的 ZIP；任意域名、latest、分支、查询参数、片段及文件名不匹配均被拒绝。
+- 下载 API 对受信 Release 返回 `307` 和精确 `Location`，未配置 Release 的资源继续通过既有本地归档测试。
 - UI 不直接打包 ZIP 或拼接命令；下载 API、安装层和下载层职责符合分层契约。
 - `npm run build` 成功生成既有静态详情页和动态下载 API，且不保留文件追踪警告。
 

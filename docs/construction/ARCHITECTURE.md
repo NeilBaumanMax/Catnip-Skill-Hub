@@ -57,10 +57,12 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 ## Phase 3 事实
 
 - `src/lib/install` 根据经实际核验的 skills CLI 1.5.20 参数生成 Claude Code CLI/Codex CLI × 当前项目/全局安装的四种命令；来源只接受仓库根级 GitHub HTTPS 地址，Skill 名称使用稳定原始名称。
-- `src/lib/downloads` 只读取 `content/skills` 下的普通目录，拒绝目录逃逸、符号链接和非普通文件，并根据管理员 `downloadEnabled` 字段决定是否归档。
+- `src/lib/downloads` 统一决定下载来源：受信且不可变的 Catnip 内容主库 Release 资产优先；未配置 Release 的既有资源继续读取 `content/skills` 本地普通目录。两条路径都先检查管理员 `downloadEnabled`。
+- Release 来源只允许固定 `github.com/neilbauman666/Catnip-skill-hub-main`、`v<semver>` Tag，以及与资源 slug/version 严格一致的 ZIP 文件名；拒绝 latest、分支、查询参数、片段、凭据和任意重定向目标。
+- 本地归档路径拒绝目录逃逸、符号链接和非普通文件；远端 Release ZIP 由内容主库 Actions 构建，网站不复制或二次改写其字节。
 - ZIP 保持原 Skill 文件夹内容和字节不变；`Catnip-安装说明.md` 与 `Catnip-来源信息.json` 只放在归档外层。
 - `src/app/api/skills/[slug]/download` 是 Node.js 下载入口；详情页客户端组件只消费预生成命令和下载 URL，不直接拼接命令或打包 ZIP。
-- `content/skills/project-brief` 是经 Skill 校验脚本验证的 Catnip 原创 MIT 夹具，也是当前唯一显式开放镜像下载的资源；其余九条演示资源继续关闭下载。
+- `project-brief` 固定到内容主库 `v0.1.0` 的不可变 Release 资产，是当前唯一显式开放下载并优先走远端 Release 的资源；网站内原始夹具继续保留为兼容和回滚路径，其余九条演示资源继续关闭下载。
 - 当前无数据库、对象存储、管理员认证、GitHub 导入、统计写入、真实搜索或随机推荐。
 
 ## Phase 4 事实

@@ -1,5 +1,5 @@
 import { runtimeSkillRepository } from "@/lib/data/skills";
-import { buildSkillArchive, SkillDownloadError } from "@/lib/downloads";
+import { resolveSkillDownload, SkillDownloadError } from "@/lib/downloads";
 
 interface DownloadRouteContext {
   params: Promise<{ slug: string }>;
@@ -17,7 +17,19 @@ export async function GET(request: Request, { params }: DownloadRouteContext) {
 
   try {
     const pageUrl = new URL(`/skills/${skill.slug}`, request.url).toString();
-    const archive = await buildSkillArchive(skill, { catnipPageUrl: pageUrl });
+    const resolved = await resolveSkillDownload(skill, { catnipPageUrl: pageUrl });
+    if (resolved.kind === "release_redirect") {
+      return new Response(null, {
+        status: 307,
+        headers: {
+          Location: resolved.url,
+          "Cache-Control": "private, no-store",
+          "X-Content-Type-Options": "nosniff",
+        },
+      });
+    }
+
+    const archive = resolved.archive;
     const body = archive.bytes.buffer.slice(
       archive.bytes.byteOffset,
       archive.bytes.byteOffset + archive.bytes.byteLength,

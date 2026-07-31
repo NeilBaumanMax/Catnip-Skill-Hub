@@ -31,7 +31,7 @@
 
 - Skill：资源身份、类型、Pack/子项关系、状态、分类标签、作者来源、版本、图片与下载授权。
 - Install：Agent、范围、来源、命令验证；Phase 3 前先核验真实 CLI。
-- Downloads：原始内容只读打包、Catnip 外层文件、授权和事件。
+- Downloads：下载授权、受信 Release 来源验证、来源决策、本地原始内容只读打包、Catnip 外层文件和下载事件。
 - Storage：文件读写接口和可替换适配器。
 - Data：Repository、查询和事务；不泄露 ORM 到 UI。
 - Auth：仅管理员身份、会话与授权。
@@ -47,6 +47,13 @@
 - 进程内 Repository 是开发适配器且返回深拷贝；后续持久化适配器必须保持同一端口语义。
 - 认证配置、密码哈希和签名密钥只在服务端读取；Cookie 验证和所有写操作授权不得由客户端替代。
 - 公开目录当前不依赖进程内管理仓储；在持久化查询适配完成前，管理端状态变化不得声称已实时发布到公开站点。
+
+## Phase 3 Release 下载扩展契约
+
+- 下载 API 只调用下载来源服务，不在路由或 React 组件中拼接 Release URL；来源服务优先返回受信 Release 重定向，否则调用既有本地归档服务。
+- 受信 URL 必须同时固定 HTTPS、GitHub 主机、内容主库 owner/repo、SemVer Tag、资源 slug、版本和 ZIP 文件名；管理员输入不满足任一约束即拒绝保存。
+- 远端下载使用临时 `307` 重定向并禁止缓存；网站不代理未知二进制、不跟随用户可控重定向，也不把 GitHub Release 可用性等同于网站服务器持久化能力。
+- `releaseAssetUrl` 是可选来源元数据，不替代 `sourceUrl`、`repositoryUrl`、版本、Commit、License 或管理员 `downloadEnabled` 决策。
 
 ## Phase 5 已实现契约
 

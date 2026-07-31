@@ -54,6 +54,7 @@ export function AdminDashboard({ initialSkills }: AdminDashboardProps) {
         sourceUrl: form.get("sourceUrl"),
         repositoryUrl: form.get("repositoryUrl"),
         repositoryPath: form.get("repositoryPath"),
+        releaseAssetUrl: form.get("releaseAssetUrl"),
         license: form.get("license"),
         version: form.get("version"),
         adminNotes: form.get("adminNotes"),
@@ -93,6 +94,7 @@ export function AdminDashboard({ initialSkills }: AdminDashboardProps) {
           <label className="admin-span-2">原始来源 URL<input name="sourceUrl" type="url" required /></label>
           <label className="admin-span-2">GitHub 仓库 URL<input name="repositoryUrl" type="url" /></label>
           <label className="admin-span-2">仓库内路径<input name="repositoryPath" placeholder="content/skills/example" /></label>
+          <label className="admin-span-2">GitHub Release ZIP<input name="releaseAssetUrl" type="url" placeholder="https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v1.0.0/example-1.0.0.zip" /></label>
           <label className="admin-span-2">管理员备注<textarea name="adminNotes" rows={2} /></label>
           <div className="admin-span-2 admin-form-footer">
             <button type="submit">创建草稿</button>
@@ -153,6 +155,7 @@ function AdminSkillCard({ skill, onChanged }: { readonly skill: SkillResource; r
         summary: form.get("summary"),
         category: form.get("category"),
         tags: String(form.get("tags") ?? "").split(","),
+        releaseAssetUrl: form.get("releaseAssetUrl"),
         downloadEnabled: form.get("downloadEnabled") === "on",
         adminNotes: form.get("adminNotes"),
       },
@@ -183,6 +186,7 @@ function AdminSkillCard({ skill, onChanged }: { readonly skill: SkillResource; r
         <label>主分类<select name="category" defaultValue={skill.category}>{MAIN_CATEGORIES.map((value: MainCategory) => <option key={value}>{value}</option>)}</select></label>
         <label className="admin-span-2">一句话介绍<textarea name="summary" defaultValue={skill.summary} rows={2} required /></label>
         <label>标签<input name="tags" defaultValue={skill.tags.join(", ")} /></label>
+        <label className="admin-span-2">GitHub Release ZIP<input name="releaseAssetUrl" type="url" defaultValue={skill.source.releaseAssetUrl ?? ""} /></label>
         <label className="checkbox-label"><input name="downloadEnabled" type="checkbox" defaultChecked={skill.governance.downloadEnabled} />开放镜像下载</label>
         <label className="admin-span-2">管理员备注<textarea name="adminNotes" defaultValue={skill.governance.adminNotes} rows={2} /></label>
         <div className="admin-span-2 admin-card-actions">

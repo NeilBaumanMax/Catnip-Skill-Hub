@@ -1,6 +1,6 @@
 import type { CoverSize, CoverTheme, MainCategory, SkillResource, SkillSubtype } from "./types";
 
-const repositoryUrl = "https://github.com/NeilBaumanMax/Catnip-Skill-Hub";
+const websiteRepositoryUrl = "https://github.com/NeilBaumanMax/Catnip-Skill-Hub";
 
 interface SeedInput {
   slug: string;
@@ -23,6 +23,10 @@ interface SeedInput {
   childSkills?: SkillResource["childSkills"];
   galleryTheme?: CoverTheme;
   repositoryPath?: string;
+  repositoryUrl?: string;
+  sourceUrl?: string;
+  releaseAssetUrl?: string;
+  sourceCommit?: string;
   license?: string;
   version?: string;
   downloadEnabled?: boolean;
@@ -32,6 +36,7 @@ interface SeedInput {
 
 function createSeed(input: SeedInput): SkillResource {
   const subtype = input.subtype ?? "single";
+  const repositoryUrl = input.repositoryUrl ?? websiteRepositoryUrl;
 
   return {
     id: `catnip-${input.slug}`,
@@ -49,11 +54,13 @@ function createSeed(input: SeedInput): SkillResource {
     source: {
       kind: subtype === "editorial_pack" ? "editorial_collection" : "catnip_original",
       label: input.sourceLabel ?? "Catnip Phase 2 原创演示目录",
-      sourceUrl: repositoryUrl,
+      sourceUrl: input.sourceUrl ?? repositoryUrl,
       repositoryUrl,
       repositoryPath: input.repositoryPath,
+      releaseAssetUrl: input.releaseAssetUrl,
       license: input.license ?? "待管理员在正式发布前确认",
       version: input.version ?? "0.2.0-demo",
+      sourceCommit: input.sourceCommit,
     },
     category: input.category,
     tags: input.tags,
@@ -190,11 +197,15 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     risks: ["简报质量依赖输入背景是否充分", "重大范围变化需要重新确认而不是静默追加"],
     relatedSlugs: ["release-checklist", "deeper-reasoning"],
     repositoryPath: "content/skills/project-brief",
+    repositoryUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main",
+    sourceUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/tree/v0.1.0/content/skills/project-brief",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.1.0/project-brief-0.1.0.zip",
+    sourceCommit: "8c594f248d91788abae3938625344d66f349cf1e",
     license: "MIT",
-    version: "1.0.0",
+    version: "0.1.0",
     downloadEnabled: true,
     sourceLabel: "Catnip 原创 Skill",
-    adminNotes: "Phase 3 可分发测试夹具；MIT License 已记录，管理员已显式开放镜像下载。",
+    adminNotes: "Catnip 内容主库 v0.1.0 原创资源；Release workflow 已验证，管理员已显式开放下载。",
   }),
   createSeed({
     slug: "automation-flow",

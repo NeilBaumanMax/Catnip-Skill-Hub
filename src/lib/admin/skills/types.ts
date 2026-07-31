@@ -12,6 +12,7 @@ export interface AdminSkillCreateInput {
   readonly sourceUrl: string;
   readonly repositoryUrl?: string;
   readonly repositoryPath?: string;
+  readonly releaseAssetUrl?: string;
   readonly license: string;
   readonly version: string;
   readonly adminNotes?: string;
@@ -26,6 +27,7 @@ export interface AdminSkillUpdateInput {
   readonly sourceUrl?: string;
   readonly repositoryUrl?: string;
   readonly repositoryPath?: string;
+  readonly releaseAssetUrl?: string;
   readonly license?: string;
   readonly version?: string;
   readonly downloadEnabled?: boolean;

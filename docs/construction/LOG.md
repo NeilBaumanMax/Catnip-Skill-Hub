@@ -2368,3 +2368,92 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 新主库 main 与备份均指向 `83a92ebd2d3a064005067552a8f5cbc393357e87`，已通过远端引用核验。
 - 网站工作区只保留本轮开始前已有的 Claude 浏览器工具改动；本轮施工文档已全部提交。
 - 当前无需回滚；下一轮不得跳过新主库自身施工文档直接批量导入 Skill。
+
+## 2026-07-31 18:26 CST / Phase 3 运维扩展 / GitHub Release 下载集成
+
+### 本轮计划回放
+
+- 新主库先完成治理、10 个原创资源、CI 和不可变 `v0.1.0` Release，再修改网站。
+- 网站只接入受信 Release URL，保留既有本地归档回滚路径，不修改服务器。
+- 既有 Claude 浏览器工具改动保持独立，不暂存、不覆盖。
+
+### GitHub 开工状态
+
+- 网站开工计划提交 `42868b2` 已 push。
+- 开发前备份 `backup/pre-release-download-integration-20260731-1826` 已 push 并远端核验，指向 `42868b2ec1ddd981ffd07edd6e8998aeb305b9bc`。
+
+### 测试日志
+
+- 修改前自动截图首次执行失败：`npx tsx scripts/screenshots.ts` 在受管环境创建 tsx IPC pipe 时返回 `listen EPERM`。
+- 影响：没有修改页面或截图输出，不将本次写成截图通过。
+- 修复动作：在获准环境重试相同截图命令，不修改用户提供的截图脚本或依赖。
+- 修改前截图第二次按脚本默认旧局域网 IP 执行，首页等待网络空闲超时；旧 IP 已漂移，未生成可确认的新基线。
+- 使用脚本已支持的 `SCREENSHOT_URL=http://127.0.0.1:3000` 重试，12/12 截图成功；桌面与移动首页已读图，基线无布局断裂。
+- 首次代码复测 `npm test`：55/56 成功，安装命令期望仍写死旧网站仓库，实际已正确切换为新内容主库。
+- 失败原因：测试夹具发生来源文档漂移，不是命令生成器错误。
+- 修复动作：更新安装测试的期望仓库为 `neilbauman666/Catnip-skill-hub-main`，随后重跑完整测试。
+- 完整测试复测：56/56 成功；lint、typecheck、db:check 与 diff check 成功。
+- 首次 `npm run build` 失败：Turbopack 在受管环境处理 `globals.css` 时需要创建进程并绑定本地端口，系统返回 `Operation not permitted`。
+- 该失败与本轮 TypeScript 变更无关；按既有构建门禁在获准环境重试相同命令，不更改构建配置。
+- 获准环境生产 build 复测成功，全部动态 API 和公开路由生成完成。
+- 首次本机下载 HTTP 检查返回旧的 `200 project-brief.zip`，没有返回新 Release 重定向。
+- 原因：端口 3000 的长跑开发进程在本轮前已创建全局进程内 Skill Repository，热更新不会替换该单例种子；代码单元测试和生产 build 使用的是新数据。
+- 修复动作：另起隔离的当前代码进程验证 307 与 Location，不删除或改写旧进程数据。
+- 隔离生产进程复测成功：`/api/skills/project-brief/download` 返回 `307`、精确 `v0.1.0` Release `Location`、`private, no-store` 与 `nosniff`；复测后已停止临时 3001 进程。
+- 修改后自动截图使用 `SCREENSHOT_URL=http://127.0.0.1:3000` 生成 12/12；已读图检查桌面首页、移动首页和详情页，未见布局断裂。截图验收：通过（自动验收，不等同 Neil Bauman 已确认）。
+
+### 实际修改
+
+- 来源模型和管理员 CMS 增加可选 GitHub Release ZIP 字段。
+- 新建下载来源服务，严格限制 Catnip 内容主库、SemVer Tag、slug、版本和 ZIP 文件名。
+- 下载 API 对受信资产返回临时重定向，本地归档路径保持兼容。
+- `project-brief` 固定到内容主库 `8c594f2`、`v0.1.0` 和真实 Release 资产。
+- 增加 Release 来源、管理员验证、API 307 和本地回退测试。
+
+### 修改文件
+
+- 领域与管理：`src/lib/domain/skills/*`、`src/lib/admin/skills/*`、`src/app/admin/admin-dashboard.tsx`。
+- 下载：`src/lib/downloads/source.ts`、下载模块导出和下载 API。
+- 测试：`tests/admin.test.ts`、`tests/downloads.test.ts`、`tests/install.test.ts`。
+- 施工文档：架构、层契约、测试指标、进度、日志和接力。
+
+### 验证结果
+
+- `npm test`：首次 55/56，修正陈旧测试期望后 56/56。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`：成功。
+- `npm run build`：受管环境首次失败；获准环境复测成功。
+- `git diff --check`：成功。
+- 生产进程 HTTP：受信 Release `307 Location` 成功。
+- 自动截图：修改前和修改后均 12/12；修改后读图通过。
+
+### 测试指标判断
+
+Phase 3 Release 下载扩展门禁已达到。远端 ZIP 二进制未在当前网络成功下载，不将 API 元数据验证误写为资产字节验证。
+
+### 文档漂移检查
+
+- 已修正 ARCHITECTURE、LAYER_CONTRACT 和 TEST_METRICS 中仅描述本地打包的旧事实。
+- 管理员、品牌、网站 Remote、内容主库、Phase 边界和服务器暂停状态一致。
+- 没有把 Release URL 放入 React 下载逻辑，没有触碰真实秘密或服务器。
+- 已知 Claude 浏览器工具改动保持独立，未纳入本轮提交。
+
+### GitHub 状态
+
+- 开发前基线：`42868b2ec1ddd981ffd07edd6e8998aeb305b9bc`。
+- 备份：`backup/pre-release-download-integration-20260731-1826`，已 push。
+- 功能提交与 push：收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚；如需撤销，使用 `git revert <本轮功能提交>`，不移动内容主库 `v0.1.0` Tag。
+- 回滚后复测 `npm test`、lint、typecheck、db:check、build 和下载 API。
+
+### 当前风险
+
+- 端口 3000 的旧进程内 Repository 需重启后才加载新种子。
+- GitHub 可用性影响远端下载；本地归档服务仍作为兼容能力保留，但当前公开种子优先远端 Release。
+- 服务器部署仍未开始。
+
+### 下一步
+
+- 重启本地预览进程加载新种子；后续按新内容主库 Release 录入更多公开资源。

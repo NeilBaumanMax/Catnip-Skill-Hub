@@ -94,6 +94,33 @@ test("无文件路径时不能开放会实际失败的镜像下载", async () =>
   );
 });
 
+test("受信 Release 资产可以在没有本地路径时开放下载", async () => {
+  const service = new DefaultAdminSkillService(new InMemorySkillRepository());
+  await service.create({
+    ...draftInput,
+    slug: "remote-skill",
+    originalName: "remote-skill",
+    repositoryPath: undefined,
+    version: "0.1.0",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.1.0/remote-skill-0.1.0.zip",
+  });
+  const updated = await service.update("remote-skill", { downloadEnabled: true });
+  assert.equal(updated.governance.downloadEnabled, true);
+});
+
+test("管理员录入拒绝非指定主库和文件名不匹配的 Release", async () => {
+  const service = new DefaultAdminSkillService(new InMemorySkillRepository());
+  await assert.rejects(
+    service.create({
+      ...draftInput,
+      slug: "bad-release",
+      originalName: "bad-release",
+      releaseAssetUrl: "https://github.com/example/repo/releases/download/v1.0.0/bad-release-1.0.0.zip",
+    }),
+    (error: unknown) => error instanceof SkillManagementError && error.code === "invalid_input",
+  );
+});
+
 test("仓储返回副本且实例之间隔离", async () => {
   const first = new InMemorySkillRepository();
   const second = new InMemorySkillRepository();

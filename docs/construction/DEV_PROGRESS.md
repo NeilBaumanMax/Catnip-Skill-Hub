@@ -1754,3 +1754,25 @@ Neil Bauman 可重新运行 `npm run admin:hash-password`，在本机输入新�
 - 功能异常优先 `git revert <本轮功能提交>`，恢复既有本地归档行为；不移动新主库 `v0.1.0` Tag。
 - 回滚后复测 unit、lint、typecheck、db:check、build、本地 ZIP 和下载 API。
 - 既有 Claude 浏览器工具改动不属于本轮回滚或暂存范围。
+
+## 2026-07-31 19:05 CST / Phase 3 运维扩展 / GitHub Release 下载集成完成
+
+### 已完成
+
+- Skill 来源模型与管理员录入支持受信 `releaseAssetUrl`。
+- 独立下载来源服务严格校验固定内容主库、SemVer Tag、slug、版本和 ZIP 文件名。
+- 下载 API 对受信 `v0.1.0` 资产返回 `307`，未配置 Release 的资源保留原本地归档行为。
+- `project-brief` 已固定到内容主库提交 `8c594f2` 与 `v0.1.0` Release。
+- 内容主库已具备 10 个原创资源、10 张封面、三类目录规范、CI、确定性 ZIP 和 Release。
+
+### 验收结果
+
+- 单元测试最终 56/56；lint、typecheck、db:check、生产 build 与 diff check 成功。
+- 隔离生产进程实测下载入口返回受信 Release 的 `307 Location`。
+- 修改后自动截图 12/12 生成，并已读图检查桌面首页、移动首页和详情页；截图验收：通过（自动验收，不等同 Neil Bauman 已确认）。
+
+### 当前限制
+
+- 端口 3000 的既有长跑开发进程仍持有修改前的进程内种子；重启该进程后才会在该预览实例体现新 Release 来源。
+- 当前网络对 GitHub Release 二进制直连请求超时，因此只记录 GitHub API 资产存在、Actions 成功和网站重定向成功，不声称已从本机下载远端 ZIP 字节。
+- 服务器部署继续暂停，本轮没有服务器写操作。

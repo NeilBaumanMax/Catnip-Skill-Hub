@@ -3,7 +3,7 @@ import test from "node:test";
 import { getSkillBySlug } from "../src/lib/domain/skills";
 import { buildInstallCommand, buildInstallCommandMatrix, InstallCommandError } from "../src/lib/install";
 
-const repositoryUrl = "https://github.com/NeilBaumanMax/Catnip-Skill-Hub";
+const repositoryUrl = "https://github.com/neilbauman666/Catnip-skill-hub-main";
 
 test("生成两个 Agent 与两个范围的真实 skills CLI 命令", () => {
   const projectBrief = getSkillBySlug("project-brief");

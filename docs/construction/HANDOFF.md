@@ -1739,3 +1739,57 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 新主库开发前备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push。
 - 新主库本地目录：`/Users/neil/Documents/Project/Catnip-skill-hub-main`；当前 main、工作区干净、与 origin/main 分歧 `0 0`。
 - 下一轮从新主库文档和目录规范开始，不直接实施网站下载切换。
+
+## 2026-07-31 19:05 CST / 内容主库与网站 Release 下载接力
+
+### 当前状态
+
+内容主库 `v0.1.0` 已发布，网站 Release 下载集成已通过本地门禁，等待最终 Git 提交号回写。服务器部署仍暂停。
+
+### 本轮完成
+
+- 内容主库独立 AGENTS、施工文档、三类目录与版本规范。
+- 10 个 Catnip 原创资源、10 张生成封面、目录验证、确定性 ZIP、SHA-256、CI 和 GitHub Release。
+- 网站受信 Release 来源、管理员录入校验、下载 API 307 与本地归档兼容。
+
+### 未完成
+
+- 没有服务器部署；没有把当前 10 条网站公开种子全部替换为内容主库资源。
+- 当前网络未完成 Release ZIP 二进制直连下载验证。
+
+### 下次优先任务
+
+重启本地 dev server 加载新种子；由 Neil Bauman 决定何时把其余内容主库资源录入公开目录。服务器准备完成前不得恢复部署。
+
+### 必读文档
+
+根 AGENTS 十项顺序，以及内容主库自身 `AGENTS.md`、`docs/construction/HANDOFF.md`。
+
+### 关键文件
+
+- 网站：`src/lib/downloads/source.ts`、下载 API、Skill 来源模型。
+- 内容主库：`catalog/manifest.json`、`scripts/build_release.py`、`.github/workflows/release.yml`。
+
+### 测试基线
+
+网站 56/56 unit、lint、typecheck、db:check、生产 build、307 HTTP 和自动截图通过。内容主库 10/10 Skill 校验、仓库验证、确定性构建、ZIP 检查及两条 Actions 通过。
+
+### GitHub 状态
+
+- 网站仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- 网站 Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 网站当前分支：`backend-server-deployment`
+- 网站开发前基线：`42868b2ec1ddd981ffd07edd6e8998aeb305b9bc`
+- 网站备份：`backup/pre-release-download-integration-20260731-1826`，已 push
+- 网站最新提交：收尾后回写
+- 内容主库：`neilbauman666/Catnip-skill-hub-main`
+- 内容主库 main：`8c594f248d91788abae3938625344d66f349cf1e`，已 push
+- 内容主库备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push
+- 内容主库 Release：`v0.1.0`，10 个 ZIP 与 3 个元数据资产，Actions 成功
+- 工作区状态：网站保留 Claude 浏览器工具既有独立改动；本轮文件待提交
+
+### 风险提醒
+
+- 不移动已发布 Tag；修复内容发布新补丁版本。
+- 只信任固定内容主库 Release URL，不能放宽为任意远端下载。
+- 端口 3000 的旧进程需重启加载新种子；不要把该进程的旧响应误判为代码未集成。

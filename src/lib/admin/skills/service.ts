@@ -5,6 +5,7 @@ import {
   type SkillSubtype,
 } from "@/lib/domain/skills";
 import type { SkillRepository } from "@/lib/data/skills";
+import { getCatnipReleaseAssetError } from "@/lib/downloads";
 import type {
   AdminSkillCreateInput,
   AdminSkillOperation,
@@ -69,6 +70,18 @@ function optionalGithubRepository(value: string | undefined): string | undefined
   return normalized.replace(/\/$/, "");
 }
 
+function optionalReleaseAssetUrl(
+  value: string | undefined,
+  slug: string,
+  version: string,
+): string | undefined {
+  const normalized = optionalWebUrl(value, "GitHub Release 资产");
+  if (!normalized) return undefined;
+  const error = getCatnipReleaseAssetError(normalized, slug, version);
+  if (error) throw new SkillManagementError("invalid_input", error);
+  return normalized;
+}
+
 function category(value: MainCategory): MainCategory {
   if (!MAIN_CATEGORIES.includes(value)) throw new SkillManagementError("invalid_input", "主分类不在固定五类中。");
   return value;
@@ -96,6 +109,8 @@ function createDraft(input: AdminSkillCreateInput): SkillResource {
   const sourceUrl = webUrl(input.sourceUrl, "原始来源");
   const repositoryUrl = optionalGithubRepository(input.repositoryUrl);
   const repositoryPath = optionalText(input.repositoryPath, 300);
+  const version = requiredText(input.version, "版本", 100);
+  const releaseAssetUrl = optionalReleaseAssetUrl(input.releaseAssetUrl, slug, version);
   const normalizedCategory = category(input.category);
   const normalizedTags = tags(input.tags);
 
@@ -115,8 +130,9 @@ function createDraft(input: AdminSkillCreateInput): SkillResource {
       sourceUrl,
       repositoryUrl,
       repositoryPath,
+      releaseAssetUrl,
       license: requiredText(input.license, "License", 100),
-      version: requiredText(input.version, "版本", 100),
+      version,
     },
     category: normalizedCategory,
     tags: normalizedTags,
@@ -182,9 +198,17 @@ export class DefaultAdminSkillService implements AdminSkillService {
     const repositoryPath = input.repositoryPath === undefined
       ? current.source.repositoryPath
       : optionalText(input.repositoryPath, 300);
+    const version = input.version === undefined
+      ? current.source.version
+      : requiredText(input.version, "版本", 100);
+    const releaseAssetUrl = optionalReleaseAssetUrl(
+      input.releaseAssetUrl === undefined ? current.source.releaseAssetUrl : input.releaseAssetUrl,
+      current.slug,
+      version,
+    );
     const downloadEnabled = input.downloadEnabled ?? current.governance.downloadEnabled;
-    if (downloadEnabled && !repositoryPath) {
-      throw new SkillManagementError("invalid_input", "开放镜像下载前必须配置可打包的仓库路径。");
+    if (downloadEnabled && !repositoryPath && !releaseAssetUrl) {
+      throw new SkillManagementError("invalid_input", "开放下载前必须配置本地仓库路径或受信 Release 资产。");
     }
 
     const updated: SkillResource = {
@@ -203,8 +227,9 @@ export class DefaultAdminSkillService implements AdminSkillService {
           ? current.source.repositoryUrl
           : optionalGithubRepository(input.repositoryUrl),
         repositoryPath,
+        releaseAssetUrl,
         license: input.license === undefined ? current.source.license : requiredText(input.license, "License", 100),
-        version: input.version === undefined ? current.source.version : requiredText(input.version, "版本", 100),
+        version,
       },
       governance: {
         ...current.governance,
