@@ -1988,3 +1988,16 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 开发前备份：`backup/pre-public-shell-navigation-20260731-0549`，已 push，指向开工计划提交 `bca3c293f15f47137ca03e929cd4d36f8146a051`。
 - 推送后工作区只剩 `.agents/`、`.codex/`、`skills-lock.json` 三项受保护未跟踪用户工具文件，均未暂存、未修改、未提交。
 - 当前无需回滚；功能回滚目标固定为 `0880fbb63118f13861abce913feed2e10875c0c1`。
+## 2026-07-31 13:06 CST / SKill-hub-ui / Codex Stop Hook 修复开工门禁
+
+### 本轮计划回放
+
+- 只修复 Codex Stop Hook 协议兼容，不修改 UI、后端、服务器或第三方 Skill 源码。
+- 保留 PostToolUse 即时检测与 Playwright 自动截图。
+
+### Git 门禁首次失败
+
+- 命令：明确暂存 `DEV_PROGRESS.md` 与 `01-public-web.md` 后提交开工计划。
+- 结果：失败；受管文件系统拒绝创建 `.git/index.lock`，错误为 `Operation not permitted`。
+- 影响：未写入 Git 索引、未产生提交、未覆盖用户文件。
+- 修复动作：记录失败后，在获准环境重试相同明确文件列表，不扩大暂存范围。

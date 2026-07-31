@@ -344,3 +344,22 @@
 ### 下一状态
 
 完成 Git 提交和 push 后停在公共导航视觉验收点。下一轮只处理 Edge 反馈，不扩大到后台、服务器或新业务。
+## 2026-07-31 13:04 CST / SKill-hub-ui / Codex Stop Hook 兼容修复开工计划
+
+### 当前目标
+
+修复前端视觉保障工具在 Codex Stop 阶段返回不受支持 JSON 的问题，使自动截图和编辑后检测可继续使用且不再污染每轮收尾。
+
+### 计划改动
+
+- 移除 `.codex/hooks.json` 中不兼容的 Stop handler。
+- 保留 PostToolUse 即时检测和 Playwright 多视口截图。
+- 收尾使用手动深度检测替代自动 Stop 深度扫描。
+- 不修改 UI、业务、后端、部署或第三方 Skill 源码。
+
+### 验收指标
+
+- Codex Hook 清单不再注册不兼容 Stop handler。
+- PostToolUse handler 保持合法并能运行。
+- 自动截图仍可生成 3 页面 × 4 视口图片。
+- 工程、文档漂移和 Git 门禁通过，用户工具之外的未知改动不进入提交。

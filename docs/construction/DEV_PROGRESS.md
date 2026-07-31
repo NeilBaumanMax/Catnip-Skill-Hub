@@ -1411,3 +1411,50 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 当前结论
 
 公共外壳和导航语义已完成工程闭环，待提交与远端 push。完成 Git 收尾后停在 Edge 视觉验收点，不进入后台、服务器或新业务。
+## 2026-07-31 13:04 CST / SKill-hub-ui / Codex Stop Hook 兼容修复开工计划
+
+### 本轮目标
+
+消除 Codex CLI 反复报告的 `hook returned invalid stop hook JSON output`，保留 Playwright 自动截图和可用的 Impeccable 编辑后检测能力。
+
+### 涉及层
+
+- 本地 Agent 工具层：`.codex/hooks.json`。
+- Phase 1 公共前台施工保障：视觉检查流程，不修改页面业务或样式。
+- 施工文档：失败复现、协议依据、测试、回滚和接力记录。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`。
+- 基线提交：`576a0f2554e485c1d7c48c5176a1833d71d83c9f`，与 `origin/SKill-hub-ui` 分歧为 `0 0`。
+- SSH 账号：`NeilBaumanMax`；origin 为指定 SSH Remote。
+- Claude 新增的浏览器工具文件和依赖改动尚未提交；本轮只修复其 Codex Hook 兼容性，不改 `next-env.d.ts`。
+
+### 计划修改
+
+- 根据 Codex 0.146.0 的 Stop 输出协议移除不兼容的 Impeccable Stop handler。
+- 保留 PostToolUse 的即时设计检测。
+- 保留 Playwright 多视口截图；深度设计检查改为施工收尾时手动执行。
+- 不修改第三方 Impeccable Skill 脚本。
+
+### 测试计划
+
+- 用模拟 Codex Stop 输入验证已移除的 handler 不再产生非法输出入口。
+- 用模拟 PostToolUse 输入验证保留的 handler 输出为合法 JSON。
+- 校验 `.codex/hooks.json` JSON 语法和事件结构。
+- 执行 `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、Playwright 截图与 `git diff --check`。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`576a0f2554e485c1d7c48c5176a1833d71d83c9f`
+- 备份分支：`backup/pre-codex-stop-hook-fix-20260731-1304`
+- 备份 push 状态：待计划提交后创建并核验。
+
+### 回滚预案
+
+- 修复提交若引入工具回归，优先 `git revert <本轮修复提交>`。
+- 未提交的 Claude 工具文件保留原状；不使用 reset、clean、restore 或 force push。
+- 回滚后重新校验 Hook JSON、PostToolUse 输出和前端工程门禁。
