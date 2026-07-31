@@ -58,6 +58,25 @@ components:
 
 # Design System: Catnip Skill Hub
 
+## 2026-07-31 Current Direction Override
+
+**Creative North Star: "Catnip 搜索画廊"**
+
+当前首页以一个紧凑的品牌搜索舞台建立第一印象，再通过彩色生态兼容带自然进入固定分类、标签与 Skill 瀑布流。它吸收参考站点清晰的视觉层级，但保留 Catnip 自有 Logo、薄荷绿强调色、蓝调山景环境与管理员策展身份。
+
+- 页面类型：Agent Skill 公共发现首页。
+- 受众：希望快速发现并判断 Skill 的创作者与开发者。
+- 视觉参数：`DESIGN_VARIANCE 6`、`MOTION_INTENSITY 5`、`VISUAL_DENSITY 4`。
+- 桌面采用单一悬浮顶栏，不再使用固定左侧工具栏；移动端使用紧凑顶部布局。
+- 品牌搜索舞台高度受控，1440 × 900 首屏必须露出内容入口。
+- 玻璃只用于导航和搜索台；Skill 卡片以图片、边线和空间组织为主。
+- Catnip Mint 是唯一固定强调色；生态图标可以使用其原生颜色，蓝紫 AI 渐变禁止作为主题。
+- 只允许一个缓慢生态图标 marquee；hover/focus 暂停，reduced-motion 静止。
+- 生态标识不改变产品支持范围，正式安装目标仍为 Claude Code CLI 与 Codex CLI。
+- 首页、推荐页和 Skill 详情页保持同一公共顶栏与环境背景；后台不采用该外壳。
+
+本节覆盖下文旧的固定 64px 左栏、双层顶部控制和“山谷上方影像墙”布局描述；下文仍适用的 Logo、可访问性、形状、内容色彩和路由连续性规则继续有效。
+
 ## Overview
 
 **Creative North Star: "山谷上方的策展影像墙"**

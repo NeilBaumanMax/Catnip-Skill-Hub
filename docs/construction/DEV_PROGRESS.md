@@ -2,6 +2,58 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-07-31 21:11 CST / Public Web UI Fix / 开工计划
+
+### 本轮目标
+
+在 `UI_fix` 分支完成一轮可独立回滚的公共前端重构：吸收 CocoLoop 首页清晰的品牌、搜索与生态入口层级，同时保留 Catnip 的真实搜索、固定分类、标签、瀑布流、推荐入口和公共外壳连续性。完成后启动局域网预览并停下汇报，不执行服务器部署。
+
+### 涉及层
+
+- 公共前台展示层：`src/app` 首页与共享公共外壳。
+- 设计系统：`DESIGN.md` 与现有 CSS token/响应式规则。
+- 不修改 Skill 领域、下载、安装、数据、认证、存储或部署层。
+
+### 当前仓库状态
+
+- 当前分支：`UI_fix`，基线 `e7eefb04eab6bb4a0ca36220a0f3d51bf5695359`。
+- origin：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`。
+- 已识别并隔离此前浏览器截图工具改动：`.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`；本轮不覆盖或暂存。
+- 服务器部署继续暂停，目标服务器和既有站点不在本轮范围。
+
+### 计划修改
+
+- 将公共首页重组为紧凑悬浮导航、Catnip 品牌字标、任务型搜索台、场景标签、彩色生态兼容带与首屏露出的 Skill 瀑布流。
+- 移除桌面固定左栏，避免首页区域锚点和独立页面入口混层；推荐页与详情页继续复用公共外壳。
+- 保留本地蓝调山景为低对比环境层，减少玻璃层级；不复制 CocoLoop Logo、品牌文案、图标资产或蓝紫渐变。
+- 生态图标只表达可协作工具环境；第一版正式安装目标仍只有 Claude Code CLI 与 Codex CLI。
+- 使用现有 Phosphor 图标和 CSS 动效，不新增 UI、动画或状态管理依赖。
+
+### 测试计划
+
+- 修改前与修改后各执行 `npx tsx scripts/screenshots.ts`，覆盖 3 页面 × 4 视口并读图。
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run db:check`
+- `npm run build`
+- `git diff --check`
+- HTTP 验证首页、详情、推荐页和现有下载重定向。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 基线提交：`e7eefb04eab6bb4a0ca36220a0f3d51bf5695359`
+- 备份分支：`backup/pre-ui-fix-cocoloop-20260731-2111`
+- 备份 push 状态：待开工计划提交并 push 后创建、核验。
+
+### 回滚预案
+
+- 本轮实现以单一功能提交落地；需要撤销时优先 `git revert <本轮实现提交>`。
+- 回滚后至少复测 `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build` 并重新截图。
+
 ## 2026-07-27 04:58 CST / Phase 0 / 开工计划
 
 ### 本轮目标
