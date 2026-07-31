@@ -64,7 +64,8 @@
 - 开工前基线：`20162dce30d15f144e471cd15eeeb18fa6b5cea4`。
 - 计划提交：`e81d970f9f6368c86747e3d00178fb6e49f82701`，已 push。
 - 备份分支：`backup/pre-ui-tag-dropdown-20260731-2320`，已 push。
-- 实现提交与 `UI_fix` push：待收尾提交后回写。
+- 实现提交：`25b6e879c0e9e8fd3b55a01d8e28588179095fbc`，已成功 push 到 `origin/UI_fix`；push 后与远端分歧 `0 0`。
+- 本状态回写作为实现提交的直接后继纯文档提交推送；最终远端 HEAD 以收尾核验为准。
 - main 与服务器未修改。
 
 ### 回滚判断

@@ -22,7 +22,7 @@
 
 - 开工计划提交：`e81d970f9f6368c86747e3d00178fb6e49f82701`，已 push。
 - 远端备份：`backup/pre-ui-tag-dropdown-20260731-2320`，已 push。
-- 实现提交与 push：待本轮代码和收尾文档审阅后完成并回写。
+- 实现提交：`25b6e879c0e9e8fd3b55a01d8e28588179095fbc`，已成功 push 到 `origin/UI_fix`；本状态回写作为其直接后继纯文档提交。
 - 回滚优先 `git revert <本轮实现提交>`，随后复测全量门禁、HTTP 与截图。
 
 ## 2026-07-31 23:20 CST / UI Fix Tag Dropdown / 开工计划
