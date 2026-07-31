@@ -1581,3 +1581,11 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 不得把“创建服务器分支”理解为“已授权立即部署”。
 - 不得覆盖旧站 `catnip-intro` 工作区或其未提交内容。
 - 后续提交必须明确排除当前浏览器工具未提交改动，除非 Neil Bauman 另行要求归档。
+
+## 2026-07-31 13:49 CST / 后端部署分支最终 Git 状态
+
+- 当前分支：`backend-server-deployment`。
+- 最新交接提交：`d74c2d17acc46f20186f4831707b3776bbc4fb63`，已 push。
+- upstream：`origin/backend-server-deployment`；本地与远端分歧 `0 0`。
+- 开发前备份：`backup/pre-backend-server-branch-20260731-1340`，已 push。
+- 下一轮先做后端与服务器门禁评估，不直接连接或修改服务器。
