@@ -2075,3 +2075,11 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 
 - 重启 Codex CLI，确认 Stop 阶段不再出现非法 JSON。
 - 回到前端视觉验收，只处理真实截图发现的问题，不恢复服务器部署。
+
+## 2026-07-31 13:18 CST / Codex Stop Hook 修复 Git 状态回写
+
+- 修复提交：`a3ea6fe36ff898897c8ce59f84a63e096b410eee`（`fix: remove incompatible Codex Stop hook`）。
+- `git push origin SKill-hub-ui`：成功；本地与远端分歧 `0 0`。
+- 备份分支：`backup/pre-codex-stop-hook-fix-20260731-1304`，已 push，指向开工计划提交 `33fd871fe0fc83339da61537dd9b9adabf2d104b`。
+- 工作区剩余 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`，均为 Claude 浏览器工具的已知独立改动，本轮未暂存。
+- 当前无需回滚；如需撤回功能提交，使用 `git revert a3ea6fe36ff898897c8ce59f84a63e096b410eee`。

@@ -1283,6 +1283,14 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - Hook JSON、PostToolUse、unit 48/48、lint、typecheck、db:check、build、diff check与 12 张截图已通过。
 - 当前分支 `SKill-hub-ui`；备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push；服务器部署继续暂停。
 
+## 2026-07-31 13:18 CST / Stop Hook 修复 Git 回写
+
+- Hook 修复提交：`a3ea6fe36ff898897c8ce59f84a63e096b410eee`，已 push 到 `origin/SKill-hub-ui`。
+- 本地与远端分歧：`0 0`。
+- 开发前备份：`backup/pre-codex-stop-hook-fix-20260731-1304`，已 push。
+- 工作区仍有 Claude 浏览器工具的已知未提交改动；不要覆盖或混入其他任务。
+- 下一次启动 Codex 后先打开 `/hooks` 信任变更定义，并确认 Stop 错误不再出现。
+
 
 ## 2026-07-31 13:13 CST / Codex Stop Hook 兼容修复交接
 
@@ -1504,3 +1512,10 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - `.codex/hooks.json` 仅保留 PostToolUse；重启 Codex CLI 并在 `/hooks` 审阅新定义后确认 Stop 错误消失。
 - Hook JSON、PostToolUse、unit 48/48、lint、typecheck、db:check、build、diff check 与 12 张截图已通过。
 - 当前分支 `SKill-hub-ui`；备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push；服务器部署继续暂停。
+
+## 2026-07-31 13:19 CST / Stop Hook 修复最终 Git 状态
+
+- Hook 修复提交 `a3ea6fe36ff898897c8ce59f84a63e096b410eee` 已 push 到 `origin/SKill-hub-ui`，推送后分歧 `0 0`。
+- 开发前备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push。
+- 工作区剩余改动属于 Claude 浏览器工具的已知独立改动，不得覆盖或混入其他任务。
+- 下一次启动 Codex 后先在 `/hooks` 信任变更定义，并确认 Stop 错误不再出现。
