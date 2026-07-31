@@ -52,3 +52,23 @@
 ### 下一状态
 
 Phase 3 完成并暂停。下一轮只有在 Neil Bauman 明确继续后，才能按完整门禁进入 Phase 4 Admin CMS。
+
+## 2026-07-31 18:26 CST / Phase 3 运维扩展 / GitHub Release 下载集成开工计划
+
+### 当前目标
+
+让公开下载从网站服务器本地打包扩展为“受信不可变 Release 优先、本地归档兼容”，降低服务器大量保存 Skill ZIP 的需求。
+
+### 计划改动
+
+- 来源模型增加可选 Release 资产 URL。
+- 独立下载服务验证固定 owner/repo、Tag、slug、版本和 ZIP 文件名。
+- API 对 Release 返回临时重定向，本地资源继续现有归档。
+- `project-brief` 种子指向新主库真实 `v0.1.0`；补齐管理员录入和测试。
+
+### 验收指标
+
+- 任意域名、非 HTTPS、latest、分支 URL、错误 slug/版本或非 ZIP 均被拒绝。
+- 页面组件不拼下载 URL；下载服务不修改原 Skill；管理员关闭下载仍优先拒绝。
+- Release 重定向和本地 ZIP 兼容路径均有自动化验证。
+- unit、lint、typecheck、db:check、build 与 diff check 全部成功。

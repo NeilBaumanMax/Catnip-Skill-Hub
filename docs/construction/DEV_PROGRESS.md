@@ -1703,3 +1703,54 @@ Neil Bauman 可重新运行 `npm run admin:hash-password`，在本机输入新�
 ### 下一状态
 
 停在新主库安全 Bootstrap 基线。下一轮应先为新仓库建立可接力施工文档、Skill 目录规范和发布/回滚规则，完成闭环后再设计 GitHub Release 与网站下载层集成。
+
+## 2026-07-31 18:26 CST / Phase 3 运维扩展 / GitHub Release 下载集成开工计划
+
+### 本轮目标
+
+在新内容主库 `v0.1.0` 已真实发布的基础上，让网站下载服务安全使用不可变 GitHub Release ZIP，同时保留既有本地 `project-brief` 归档路径作为兼容和回滚能力。
+
+### 涉及层
+
+- Skill 领域来源字段和管理员录入边界。
+- `src/lib/downloads` 下载来源决策服务。
+- `/api/skills/[slug]/download` API。
+- 种子资源、下载测试和 Phase 3 施工文档。
+
+### 当前仓库状态
+
+- 当前分支：`backend-server-deployment`。
+- 基线提交：`58fe0bc8fa0d4c645a6d8847119e816bc5efbd1b`，与 `origin/backend-server-deployment` 分歧为 `0 0`。
+- origin 仍为网站仓库指定 SSH Remote；新内容主库是独立仓库，不替换 origin。
+- 工作区保留 Claude 浏览器工具的已知独立改动：`.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`；本轮不覆盖、不暂存、不提交。
+- 新主库 main CI 与 `v0.1.0` Release workflow 均成功；Release 含 10 个 ZIP 和 3 个元数据资产。
+
+### 计划修改
+
+- 在来源模型和管理输入中加入可选 `releaseAssetUrl`，不把远端 URL 当成本地路径。
+- 建立独立下载来源决策服务，只接受 `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v<semver>/<slug>-<semver>.zip`。
+- 下载 API 对受信 Release 返回临时重定向，对未配置 Release 的既有资源继续调用本地 ZIP 服务。
+- 将公开演示资源 `project-brief` 固定到真实 `v0.1.0` 资产，并记录新主库仓库、路径和 Commit。
+- 增加受信/非受信 URL、Release 重定向和本地兼容路径测试；不在 React 组件拼 URL 或 ZIP。
+
+### 测试计划
+
+- `npm test` 覆盖新下载决策与 API 语义。
+- 执行 lint、typecheck、db:check、生产 build、`git diff --check`。
+- 对本机运行入口检查 `/api/skills/project-brief/download` 返回受信 GitHub Release Location。
+- 核对旧本地归档构建测试继续通过；不把当前网络下 GitHub 二进制下载超时写成资产字节已下载验证。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`backend-server-deployment`
+- 基线提交：`58fe0bc8fa0d4c645a6d8847119e816bc5efbd1b`
+- 备份分支：`backup/pre-release-download-integration-20260731-1826`
+- 备份 push 状态：待开工计划提交后创建并远端核验。
+
+### 回滚预案
+
+- 功能异常优先 `git revert <本轮功能提交>`，恢复既有本地归档行为；不移动新主库 `v0.1.0` Tag。
+- 回滚后复测 unit、lint、typecheck、db:check、build、本地 ZIP 和下载 API。
+- 既有 Claude 浏览器工具改动不属于本轮回滚或暂存范围。
