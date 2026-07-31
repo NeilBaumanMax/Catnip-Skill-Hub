@@ -53,3 +53,23 @@
 ### 下一状态
 
 Phase 4 完成并暂停。当前数据为进程内非持久状态，公开目录仍读取版本化种子；下一轮只有在 Neil Bauman 明确继续后，才能按完整门禁进入 Phase 5 Storage and Import。
+
+## 2026-07-31 14:13 CST / Phase 4 运维修复 / 开工计划
+
+### 当前目标
+
+修复管理员密码哈希 CLI 在 Node.js 24.18.0 与当前 `tsx` CommonJS 转换模式下无法启动的问题，不改变认证协议或安全门槛。
+
+### 计划改动
+
+- 将脚本顶层 `await` 改为兼容 CommonJS 输出的显式异步入口。
+- 以非真实密码验证可执行入口和哈希输出。
+- 增加入口回归覆盖，保留过短密码拒绝、隐藏输入和 scrypt 规则。
+- 不修改或读取 `.env.local` 中的真实秘密，不混入现有浏览器工具改动。
+
+### 验收指标
+
+- `npm run admin:hash-password` 在当前 Node/tsx 组合下正常运行。
+- 合法测试密码输出 `scrypt$...`，过短测试密码仍失败。
+- unit、lint、typecheck、db:check、build 与 diff check 通过。
+- 首次失败、修复和复测完整记录；备份与工作分支均成功 push。

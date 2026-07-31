@@ -1545,3 +1545,52 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 下一状态
 
 停在专用分支基线。后续后端开发或服务器部署必须另起施工轮；服务器写操作仍需重新满足全部部署门禁。
+
+## 2026-07-31 14:13 CST / Phase 4 运维修复 / 管理员密码哈希工具开工计划
+
+### 本轮目标
+
+修复 `npm run admin:hash-password` 在 Node.js 24.18.0 与当前 `tsx` CommonJS 输出模式下因顶层 `await` 无法转换而启动失败的问题，使 Neil Bauman 可以在本机安全生成管理员密码哈希。
+
+### 涉及层
+
+- Phase 4 管理员认证辅助工具：`scripts/hash-admin-password.ts`。
+- 管理员认证单元测试与既有工程门禁。
+- 施工日志、Phase 4 层进度与接力文档。
+
+### 当前仓库状态
+
+- 当前分支：`backend-server-deployment`。
+- 基线提交：`1921bf386b9c5898e896bd5ace20bb7d6e9a841d`，与 `origin/backend-server-deployment` 分歧为 `0 0`。
+- SSH 输出确认账号为 `NeilBaumanMax`；origin 为指定 SSH Remote。
+- 工作区已有 Claude 浏览器工具相关的 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts` 与 `skills-lock.json` 改动；来源已知但不属于本轮，不覆盖、不暂存、不提交。
+- 首次执行 `npm run admin:hash-password` 已真实失败：`tsx` 报告 CommonJS 输出不支持两处顶层 `await`。
+
+### 计划修改
+
+- 将脚本顶层异步流程封装为显式 `main()`，保留隐藏输入、非 TTY 输入、scrypt 哈希和取消行为。
+- 增加脚本入口兼容性回归测试，避免只验证底层哈希函数而漏掉可执行入口。
+- 不降低 12 位密码、有效管理员邮箱、32 位会话密钥或其他认证安全规则。
+- 不读取、记录或提交 Neil Bauman 的真实密码、哈希或环境秘密。
+
+### 测试计划
+
+- 使用非真实测试密码执行 `npm run admin:hash-password`，确认输出为合法 `scrypt$...` 哈希。
+- 验证过短测试密码仍被拒绝。
+- 执行 `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build` 与 `git diff --check`。
+- 检查日志保留首次失败、修复动作和复测结果。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`backend-server-deployment`
+- 基线提交：`1921bf386b9c5898e896bd5ace20bb7d6e9a841d`
+- 备份分支：`backup/pre-admin-hash-tool-fix-20260731-1413`
+- 备份 push 状态：待创建并远端核验。
+
+### 回滚预案
+
+- 如修复引入回归，优先 `git revert <本轮修复提交>`，不使用 reset、clean、restore 或 force push。
+- 回滚后复测哈希工具入口、认证单元测试、lint、typecheck 与 build。
+- 既有 Claude 浏览器工具改动不属于本轮回滚范围。
