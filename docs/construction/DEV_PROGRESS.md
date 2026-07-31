@@ -26,7 +26,7 @@
 
 - 开发前基线：`fcf12d128caa7e0e0af76192781f0b5555ba1501`。
 - 备份分支：`backup/pre-ui-fix-cocoloop-20260731-2111`，已 push 并核验远端引用。
-- 实现提交与 `UI_fix` push：待完成最终差异审阅后回写。
+- 实现提交：`8a10edf75ac146508ea203670722b53f96472742`；`UI_fix` push 成功。
 - 推荐回滚：`git revert <本轮实现提交>`，随后复测全量门禁和 12 张截图。
 
 ## 2026-07-31 21:11 CST / Public Web UI Fix / 开工计划
