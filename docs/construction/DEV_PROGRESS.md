@@ -21,7 +21,7 @@
 
 - 纠偏开发前基线：`c3c4751b162690dc14a52aaff3cf8530218122e9`。
 - 远端备份：`backup/pre-ui-shell-correction-20260731-2158`，已 push 并核验。
-- 纠偏实现与收尾提交号、push 状态在本轮最终 Git 状态回写中记录。
+- 纠偏实现提交：`f42a633eb3f4e8cddc4ca503915148f3f605cbcf`，已成功 push 到 `origin/UI_fix`；本状态回写为其直接后继纯文档提交。
 - 需要撤销时优先 `git revert <纠偏实现提交>`，随后复测全量门禁与 12 张截图。
 
 ## 2026-07-31 21:58 CST / UI Fix Correction / 开工计划

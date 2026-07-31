@@ -62,7 +62,8 @@
 - 开发前计划前基线：`6b9e56928aa81d923a88c4108c4ba4f1c06746f0`。
 - 纠偏施工基线：`c3c4751b162690dc14a52aaff3cf8530218122e9`。
 - 备份分支：`backup/pre-ui-shell-correction-20260731-2158`，push 成功并核验远端引用。
-- 实现提交与 `UI_fix` push 状态：待本轮 Git 收尾后追加回写。
+- 纠偏实现提交：`f42a633eb3f4e8cddc4ca503915148f3f605cbcf`，已成功 push 到 `origin/UI_fix`。
+- 本 Git 状态回写作为实现提交的直接后继纯文档提交推送；远端最终 HEAD 以收尾核验为准。
 - main 与服务器未修改。
 
 ### 回滚判断
