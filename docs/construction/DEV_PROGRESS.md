@@ -21,7 +21,7 @@
 
 - 开工基线：`eb4d4b8bae406a719917ac97d5c132c0733d13cd`；计划提交：`e961cd8672f1e36030e802704d144f7e176135d7`，已 push。
 - 远端备份：`backup/pre-ui-top-logo-removal-20260801-0019`，已 push。
-- 实现提交待提交后回写；需要恢复时优先 `git revert <本轮实现提交>` 并复测全部门禁。
+- 实现提交：`6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`，已成功 push 到 `origin/UI_fix`；最终状态回写为其直接后继纯文档提交。
 
 ## 2026-08-01 00:19 CST / UI Fix Top Logo Removal / 开工计划
 
