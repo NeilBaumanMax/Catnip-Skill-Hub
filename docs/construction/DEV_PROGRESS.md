@@ -22,7 +22,7 @@
 
 - 计划基线：`53530e6`。
 - 远端备份：`backup/pre-ui-tag-filters-20260731-2226`，已 push。
-- 实现提交与 push 状态在最终 Git 状态回写记录中补充。
+- 实现提交：`b7583d93d1af680d06f5a6bc34553050a2aeeec7`，已成功 push 到 `origin/UI_fix`；本状态回写为直接后继纯文档提交。
 - 回滚优先 `git revert <标签筛选实现提交>`，随后复测全量门禁和截图。
 
 ## 2026-07-31 22:26 CST / UI Fix Tag Filters / 开工计划
