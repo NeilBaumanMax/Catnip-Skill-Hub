@@ -1525,3 +1525,23 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 - 分支建立不修改既有提交历史；如不再需要，只停止使用，不在本轮删除远端分支。
 - 后续代码回滚优先使用 `git revert`，不得 reset、clean、restore 或 force push。
 - 服务器写操作继续暂停，恢复施工前必须重新执行服务器门禁。
+
+## 2026-07-31 13:45 CST / backend-server-deployment / 分支建立完成
+
+### 完成事项
+
+- 开工计划已提交并推送到 `SKill-hub-ui`。
+- 远端备份 `backup/pre-backend-server-branch-20260731-1340` 建立成功。
+- `backend-server-deployment` 已从提交 `b1664b02f0dcee96d2452a37c7613c12c64dea3f` 创建、推送并设为当前分支。
+- upstream 为 `origin/backend-server-deployment`，本地与远端分歧 `0 0`。
+
+### 验证状态
+
+- 两个远端引用均指向相同安全基线 `b1664b0`。
+- `git diff --check` 成功。
+- 本轮未改运行代码，未执行也未虚报 npm 工程测试。
+- Claude 浏览器工具未提交改动原样保留，未暂存、未覆盖。
+
+### 下一状态
+
+停在专用分支基线。后续后端开发或服务器部署必须另起施工轮；服务器写操作仍需重新满足全部部署门禁。

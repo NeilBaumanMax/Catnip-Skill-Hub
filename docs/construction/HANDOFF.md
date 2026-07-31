@@ -1519,3 +1519,65 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 开发前备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push。
 - 工作区剩余改动属于 Claude 浏览器工具的已知独立改动，不得覆盖或混入其他任务。
 - 下一次启动 Codex 后先在 `/hooks` 信任变更定义，并确认 Stop 错误不再出现。
+
+## 2026-07-31 13:45 CST / 后端与服务器部署分支交接
+
+### 当前状态
+
+当前已切换到 `backend-server-deployment`。该分支用于后续后端开发与服务器部署准备，但本轮未开始代码或服务器施工。
+
+### 本轮完成
+
+- 从 `SKill-hub-ui` 最新已提交基线建立开发前备份。
+- 创建、推送并切换到 `backend-server-deployment`。
+- 新分支 upstream 和远端引用已核验。
+- Claude 浏览器工具未提交改动完整保留。
+
+### 未完成
+
+- 未评估本轮具体后端开发需求。
+- 未恢复服务器写操作。
+- 未处理服务器快照、旧站恢复、资源限制、amd64 镜像、依赖风险、端口收敛或 HTTPS。
+
+### 下次优先任务
+
+1. 先审计后端现状与第一版上线缺口。
+2. 重新执行 `SERVER_DEPLOYMENT.md` 门禁评估。
+3. 未经 Neil Bauman 明确授权，不执行服务器写操作。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并重点读取 `docs/deployment/SERVER_DEPLOYMENT.md` 和 `docs/construction/progress/layers/07-deployment.md` 最新记录。
+
+### 关键文件
+
+- `lib/data`
+- `lib/auth`
+- `lib/storage`
+- `lib/downloads`
+- `drizzle`
+- `docker-compose.yml`
+- `docs/deployment/SERVER_DEPLOYMENT.md`
+
+### 测试基线
+
+- 本轮仅 Git 分支施工：`git diff --check` 成功。
+- 最近代码基线：unit 48/48、lint、typecheck、db:check、build 通过；本轮未重新执行，不写成当前复测。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`backend-server-deployment`
+- 分支基线：`b1664b02f0dcee96d2452a37c7613c12c64dea3f`
+- 备份分支：`backup/pre-backend-server-branch-20260731-1340`，已 push
+- 开发分支：`backend-server-deployment`，已 push
+- upstream：`origin/backend-server-deployment`
+- 本地与远端分歧：`0 0`
+- 工作区状态：Claude 浏览器工具的已知未提交改动，未纳入本轮提交。
+
+### 风险提醒
+
+- 不得把“创建服务器分支”理解为“已授权立即部署”。
+- 不得覆盖旧站 `catnip-intro` 工作区或其未提交内容。
+- 后续提交必须明确排除当前浏览器工具未提交改动，除非 Neil Bauman 另行要求归档。

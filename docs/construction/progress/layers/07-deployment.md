@@ -151,3 +151,21 @@
 - 新分支 upstream 指向 `origin/backend-server-deployment`，本地与远端一致。
 - 既有前端分支、旧站服务器与用户未提交文件不受影响。
 - 后续恢复服务器施工仍需满足 `SERVER_DEPLOYMENT.md` 全部门禁。
+
+## 2026-07-31 13:45 CST / backend-server-deployment / 分支基线验收
+
+### 实际完成
+
+- 备份分支与专用开发分支均从 `b1664b02f0dcee96d2452a37c7613c12c64dea3f` 创建并成功 push。
+- 当前分支为 `backend-server-deployment`，跟踪 `origin/backend-server-deployment`。
+- Claude 浏览器工具的未提交改动保持原样，没有进入分支基线提交。
+
+### 验收结果
+
+- 远端引用核验成功，本地与远端分歧 `0 0`。
+- `git diff --check` 成功。
+- 未连接目标服务器，未执行 Docker、nginx、端口、防火墙、DNS、HTTPS 或生产秘密修改。
+
+### 下一状态
+
+分支边界已建立。下一轮先做后端与服务器门禁评估，再根据 Neil Bauman 明确指令决定施工范围。
