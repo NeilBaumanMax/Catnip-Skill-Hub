@@ -22,7 +22,7 @@
 
 - 开工前基线：`707a2236978efea42badeb21e8a3158184e8763e`；计划提交：`a1c0e9fb9b139a5b18bb38a1944175059caecd88`，已 push。
 - 远端备份：`backup/pre-handoff-drift-sync-20260801-0034`，已 push。
-- 文档实现提交待提交后回写；回滚优先 `git revert <本轮文档实现提交>`，随后复核文档、HTTP 和工程门禁。
+- 文档实现提交：`18df8ae734a57bbecfd057c84ab0af37cbb9e387`，已成功 push 到 `origin/UI_fix`；最终状态回写为其直接后继纯文档提交。
 
 ## 2026-08-01 00:34 CST / Documentation Handoff Sync / 开工计划
 

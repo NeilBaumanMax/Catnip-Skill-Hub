@@ -105,8 +105,8 @@ SCREENSHOT_URL=http://192.168.110.9:3000 npx tsx scripts/screenshots.ts
 - 交接计划提交：`a1c0e9fb9b139a5b18bb38a1944175059caecd88`，已 push
 - 交接备份：`backup/pre-handoff-drift-sync-20260801-0034`，已 push
 - 最新 UI 实现：`6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`
-- 本轮文档实现提交：待提交后回写
-- 工作区：网站提交范围待收尾；上述本地工具改动隔离保留，因此全局工作区不会干净
+- 本轮文档实现提交：`18df8ae734a57bbecfd057c84ab0af37cbb9e387`，已 push
+- 工作区：本轮文档已提交；仅剩上述本地工具改动隔离保留，因此全局工作区不会干净
 
 ### 风险提醒
 
