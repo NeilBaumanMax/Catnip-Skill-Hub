@@ -2,6 +2,71 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-01 00:11 CST / UI_fix 公共顶栏单层化交接
+
+### 当前状态
+
+`UI_fix` 已把公共顶部从“玻璃 header 内再套玻璃 topline/context”收敛为一层连续环境材质，全部自动门禁最终通过。局域网预览继续为 `http://192.168.110.9:3000`；服务器部署暂停。
+
+### 本轮完成
+
+- header 独立承担滚动透明度、底边和阴影；内部品牌/搜索行不再形成第二张卡片。
+- 分类/标签用 hairline 和留白分组；标签入口默认透明，下拉多选行为不变。
+- 详情与推荐 breadcrumb 去除独立卡片，公开路由外壳保持连续。
+- 12 张标准截图与 3 张专项状态图读图通过；57 项测试、工程、HTTP 和 build 门禁最终通过。
+
+### 未完成
+
+- Neil Bauman 尚未主观确认本轮视觉修正。
+- 本轮不合并 `UI_fix`，不清理历史 CSS，不部署服务器。
+
+### 下次优先任务
+
+1. 让 Neil Bauman 在桌面和移动设备检查顶部单层化、标签展开及滚动实体化。
+2. 仅按明确视觉反馈微调顶栏密度或控件状态。
+3. 视觉确认后再决定是否合并 `UI_fix`；服务器仍需独立门禁和新授权。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/globals.css`
+- `src/app/page.tsx`
+- `src/app/_components/public-shell.tsx`
+- `DESIGN.md`
+
+### 测试基线
+
+- `npm test`：57/57 通过。
+- lint、typecheck、db:check、build、diff check：最终通过。
+- 首页、详情、推荐及分类 + 两标签组合 HTTP：全部 `200`。
+- 截图：标准 12/12、标签展开 2 张、滚动状态 1 张，读图通过；不等于 Neil Bauman 已确认。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`6c4edcf8a561e47505e60b8caed0e34de0d911da`
+- 计划提交：`f545cb69b7e9ecaf2941b777d01732b895d78c77`，已 push
+- 备份分支：`backup/pre-ui-header-distill-20260731-2356`，已 push
+- 最新实现提交：待提交后回写
+- 已 push：计划和备份已 push；实现与收尾状态待提交
+- 工作区状态：本轮文件待提交；既有用户工具改动隔离，因此全局工作区不是干净状态
+
+### 风险提醒
+
+- 不得暂存 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`。
+- 不得把自动截图写成 Neil Bauman 已验收。
+- 不得恢复服务器写操作。
+
 ## 2026-07-31 23:29 CST / UI_fix 标签下拉交接
 
 ### 当前状态

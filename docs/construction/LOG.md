@@ -1,5 +1,81 @@
 # 施工日志
 
+## 2026-08-01 00:11 CST / UI Fix Header Distill / 公共顶栏单层化
+
+### 本轮计划回放
+
+先读取施工和设计规范、核验 Git 与用户改动、完成修改前截图，再提交并 push 开工计划并建立远端备份。真实施工只收敛公共顶栏材质，不改变发现行为；最后执行工程、HTTP、滚动、标签展开、多视口截图和文档漂移门禁。
+
+### 实际修改
+
+- `.discovery-header` 保留为唯一滚动环境玻璃；`.discovery-topline` 移除独立背景、边框、圆角、阴影和 blur。
+- 顶部搜索改为一个有边界的输入组，input 本身透明，搜索按钮继续作为明确操作面。
+- 分类/标签行增加单条 hairline；标签 summary 静止态透明，交互和展开态提供轻量反馈。
+- 公共内页上下文取消独立四边卡片、背景和 blur，只保留路径分隔。
+- 同步 `DESIGN.md` 与施工规范；未修改搜索服务、标签 AND 语义、后台、数据库、下载、安装、主库或服务器。
+
+### 修改文件
+
+- `src/app/globals.css`
+- `DESIGN.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 修改前 12/12 截图生成，桌面与手机首页确认内层圆角卡片造成重复材质。
+- 修改后 12/12 标准截图读图通过；额外桌面/手机标签展开态和桌面滚动态读图通过。
+- 计算样式确认 topline 背景透明、四边框为 0、圆角为 0、阴影和 blur 为 none；分类行只保留 1px 上分隔；搜索输入组保留必要边界。
+- 首页、详情、推荐、分类 + 两标签组合查询均返回 `200`。
+
+### 测试日志
+
+- 施工中间门禁：`npm test` 57/57、lint、typecheck、db:check、`git diff --check` 通过。
+- `npm run build` 第一次失败：Turbopack 创建内部进程并绑定端口时被受管沙箱拒绝，报 `Operation not permitted (os error 1)`；不是 CSS 解析错误或应用代码失败。
+- 修复动作：不修改代码、依赖或系统配置，在获准环境重新执行相同 `npm run build`。
+- build 复测：通过；Next.js 编译、TypeScript、5 workers 页面数据与 9 个页面生成完成。
+- 构建临时改写 `next-env.d.ts` 后恢复施工前用户 dev routes 内容及 SHA-1 `d0edc62da2f216ad272c8e8ed9d04f5267bd85a2`。
+- 最终复测：`npm test` 57/57、lint、typecheck、db:check、HTTP 和 `git diff --check` 全部通过。
+
+### 测试指标判断
+
+功能回归、静态质量、数据库 schema、生产构建、HTTP、滚动实体化、标签展开和四视口视觉门禁最终达到本轮指标。自动验收不等于 Neil Bauman 已确认视觉方向。
+
+### 文档漂移检查
+
+- `DESIGN.md` 和 `SKILL_HUB_UI_PLAN.md` 已固化“header 单一环境材质、内部按布局组织”的最高优先级覆盖规则。
+- `CODEX_MASTER_REQUIREMENTS.md` 当前任务改为等待本轮单层化验收；服务器暂停、分支和产品边界未漂移。
+- 管理员始终为 Neil Bauman，品牌为 Catnip 薄荷猫，Remote 保持指定 SSH；未实现后续业务、未创建新秘密。
+- 施工前用户工具改动未覆盖、未暂存；历史 CSS 审计债务未借机扩大施工范围。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开工前基线：`6c4edcf8a561e47505e60b8caed0e34de0d911da`。
+- 计划提交：`f545cb69b7e9ecaf2941b777d01732b895d78c77`，已 push。
+- 备份分支：`backup/pre-ui-header-distill-20260731-2356`，已 push。
+- 实现提交：待本轮提交后回写；main 与服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 推荐回滚：`git revert <本轮实现提交>`。
+- 回滚后复测：unit、lint、typecheck、db:check、build、HTTP 和截图。
+
+### 当前风险
+
+- 自动视觉验收不等于 Neil Bauman 已主观确认。
+- 手机标签面板会覆盖部分首屏，这是下拉筛选的预期模态层级；标签列表在面板内部滚动。
+- 既有用户工具改动和历史 CSS 审计债务继续隔离。
+
+### 下一步
+
+保持局域网预览，等待 Neil Bauman 验收单层顶栏；未获新指令前不合并、不部署服务器。
+
 ## 2026-07-31 23:29 CST / UI Fix Tag Dropdown / 发现控制精简
 
 ### 本轮计划回放

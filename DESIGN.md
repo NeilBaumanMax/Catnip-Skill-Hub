@@ -89,6 +89,18 @@ components:
 
 # Design System: Catnip Skill Hub
 
+## 2026-08-01 Public Header Distillation Override
+
+公共顶栏只允许一个环境材质层：`.discovery-header` 负责滚动自适应背景、底部分隔和阴影；其内部 `.discovery-topline` 只承担品牌、搜索与推荐入口的网格布局，不得拥有第二层背景、四边边框、圆角、阴影或 blur。
+
+- 品牌/搜索行与分类/标签行使用留白和一条 hairline 分组，不创建包裹整行的卡片。
+- 搜索输入组、按钮和展开后的标签面板是有交互边界的控件，可以保留必要边框与底色；这不构成环境玻璃嵌套。
+- 标签入口静止态透明；hover、focus、展开或已选时才出现轻量状态面。
+- 详情与推荐页 breadcrumb 只使用单条分隔和间距，不再拥有独立玻璃卡片。
+- 顶部通透、滚动实体化与 reduced-transparency 回退继续由唯一的公共 header 承担。
+
+本节覆盖下方任何允许 topline、分类上下文或 breadcrumb 各自拥有独立玻璃容器的旧描述；不改变搜索、分类、标签、推荐和公共路由行为。
+
 ## 2026-07-31 Shell Correction Override
 
 **Creative North Star: "山景玻璃画廊中的任务搜索台"**

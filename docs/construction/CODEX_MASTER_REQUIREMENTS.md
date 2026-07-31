@@ -64,5 +64,5 @@
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
-- 当前主任务是在 `UI_fix` 分支等待 Neil Bauman 验收精简后的发现控制：中央搜索台不再显示虚假模式切换；分类保持单选，标签通过带图标和已选计数的下拉面板完成多选、应用、单独清除和重复 URL 参数恢复；不得借机重构后端或部署栈。
+- 当前主任务是在 `UI_fix` 分支等待 Neil Bauman 验收公共顶栏单层化：公共 header 是唯一滚动毛玻璃环境层，内部品牌/搜索行和 breadcrumb 不得再形成独立卡片；分类保持单选，标签继续通过带图标和计数的下拉面板多选。不得借机重构后端或部署栈。
 - 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。
