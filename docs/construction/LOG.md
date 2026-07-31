@@ -2146,3 +2146,114 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - `SKill-hub-ui` 与开发前备份均保留在 `b1664b02f0dcee96d2452a37c7613c12c64dea3f`。
 - 当前工作区剩余 Claude 浏览器工具的已知未提交改动，未暂存、未覆盖、未回滚。
 - 当前无需回滚；本轮未执行任何服务器写操作。
+
+## 2026-07-31 14:16 CST / Phase 4 运维修复 / 管理员密码哈希工具失败记录
+
+### 本轮计划回放
+
+- 修复 `npm run admin:hash-password` 在当前 Node.js 24.18.0 与 `tsx` 输出模式下的可执行入口。
+- 不改变密码长度、scrypt、管理员邮箱或会话密钥规则。
+- 使用非真实测试密码完成入口回归，不读取或记录真实凭据。
+
+### 首次失败
+
+- 命令：`npm run admin:hash-password`。
+- 执行者：Neil Bauman 在本机终端执行。
+- 结果：失败。
+- 错误摘要：`tsx` 以 CommonJS 输出转换脚本时，报告第 45、46 行两处顶层 `await` 不受支持。
+- 根因：脚本可执行入口直接使用顶层 `await`，但仓库当前包输出模式没有声明为 ESM；底层认证单元测试没有启动真实 CLI，因此此前未覆盖此兼容性。
+- 影响：管理员密码哈希无法生成；没有创建或修改真实凭据。
+
+### 修复动作
+
+- 将顶层异步调用封装为 `main()`，以 `void main().catch(...)` 处理错误和非零退出状态。
+- 新增入口级回归测试，分别验证合法测试密码产生 `scrypt$...` 哈希及过短密码仍被拒绝。
+
+### 专项测试环境失败
+
+- 命令：`npx tsx --test tests/hash-admin-password-script.test.ts`。
+- 结果：受限环境失败。
+- 错误摘要：`tsx` 创建临时 IPC 管道时触发 `listen EPERM .../tsx-501/...pipe`。
+- 判断：失败发生在测试代码加载前，是当前受管沙箱对本地 IPC 监听的限制，不是哈希脚本断言失败。
+- 下一动作：在获准本机环境重新执行相同专项测试；通过后再进入全量门禁。
+
+## 2026-07-31 14:22 CST / Phase 4 运维修复 / 管理员密码哈希工具
+
+### 本轮计划回放
+
+- 恢复真实 `npm run admin:hash-password` 可执行入口。
+- 保留管理员认证安全门槛并增加入口回归。
+- 完成测试、漂移、GitHub 备份、提交、push 和交接闭环。
+
+### 实际修改
+
+- 将 `scripts/hash-admin-password.ts` 顶层异步逻辑封装为 `main()`，兼容当前 `tsx` CommonJS 输出。
+- 错误经统一 catch 输出并设置非零退出状态。
+- TTY 数据监听改为遍历输入块，正确处理回车、取消和退格；结束时注销监听并恢复终端。
+- 新增 `tests/hash-admin-password-script.test.ts`，真实启动脚本验证合法与过短密码路径。
+
+### 修改文件
+
+- `scripts/hash-admin-password.ts`
+- `tests/hash-admin-password-script.test.ts`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/progress/layers/04-admin-cms.md`
+- `docs/construction/HANDOFF.md`
+
+### 验证结果
+
+- 原始用户命令失败：已确认并保留。
+- 受限环境专项测试：因 `tsx` 临时 IPC `EPERM` 失败，已保留。
+- 获准环境专项复测：2/2 成功。
+- 实际交互命令：使用非真实测试密码成功生成 `scrypt$...`，输入不回显。
+- 输入块鲁棒性修正后专项复测：2/2 成功。
+- 最终完整测试：50/50 成功。
+- lint、typecheck、db:check、生产 build、diff check：成功。
+
+### 测试日志
+
+1. Neil Bauman 执行原命令，CommonJS 转换因两处顶层 `await` 失败。
+2. 首次修复后专项测试在受限沙箱因 IPC 权限失败；获准环境相同命令复测成功。
+3. 首次交互验收发现自动终端整块输入需要额外回车；定位为数据事件可能包含多个字符。
+4. 改为逐字符遍历输入块并清理监听后，单次整块输入正常结束。
+5. 最终专项 2/2、完整 50/50、lint、typecheck、db:check 和 build 全部成功。
+
+### 测试指标判断
+
+- Phase 4 密码哈希、错误处理、真实 CLI 入口与既有认证回归满足当前门禁。
+- 本轮未改数据库或对象存储；没有执行 PostgreSQL/S3 集成测试，也未写成通过。
+- 本轮无前端可见修改，不适用 Playwright 截图门禁。
+
+### 文档漂移检查
+
+- 实际修改仍位于认证辅助脚本和测试，不改变公共 UI、Repository、数据库、下载或部署依赖方向。
+- 密码继续要求 12 至 256 位，管理员配置继续要求有效邮箱、scrypt 哈希和 32 位以上会话密钥。
+- Neil Bauman、NeilBaumanMax、Catnip 薄荷猫与指定 SSH Remote 一致；未出现 Kyle。
+- 没有默认凭据、明文密码、真实哈希、Token 或会话密钥进入仓库。
+- 服务器部署继续暂停；本轮没有连接或修改目标服务器。
+- Claude 浏览器工具工作区改动保持独立，未暂存、未覆盖。
+
+### GitHub 状态
+
+- 开发前代码基线：`1921bf386b9c5898e896bd5ace20bb7d6e9a841d`。
+- 开工计划提交：`84b8d76`，已 push。
+- 备份分支：`backup/pre-admin-hash-tool-fix-20260731-1413`，已成功 push。
+- 功能提交与 `backend-server-deployment` push：待 Git 收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 如需撤回，优先 `git revert <本轮功能提交>`。
+- 回滚后复测专项 CLI、`npm test`、lint、typecheck、db:check 和 build；不得 reset、clean、restore 或 force push。
+
+### 当前风险
+
+- 管理员真实邮箱和密码哈希仍为空，后台登录会继续安全拒绝，直到 Neil Bauman 在本机自行配置。
+- 聊天中出现过的旧短密码不得继续使用。
+- 当前开发模式后台数据为进程内状态；正式持久管理仍需安全 HTTPS 入口和部署秘密。
+
+### 下一步
+
+- Neil Bauman 重新运行哈希命令，使用新的 12 位以上密码并把输出写入本机忽略文件。
+- 配置完成后重启开发服务，再从 `http://127.0.0.1:3000/admin/login` 登录。

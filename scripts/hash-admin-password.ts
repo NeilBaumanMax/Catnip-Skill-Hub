@@ -16,31 +16,48 @@ async function readPassword(): Promise<string> {
   return new Promise((resolve, reject) => {
     let value = "";
 
-    function finish() {
+    function restoreInput() {
+      stdin.off("data", handleData);
       stdin.setRawMode(false);
       stdin.pause();
+    }
+
+    function finish() {
+      restoreInput();
       stdout.write("\n");
       resolve(value);
     }
 
-    stdin.on("data", (character: string) => {
-      if (character === "\u0003") {
-        stdin.setRawMode(false);
-        reject(new Error("已取消。"));
-        return;
+    function handleData(chunk: string) {
+      for (const character of chunk) {
+        if (character === "\u0003") {
+          restoreInput();
+          reject(new Error("已取消。"));
+          return;
+        }
+        if (character === "\r" || character === "\n") {
+          finish();
+          return;
+        }
+        if (character === "\u007f") {
+          value = value.slice(0, -1);
+          continue;
+        }
+        value += character;
       }
-      if (character === "\r" || character === "\n") {
-        finish();
-        return;
-      }
-      if (character === "\u007f") {
-        value = value.slice(0, -1);
-        return;
-      }
-      value += character;
-    });
+    }
+
+    stdin.on("data", handleData);
   });
 }
 
-const password = await readPassword();
-stdout.write(`${await hashAdminPassword(password)}\n`);
+async function main(): Promise<void> {
+  const password = await readPassword();
+  stdout.write(`${await hashAdminPassword(password)}\n`);
+}
+
+void main().catch((error: unknown) => {
+  const message = error instanceof Error ? error.message : String(error);
+  console.error(message);
+  process.exitCode = 1;
+});

@@ -1589,3 +1589,68 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - upstream：`origin/backend-server-deployment`；本地与远端分歧 `0 0`。
 - 开发前备份：`backup/pre-backend-server-branch-20260731-1340`，已 push。
 - 下一轮先做后端与服务器门禁评估，不直接连接或修改服务器。
+
+## 2026-07-31 14:22 CST / 管理员密码哈希工具修复交接
+
+### 当前状态
+
+`npm run admin:hash-password` 的 Node.js 24.18.0/tsx CommonJS 顶层 `await` 兼容问题已修复并完成全量验证。管理员真实凭据仍未配置；网站会继续安全拒绝登录，直到 Neil Bauman 在本机生成新哈希并填写忽略文件。
+
+### 本轮完成
+
+- 哈希工具显式异步入口和统一错误处理。
+- 隐藏输入的多字符数据块、回车、退格、取消和监听清理。
+- 两项真实 CLI 子进程回归。
+- 首次失败、沙箱失败、修复、交互复测、全量门禁和漂移记录。
+
+### 未完成
+
+- 未代替 Neil Bauman 创建、读取或写入真实密码和哈希。
+- `.env.local` 的 `CATNIP_ADMIN_EMAIL` 与 `CATNIP_ADMIN_PASSWORD_HASH` 仍为空。
+- 未执行服务器部署，未建立 HTTPS 管理入口。
+
+### 下次优先任务
+
+1. Neil Bauman 本机运行 `npm run admin:hash-password` 并使用新的 12 位以上密码。
+2. Neil Bauman 将管理员邮箱和哈希写入 `.env.local`，不把真实值发到聊天或提交 Git。
+3. 重启本机开发服务，验证 `/admin/login`；之后再决定是否继续后台开发。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并重点读取本条、LOG 14:22 记录和 `docs/deployment/LOCAL_DEPLOYMENT.md` 管理员安全边界。
+
+### 关键文件
+
+- `scripts/hash-admin-password.ts`
+- `tests/hash-admin-password-script.test.ts`
+- `src/lib/auth/password.ts`
+- `src/lib/auth/config.ts`
+- `.env.example`
+- `docs/deployment/LOCAL_DEPLOYMENT.md`
+
+### 测试基线
+
+- 专项 CLI：2/2 成功。
+- 完整单元测试：50/50 成功。
+- 交互隐藏输入：非真实测试密码成功。
+- lint、typecheck、db:check、生产 build、diff check：成功。
+- PostgreSQL/S3 集成测试本轮未执行，不写成通过。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`backend-server-deployment`
+- 开发前基线：`1921bf386b9c5898e896bd5ace20bb7d6e9a841d`
+- 开工计划提交：`84b8d76`，已 push
+- 备份分支：`backup/pre-admin-hash-tool-fix-20260731-1413`
+- 最新提交：本轮功能提交后回写
+- 已 push：开工计划与备份已 push；功能提交待收尾 push
+- 工作区状态：本轮受控脚本、测试、施工文档改动，加 Claude 浏览器工具的既有独立改动
+
+### 风险提醒
+
+- 不使用聊天中出现过的旧短密码。
+- 不读取、输出或提交 `.env.local`、哈希、会话密钥或其他真实秘密。
+- Claude 浏览器工具的 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 改动不得混入本轮提交。
+- 服务器部署继续暂停；管理员登录只在本机开发入口使用。
