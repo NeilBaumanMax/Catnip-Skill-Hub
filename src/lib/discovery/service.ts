@@ -3,6 +3,7 @@ import type { DiscoveryFilters, DiscoveryInput, DiscoveryResult, RandomSource } 
 
 const MAX_QUERY_LENGTH = 100;
 const MAX_TAG_LENGTH = 80;
+const MAX_TAG_FILTERS = 8;
 
 function normalizeText(value: string): string {
   return value.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
@@ -13,8 +14,19 @@ function normalizeFilters(input: DiscoveryInput): DiscoveryFilters {
   const category = MAIN_CATEGORIES.includes(input.category as MainCategory)
     ? input.category as MainCategory
     : undefined;
-  const tag = typeof input.tag === "string" ? input.tag.normalize("NFKC").trim().slice(0, MAX_TAG_LENGTH) : "";
-  return { query, category, tag: tag || undefined };
+  const seenTags = new Set<string>();
+  const tags = (Array.isArray(input.tags) ? input.tags : [])
+    .filter((tag): tag is string => typeof tag === "string")
+    .map((tag) => tag.normalize("NFKC").trim().slice(0, MAX_TAG_LENGTH))
+    .filter(Boolean)
+    .filter((tag) => {
+      const normalized = normalizeText(tag);
+      if (seenTags.has(normalized)) return false;
+      seenTags.add(normalized);
+      return true;
+    })
+    .slice(0, MAX_TAG_FILTERS);
+  return { query, category, tags };
 }
 
 function searchText(skill: SkillResource): string {
@@ -62,20 +74,29 @@ export function discoverSkills(
   const visible = resources.filter(
     (skill) => skill.governance.publishStatus === "published" && !skill.governance.hidden,
   );
-  const filters = normalizeFilters(input);
+  const requestedFilters = normalizeFilters(input);
   const availableTags = [...new Set(visible.flatMap((skill) => skill.tags))]
     .sort((left, right) => left.localeCompare(right, "zh-CN"));
-  const hasFilters = Boolean(filters.query || filters.category || filters.tag);
+  const availableTagsByKey = new Map(availableTags.map((tag) => [normalizeText(tag), tag]));
+  const filters: DiscoveryFilters = {
+    ...requestedFilters,
+    tags: requestedFilters.tags
+      .map((tag) => availableTagsByKey.get(normalizeText(tag)))
+      .filter((tag): tag is string => Boolean(tag)),
+  };
+  const hasFilters = Boolean(filters.query || filters.category || filters.tags.length);
 
   if (!hasFilters) {
     return { items: recommendationOrder(visible, random), filters, availableTags, mode: "recommended" };
   }
 
   const query = normalizeText(filters.query);
-  const tag = filters.tag ? normalizeText(filters.tag) : undefined;
+  const tags = filters.tags.map(normalizeText);
   const items = visible
     .filter((skill) => !filters.category || skill.category === filters.category)
-    .filter((skill) => !tag || skill.tags.some((candidate) => normalizeText(candidate) === tag))
+    .filter((skill) => tags.every(
+      (tag) => skill.tags.some((candidate) => normalizeText(candidate) === tag),
+    ))
     .filter((skill) => !query || searchText(skill).includes(query))
     .sort((left, right) => left.title.localeCompare(right.title, "zh-CN"));
 

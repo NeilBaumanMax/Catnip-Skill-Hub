@@ -2,6 +2,73 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-07-31 22:44 CST / UI_fix 标签多选交接
+
+### 当前状态
+
+`UI_fix` 已完成标签多选筛选实现和全部自动门禁。局域网预览为 `http://192.168.110.9:3000`；服务器部署继续暂停。
+
+### 本轮完成
+
+- 分类单选与标签多选完成语义和视觉拆分。
+- 标签具有 Tag 图标、原生复选框、勾选反馈、已应用计数、筛选按钮和只清除标签。
+- 重复 `tag` URL、AND 过滤、去重、无效值清理和分类/关键词组合已完成。
+- 57 项测试、工程门禁、HTTP 和多视口截图最终通过。
+
+### 未完成
+
+- Neil Bauman 尚未对实际多选操作进行主观确认。
+- 历史 `globals.css` 的 51 个 Impeccable 字号漂移未在本轮扩大处理。
+- 分支未合并，服务器未部署。
+
+### 下次优先任务
+
+1. 由 Neil Bauman 在首页勾选多个标签并点击“筛选”验收。
+2. 根据明确反馈微调标签密度、文案或 AND/OR 产品语义。
+3. 视觉确认后再决定是否合并 `UI_fix`；历史 CSS 清理必须另开施工轮。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/lib/discovery/service.ts`
+- `src/lib/discovery/types.ts`
+- `tests/discovery.test.ts`
+
+### 测试基线
+
+- `npm test`：57/57 通过。
+- lint、typecheck、db:check、build、diff check：通过。
+- 多标签分类组合 HTTP：`200`，两项应用并返回 1 个匹配结果。
+- 截图：常规 12/12 加 3 张多选状态图均读图通过；不等于 Neil Bauman 已确认。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`d3c3f83f45dc47333992b1a3fcb9e0b464f80421`
+- 计划提交：`53530e6`，已 push
+- 备份分支：`backup/pre-ui-tag-filters-20260731-2226`，已 push
+- 最新实现提交：待 Git 收尾回写
+- 已 push：计划与备份已完成，实现待收尾
+- 工作区状态：本轮受控变更待提交；用户工具改动隔离保留
+
+### 风险提醒
+
+- 不得暂存 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`。
+- 不得把历史 Impeccable 检测债务包装成本轮通过或擅自全局豁免。
+- 不得恢复服务器写操作。
+
 ## 2026-07-31 22:11 CST / UI_fix 公共外壳纠偏交接
 
 ### 当前状态

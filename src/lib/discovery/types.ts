@@ -3,13 +3,13 @@ import type { MainCategory, SkillResource } from "@/lib/domain/skills";
 export interface DiscoveryInput {
   readonly query?: string;
   readonly category?: string;
-  readonly tag?: string;
+  readonly tags?: readonly string[];
 }
 
 export interface DiscoveryFilters {
   readonly query: string;
   readonly category?: MainCategory;
-  readonly tag?: string;
+  readonly tags: readonly string[];
 }
 
 export interface DiscoveryResult {

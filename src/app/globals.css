@@ -2896,7 +2896,7 @@ select:focus-visible {
 }
 
 .discovery-categories,
-.discovery-tags {
+.discovery-tag-options {
   display: flex;
   gap: 6px;
   align-items: center;
@@ -2905,12 +2905,11 @@ select:focus-visible {
 }
 
 .discovery-categories::-webkit-scrollbar,
-.discovery-tags::-webkit-scrollbar {
+.discovery-tag-options::-webkit-scrollbar {
   display: none;
 }
 
-.discovery-categories a,
-.discovery-tags a {
+.discovery-categories a {
   flex: none;
   min-height: 44px;
   display: inline-flex;
@@ -2924,35 +2923,155 @@ select:focus-visible {
   transition: background-color 160ms ease-out, color 160ms ease-out;
 }
 
-.discovery-categories a:hover,
-.discovery-tags a:hover {
+.discovery-categories a:hover {
   background: rgb(255 255 255 / 0.1);
   color: var(--gallery-ink);
 }
 
-.discovery-categories a.active,
-.discovery-tags a.active {
+.discovery-categories a.active {
   background: rgb(244 248 247 / 0.92);
   color: var(--rail-ink);
 }
 
 .discovery-tags {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  min-width: 0;
+  align-items: center;
   padding-left: 14px;
   border-left: 1px solid var(--gallery-line);
 }
 
-.discovery-tags > span {
+.discovery-tag-heading {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 6px;
+  row-gap: 0;
+  align-items: center;
   flex: none;
-  margin-right: 4px;
   color: var(--gallery-ink);
-  font-size: 0.72rem;
+  font-size: 0.6875rem;
   font-weight: 780;
+  white-space: nowrap;
 }
 
-.discovery-tags a {
+.discovery-tag-heading svg {
+  grid-row: 1 / 3;
+  color: var(--gallery-mint);
+}
+
+.discovery-tag-heading small {
+  color: var(--gallery-muted);
+  font-size: 0.625rem;
+  font-weight: 580;
+}
+
+.discovery-tag-options {
+  min-width: 0;
+}
+
+.discovery-tag-option {
+  position: relative;
+  flex: none;
+  padding-block: 4px;
+  cursor: pointer;
+}
+
+.discovery-tag-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.discovery-tag-option > span {
+  display: inline-flex;
+  min-height: 36px;
+  gap: 0;
+  align-items: center;
+  border: 1px solid var(--gallery-line);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--gallery-canvas) 55%, transparent);
+  color: var(--gallery-muted);
+  padding: 0 10px;
+  font-size: 0.6875rem;
+  font-weight: 670;
+  white-space: nowrap;
+  transition: border-color 150ms ease-out, background-color 150ms ease-out, color 150ms ease-out, transform 120ms ease-out;
+}
+
+.discovery-tag-option svg {
+  width: 13px;
+  margin-right: 6px;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+.discovery-tag-option:hover > span {
+  border-color: color-mix(in srgb, var(--gallery-ink) 30%, transparent);
+  color: var(--gallery-ink);
+}
+
+.discovery-tag-option input:checked + span {
+  border-color: color-mix(in srgb, var(--gallery-mint) 58%, transparent);
+  background: color-mix(in srgb, var(--gallery-mint) 14%, transparent);
+  color: var(--gallery-ink);
+}
+
+.discovery-tag-option input:checked + span svg {
+  opacity: 1;
+}
+
+.discovery-tag-option input:focus-visible + span {
+  outline: 2px solid var(--gallery-mint);
+  outline-offset: 2px;
+}
+
+.discovery-tag-option:active > span {
+  transform: scale(0.98);
+}
+
+.discovery-tag-actions {
+  display: flex;
+  flex: none;
+  gap: 10px;
+  align-items: center;
+}
+
+.discovery-tag-actions button {
   min-height: 44px;
-  padding-inline: 10px;
-  font-size: 0.72rem;
+  border: 1px solid var(--gallery-line);
+  border-radius: 9px;
+  background: var(--gallery-ink);
+  color: var(--rail-ink);
+  padding: 0 10px;
+  font: inherit;
+  font-size: 0.6875rem;
+  font-weight: 780;
+  cursor: pointer;
+}
+
+.discovery-tag-actions button:hover,
+.discovery-tag-actions button:focus-visible {
+  background: var(--gallery-mint);
+}
+
+.discovery-tag-actions button:active {
+  transform: scale(0.98);
+}
+
+.discovery-tag-actions a {
+  color: var(--gallery-muted);
+  font-size: 0.6875rem;
+  font-weight: 680;
+  white-space: nowrap;
+}
+
+.discovery-tag-actions a:hover,
+.discovery-tag-actions a:focus-visible {
+  color: var(--gallery-ink);
 }
 
 .discovery-content {
@@ -3353,6 +3472,10 @@ select:focus-visible {
     padding-left: 0;
     border-top: 1px solid var(--gallery-line);
     border-left: 0;
+  }
+
+  .discovery-tag-heading {
+    padding-left: 2px;
   }
 
   #categories,

@@ -41,6 +41,16 @@ typography:
     fontSize: "0.8125rem"
     fontWeight: 700
     lineHeight: 1.2
+  micro:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 680
+    lineHeight: 1.2
+  caption:
+    fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif"
+    fontSize: "0.625rem"
+    fontWeight: 580
+    lineHeight: 1.2
   code:
     fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
     fontSize: "0.875rem"
@@ -198,6 +208,7 @@ Neil Bauman 明确认可上一轮的 Catnip 大字标、中央任务搜索台、
 
 - **Style:** 未选中为玻璃工具层上的高对比文本。
 - **State:** 选中为近白实底与深蓝文字；类别名称必须与固定五分类一致。
+- **Filter distinction:** 主分类使用 44px 全圆角单选胶囊；自由标签使用 36px、9px 圆角的边线复选面，并由 4px 外部垂直留白形成 44px 点击区域。标签字号只使用 Micro 11px，辅助计数只使用 Caption 10px。
 
 ### Cards / Containers
 

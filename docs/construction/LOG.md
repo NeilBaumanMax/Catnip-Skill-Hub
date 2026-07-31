@@ -1,5 +1,109 @@
 # 施工日志
 
+## 2026-07-31 22:44 CST / UI Fix Tag Filters / 标签多选施工
+
+### 本轮计划回放
+
+先提交并 push 开工计划，建立远端开发前备份，再将标签从第二排分类改为可多选复合筛选；最后完成失败循环、工程门禁、真实多标签 HTTP、自动截图、设计审计和文档漂移修正。
+
+### 实际修改
+
+- 首页标签区从导航链接改为原生 GET 复选表单，增加 Phosphor Tag 与 Check 图标。
+- 分类保持单选胶囊；标签采用 36px 方圆边线面、44px 点击区域、薄荷选中边线和明确筛选按钮。
+- 已应用数量和“清除标签”只影响标签；全局“清除条件”继续清除全部筛选。
+- `DiscoveryInput/Filters` 从单个 `tag` 改为 `tags` 数组，规范化、去重、限制八项、丢弃不存在标签并使用 AND 过滤。
+- URL 使用重复 `tag` 参数，分类切换保留标签；场景快捷入口进入相同协议。
+- `DESIGN.md` 增加 Micro/Caption 字号令牌和分类/标签区分契约。
+
+### 修改文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/lib/discovery/types.ts`
+- `src/lib/discovery/service.ts`
+- `tests/discovery.test.ts`
+- `DESIGN.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 修改前截图首次因受管沙箱禁止 tsx IPC pipe 失败；获准环境重新执行后完成基线截图。
+- 修改后常规截图 12/12；桌面与手机已选两项截图、桌面可见勾选截图均成功并读图通过。
+- 多标签与分类组合 URL 返回 `200`，页面显示“已应用 2 项”“清除标签”和 1 个 `project-brief` 匹配结果。
+- dev server 重启命令返回 `EADDRINUSE`，只读检查确认原 PID 57274 仍在监听；受限 curl 失败后在获准环境访问成功。这是环境/重复启动检查，不是应用失败。
+
+### 测试日志
+
+- 第一轮 `npm test`：57/57 通过。
+- 第一轮 `npm run lint`：通过。
+- 第一轮 `npm run db:check`：通过。
+- 第一轮 `git diff --check`：通过。
+- 第一轮 `npm run typecheck`：失败，TS2561；旧场景入口仍传 `tag`。
+- 修复：改为 `tags: [tag]`；typecheck 单项复测通过。
+- 最终 `npm test`：57/57 通过。
+- 最终 `npm run lint`、`npm run typecheck`、`npm run db:check`、`git diff --check`：通过。
+- 最终 `npm run build`：通过，Next.js 编译、TypeScript 和 9 个静态页面生成完成。
+- 构建覆盖 `next-env.d.ts` 后已恢复既有用户 dev routes 改动并继续隔离。
+
+### 测试指标判断
+
+多标签领域逻辑、静态质量、数据库 schema、生产构建、HTTP、可访问复选控件和多视口视觉门禁最终通过。中间 typecheck 失败已保留并完成修复复测。
+
+### 文档漂移检查
+
+- `PRODUCT_REQUIREMENTS.md` 已补充分类单选、标签多选和 AND 语义。
+- `DESIGN.md` 已补充标签专用字号、形状和点击区域；新样式不再使用未记录的字号/颜色或布局属性动画。
+- `CODEX_MASTER_REQUIREMENTS.md` 当前任务已指向标签多选验收。
+- Impeccable 静态检测不再报告本轮新增标签块；仍报告全局历史 CSS 的 51 个字号漂移。它们不由本轮产生，且大范围改写会扩大视觉风险，因此保留为后续独立清理风险，未静默忽略或配置豁免。
+- 管理员、品牌、仓库、Remote、安装范围与服务器暂停状态无漂移；用户工具改动未覆盖或暂存。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开工前基线：`d3c3f83f45dc47333992b1a3fcb9e0b464f80421`。
+- 计划提交：`53530e6`，已 push。
+- 备份分支：`backup/pre-ui-tag-filters-20260731-2226`，已 push。
+- 实现提交与当前分支 push：待 Git 收尾后回写。
+- main 与服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 推荐回滚：`git revert <标签筛选实现提交>`。
+- 回滚后复测：`npm test`、lint、typecheck、db:check、build、HTTP 和截图。
+
+### 当前风险
+
+- 自动视觉验收不等于 Neil Bauman 已确认交互和视觉方向。
+- 全局历史 CSS 仍有 Impeccable 字号令牌债务，应独立施工，不能混入本轮。
+- 浏览器截图工具既有用户改动仍在工作区，必须继续隔离。
+
+### 下一步
+
+保持局域网预览，等待 Neil Bauman 实际勾选多个标签并验收；未获新指令前不扩展后端或服务器。
+
+## 2026-07-31 22:34 CST / UI Fix Tag Filters / 中间测试失败
+
+### 失败命令
+
+- `npm run typecheck`
+
+### 失败摘要
+
+- `src/app/page.tsx:148` 的场景快捷入口仍向 `discoveryHref` 传递旧字段 `tag`；多标签接口已经改为 `tags`，TypeScript 返回 TS2561。
+- 同轮 `npm test` 57/57、`npm run lint`、`npm run db:check` 和 `git diff --check` 均通过。
+
+### 修复与复测计划
+
+- 将快捷入口改为 `tags: [tag]`，保持点击单个场景标签的既有行为，并进入新的重复参数协议。
+- 重新执行 typecheck；通过后再执行全量门禁与截图，不覆盖本次失败记录。
+
 ## 2026-07-31 22:11 CST / Public Web UI Fix / 公共外壳纠偏
 
 ### 本轮计划回放

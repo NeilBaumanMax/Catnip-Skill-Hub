@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Check, Tag } from "@phosphor-icons/react/dist/ssr";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
 import { analyticsService } from "@/lib/analytics";
@@ -16,11 +17,15 @@ function first(value: string | string[] | undefined): string {
   return Array.isArray(value) ? value[0] ?? "" : value ?? "";
 }
 
-function discoveryHref(filters: { query?: string; category?: string; tag?: string }): string {
+function all(value: string | string[] | undefined): string[] {
+  return Array.isArray(value) ? value : value ? [value] : [];
+}
+
+function discoveryHref(filters: { query?: string; category?: string; tags?: readonly string[] }): string {
   const params = new URLSearchParams();
   if (filters.query) params.set("q", filters.query);
   if (filters.category) params.set("category", filters.category);
-  if (filters.tag) params.set("tag", filters.tag);
+  filters.tags?.forEach((tag) => params.append("tag", tag));
   const query = params.toString();
   return query ? `/?${query}#skill-grid` : "/#skill-grid";
 }
@@ -31,7 +36,7 @@ export default async function Home({ searchParams }: HomeProps) {
   const discovery = discoverSkills({
     query: first(params.q),
     category: first(params.category),
-    tag: first(params.tag),
+    tags: all(params.tag),
   }, Math.random, resources);
   const stats = await analyticsService.getMany(discovery.items.map((skill) => skill.slug));
 
@@ -50,7 +55,7 @@ export default async function Home({ searchParams }: HomeProps) {
               <Link
                 aria-current={discovery.filters.category ? undefined : "page"}
                 className={discovery.filters.category ? "" : "active"}
-                href={discoveryHref({ query: discovery.filters.query, tag: discovery.filters.tag })}
+                href={discoveryHref({ query: discovery.filters.query, tags: discovery.filters.tags })}
               >
                 全部
               </Link>
@@ -61,7 +66,7 @@ export default async function Home({ searchParams }: HomeProps) {
                   href={discoveryHref({
                     query: discovery.filters.query,
                     category: discovery.filters.category === category ? undefined : category,
-                    tag: discovery.filters.tag,
+                    tags: discovery.filters.tags,
                   })}
                   key={category}
                 >
@@ -70,23 +75,44 @@ export default async function Home({ searchParams }: HomeProps) {
               ))}
             </nav>
 
-            <nav className="discovery-tags" aria-label="Skill 标签">
-              <span>热门标签</span>
-              {discovery.availableTags.map((tag) => (
-                <Link
-                  aria-current={discovery.filters.tag === tag ? "page" : undefined}
-                  className={discovery.filters.tag === tag ? "active" : ""}
-                  href={discoveryHref({
+            <form className="discovery-tags" aria-label="Skill 标签筛选" action="/#skill-grid" method="get">
+              {discovery.filters.query ? <input name="q" type="hidden" value={discovery.filters.query} /> : null}
+              {discovery.filters.category ? (
+                <input name="category" type="hidden" value={discovery.filters.category} />
+              ) : null}
+              <div className="discovery-tag-heading">
+                <Tag aria-hidden="true" size={17} weight="regular" />
+                <span>标签筛选</span>
+                <small>
+                  {discovery.filters.tags.length ? `已应用 ${discovery.filters.tags.length} 项` : "可多选"}
+                </small>
+              </div>
+              <div className="discovery-tag-options">
+                {discovery.availableTags.map((tag) => {
+                  const selected = discovery.filters.tags.includes(tag);
+                  return (
+                    <label className="discovery-tag-option" key={tag}>
+                      <input defaultChecked={selected} name="tag" type="checkbox" value={tag} />
+                      <span>
+                        <Check aria-hidden="true" size={13} weight="bold" />
+                        {tag}
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              <div className="discovery-tag-actions">
+                <button type="submit">筛选</button>
+                {discovery.filters.tags.length ? (
+                  <Link href={discoveryHref({
                     query: discovery.filters.query,
                     category: discovery.filters.category,
-                    tag: discovery.filters.tag === tag ? undefined : tag,
-                  })}
-                  key={tag}
-                >
-                  {tag}
-                </Link>
-              ))}
-            </nav>
+                  })}>
+                    清除标签
+                  </Link>
+                ) : null}
+              </div>
+            </form>
       </PublicHeader>
 
         <main className="discovery-content">
@@ -119,7 +145,7 @@ export default async function Home({ searchParams }: HomeProps) {
               </form>
               <nav className="scene-shortcuts" aria-label="常用场景">
                 {discovery.availableTags.slice(0, 6).map((tag) => (
-                  <Link href={discoveryHref({ tag })} key={tag}>{tag}</Link>
+                  <Link href={discoveryHref({ tags: [tag] })} key={tag}>{tag}</Link>
                 ))}
               </nav>
             </div>
