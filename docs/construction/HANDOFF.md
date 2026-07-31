@@ -1799,3 +1799,38 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - `backend-server-deployment` 功能提交 `c15b5bf5379e19d7369b688302838e1f01ddfe3f` 已 push。
 - 本次文档回写提交之后，网站分支应与 origin 分歧 `0 0`。
 - 工作区应只剩 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts` 和 `skills-lock.json` 等 Claude 浏览器工具既有改动；不得把它们解释成本轮未完成文件。
+
+## 2026-07-31 19:32 CST / 局域网运行态交接
+
+### 当前状态
+
+本地开发预览正在 `http://192.168.110.9:3000` 运行，同一局域网设备可直接访问；Release 下载配置已由新进程加载。
+
+### 本轮完成
+
+- 旧回环 dev server 已优雅停止。
+- 新 dev server 只绑定当前私网地址；首页、详情、307 下载和 12 张截图均通过。
+
+### 未完成
+
+- 其余 9 个内容主库资源尚未录入网站公开目录。
+- 没有服务器部署、域名或生产 HTTPS。
+
+### 下次优先任务
+
+收到 Neil Bauman 继续指令后，先规划其余 9 个资源的字段映射、封面来源和公开状态，再建立开发前备份并施工。
+
+### 测试基线
+
+代码门禁沿用上一轮 56/56 unit、lint、typecheck、db:check 和 production build；本轮新增首页 200、详情 200、下载 307 和截图 12/12。
+
+### GitHub 状态
+
+- 当前分支：`backend-server-deployment`
+- 当前代码：`2cdca4edfbd58be5b1fb678fe5add9de2419b11e`，已 push
+- 运行日志：提交后 push
+- 工作区：除本次追加文档外，仍仅有 Claude 浏览器工具既有改动
+
+### 风险提醒
+
+`192.168.110.9` 可能漂移；开发服务器不适合公网暴露。不要把局域网预览写成服务器部署完成。

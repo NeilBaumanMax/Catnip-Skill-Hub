@@ -2464,3 +2464,47 @@ Phase 3 Release 下载扩展门禁已达到。远端 ZIP 二进制未在当前�
 - 开发前备份 `backup/pre-release-download-integration-20260731-1826` 已 push，指向 `42868b2ec1ddd981ffd07edd6e8998aeb305b9bc`。
 - 本地受控改动已提交；工作区只保留本轮开始前已有的 Claude 浏览器工具改动。
 - 当前无需回滚；若需撤销功能提交，使用 `git revert c15b5bf5379e19d7369b688302838e1f01ddfe3f`，随后执行完整 Phase 3 门禁。
+
+## 2026-07-31 19:32 CST / Phase 3 / 本地运行态与局域网预览
+
+### 本轮计划回放
+
+只重启本轮前已存在的 dev server 并验证已提交代码，不继续批量录入资源，不触碰服务器或既有用户改动。
+
+### 实际修改
+
+- 源码修改：无。
+- 运行态：停止旧进程树 `npm -> next dev -H 127.0.0.1 -p 3000`；新进程绑定当前单一局域网地址 `192.168.110.9:3000`。
+
+### 验证结果
+
+- `GET /`：200。
+- `GET /skills/project-brief`：200。
+- `GET /api/skills/project-brief/download`：307，Location 精确指向内容主库 `v0.1.0/project-brief-0.1.0.zip`，并包含 `private, no-store` 与 `nosniff`。
+- `lsof`：端口 3000 仅监听 `192.168.110.9`，当前 Next.js PID 为 `57274`。
+- `SCREENSHOT_URL=http://192.168.110.9:3000 npx tsx scripts/screenshots.ts`：12/12 成功。
+- 读图：桌面首页、移动首页和桌面详情页无布局断裂；截图验收通过（自动验收，不等同 Neil Bauman 已确认）。
+
+### 测试指标判断
+
+本轮没有代码或依赖变化，因此不重复声称新一轮 unit/lint/build；上一轮 56/56、lint、typecheck、db:check 和 build 基线保持有效。本轮新增运行态 HTTP 与截图验证均通过。
+
+### 文档漂移检查
+
+局域网地址由旧截图脚本默认值 `192.168.0.109` 漂移为 `192.168.110.9`；本轮通过环境变量覆盖，没有修改用户提供的脚本。服务器暂停、单一私网地址和无真实凭据边界保持一致。
+
+### GitHub 状态
+
+运行代码仍为 `2cdca4edfbd58be5b1fb678fe5add9de2419b11e`；本条运行日志提交后 push。沿用 `backup/pre-release-download-integration-20260731-1826`，因为本轮没有源代码施工。
+
+### 回滚判断
+
+无需 Git 回滚。运行态回滚方式是停止当前 dev server，并按需要重新绑定 `127.0.0.1`；不影响已 push 的代码或 Release。
+
+### 当前风险
+
+局域网 IP 可能在网络切换或 DHCP 续租后再次变化；地址变化时必须重新绑定。开发服务仅适合可信局域网预览，不等同生产部署。
+
+### 下一步
+
+停下并向 Neil Bauman 汇报。收到继续指令后，为其余 9 个内容资源的网站录入单独建立计划和备份。
