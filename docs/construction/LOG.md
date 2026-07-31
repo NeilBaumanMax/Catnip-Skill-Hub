@@ -2359,3 +2359,12 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 
 - 在新主库建立独立施工文档和 Skill 目录/版本规范。
 - 再设计 GitHub Actions 校验、Release ZIP 和网站固定 Commit/Release 下载适配。
+
+## 2026-07-31 17:12 CST / 独立 Skill 主库 Bootstrap 最终 Git 回写
+
+- 网站收尾提交：`df77733b2b6314c81b6adb95259c9b402aa0c520`（`docs: record Skill library bootstrap`），已 push。
+- 网站 `backend-server-deployment` 与远端分歧：`0 0`。
+- 网站开工计划与备份：`61892cc`；`backup/pre-skill-library-bootstrap-20260731-1658` 已 push。
+- 新主库 main 与备份均指向 `83a92ebd2d3a064005067552a8f5cbc393357e87`，已通过远端引用核验。
+- 网站工作区只保留本轮开始前已有的 Claude 浏览器工具改动；本轮施工文档已全部提交。
+- 当前无需回滚；下一轮不得跳过新主库自身施工文档直接批量导入 Skill。

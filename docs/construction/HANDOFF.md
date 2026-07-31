@@ -1730,3 +1730,12 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - SSH 写入依赖 `NeilBaumanMax` 协作者权限。
 - 两个仓库的 origin 不得互换，不得将网站历史推入内容主库。
 - 服务器部署继续暂停；新主库建立不等于网站已上线或下载链路已切换。
+
+## 2026-07-31 17:12 CST / 独立 Skill 主库最终 Git 状态
+
+- 网站收尾提交：`df77733b2b6314c81b6adb95259c9b402aa0c520`，已 push；本地与远端分歧 `0 0`。
+- 网站开发前备份：`backup/pre-skill-library-bootstrap-20260731-1658`，已 push。
+- 新主库 main：`83a92ebd2d3a064005067552a8f5cbc393357e87`，已 push。
+- 新主库开发前备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push。
+- 新主库本地目录：`/Users/neil/Documents/Project/Catnip-skill-hub-main`；当前 main、工作区干净、与 origin/main 分歧 `0 0`。
+- 下一轮从新主库文档和目录规范开始，不直接实施网站下载切换。
