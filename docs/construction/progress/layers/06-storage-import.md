@@ -68,3 +68,22 @@
 - SSH push 成功，远端 main、HEAD、origin 和本地副本一致。
 - 网站代码仓库 origin、分支和已有用户改动不受影响。
 - 无密钥、Token、密码、`.env` 或生成文件进入新仓库。
+
+## 2026-07-31 17:08 CST / Phase 5 运维扩展 / 独立 Skill 主库完成记录
+
+### 实际完成
+
+- 新仓库以独立根提交 `83a92ebd2d3a064005067552a8f5cbc393357e87` 建立 README 与安全忽略规则。
+- `main` 已通过 SSH push，持久本地副本位于 `/Users/neil/Documents/Project/Catnip-skill-hub-main`。
+- 开发前备份 `backup/pre-skill-library-foundation-20260731-1707` 已成功 push，当前分支恢复为 `main`。
+
+### 验收结果
+
+- `origin` 严格为 `git@github.com:neilbauman666/Catnip-skill-hub-main.git`。
+- 本地与 `origin/main` 分歧 `0 0`，工作区干净；远端 main 与备份均存在。
+- 网站代码仓库 Remote 和历史没有改变，网站用户工具改动没有被纳入新仓库。
+- 本轮没有建立或声称已建立 Skill 目录、CI、Release、导入或下载集成。
+
+### 下一状态
+
+新主库连接与回滚基线已就绪。下一轮先设计仓库施工文档、目录和版本发布规范，未经新开工计划不得批量导入 Skill。

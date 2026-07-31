@@ -1675,3 +1675,31 @@ Neil Bauman 可重新运行 `npm run admin:hash-password`，在本机输入新�
 - 网站仓库只增加施工记录；如需撤回，优先 `git revert <本轮文档提交>`。
 - 新主库 Bootstrap 是空仓库首个提交；不使用 force push 或删除历史。若身份信息需修正，使用后续普通提交。
 - 不删除新仓库、远端分支或协作者权限；不执行 reset、clean、restore。
+
+## 2026-07-31 17:08 CST / Phase 5 运维扩展 / 独立 Skill 主库 Bootstrap 完成
+
+### 完成事项
+
+- 通过 `NeilBaumanMax` 协作者 SSH 身份成功写入 `neilbauman666/Catnip-skill-hub-main`。
+- 空仓库仅以 README 和 `.gitignore` 建立独立根提交，没有复制网站代码或 Git 历史。
+- 新主库默认分支为 `main`，已成功 push 并跟踪 `origin/main`。
+- 持久本地副本建立在 `/Users/neil/Documents/Project/Catnip-skill-hub-main`，仓库级提交身份为 Neil 已明确提供的 `Neil·Baumann <2091760192@qq.com>`。
+- 新主库开发前备份 `backup/pre-skill-library-foundation-20260731-1707` 已成功 push，随后切回 `main`。
+
+### 验证状态
+
+- 新主库根提交：`83a92ebd2d3a064005067552a8f5cbc393357e87`。
+- 持久副本 main、origin/HEAD、origin/main 和 HEAD 一致；本地与远端分歧 `0 0`，工作区干净。
+- 新主库 SSH Remote 为 `git@github.com:neilbauman666/Catnip-skill-hub-main.git`。
+- 网站代码仓库 origin 仍为 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`，网站工作区既有 Claude 浏览器工具改动未改变。
+- 本轮只修改 Git/文档，没有运行或虚报 npm 工程测试。
+
+### 文档漂移结论
+
+- `NeilBaumanMax/Catnip-Skill-Hub` 继续是网站代码与施工控制仓库；新仓库是独立 Skill 内容来源，二者不替换、不共享历史。
+- 本轮尚未确定完整目录规范、manifest、CI、Release ZIP 或网站下载适配，因此未提前写入架构完成状态。
+- 管理员仍为 Neil Bauman，品牌仍为 Catnip 薄荷猫；没有密钥、Token、密码或 `.env` 进入新仓库。
+
+### 下一状态
+
+停在新主库安全 Bootstrap 基线。下一轮应先为新仓库建立可接力施工文档、Skill 目录规范和发布/回滚规则，完成闭环后再设计 GitHub Release 与网站下载层集成。

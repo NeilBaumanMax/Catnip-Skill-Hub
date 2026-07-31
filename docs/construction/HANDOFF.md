@@ -1663,3 +1663,70 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 开发前备份：`backup/pre-admin-hash-tool-fix-20260731-1413`，已 push，指向开工计划提交 `84b8d763c217476a0ef547b66842cd6ad87f4b1c`。
 - 工作区仅保留本轮开始前已有的 Claude 浏览器工具改动；管理员哈希工具修复文件已全部提交。
 - 下一步仍是 Neil Bauman 在本机重新运行哈希命令并自行配置忽略文件，不要把密码或哈希发到聊天。
+
+## 2026-07-31 17:08 CST / 独立 Skill 主库 Bootstrap 交接
+
+### 当前状态
+
+`neilbauman666/Catnip-skill-hub-main` 已作为独立 Skill 内容主库完成 SSH、最小 main 基线、持久本地克隆和远端备份。网站代码仓库与内容仓库仍为两个完全独立的 Git 历史。
+
+### 本轮完成
+
+- `NeilBaumanMax` 协作者写权限验证。
+- 新主库空仓库最小 README/ignore Bootstrap。
+- main 首次 push 和 origin 跟踪。
+- 持久本地副本与仓库级提交身份。
+- 新主库开发前远端备份。
+- 网站仓库施工计划、备份、日志和接力记录。
+
+### 未完成
+
+- 新主库尚无 AGENTS、施工规范、正式 Skill 目录和 manifest。
+- 尚无 GitHub Actions 安全校验、Release ZIP 或版本发布流程。
+- 网站下载服务尚未读取新主库或 GitHub Release。
+- 尚未导入任何正式 Skill。
+
+### 下次优先任务
+
+1. 在新主库建立可接力施工文档和目录/来源/License/Commit 规范。
+2. 设计单项 Skill、原生包和编辑包的仓库布局及不可变版本策略。
+3. 完成文档闭环后，再实现 CI 校验和 GitHub Release ZIP；不要直接批量搬运资源。
+
+### 必读文档
+
+- 网站仓库 AGENTS 十项顺序。
+- 本条交接与 LOG 17:08 记录。
+- `docs/product/PRODUCT_REQUIREMENTS.md` 的 Skill、ZIP、来源和 License 规则。
+- `docs/construction/LAYER_CONTRACT.md` 的下载、存储和 GitHub 导入边界。
+
+### 关键路径
+
+- 网站仓库：`/Users/neil/Documents/Project/Catnip-Skill-Hub`
+- 新 Skill 主库：`/Users/neil/Documents/Project/Catnip-skill-hub-main`
+
+### 测试基线
+
+- 新主库 diff check、branch、status、remote、identity、HEAD、log、远端分歧：成功。
+- main push 与备份 push：成功。
+- 本轮没有应用代码变化，未执行也未写成 unit、lint、typecheck 或 build 通过。
+
+### GitHub 状态
+
+- 网站仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- 网站 Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 网站当前分支：`backend-server-deployment`
+- 网站开工计划：`61892cc`，已 push
+- 网站备份：`backup/pre-skill-library-bootstrap-20260731-1658`，已 push
+- 新主库：`neilbauman666/Catnip-skill-hub-main`
+- 新主库 Remote：`git@github.com:neilbauman666/Catnip-skill-hub-main.git`
+- 新主库 main：`83a92ebd2d3a064005067552a8f5cbc393357e87`，已 push
+- 新主库备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push
+- 新主库工作区：干净，main 与 origin/main 分歧 `0 0`
+- 网站最终收尾提交：本轮收尾后回写
+
+### 风险提醒
+
+- 新主库当前仅为安全 Git 基线，不能写成完整内容平台。
+- SSH 写入依赖 `NeilBaumanMax` 协作者权限。
+- 两个仓库的 origin 不得互换，不得将网站历史推入内容主库。
+- 服务器部署继续暂停；新主库建立不等于网站已上线或下载链路已切换。

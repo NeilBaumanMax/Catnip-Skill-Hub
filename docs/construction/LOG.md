@@ -2266,3 +2266,96 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 备份分支：`backup/pre-admin-hash-tool-fix-20260731-1413`，远端核验指向 `84b8d763c217476a0ef547b66842cd6ad87f4b1c`。
 - 工作区剩余 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 均为本轮开始前已有的 Claude 浏览器工具改动；未暂存、未覆盖、未提交。
 - 当前无需回滚；如需撤回功能，使用 `git revert 9c6deb23ccc05dceb518bad84accd6fd407d57db`，再复测专项 CLI、unit、lint、typecheck、db:check 和 build。
+
+## 2026-07-31 17:08 CST / Phase 5 运维扩展 / 独立 Skill 主库 Bootstrap
+
+### 本轮计划回放
+
+- 保持网站代码仓库 origin 不变。
+- 验证新账号仓库的 SSH 协作者权限。
+- 对空仓库创建独立最小 Bootstrap、持久本地副本和开发前备份。
+- 不提前实现 Skill 目录、CI、Release 或网站下载集成。
+
+### 权限检查与中间失败
+
+1. 授权前 `git push --dry-run` 被 GitHub 拒绝，明确显示新仓库没有授予 `NeilBaumanMax` 写权限；未产生远端写入。
+2. Neil Bauman 完成协作者授权后，相同 dry-run 成功；远端仍为空。
+3. 一次并行只读核验长时间无输出后被主动终止；未执行写操作。
+4. 随后的首次逐项核验因自动权限审批超时未启动；按规则重试一次后成功。
+
+### 实际修改
+
+- 网站仓库追加开工、进度、日志和交接记录，并建立远端备份。
+- 在受控临时克隆中创建新主库 README 与 `.gitignore`。
+- 使用仓库级提交身份 `Neil·Baumann <2091760192@qq.com>` 创建独立根提交并 push `main`。
+- 从远端克隆持久本地副本到 `/Users/neil/Documents/Project/Catnip-skill-hub-main`。
+- 创建并 push 新主库备份 `backup/pre-skill-library-foundation-20260731-1707`，随后切回 main。
+
+### 修改文件
+
+网站仓库：
+
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/progress/layers/06-storage-import.md`
+- `docs/construction/HANDOFF.md`
+
+新 Skill 主库：
+
+- `README.md`
+- `.gitignore`
+
+### 验证结果
+
+- SSH 实际账号：`NeilBaumanMax`，作为 `neilbauman666` 仓库协作者写入成功。
+- 新主库 Remote：`git@github.com:neilbauman666/Catnip-skill-hub-main.git`。
+- 新主库根提交：`83a92ebd2d3a064005067552a8f5cbc393357e87`，已 push 到 main。
+- 持久副本 HEAD、origin/main 与 origin/HEAD 一致；分歧 `0 0`，工作区干净。
+- 新主库备份分支已 push。
+- 网站 origin、分支和既有用户改动保持不变。
+
+### 测试日志
+
+- Bootstrap 文件 `git diff --check`：成功。
+- 新主库 branch、status、remote、identity、HEAD、log、远端分歧：成功。
+- 新主库 main push 与备份 push：成功。
+- 网站仓库 diff check 与 Remote 核对：收尾提交前执行。
+- 本轮没有应用代码变化，因此未执行也未虚报 unit、lint、typecheck 或 build。
+
+### 测试指标判断
+
+- GitHub 连接、空仓库 Bootstrap、独立历史、持久克隆与远端回滚点满足本轮范围。
+- 本轮没有建立 Skill 发布能力，不能写成 GitHub Release、下载服务或导入链路已完成。
+
+### 文档漂移检查
+
+- 网站代码仓库与 Skill 内容仓库职责明确分离；原固定网站 origin 未改变。
+- 新主库负责人为 Neil Bauman，品牌为 Catnip 薄荷猫；没有使用 Kyle。
+- 新主库没有真实凭据、环境文件、网站代码、构建产物或依赖目录。
+- 服务器部署继续暂停；本轮未连接或修改目标服务器。
+
+### GitHub 状态
+
+- 网站开工计划提交：`61892cc`，已 push。
+- 网站开发前备份：`backup/pre-skill-library-bootstrap-20260731-1658`，已 push。
+- 新主库 main：`83a92ebd2d3a064005067552a8f5cbc393357e87`，已 push。
+- 新主库备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push。
+- 网站收尾提交与 push：待 Git 收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 网站文档如需撤回，使用 `git revert <本轮网站文档提交>`。
+- 新主库首提交不重写；后续如需调整 README/ignore，使用普通提交或 `git revert <后续错误提交>`。
+- 禁止 force push、reset、clean、restore 或删除远端仓库。
+
+### 当前风险
+
+- 新主库尚无自身 AGENTS、施工文档、目录规范、发布验证和版本策略；不能直接开始批量收录。
+- 当前写权限依赖 `NeilBaumanMax` 协作者授权；若权限被移除，本机 SSH 将失去写入能力。
+- 网站下载层仍只读取网站仓库本地 `content/skills`，尚未接入新主库。
+
+### 下一步
+
+- 在新主库建立独立施工文档和 Skill 目录/版本规范。
+- 再设计 GitHub Actions 校验、Release ZIP 和网站固定 Commit/Release 下载适配。
