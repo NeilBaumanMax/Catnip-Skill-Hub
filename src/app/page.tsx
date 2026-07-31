@@ -45,7 +45,49 @@ export default async function Home({ searchParams }: HomeProps) {
         FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
       */}
       <span className="navigation-sentinel" id="page-top" aria-hidden="true" />
-      <PublicHeader query={discovery.filters.query} />
+      <PublicHeader query={discovery.filters.query}>
+            <nav className="discovery-categories" aria-label="Skill 主分类">
+              <Link
+                aria-current={discovery.filters.category ? undefined : "page"}
+                className={discovery.filters.category ? "" : "active"}
+                href={discoveryHref({ query: discovery.filters.query, tag: discovery.filters.tag })}
+              >
+                全部
+              </Link>
+              {MAIN_CATEGORIES.map((category) => (
+                <Link
+                  aria-current={discovery.filters.category === category ? "page" : undefined}
+                  className={discovery.filters.category === category ? "active" : ""}
+                  href={discoveryHref({
+                    query: discovery.filters.query,
+                    category: discovery.filters.category === category ? undefined : category,
+                    tag: discovery.filters.tag,
+                  })}
+                  key={category}
+                >
+                  {category}
+                </Link>
+              ))}
+            </nav>
+
+            <nav className="discovery-tags" aria-label="Skill 标签">
+              <span>热门标签</span>
+              {discovery.availableTags.map((tag) => (
+                <Link
+                  aria-current={discovery.filters.tag === tag ? "page" : undefined}
+                  className={discovery.filters.tag === tag ? "active" : ""}
+                  href={discoveryHref({
+                    query: discovery.filters.query,
+                    category: discovery.filters.category,
+                    tag: discovery.filters.tag === tag ? undefined : tag,
+                  })}
+                  key={tag}
+                >
+                  {tag}
+                </Link>
+              ))}
+            </nav>
+      </PublicHeader>
 
         <main className="discovery-content">
           <section className="search-stage" id="search-stage" aria-labelledby="page-title">
@@ -83,50 +125,6 @@ export default async function Home({ searchParams }: HomeProps) {
             </div>
 
             <EcosystemMarquee />
-          </section>
-
-          <section className="discovery-filter-panel" id="categories" aria-label="Skill 分类与标签">
-            <nav className="discovery-categories" aria-label="Skill 主分类">
-              <Link
-                aria-current={discovery.filters.category ? undefined : "page"}
-                className={discovery.filters.category ? "" : "active"}
-                href={discoveryHref({ query: discovery.filters.query, tag: discovery.filters.tag })}
-              >
-                全部
-              </Link>
-              {MAIN_CATEGORIES.map((category) => (
-                <Link
-                  aria-current={discovery.filters.category === category ? "page" : undefined}
-                  className={discovery.filters.category === category ? "active" : ""}
-                  href={discoveryHref({
-                    query: discovery.filters.query,
-                    category: discovery.filters.category === category ? undefined : category,
-                    tag: discovery.filters.tag,
-                  })}
-                  key={category}
-                >
-                  {category}
-                </Link>
-              ))}
-            </nav>
-
-            <nav className="discovery-tags" id="popular-tags" aria-label="Skill 标签">
-              <span>热门标签</span>
-              {discovery.availableTags.map((tag) => (
-                <Link
-                  aria-current={discovery.filters.tag === tag ? "page" : undefined}
-                  className={discovery.filters.tag === tag ? "active" : ""}
-                  href={discoveryHref({
-                    query: discovery.filters.query,
-                    category: discovery.filters.category,
-                    tag: discovery.filters.tag === tag ? undefined : tag,
-                  })}
-                  key={tag}
-                >
-                  {tag}
-                </Link>
-              ))}
-            </nav>
           </section>
 
           <section className="discovery-intro" aria-labelledby="page-title">

@@ -2,6 +2,28 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-07-31 22:11 CST / UI Fix Correction / 完成记录
+
+### 完成状态
+
+- 仅保留 Neil Bauman 认可的 Catnip 大字标、中央任务搜索台、场景标签和彩色生态带。
+- 恢复蓝调山景、64px 左侧图标栏、滚动自适应毛玻璃顶栏、顶部分类/标签、毛玻璃 Skill 内容流以及详情/推荐公共外壳。
+- 本轮未修改后端、管理功能、数据库、下载服务、安装服务或服务器。
+
+### 验证摘要
+
+- 修改前与修改后截图均为 3 页面 x 4 视口；最终 12/12 生成并逐张读图通过。
+- `npm test`：56/56 通过；`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check` 均通过。
+- HTTP 首页、详情、推荐均为 `200`；正确下载接口为 `307` 到固定 GitHub Release。
+- 自动截图通过只表示工程视觉门禁通过，不等于 Neil Bauman 已完成主观确认。
+
+### GitHub 与回滚
+
+- 纠偏开发前基线：`c3c4751b162690dc14a52aaff3cf8530218122e9`。
+- 远端备份：`backup/pre-ui-shell-correction-20260731-2158`，已 push 并核验。
+- 纠偏实现与收尾提交号、push 状态在本轮最终 Git 状态回写中记录。
+- 需要撤销时优先 `git revert <纠偏实现提交>`，随后复测全量门禁与 12 张截图。
+
 ## 2026-07-31 21:58 CST / UI Fix Correction / 开工计划
 
 ### 本轮目标

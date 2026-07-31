@@ -2,6 +2,72 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-07-31 22:11 CST / UI_fix 公共外壳纠偏交接
+
+### 当前状态
+
+`UI_fix` 已完成公共外壳纠偏：上一版山景毛玻璃画廊已恢复，CocoLoop 启发部分只保留 Neil Bauman 认可的首页搜索核心。局域网预览继续监听 `http://192.168.110.9:3000`；服务器部署仍暂停。
+
+### 本轮完成
+
+- 恢复 64px 左栏、移动顶部图标栏、滚动自适应毛玻璃顶栏、分类/标签与毛玻璃内容流。
+- 保留 Catnip 大字标、中央任务搜索、场景标签和彩色生态带。
+- 首页、详情、推荐页共享外壳连续；业务与后端未改。
+- 全量工程、HTTP 与 12 张多视口截图门禁通过。
+
+### 未完成
+
+- Neil Bauman 尚未在局域网预览中确认最终组合。
+- 本轮不合并分支、不部署服务器、不清理历史 CSS。
+
+### 下次优先任务
+
+1. 让 Neil Bauman 检查桌面与手机首页纠偏结果。
+2. 只按明确反馈继续微调认可模块或公共外壳。
+3. 视觉确认后再决定是否合并 `UI_fix` 和是否单独清理 CSS。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/_components/public-rail-nav.tsx`
+- `src/app/_components/ecosystem-marquee.tsx`
+- `src/app/page.tsx`
+- `src/app/globals.css`
+
+### 测试基线
+
+- `npm test`：56/56 通过。
+- `npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`：通过。
+- HTTP：首页、详情、推荐 `200`；下载接口 `307` 到固定 Release。
+- 截图：3 页面 x 4 视口最终 12/12 生成并逐张读图通过；不等于 Neil Bauman 已确认设计。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`6b9e56928aa81d923a88c4108c4ba4f1c06746f0`
+- 纠偏施工基线：`c3c4751b162690dc14a52aaff3cf8530218122e9`
+- 备份分支：`backup/pre-ui-shell-correction-20260731-2158`，已 push
+- 最新提交：待 Git 收尾回写
+- 已 push：计划与远端备份已完成，实现待 Git 收尾
+- 工作区状态：本轮受控变更待提交；浏览器工具既有用户改动隔离保留
+
+### 风险提醒
+
+- 不得暂存 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`。
+- 不得把生态图标解释为新增正式安装支持。
+- 不得恢复服务器写操作。
+
 ## 2026-07-31 21:48 CST / UI_fix 搜索画廊交接
 
 ### 当前状态

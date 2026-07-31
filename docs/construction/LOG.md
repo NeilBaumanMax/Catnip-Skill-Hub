@@ -1,5 +1,86 @@
 # 施工日志
 
+## 2026-07-31 22:11 CST / Public Web UI Fix / 公共外壳纠偏
+
+### 本轮计划回放
+
+按 Neil Bauman 最终截图裁定，先提交纠偏计划并 push，创建远端开发前备份；再只撤销未认可的外壳替换，保留认可搜索核心，完成全量工程、HTTP、截图和文档漂移门禁。
+
+### 实际修改
+
+- 恢复 `PublicShell` 的固定左侧图标栏与 `PublicRailNav`，移动端继续转为顶部图标导航。
+- 恢复上一版 `PublicHeader`：品牌、普通搜索、推荐入口、五分类和热门标签重新成为共享顶栏。
+- 首页保留 Catnip 大字标、任务搜索台、场景标签与彩色生态 marquee，并让它位于公共导航之后。
+- 删除用于替换整套外壳的 `ui-fix.css` 后加载覆盖；恢复 `globals.css` 中已经验收的山景、玻璃、滚动透明度和公共内页规则。
+- 详情页和推荐页未改业务，仅随共享外壳恢复导航连续性。
+
+### 修改文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/layout.tsx`
+- `src/app/page.tsx`
+- `src/app/ui-fix.css`（删除）
+- `DESIGN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 修改前截图：12/12；最终截图：12/12，全部逐张读图通过。
+- 桌面、平板与移动端未发现布局断裂、文字重叠或页面级横向溢出；移动分类/标签为预期的横向滚动。
+- HTTP：首页 `/`、详情 `/skills/project-brief`、推荐 `/recommend` 均为 `200`。
+- 下载验收第一次误用不存在的 `/api/downloads/project-brief`，得到 `404`；纠正为真实接口 `/api/skills/project-brief/download` 后得到 `307`，目标为固定 `v0.1.0` GitHub Release。该失败是验收命令路径错误，未修改产品代码。
+
+### 测试日志
+
+- `npm test`：56/56 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：通过，Next.js 编译、TypeScript 检查与 9 个静态页面生成完成。
+- `git diff --check`：通过。
+- 最终截图命令：`SCREENSHOT_URL=http://192.168.110.9:3000 npx tsx scripts/screenshots.ts`，12/12 成功。
+
+### 测试指标判断
+
+单元测试、静态质量、数据库 schema、生产构建、关键 HTTP 和多视口视觉门禁均通过。HTTP 误测已保留并纠正，不把错误命令包装成产品故障或虚假成功。
+
+### 文档漂移检查
+
+- 修正 `DESIGN.md` 仍把“无固定左栏、玻璃只用于两处”写成当前方向的漂移。
+- 修正 `CODEX_MASTER_REQUIREMENTS.md` 仍把已否决的整套搜索画廊外壳写成当前主任务的漂移。
+- `SKILL_HUB_UI_PLAN.md` 的最新视觉裁定与实际实现一致。
+- 管理员 Neil Bauman、仓库、Remote、产品类型和正式安装范围无漂移。
+- 未新增普通用户认证、服务器施工、未来资源市场或真实凭据。
+- 浏览器截图工具相关既有用户改动继续隔离，未覆盖、未暂存。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开发前计划前基线：`6b9e56928aa81d923a88c4108c4ba4f1c06746f0`。
+- 纠偏施工基线：`c3c4751b162690dc14a52aaff3cf8530218122e9`。
+- 备份分支：`backup/pre-ui-shell-correction-20260731-2158`，push 成功并核验远端引用。
+- 实现提交与 `UI_fix` push 状态：待本轮 Git 收尾后追加回写。
+- main 与服务器未修改。
+
+### 回滚判断
+
+- 当前不需要回滚。
+- 推荐回滚：`git revert <纠偏实现提交>`。
+- 回滚后复测：`npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build` 和 12 张截图。
+
+### 当前风险
+
+- 自动截图通过不等于 Neil Bauman 已主观认可最终组合。
+- `globals.css` 包含历史层叠样式；当前结果稳定并通过截图，后续若整理必须单独开工且保持视觉不变。
+- 工作区仍有明确隔离的浏览器工具用户改动，不能纳入本轮提交。
+
+### 下一步
+
+保持局域网预览，等待 Neil Bauman 验收本次纠偏；未获新指令前不进入服务器部署或后端扩展。
+
 ## 2026-07-31 21:48 CST / Public Web UI Fix / 搜索画廊施工
 
 ### 本轮计划回放
