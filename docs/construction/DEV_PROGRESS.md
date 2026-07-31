@@ -2,6 +2,58 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-07-31 23:20 CST / UI Fix Tag Dropdown / 开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新视觉反馈精简首页发现控制：删除中央搜索台中没有实际作用的“搜索 Skill / 按场景发现”模式切换；把顶部会随标签数量持续横向扩张的标签条改为紧凑、多选、内部纵向滚动的下拉筛选器。
+
+### 涉及层
+
+- 公共前台：首页搜索台结构、顶部标签筛选结构、响应式和键盘可访问性。
+- 发现服务：保持现有重复 `tag` 参数和多标签 AND 语义，不修改数据或后端接口。
+- 施工文档：更新 UI 契约、进度、日志和交接，修正上一轮“标签横向浏览”的已过期约束。
+- 不修改后台、下载、安装、认证、存储、内容主库或服务器部署。
+
+### 当前仓库状态
+
+- 当前分支：`UI_fix`；基线：`20162dce30d15f144e471cd15eeeb18fa6b5cea4`，与 `origin/UI_fix` 分歧 `0 0`。
+- Git 身份：`Neil·Baumann <2091760192@qq.com>`；网站 Remote 为指定 SSH 地址。
+- 修改前 Playwright 截图 12/12 已生成，桌面与移动首页已读图确认当前横向标签和冗余模式切换现状。
+- `.gitignore`、`AGENTS.md`、`package*.json`、`next-env.d.ts` 及浏览器/截图工具文件为本轮开始前已有用户改动，继续隔离，不覆盖、不暂存。
+
+### 计划修改
+
+- 删除中央搜索台的静态双模式控件，让任务输入直接成为唯一主操作；保留真实场景快捷标签和生态带。
+- 分类仍保持单选胶囊导航；标签入口收敛为位于分类行右侧的 Tag 图标下拉按钮，并显示已选数量。
+- 下拉内部提供可多选复选项、固定最大高度、纵向滚动、应用和只清除标签操作；标签增多时不再撑宽顶栏。
+- 使用原生可聚焦 disclosure 语义，不新增客户端状态库或 UI 依赖；维持 44px 触控目标、可见焦点和薄荷选中反馈。
+
+### 测试计划
+
+- 修改后执行 3 页面 × 4 视口截图并逐张读图；额外截取标签下拉展开态桌面与移动图。
+- `npm test`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run db:check`
+- `npm run build`
+- `git diff --check`
+- HTTP 验证首页、重复标签参数、分类与标签组合以及清除链接。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 基线提交：`20162dce30d15f144e471cd15eeeb18fa6b5cea4`
+- 备份分支：`backup/pre-ui-tag-dropdown-20260731-2320`
+- 备份 push 状态：待本开工计划提交并 push 后创建、核验。
+
+### 回滚预案
+
+- 本轮实现使用独立提交；需要撤销时优先 `git revert <本轮实现提交>`，不移动或删除 `UI_fix`。
+- 回滚后复测 unit、lint、typecheck、db:check、build、HTTP 和 12 张截图。
+
 ## 2026-07-31 22:44 CST / UI Fix Tag Filters / 完成记录
 
 ### 完成状态
