@@ -131,3 +131,23 @@
 
 - 服务器部署暂停；没有服务器写操作或配置漂移。
 - main 文档提交与 push 后建立 `frontend/visual-optimization`，不在本轮先行设计或修改视觉。
+
+## 2026-07-31 13:40 CST / 后端与服务器部署专用分支 / 开工计划
+
+### 当前目标
+
+建立 `backend-server-deployment` 专用分支，将未来后端完善和服务器部署准备与当前前端视觉分支隔离。
+
+### 计划改动
+
+- 从 `SKill-hub-ui` 当前已提交基线创建远端备份。
+- 创建、推送并切换到 `backend-server-deployment`。
+- 保留现有 Claude 浏览器工具未提交改动，不纳入分支基线提交。
+- 不连接或修改服务器，不安装 Docker，不改 nginx、端口、防火墙、DNS 或 HTTPS。
+
+### 验收指标
+
+- 备份分支和新开发分支均成功 push。
+- 新分支 upstream 指向 `origin/backend-server-deployment`，本地与远端一致。
+- 既有前端分支、旧站服务器与用户未提交文件不受影响。
+- 后续恢复服务器施工仍需满足 `SERVER_DEPLOYMENT.md` 全部门禁。

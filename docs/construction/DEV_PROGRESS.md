@@ -1478,3 +1478,50 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 - 开工计划提交 `33fd871` 已 push。
 - 备份分支 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push。
 - 修复提交与 push 状态见本轮最终 Git 回写。
+
+## 2026-07-31 13:40 CST / 后端与服务器部署专用分支 / 开工计划
+
+### 本轮目标
+
+从当前 `SKill-hub-ui` 已提交 HEAD 建立并推送 `backend-server-deployment`，作为后续后端完善与服务器部署准备的独立施工分支。
+
+### 涉及层
+
+- 后端领域、数据、认证、存储与下载服务的后续完善。
+- Phase 7 服务器部署准备。
+- 本轮只建立 Git 分支边界，不修改后端代码，不执行服务器写操作。
+
+### 当前仓库状态
+
+- 当前分支：`SKill-hub-ui`。
+- 当前已提交基线：`e935056a8bda544c015c8e996223701037f34891`，与远端分歧 `0 0`。
+- 工作区保留 Claude 浏览器工具的已知未提交改动；不暂存、不覆盖、不回滚。
+- SSH 认证账号：`NeilBaumanMax`；origin 为指定 SSH Remote。
+
+### 计划修改
+
+- 提交并推送本轮分支开工文档。
+- 创建并推送 `backup/pre-backend-server-branch-20260731-1340`。
+- 从相同安全基线创建并推送 `backend-server-deployment`。
+- 切换到新分支，同时保持现有未提交工具改动原样。
+
+### 测试计划
+
+- 校验新分支和备份分支远端引用。
+- 校验新分支基线提交、origin、上下游跟踪和本地/远端分歧。
+- 执行 `git diff --check`；本轮不改运行代码，不虚报 npm 工程复测。
+
+### GitHub 备份计划
+
+- GitHub 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 基线提交：`e935056a8bda544c015c8e996223701037f34891`
+- 备份分支：`backup/pre-backend-server-branch-20260731-1340`
+- 备份 push 状态：待计划提交后创建并核验。
+
+### 回滚预案
+
+- 分支建立不修改既有提交历史；如不再需要，只停止使用，不在本轮删除远端分支。
+- 后续代码回滚优先使用 `git revert`，不得 reset、clean、restore 或 force push。
+- 服务器写操作继续暂停，恢复施工前必须重新执行服务器门禁。

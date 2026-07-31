@@ -2083,3 +2083,21 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 备份分支：`backup/pre-codex-stop-hook-fix-20260731-1304`，已 push，指向开工计划提交 `33fd871fe0fc83339da61537dd9b9adabf2d104b`。
 - 工作区剩余 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`，均为 Claude 浏览器工具的已知独立改动，本轮未暂存。
 - 当前无需回滚；如需撤回功能提交，使用 `git revert a3ea6fe36ff898897c8ce59f84a63e096b410eee`。
+
+## 2026-07-31 13:40 CST / 后端与服务器部署分支开工门禁
+
+### 本轮计划回放
+
+- 只建立后端与服务器部署专用 Git 分支，不执行代码或服务器施工。
+- 保护 Claude 浏览器工具的现有未提交改动。
+
+### 门禁检查
+
+- 当前 `SKill-hub-ui` HEAD 为 `e935056a8bda544c015c8e996223701037f34891`，与远端分歧 `0 0`。
+- SSH 认证输出确认账号为 `NeilBaumanMax`。
+- `backend-server-deployment` 与 `backup/pre-backend-server-branch-20260731-1340` 本地和远端均未占用。
+
+### 中间失败
+
+- 首次分支占用检查使用未引用的 zsh 通配符，因无匹配项触发 `no matches found`。
+- 该失败未创建、删除或修改任何分支；改用两个固定分支名复查后成功。
