@@ -2,6 +2,54 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-01 00:34 CST / Documentation Handoff Sync / 开工计划
+
+### 本轮目标
+
+为 Neil Bauman 新开对话建立无需聊天记录即可接力的权威交接：核验当前代码、分支、远端、局域网入口、测试基线与未提交用户工具改动，并修正规范文档仍指向旧前端分支或旧运行事实的漂移。
+
+### 涉及层
+
+- 施工入口与主要求：当前分支、当前任务、视觉验收入口和服务器暂停边界。
+- 测试与公共前台进度：当前 UI 分支门禁、最近视觉基线与交接优先级。
+- Git/HANDOFF：远端分支、备份、最终提交、工作区隔离文件和下一轮开工步骤。
+- 本轮不修改应用代码、依赖、数据库、内容主库或服务器。
+
+### 当前仓库状态
+
+- 当前分支：`UI_fix`；基线：`707a2236978efea42badeb21e8a3158184e8763e`，与 `origin/UI_fix` 分歧 `0 0`。
+- `origin/main` 仍为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`；`SKill-hub-ui`、`frontend/visual-optimization` 与 `backend-server-deployment` 均为保留历史分支，不是当前分支。
+- 局域网开发预览 `/`、详情、推荐和 `/api/health` 均为 `200`，入口为 `http://192.168.110.9:3000`。
+- `.gitignore`、`AGENTS.md` 截图工具段、`next-env.d.ts`、`package*.json`、`.agents/`、`scripts/screenshots.ts` 与 `skills-lock.json` 为既有未提交用户工具改动；先审阅，除明确文档漂移 hunk 外不纳入。
+
+### 计划修改
+
+- 修正根 `AGENTS.md` 的当前 Phase/分支，但隔离其既有截图工具 hunk。
+- 修正 `TEST_METRICS.md` 与 `CODEX_MASTER_REQUIREMENTS.md` 仍指向旧分支或旧基线的规范描述。
+- 新增一条权威 HANDOFF，明确最新 UI 事实、测试、预览、Git、风险、未完成和下一轮第一步。
+- 在 LOG、DEV_PROGRESS 与 01-public-web 追加本轮审计和最终验证，不改写历史记录。
+
+### 测试计划
+
+- `npm test`、`npm run lint`、`npm run typecheck`、`npm run db:check`、`npm run build`、`git diff --check`。
+- HTTP：`/`、`/skills/project-brief`、`/recommend`、`/api/health`。
+- 文档检索：权威当前段不得再把 `SKill-hub-ui` 或 `frontend/visual-optimization` 写成当前分支；历史追加记录允许保留。
+- 远端核验：`UI_fix`、本轮备份与最终 push。
+
+### GitHub 备份计划
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 基线提交：`707a2236978efea42badeb21e8a3158184e8763e`
+- 备份分支：`backup/pre-handoff-drift-sync-20260801-0034`
+- 备份 push 状态：待计划提交 push 后创建并核验。
+
+### 回滚预案
+
+- 规范修正和交接使用独立提交；需要撤销时优先 `git revert <本轮文档提交>`。
+- 回滚后重新核验文档当前段、Git 分支、HTTP 与完整工程门禁。
+
 ## 2026-08-01 00:26 CST / UI Fix Top Logo Removal / 完成记录
 
 ### 完成状态
