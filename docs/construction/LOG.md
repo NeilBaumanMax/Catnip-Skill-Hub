@@ -1,5 +1,88 @@
 # 施工日志
 
+## 2026-07-31 23:29 CST / UI Fix Tag Dropdown / 发现控制精简
+
+### 本轮计划回放
+
+先完成设计规范复核和修改前截图，提交并 push 开工计划，再创建并核验远端备份；真实施工仅删除中央无效模式切换并把横向标签条改为多选下拉，最后执行工程、交互、HTTP、截图和文档漂移门禁。
+
+### 实际修改
+
+- `page.tsx` 删除静态搜索模式控件，引入 Phosphor `CaretDown` 并将标签表单封装为原生 `details/summary` 下拉。
+- 标签入口显示 Tag 图标、文字、未选提示或已选数字；展开面板保留原生复选框、AND 语义、GET 参数、应用和清除。
+- `globals.css` 删除废弃搜索模式样式；标签面板改为定位浮层、内部纵向滚动、桌面两列/手机单列和 44px 可操作面。
+- 没有修改发现服务、数据库、API、后端、下载、安装、认证、内容主库或部署。
+
+### 修改文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `DESIGN.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 修改前截图：12/12 生成，桌面与手机首页读图确认基线。
+- 修改后截图：12/12 生成并逐张读图通过；展开态桌面/手机 2 张专项截图通过。
+- Playwright 实际勾选两个标签并应用：组合 URL、已选计数和 1 个匹配结果正确。
+- 首页与分类 + 两标签 HTTP 均为 `200`；HTML 不再出现“按场景发现”。
+
+### 测试日志
+
+- `npm test`：57/57 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：通过，Next.js 生产编译、TypeScript 和 9 个页面生成完成。
+- `git diff --check`：通过。
+- 设计令牌微调后的全量复测首次在 `npm test` 启动前失败：受管沙箱禁止 `tsx` 创建 IPC pipe，返回 `listen EPERM`；lint、typecheck 和 db:check 因串联命令中止而未执行，不能写成失败或通过。
+- 修复动作：不改测试、依赖或系统配置，在获准环境重跑相同的 unit、lint、typecheck 和 db:check。
+- 获准环境最终复测：`npm test` 57/57、lint、typecheck 和 db:check 全部通过。
+- 生产 build 临时改写 `next-env.d.ts` 后已恢复施工前用户内容和原 SHA-1。
+
+### 测试指标判断
+
+交互、查询恢复、静态质量、数据库 schema、生产构建、HTTP 和多视口视觉门禁均达到本轮验收指标。没有把自动截图写成 Neil Bauman 主观验收。
+
+### 文档漂移检查
+
+- `SKILL_HUB_UI_PLAN.md`、`DESIGN.md` 和产品需求已将“横向标签条”修正为“下拉 + 内部纵向滚动”，并删除搜索模式事实。
+- `CODEX_MASTER_REQUIREMENTS.md` 当前任务已指向本轮待验收状态。
+- 管理员 Neil Bauman、品牌 Catnip 薄荷猫、网站 Remote、CLI 支持范围和服务器暂停状态无漂移。
+- 未实现 Phase 后续功能、未触碰真实秘密、未覆盖或暂存既有用户工具改动。
+- 历史全局 CSS 的 51 个 Impeccable 字号令牌债务未在本轮扩大，继续作为独立风险保留。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开工前基线：`20162dce30d15f144e471cd15eeeb18fa6b5cea4`。
+- 计划提交：`e81d970f9f6368c86747e3d00178fb6e49f82701`，已 push。
+- 备份分支：`backup/pre-ui-tag-dropdown-20260731-2320`，已 push。
+- 实现提交与 `UI_fix` push：待收尾提交后回写。
+- main 与服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 推荐回滚：`git revert <本轮实现提交>`。
+- 回滚后复测：unit、lint、typecheck、db:check、build、HTTP 和截图。
+
+### 当前风险
+
+- 自动视觉与交互验收不等于 Neil Bauman 已确认最终体验。
+- 原生 disclosure 由用户再次点击入口关闭；未额外引入点击外部关闭的客户端逻辑。
+- 全局历史 CSS 令牌债务与既有用户工具改动继续隔离。
+
+### 下一步
+
+保持局域网预览，等待 Neil Bauman 验收精简搜索台和标签下拉；未获新指令前不合并分支、不部署服务器。
+
 ## 2026-07-31 22:44 CST / UI Fix Tag Filters / 标签多选施工
 
 ### 本轮计划回放

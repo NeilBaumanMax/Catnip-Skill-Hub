@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Check, Tag } from "@phosphor-icons/react/dist/ssr";
+import { CaretDown, Check, Tag } from "@phosphor-icons/react/dist/ssr";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
 import { analyticsService } from "@/lib/analytics";
@@ -75,44 +75,60 @@ export default async function Home({ searchParams }: HomeProps) {
               ))}
             </nav>
 
-            <form className="discovery-tags" aria-label="Skill 标签筛选" action="/#skill-grid" method="get">
-              {discovery.filters.query ? <input name="q" type="hidden" value={discovery.filters.query} /> : null}
-              {discovery.filters.category ? (
-                <input name="category" type="hidden" value={discovery.filters.category} />
-              ) : null}
-              <div className="discovery-tag-heading">
-                <Tag aria-hidden="true" size={17} weight="regular" />
-                <span>标签筛选</span>
-                <small>
-                  {discovery.filters.tags.length ? `已应用 ${discovery.filters.tags.length} 项` : "可多选"}
-                </small>
-              </div>
-              <div className="discovery-tag-options">
-                {discovery.availableTags.map((tag) => {
-                  const selected = discovery.filters.tags.includes(tag);
-                  return (
-                    <label className="discovery-tag-option" key={tag}>
-                      <input defaultChecked={selected} name="tag" type="checkbox" value={tag} />
-                      <span>
-                        <Check aria-hidden="true" size={13} weight="bold" />
-                        {tag}
-                      </span>
-                    </label>
-                  );
-                })}
-              </div>
-              <div className="discovery-tag-actions">
-                <button type="submit">筛选</button>
+            <details className="discovery-tag-menu">
+              <summary>
+                <Tag aria-hidden="true" size={18} weight="regular" />
+                <span>标签</span>
                 {discovery.filters.tags.length ? (
-                  <Link href={discoveryHref({
-                    query: discovery.filters.query,
-                    category: discovery.filters.category,
-                  })}>
-                    清除标签
-                  </Link>
-                ) : null}
+                  <strong aria-label={`已选 ${discovery.filters.tags.length} 个标签`}>
+                    {discovery.filters.tags.length}
+                  </strong>
+                ) : (
+                  <small>多选</small>
+                )}
+                <CaretDown className="discovery-tag-caret" aria-hidden="true" size={15} weight="bold" />
+              </summary>
+              <div className="discovery-tag-popover">
+                <form aria-label="Skill 标签筛选" action="/#skill-grid" method="get">
+                  {discovery.filters.query ? <input name="q" type="hidden" value={discovery.filters.query} /> : null}
+                  {discovery.filters.category ? (
+                    <input name="category" type="hidden" value={discovery.filters.category} />
+                  ) : null}
+                  <header className="discovery-tag-heading">
+                    <div>
+                      <strong>标签筛选</strong>
+                      <small>可多选，结果需满足全部标签</small>
+                    </div>
+                    <span>{discovery.filters.tags.length ? `已选 ${discovery.filters.tags.length} 项` : "未选择"}</span>
+                  </header>
+                  <div className="discovery-tag-options">
+                    {discovery.availableTags.map((tag) => {
+                      const selected = discovery.filters.tags.includes(tag);
+                      return (
+                        <label className="discovery-tag-option" key={tag}>
+                          <input defaultChecked={selected} name="tag" type="checkbox" value={tag} />
+                          <span>
+                            <Check aria-hidden="true" size={13} weight="bold" />
+                            {tag}
+                          </span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                  <div className="discovery-tag-actions">
+                    <button type="submit">应用</button>
+                    {discovery.filters.tags.length ? (
+                      <Link href={discoveryHref({
+                        query: discovery.filters.query,
+                        category: discovery.filters.category,
+                      })}>
+                        清除标签
+                      </Link>
+                    ) : null}
+                  </div>
+                </form>
               </div>
-            </form>
+            </details>
       </PublicHeader>
 
         <main className="discovery-content">
@@ -127,10 +143,6 @@ export default async function Home({ searchParams }: HomeProps) {
             </div>
 
             <div className="search-console">
-              <div className="search-mode" aria-label="搜索方式">
-                <span className="active">搜索 Skill</span>
-                <span>按场景发现</span>
-              </div>
               <form className="hero-search" role="search" aria-label="搜索 Skill" action="/" method="get">
                 <label htmlFor="hero-search-input">搜索 Skill</label>
                 <input

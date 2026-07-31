@@ -2,6 +2,72 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-07-31 23:29 CST / UI_fix 标签下拉交接
+
+### 当前状态
+
+`UI_fix` 已完成搜索台精简和标签下拉实现，全部自动门禁通过。局域网预览继续为 `http://192.168.110.9:3000`；服务器部署继续暂停。
+
+### 本轮完成
+
+- 删除中央“搜索 Skill / 按场景发现”静态切换，保留任务搜索和场景快捷入口。
+- 顶部标签从水平复选条改为 Tag 图标多选下拉，入口显示已选数量。
+- 面板内部纵向滚动，桌面两列、手机单列，并保留应用、清除、URL 恢复和 AND 过滤。
+- 57 项测试、工程门禁、HTTP、真实 Playwright 多选和多视口截图通过。
+
+### 未完成
+
+- Neil Bauman 尚未在局域网实际页面主观确认本版。
+- 原生下拉未增加点击外部关闭；如用户认为必要，应作为明确小改动处理。
+- `UI_fix` 未合并，服务器未部署；历史 CSS 令牌债务未清理。
+
+### 下次优先任务
+
+1. 让 Neil Bauman 验收桌面和手机标签下拉、搜索台精简结果。
+2. 只按明确反馈调整面板密度、关闭行为或文案。
+3. 视觉确认后再决定是否合并 `UI_fix`；不得顺带恢复服务器施工。
+
+### 必读文档
+
+- `AGENTS.md`
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `DESIGN.md`
+- 本文件最新记录
+
+### 关键文件
+
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/lib/discovery/service.ts`
+- `tests/discovery.test.ts`
+
+### 测试基线
+
+- `npm test`：57/57 通过。
+- lint、typecheck、db:check、build、diff check：通过。
+- Playwright 多选：分类 + 两标签返回 1 个结果，入口显示 2。
+- 截图：标准 12/12 + 展开态 2/2 读图通过；不等于 Neil Bauman 已确认。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 开发前基线：`20162dce30d15f144e471cd15eeeb18fa6b5cea4`
+- 计划提交：`e81d970f9f6368c86747e3d00178fb6e49f82701`，已 push
+- 备份分支：`backup/pre-ui-tag-dropdown-20260731-2320`，已 push
+- 最新实现提交：待收尾提交后回写
+- 已 push：计划与备份已 push；实现和收尾状态待完成
+- 工作区状态：本轮受控文件待提交；用户工具改动隔离保留
+
+### 风险提醒
+
+- 不得暂存 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json`。
+- 不得把自动截图通过包装成用户验收，也不得混入历史 CSS 全局清理。
+- 不得恢复服务器写操作。
+
 ## 2026-07-31 22:44 CST / UI_fix 标签多选交接
 
 ### 当前状态
