@@ -1781,7 +1781,7 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 网站当前分支：`backend-server-deployment`
 - 网站开发前基线：`42868b2ec1ddd981ffd07edd6e8998aeb305b9bc`
 - 网站备份：`backup/pre-release-download-integration-20260731-1826`，已 push
-- 网站最新提交：收尾后回写
+- 网站功能提交：`c15b5bf5379e19d7369b688302838e1f01ddfe3f`，已 push
 - 内容主库：`neilbauman666/Catnip-skill-hub-main`
 - 内容主库 main：`8c594f248d91788abae3938625344d66f349cf1e`，已 push
 - 内容主库备份：`backup/pre-skill-library-foundation-20260731-1707`，已 push
@@ -1793,3 +1793,9 @@ Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable S
 - 不移动已发布 Tag；修复内容发布新补丁版本。
 - 只信任固定内容主库 Release URL，不能放宽为任意远端下载。
 - 端口 3000 的旧进程需重启加载新种子；不要把该进程的旧响应误判为代码未集成。
+
+## 2026-07-31 19:16 CST / 网站最终 Git 状态
+
+- `backend-server-deployment` 功能提交 `c15b5bf5379e19d7369b688302838e1f01ddfe3f` 已 push。
+- 本次文档回写提交之后，网站分支应与 origin 分歧 `0 0`。
+- 工作区应只剩 `.gitignore`、`AGENTS.md`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts` 和 `skills-lock.json` 等 Claude 浏览器工具既有改动；不得把它们解释成本轮未完成文件。
