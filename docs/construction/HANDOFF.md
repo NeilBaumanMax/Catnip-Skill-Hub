@@ -2,6 +2,119 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-01 00:34 CST / 新对话权威交接
+
+> 本条是下一次 Codex 的权威当前入口。下方旧分支、旧 IP、旧 Phase 停点均为追加式历史证据，不代表当前状态。
+
+### 当前状态
+
+- 网站仓库当前分支为 `UI_fix`；本轮交接开工计划提交为 `a1c0e9fb9b139a5b18bb38a1944175059caecd88`，最新公共前台实现提交为 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`，上一轮状态提交为 `707a2236978efea42badeb21e8a3158184e8763e`。
+- 当前没有新的已授权代码任务。下一次对话先核验本条、Git 和预览，再等待 Neil Bauman 的验收或明确修改指令。
+- 当前 Node 开发进程 PID `57274` 监听 `192.168.110.9:3000`；`/`、`/skills/project-brief`、`/recommend`、`/api/health` 在本轮均返回 `200`。该 IP 可能随网络变化，不能写成固定生产地址。
+- Phase 0 至 Phase 7 的功能与本地/局域网里程碑已有完成记录；公网服务器部署未开始，Neil Bauman 已明确暂停。
+
+### 当前公共前台事实
+
+- 桌面使用 64px 左侧图标栏；移动端转换为顶部图标工具栏。当前视区只在工具栏保留一个正式图形 Logo。
+- 公共 header 只显示 `Catnip Skill Hub / Curated Agent Skills` 文字品牌，不重复图形 Logo；header 是唯一顶部环境毛玻璃层，随滚动实体化。
+- 首页保留蓝调山景、Catnip 大字标题、任务搜索、场景快捷入口、彩色生态带和 Skill 瀑布流。
+- 五个主分类为单选；自由标签通过 Tag 图标下拉多选，重复 `tag` URL 参数使用 AND 语义。
+- 首页、详情和推荐复用同一公共外壳；详情承担下载/安装，案例没有成为首页主线。
+- 自动截图最近一次为 3 页面 × 4 视口共 12 张，读图通过；这不等于 Neil Bauman 已主观验收。
+
+### 后端、内容与部署状态
+
+- 管理员认证、草稿/发布/下架、资源 CRUD、导入预览、文件端口、搜索/发现、统计、PostgreSQL/Drizzle、S3 兼容存储与 Compose/Caddy 本地里程碑均已有代码和测试。不要把这些写成公网生产已部署。
+- 当前活动预览是 Node 开发进程；本轮没有重新启动或重新验收 Docker 完整栈，因此下一次不能仅凭历史记录声称 Compose 当前正在运行。
+- 独立内容主库位于 `/Users/neil/Documents/Project/Catnip-skill-hub-main`，Remote 为 `git@github.com:neilbauman666/Catnip-skill-hub-main.git`；本轮只读核验 main 为 `e9af20e3182345f196b4325947aa25c9df592b0e`、工作区干净、远端同步。`v0.1.0` 是 annotated tag，指向内容提交 `8c594f248d91788abae3938625344d66f349cf1e`。
+- 网站只信任该内容主库的不可变 Release 规则；`project-brief` 是当前显式开放的 Release 下载示例，其余资源不得因有 License 自动开放。
+- 腾讯云服务器 `118.195.247.102` 上存在既有独立站且没有云快照；禁止连接后直接写入、安装、修改 nginx/Docker、开放端口或触碰 `catnip-intro`。恢复服务器施工必须有 Neil Bauman 新指令和独立门禁。
+
+### 工作区保护
+
+以下是本轮开始前已存在、未纳入网站提交的本地工具改动，下一次不得删除、覆盖、回滚或顺手暂存：
+
+- `.gitignore`
+- `AGENTS.md` 中自动截图工具段（本轮只允许单独提交当前 Phase 修正）
+- `next-env.d.ts`
+- `package.json`
+- `package-lock.json`
+- `.agents/`
+- `scripts/screenshots.ts`
+- `skills-lock.json`
+
+其中截图脚本默认 IP 已过期；当前工作区调用必须显式使用：
+
+```bash
+SCREENSHOT_URL=http://192.168.110.9:3000 npx tsx scripts/screenshots.ts
+```
+
+不要把这组本地工具文件误写成已提交、已远端交付；如 Neil Bauman 以后要求正式纳入仓库，必须另开一轮审阅其来源、依赖和安全性。
+
+### 未完成
+
+- Neil Bauman 尚未在本条之后确认顶部 Logo 去重和顶栏单层化为最终视觉版本。
+- `UI_fix` 尚未合并到 `main`；`origin/main` 仍为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
+- 服务器没有部署 Catnip Skill Hub；域名、HTTPS、生产秘密、云快照、异机恢复和旧站回归均未完成。
+- 9 个内容主库示例资源尚未全部转为网站正式公开目录；不要把演示种子描述为已验证精选内容。
+- 历史 `globals.css` 存在令牌/重复覆盖债务，只能在单独明确施工轮处理。
+
+### 下次优先任务
+
+1. 读取必读文档后执行 `git branch --show-current`、`git status --short`、`git rev-parse HEAD` 和远端只读核验，确认仍在 `UI_fix` 且保护上述工具改动。
+2. 打开当前局域网预览，让 Neil Bauman 给出下一条明确 UI 指令；如果 IP 已变化，先只读识别新 RFC1918 地址，不使用 `0.0.0.0`。
+3. 收到具体修改后，按新一轮开工计划、远端备份、修改前截图、代码、测试、漂移和 HANDOFF 闭环施工；未收到指令不得自行合并或部署。
+
+### 必读文档
+
+1. `AGENTS.md`
+2. `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+3. `docs/product/PRODUCT_REQUIREMENTS.md`
+4. `docs/construction/DEV_PROGRESS.md`
+5. `docs/construction/LOG.md`
+6. `docs/construction/GITHUB_ROLLBACK.md`
+7. `docs/construction/TEST_METRICS.md`
+8. `docs/construction/WORKFLOW.md`
+9. `docs/construction/progress/layers/01-public-web.md`
+10. 本文件本条
+
+### 关键文件
+
+- `src/app/_components/public-shell.tsx`
+- `src/app/_components/public-rail-nav.tsx`
+- `src/app/page.tsx`
+- `src/app/globals.css`
+- `src/lib/discovery/service.ts`
+- `DESIGN.md`
+- `docs/construction/SKILL_HUB_UI_PLAN.md`
+- `docs/deployment/SERVER_DEPLOYMENT.md`
+
+### 测试基线
+
+- `npm test`：本交接轮重新执行，57/57 通过。
+- lint、typecheck、db:check、生产 build、diff check：本交接轮全部通过。
+- HTTP：四个当前开发入口本轮预检查均为 `200`。
+- 视觉：最近 12/12 截图读图通过；本轮不修改 UI，不把文档审计写成新的视觉验收。
+
+### GitHub 状态
+
+- 网站仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`UI_fix`
+- 交接轮开发前基线：`707a2236978efea42badeb21e8a3158184e8763e`
+- 交接计划提交：`a1c0e9fb9b139a5b18bb38a1944175059caecd88`，已 push
+- 交接备份：`backup/pre-handoff-drift-sync-20260801-0034`，已 push
+- 最新 UI 实现：`6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`
+- 本轮文档实现提交：待提交后回写
+- 工作区：网站提交范围待收尾；上述本地工具改动隔离保留，因此全局工作区不会干净
+
+### 风险提醒
+
+- `AGENTS.md` 同时含未提交截图工具段和本轮当前 Phase 修正，必须使用精确 hunk 暂存，不能 `git add AGENTS.md`。
+- `scripts/screenshots.ts` 默认 `192.168.0.109` 已过期，必须用 `SCREENSHOT_URL` 覆盖；不要擅改或提交该用户文件。
+- 自动测试和截图不能替代 Neil Bauman 的主观 UI 验收。
+- 不得 force push、删除历史分支、合并到 main 或恢复服务器施工。
+
 ## 2026-08-01 00:26 CST / UI_fix 顶部 Logo 去重交接
 
 ### 当前状态

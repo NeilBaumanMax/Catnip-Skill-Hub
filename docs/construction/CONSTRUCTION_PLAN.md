@@ -8,7 +8,7 @@ SSH 与 Git 基线、施工文档、产品和架构边界、品牌资源约定�
 
 ## Phase 1：Public Web（已完成）
 
-公共页面外壳、文字品牌占位、五类目胶囊、十张静态 Skill 卡片瀑布流、基础导航、CSS 封面和响应式均已完成；未接数据库。
+公共页面外壳、文字品牌、正式工具栏 Logo、五类目胶囊、Skill 卡片瀑布流、基础导航、CSS 封面和响应式均已完成；后续 Phase 已接入真实领域、搜索与持久化能力。
 
 ## Phase 2：Skill Domain（已完成）
 
@@ -24,7 +24,7 @@ ZIP 与 Catnip 外层说明、下载授权与路径安全、下载 API，以及�
 
 ## Phase 5：Storage and Import（已完成）
 
-GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill 线索表单已完成。导入仅生成固定 Commit 的受限预览，文件与线索使用可替换的进程内开发适配器；不误报为数据库、对象存储或自动发布。当前停在 Phase 5 与 Phase 6 之间，等待 Neil Bauman 下一次明确继续指令。
+GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill 线索表单已完成。导入仅生成固定 Commit 的受限预览，不自动发布；后续 Phase 7 已为生产形态建立 PostgreSQL 与 S3 兼容适配器，本段不再代表当前停点。
 
 ## Phase 6：Search and Discovery（已完成）
 
@@ -34,7 +34,7 @@ GitHub 辅助导入、SKILL.md 信息读取、ZIP 和图片管理、推荐 Skill
 
 本地已完成 PostgreSQL、Drizzle 迁移、Docker Compose、SeaweedFS S3、Caddy 反向代理、备份恢复、安全与重启持久化验收；局域网入口以显式 RFC1918 地址开放，并完成危险地址拒绝、Caddy 就绪等待和回环回滚。目标服务器已经只读评估，但因无云快照、既有站点恢复链脆弱、生产依赖高危漏洞和 amd64 适配未完成，Neil Bauman 已决定暂停服务器部署。
 
-当前先在 `SKill-hub-ui` 专用分支按 `SKILL_HUB_UI_PLAN.md` 完成前端规划与分批优化；旧 `frontend/visual-optimization` 分支保留但不继续施工。每个 UI 批次均需完整闭环并停下汇报，通过本地局域网入口实时验收。未来服务器施工仍属于 Phase 7，必须重新开工并依次完成依赖修复、多架构验证、云快照或明确批准的替代回滚、既有站点异机备份、资源与服务托管加固、隔离部署、旧站回归和新站验收。
+当前在 `UI_fix` 专用分支按 `SKILL_HUB_UI_PLAN.md` 继续前端小批次优化，最新公共前台实现为 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`；`SKill-hub-ui` 与 `frontend/visual-optimization` 只保留历史。每个 UI 批次均需完整闭环并停下汇报，通过 `http://192.168.110.9:3000` 局域网入口实时验收。未来服务器施工仍属于 Phase 7，必须重新开工并依次完成依赖修复、多架构验证、云快照或明确批准的替代回滚、既有站点异机备份、资源与服务托管加固、隔离部署、旧站回归和新站验收。
 
 ## 层文件映射说明
 

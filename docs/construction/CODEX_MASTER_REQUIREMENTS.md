@@ -34,7 +34,7 @@
 
 ## 当前前端专项要求
 
-- 当前前端开发分支为 `UI_fix`；公共外壳纠偏施工基线为 `c3c4751b162690dc14a52aaff3cf8530218122e9`，开发前远端备份为 `backup/pre-ui-shell-correction-20260731-2158`；旧备份、`SKill-hub-ui` 与 `frontend/visual-optimization` 分支保留，不删除。
+- 当前前端开发分支为 `UI_fix`；最新公共前台实现提交为 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`，最近一次 UI 开发前备份为 `backup/pre-ui-top-logo-removal-20260801-0019`。`main`、旧备份、`SKill-hub-ui`、`frontend/visual-optimization` 与 `backend-server-deployment` 均保留，不删除、不误写为当前分支。
 - 前端施工以 `docs/construction/SKILL_HUB_UI_PLAN.md` 为专项依据：使用 WorkBuddy 的成熟信息架构、Marvis 的封面驱动浏览节奏和 Catnip 的管理员策展身份。
 - 首次规划轮只写文档，不改 UI 代码；后续 UI-1 至 UI-4 每批完成施工闭环后必须停下向 Neil Bauman 汇报，未经继续指令不得进入下一批。
 - 不因参考产品扩展专家、连接器、MCP、Prompt、社区、用户安装库或首页直接安装；Skill 仍是主角，下载和安装仍在详情页。
@@ -64,5 +64,5 @@
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
-- 当前主任务是在 `UI_fix` 分支等待 Neil Bauman 验收公共品牌去重：桌面左栏或移动工具栏保留唯一图形 Logo，顶部公共品牌行只显示 `Catnip Skill Hub` 文字；公共 header 单层材质、分类单选和标签下拉多选继续保持。不得借机重构后端或部署栈。
+- 当前没有新的已授权代码施工任务。下一次对话必须从 `UI_fix` 与 `HANDOFF.md` 最新记录接力，先让 Neil Bauman 验收或给出明确下一项；不得自行合并分支、重构后端或恢复部署。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
 - 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。

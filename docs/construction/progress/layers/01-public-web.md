@@ -2,6 +2,21 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-08-01 00:42 CST / Documentation Handoff Sync / 完成记录
+
+### 实际完成
+
+- 权威入口、施工主要求、测试指标和总体施工计划统一指向 `UI_fix` 与最新 UI 实现 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`。
+- 最新 HANDOFF 明确顶部 Logo 去重、单层 header、分类单选、标签下拉、三公共路由和局域网入口。
+- 历史 UI 分支和旧 IP 记录保留为证据，不再作为下一次对话当前状态。
+- 本轮零应用代码改动、零新视觉结论。
+
+### 验收结果
+
+- 57 项测试、lint、typecheck、db:check、生产 build、HTTP 和 diff check 通过。
+- 权威当前段无旧分支、旧 Phase 停点或 Logo 占位漂移。
+- 最新交接包含不可暂存工具文件、服务器禁区、内容主库和下一轮第一步。
+
 ## 2026-08-01 00:34 CST / Documentation Handoff Sync / 开工计划
 
 ### 当前目标

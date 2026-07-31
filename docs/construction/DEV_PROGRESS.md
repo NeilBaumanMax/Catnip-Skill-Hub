@@ -2,6 +2,28 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-01 00:42 CST / Documentation Handoff Sync / 完成记录
+
+### 完成状态
+
+- 根 `AGENTS.md` 当前 Phase 已从旧 `SKill-hub-ui` 修正为 `UI_fix` 和最新公共 UI 基线；既有自动截图工具段继续隔离。
+- `CODEX_MASTER_REQUIREMENTS.md`、`TEST_METRICS.md` 与 `CONSTRUCTION_PLAN.md` 的当前分支、当前停点和 Phase 5/6 描述已同步真实状态。
+- 产品需求中“未来 Logo 占位”已修正为工具栏正式 Logo + 顶部文字品牌的当前事实。
+- `HANDOFF.md` 顶部新增权威新对话交接，覆盖当前 UI、后端/内容、局域网、服务器禁区、工具改动、测试和下一轮首步。
+
+### 验证摘要
+
+- `npm test` 57/57、lint、typecheck、db:check、生产 build 与 `git diff --check` 通过；本轮无应用代码修改和中间测试失败。
+- `/`、详情、推荐和 `/api/health` 均为 `200`；当前 Node PID 57274 监听 `192.168.110.9:3000`。
+- 网站 `UI_fix`、历史分支、内容主库 main/tag 和两仓库 Remote 已只读核验。
+- 权威规范检索不再把旧前端分支写为当前；旧 LOG/HANDOFF 记录保留并由最新交接明确标记为历史。
+
+### GitHub 与回滚
+
+- 开工前基线：`707a2236978efea42badeb21e8a3158184e8763e`；计划提交：`a1c0e9fb9b139a5b18bb38a1944175059caecd88`，已 push。
+- 远端备份：`backup/pre-handoff-drift-sync-20260801-0034`，已 push。
+- 文档实现提交待提交后回写；回滚优先 `git revert <本轮文档实现提交>`，随后复核文档、HTTP 和工程门禁。
+
 ## 2026-08-01 00:34 CST / Documentation Handoff Sync / 开工计划
 
 ### 本轮目标

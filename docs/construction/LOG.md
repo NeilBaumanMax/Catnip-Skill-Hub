@@ -1,5 +1,88 @@
 # 施工日志
 
+## 2026-08-01 00:42 CST / Documentation Handoff Sync / 新对话权威交接
+
+### 本轮计划回放
+
+先按必读顺序审阅施工文档，核验网站与内容主库 Git、SSH/Remote、当前分支、局域网入口和用户工具改动；提交并 push 开工计划、建立远端备份后，修正权威规范漂移并新增自包含 HANDOFF，最后重跑工程、HTTP、文档检索和远端门禁。
+
+### 实际修改
+
+- 根 `AGENTS.md` 当前 Phase 从旧 `SKill-hub-ui` 修正为真实 `UI_fix`、最新 UI 实现和“等待明确指令”停点；自动截图工具段保持用户未提交状态，不纳入本轮提交。
+- `CODEX_MASTER_REQUIREMENTS.md` 当前前端基线和任务改为最新事实，并明确当前没有新授权代码任务。
+- `TEST_METRICS.md` 与 `CONSTRUCTION_PLAN.md` 将当前 UI 分支改为 `UI_fix`；修正 Phase 5 段仍称停在 Phase 5/6 之间的矛盾。
+- `PRODUCT_REQUIREMENTS.md` 将未来 Logo 占位修正为工具栏正式 Logo + 顶部文字品牌，禁止同视区重复图形。
+- `HANDOFF.md` 顶部新增新对话权威交接，写清 UI、后端、内容主库、局域网、服务器禁区、未提交工具文件、测试、风险和下一轮首步。
+- 追加 DEV_PROGRESS 与 01-public-web 完成记录；未修改应用代码、依赖、数据库或服务器。
+
+### 修改文件
+
+- `AGENTS.md`（只提交当前 Phase hunk）
+- `docs/construction/CODEX_MASTER_REQUIREMENTS.md`
+- `docs/construction/CONSTRUCTION_PLAN.md`
+- `docs/construction/TEST_METRICS.md`
+- `docs/product/PRODUCT_REQUIREMENTS.md`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/HANDOFF.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 验证结果
+
+- 网站分支：`UI_fix`；开工时 HEAD `707a2236978efea42badeb21e8a3158184e8763e`，远端分歧 `0 0`。
+- 网站远端分支只读核验：`main=059ab6a...`、`UI_fix=707a223...`；旧 `SKill-hub-ui`、`frontend/visual-optimization`、`backend-server-deployment` 均存在但不是当前分支。
+- 内容主库本地 main `e9af20e3182345f196b4325947aa25c9df592b0e`、工作区干净、与远端同步；annotated `v0.1.0` tag 远端存在并指向既有内容提交。
+- 当前 Node PID 57274 监听 `192.168.110.9:3000`；首页、详情、推荐、健康接口均为 `200`。
+
+### 测试日志
+
+- `npm test`：57/57 通过。
+- `npm run lint`：通过。
+- `npm run typecheck`：通过。
+- `npm run db:check`：通过。
+- `npm run build`：通过，Next.js 编译、TypeScript 和 9 个页面生成完成。
+- `git diff --check`：通过。
+- build 临时改写 `next-env.d.ts` 后恢复用户 dev routes 内容及 SHA-1 `d0edc62da2f216ad272c8e8ed9d04f5267bd85a2`。
+- 首次权威规范 `rg` 命令因 shell 双引号中的反引号被解释，打印两条 `command not found`；未修改文件。修正为单引号模式后复检成功，匹配旧分支的权威行均明确标注为历史而非当前。
+- 本轮无应用测试失败；文档检索命令问题已记录并复测。
+
+### 测试指标判断
+
+代码回归、静态质量、数据库 schema、生产构建、HTTP、两仓库只读事实和权威文档检索满足新对话交接指标。本轮未修改 UI，因此没有将上一轮截图包装成本轮视觉验收。
+
+### 文档漂移检查
+
+- 已修正 AGENTS、主要求、测试指标、总体施工计划和产品需求中的当前分支、Phase 停点与 Logo 事实。
+- ARCHITECTURE、LAYER_CONTRACT、WORKFLOW、GITHUB_ROLLBACK 与服务器暂停门禁未发现需要改写的当前事实。
+- 历史 LOG/HANDOFF/层记录保持追加式原文；最新 HANDOFF 明示旧分支和旧 IP 仅为历史。
+- Neil Bauman、Catnip 薄荷猫、NeilBaumanMax、网站 SSH Remote 和内容主库隔离关系一致。
+- 未提交工具文件不纳入本轮；无真实密钥、Token、密码、`.env`、构建产物或依赖目录进入暂存范围。
+
+### GitHub 状态
+
+- 当前分支：`UI_fix`。
+- 开工前基线：`707a2236978efea42badeb21e8a3158184e8763e`。
+- 计划提交：`a1c0e9fb9b139a5b18bb38a1944175059caecd88`，已 push。
+- 备份分支：`backup/pre-handoff-drift-sync-20260801-0034`，已 push。
+- 文档实现提交：待提交后回写；main、内容主库和服务器未修改。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 推荐回滚：`git revert <本轮文档实现提交>`。
+- 回滚后复测：unit、lint、typecheck、db:check、build、HTTP 和权威文档检索。
+
+### 当前风险
+
+- 根 `AGENTS.md`、package、截图脚本等本地工具改动仍未作为一个完整功能提交；下一次必须继续隔离。
+- `scripts/screenshots.ts` 默认 IP 过期，当前只能通过 `SCREENSHOT_URL` 安全覆盖。
+- 局域网 IP 可能变化；服务器无快照且承载旧站，部署继续禁止。
+- `UI_fix` 未合并，Neil Bauman 尚未对最新 UI 给出最终验收。
+
+### 下一步
+
+结束本轮并新开对话；下一次 Codex 只按最新 HANDOFF 开始，先核验 Git/预览并等待 Neil Bauman 明确指令，不自行施工、合并或部署。
+
 ## 2026-08-01 00:26 CST / UI Fix Top Logo Removal / 公共品牌图形去重
 
 ### 本轮计划回放
