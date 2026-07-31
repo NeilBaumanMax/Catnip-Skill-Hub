@@ -363,3 +363,22 @@
 - PostToolUse handler 保持合法并能运行。
 - 自动截图仍可生成 3 页面 × 4 视口图片。
 - 工程、文档漂移和 Git 门禁通过，用户工具之外的未知改动不进入提交。
+
+## 2026-07-31 13:13 CST / SKill-hub-ui / Codex Stop Hook 兼容修复验收
+
+### 实际完成
+
+- `.codex/hooks.json` 不再注册 Stop handler，只保留 PostToolUse 即时检测。
+- Playwright 截图工具、页面代码、业务逻辑和第三方 Skill 源码均未修改。
+- Hook 命令使用 `$HOME/.agents` 标准位置，避免绑定 Neil 的绝对用户目录。
+
+### 验收结果
+
+- Hook 清单 JSON 和 PostToolUse 输出合法。
+- unit 48/48、lint、typecheck、db:check、生产 build 与 diff check 成功。
+- 首页、详情、推荐共 12 张多视口截图生成成功；1440 与 390 首页已读图。
+- CLI 重启后才能完成最终 Stop 运行态确认；不伪报当前进程已经热重载。
+
+### 下一状态
+
+停在 Hook 修复交付点。重启 Codex 后确认错误消失，再继续前端视觉反馈；服务器部署继续暂停。

@@ -2001,3 +2001,77 @@ Git 收尾后停止。收到 Neil Bauman 明确继续及服务器目标信息后
 - 结果：失败；受管文件系统拒绝创建 `.git/index.lock`，错误为 `Operation not permitted`。
 - 影响：未写入 Git 索引、未产生提交、未覆盖用户文件。
 - 修复动作：记录失败后，在获准环境重试相同明确文件列表，不扩大暂存范围。
+
+## 2026-07-31 13:13 CST / SKill-hub-ui / Codex Stop Hook 兼容修复
+
+### 本轮计划回放
+
+- 消除 Codex CLI 反复出现的 `hook returned invalid stop hook JSON output`。
+- 保留 PostToolUse 即时设计检测与 Playwright 自动截图，不修改 UI、后端或服务器。
+
+### 实际修改
+
+- 根因确认：Codex 0.146.0 的 Stop 事件在退出码 0 时要求 Stop 决策 JSON；当前 Impeccable 4.0.2 对 Stop 返回 `hookSpecificOutput.additionalContext`，该结构不属于 Codex Stop 的有效输出。
+- 从 `.codex/hooks.json` 移除不兼容的 Stop handler，保留 PostToolUse handler。
+- Hook 脚本路径由 Neil 本机绝对路径改为 `$HOME/.agents/skills/impeccable/scripts/hook.mjs`。
+- 未修改第三方 Impeccable Skill 脚本，未关闭 PostToolUse 检测，未影响 Playwright 截图。
+
+### 修改文件
+
+- `.codex/hooks.json`
+- `docs/construction/DEV_PROGRESS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/progress/layers/01-public-web.md`
+- `docs/construction/HANDOFF.md`
+
+### 验证结果
+
+- Hook JSON：成功；仅注册 `PostToolUse`，`Stop` 未注册。
+- PostToolUse 模拟：输出合法 JSON；检测器报告现有 UI 设计系统漂移，本轮未修改 UI，也未擅自批量改设计或写忽略项。
+- Playwright：成功生成首页、详情、推荐三页四视口共 12 张截图。
+- 截图读图：首页 1440 与 390 视口正常渲染；不把自动截图写成 Neil Bauman 已确认。
+
+### 测试日志
+
+- `npm test`：48/48 成功。
+- `npm run lint`：成功。
+- `npm run typecheck`：成功。
+- `npm run db:check`：成功。
+- `npm run build`：成功。
+- `git diff --check`：成功。
+- 中间失败一：首次 Git 暂存因受管环境禁止 `.git/index.lock` 失败；获准环境以相同明确文件列表重试成功。
+- 中间失败二：首次收尾文档补丁因上下文词语不一致被整体拒绝；重新读取文件尾部后追加成功，未产生部分写入。
+
+### 测试指标判断
+
+- Hook 专项协议、工程门禁和截图回归满足本轮范围。
+- PostgreSQL/S3 集成环境未配置，本轮未涉及其代码且未将其写成通过。
+
+### 文档漂移检查
+
+- AGENTS 自动截图规则仍与实际能力一致。
+- Codex Stop 自动深度检查已移除；前端施工继续使用 PostToolUse、截图和必要时手动 Impeccable 审查。
+- 产品、架构、Phase、管理员、品牌、Remote、部署暂停状态无漂移。
+
+### GitHub 状态
+
+- 开发前基线：`576a0f2554e485c1d7c48c5176a1833d71d83c9f`。
+- 开工计划提交：`33fd871fe0fc83339da61537dd9b9adabf2d104b`，已 push。
+- 备份分支：`backup/pre-codex-stop-hook-fix-20260731-1304`，已 push。
+- 修复提交和当前分支 push：收尾后回写。
+
+### 回滚判断
+
+- 当前无需回滚。
+- 如需撤回，优先 `git revert <本轮 Hook 修复提交>`。
+- 回滚后复测 Hook JSON、PostToolUse、unit、lint、typecheck、db:check 和 build。
+
+### 当前风险
+
+- Codex 对运行中修改 Hook 清单可能不热重载；完成后需要重启一次 Codex CLI，并在 `/hooks` 中信任变更定义。
+- Claude 新增浏览器工具的其余文件仍是独立未提交改动；本轮不把 `.agents/` 或 `skills-lock.json` 混入提交。
+
+### 下一步
+
+- 重启 Codex CLI，确认 Stop 阶段不再出现非法 JSON。
+- 回到前端视觉验收，只处理真实截图发现的问题，不恢复服务器部署。

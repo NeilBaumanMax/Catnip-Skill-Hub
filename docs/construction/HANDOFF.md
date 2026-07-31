@@ -1276,6 +1276,78 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - 不得把工程成功写成自动视觉验收成功。
 - 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。
 
+## 2026-07-31 13:14 CST / Stop Hook 修复最新接力覆盖
+
+- 本文件中较早的公共外壳交接是历史记录；当前最新状态以 13:13 的 Codex Stop Hook 兼容修复交接为准。
+- `.codex/hooks.json` 已只保留 PostToolUse；重启 Codex CLI 并在 `/hooks` 审阅新定义后，再确认错误消失。
+- Hook JSON、PostToolUse、unit 48/48、lint、typecheck、db:check、build、diff check与 12 张截图已通过。
+- 当前分支 `SKill-hub-ui`；备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push；服务器部署继续暂停。
+
+
+## 2026-07-31 13:13 CST / Codex Stop Hook 兼容修复交接
+
+### 当前状态
+
+Codex Stop Hook 的非法 JSON 根因已修复：项目不再注册 Impeccable Stop handler，PostToolUse 即时检测和 Playwright 自动截图继续保留。服务器部署仍暂停。
+
+### 本轮完成
+
+- 依据 Codex 0.146.0 实际协议移除不兼容 Stop handler。
+- 验证 PostToolUse 输出为合法 JSON。
+- 完成 12 张多视口截图与桌面/移动首页读图。
+- 完成 unit、lint、typecheck、db:check、生产 build 和 Git 差异门禁。
+
+### 未完成
+
+- 当前 Codex CLI 进程可能缓存旧 Hook 清单；需要退出并重启一次，再在 `/hooks` 审阅和信任变更定义。
+- Neil Bauman 对当前首页视觉仍未最终确认。
+- PostgreSQL/S3 集成测试环境本轮未配置。
+
+### 下次优先任务
+
+1. 重启 Codex CLI，确认 Stop 阶段不再报告非法 JSON。
+2. 使用 Playwright 截图读取首页、详情和推荐页视觉，只修正真实问题。
+3. 不恢复服务器部署。
+
+### 必读文档
+
+按 AGENTS 十项顺序，并读取本条交接与 `.codex/hooks.json`。
+
+### 关键文件
+
+- `.codex/hooks.json`
+- `scripts/screenshots.ts`
+- `AGENTS.md`
+- `docs/construction/LOG.md`
+- `docs/construction/progress/layers/01-public-web.md`
+
+### 测试基线
+
+- Hook JSON：成功；仅 `PostToolUse`。
+- PostToolUse 模拟：合法 JSON。
+- `npm test`：48/48 成功。
+- lint、typecheck、db:check、生产 build、diff check：成功。
+- Playwright：12/12 截图生成成功。
+
+### GitHub 状态
+
+- 仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`SKill-hub-ui`
+- 开发前基线：`576a0f2554e485c1d7c48c5176a1833d71d83c9f`
+- 开工计划提交：`33fd871fe0fc83339da61537dd9b9adabf2d104b`，已 push
+- 备份分支：`backup/pre-codex-stop-hook-fix-20260731-1304`，已 push
+- 最新提交：修复提交后回写
+- 已 push：开工计划和备份已 push；修复提交待收尾 push
+- 工作区状态：Claude 浏览器工具的已知未提交改动；本轮只暂存 Hook 配置和施工文档。
+
+### 风险提醒
+
+- 不要运行 Impeccable `hooks on` 自动修复清单；当前 Impeccable 4.0.2 会重新加入与 Codex 0.146.0 不兼容的 Stop handler。
+- `.agents/` 和 `skills-lock.json` 不属于本轮提交。
+- 不得把自动截图通过写成 Neil Bauman 已确认视觉。
+
+
 ## 2026-07-31 06:05 CST / 公共外壳 Git 状态回写
 
 - 功能提交：`0880fbb63118f13861abce913feed2e10875c0c1`，已成功 push 到 `origin/SKill-hub-ui`。
@@ -1425,3 +1497,10 @@ Neil Bauman 提供的正式 Catnip 图形已完成网页、favicon 和公共品�
 - `.agents/`、`.codex/`、`skills-lock.json` 不得暂存或提交。
 - 不得把 HTTP、源码或单元测试写成 Edge 视觉像素验收。
 - 不得恢复服务器 Docker、nginx、DNS、HTTPS、防火墙或生产秘密配置。
+
+## 2026-07-31 13:15 CST / Stop Hook 修复最终接力状态
+
+- 当前最新状态以 13:13 的 Codex Stop Hook 兼容修复交接为准；其后的公共外壳条目属于更早历史。
+- `.codex/hooks.json` 仅保留 PostToolUse；重启 Codex CLI 并在 `/hooks` 审阅新定义后确认 Stop 错误消失。
+- Hook JSON、PostToolUse、unit 48/48、lint、typecheck、db:check、build、diff check 与 12 张截图已通过。
+- 当前分支 `SKill-hub-ui`；备份 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push；服务器部署继续暂停。

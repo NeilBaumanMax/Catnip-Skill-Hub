@@ -1458,3 +1458,23 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 - 修复提交若引入工具回归，优先 `git revert <本轮修复提交>`。
 - 未提交的 Claude 工具文件保留原状；不使用 reset、clean、restore 或 force push。
 - 回滚后重新校验 Hook JSON、PostToolUse 输出和前端工程门禁。
+
+## 2026-07-31 13:13 CST / SKill-hub-ui / Codex Stop Hook 兼容修复完成
+
+### 完成事项
+
+- 已移除 Codex 不兼容的 Impeccable Stop handler。
+- 保留 PostToolUse 即时检测和 Playwright 多视口截图。
+- Hook 命令改用标准 `$HOME/.agents` 路径，不提交个人绝对目录。
+
+### 验证状态
+
+- Hook JSON、PostToolUse 模拟、48 项单元测试、lint、typecheck、db:check、生产 build 和 diff check 成功。
+- 12 张自动截图生成成功，桌面与移动首页已读图确认正常渲染。
+- 当前 Codex 进程可能仍缓存旧 Hook，必须重启 CLI 后确认最终运行态。
+
+### Git 状态
+
+- 开工计划提交 `33fd871` 已 push。
+- 备份分支 `backup/pre-codex-stop-hook-fix-20260731-1304` 已 push。
+- 修复提交与 push 状态见本轮最终 Git 回写。
