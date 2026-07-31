@@ -48,3 +48,23 @@
 - lint、typecheck 与 `git diff --check` 首轮成功；生产构建在沙箱首次受端口权限阻塞，授权环境同命令复测成功。
 - 文件、线索、CMS 和限流均明确为进程内非持久化；没有引入数据库、对象存储 SDK、搜索或统计。
 - 最终 34/34 单元测试、lint、typecheck、生产构建和 `git diff --check` 全部成功；Git push 状态见同轮 LOG 与 HANDOFF 最新记录。
+
+## 2026-07-31 16:58 CST / Phase 5 运维扩展 / 独立 Skill 主库开工计划
+
+### 当前目标
+
+将 `neilbauman666/Catnip-skill-hub-main` 跑通为独立、空白起步的 Skill 内容主库，不替换网站代码仓库，不把现有网站历史推入新仓库。
+
+### 计划改动
+
+- 以 `NeilBaumanMax` 协作者 SSH 身份验证新仓库读写。
+- 对空仓库执行最小 README/ignore Bootstrap 并推送 `main`。
+- 在 `/Users/neil/Documents/Project/Catnip-skill-hub-main` 建立独立本地副本。
+- 本轮只建立连接与 Git 基线，不提前实现目录规范、CI、Release 或网站下载适配。
+
+### 验收指标
+
+- 新仓库 `main` 只有独立 Bootstrap 历史，不包含网站代码提交。
+- SSH push 成功，远端 main、HEAD、origin 和本地副本一致。
+- 网站代码仓库 origin、分支和已有用户改动不受影响。
+- 无密钥、Token、密码、`.env` 或生成文件进入新仓库。

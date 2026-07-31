@@ -1622,3 +1622,56 @@ Phase 7 局域网访问里程碑完成，当前入口为 `http://192.168.120.107
 ### 下一状态
 
 Neil Bauman 可重新运行 `npm run admin:hash-password`，在本机输入新的 12 位以上密码，并只把生成哈希写入被 Git 忽略的本地环境文件。功能提交与远端 push 状态见本轮最终 Git 回写。
+
+## 2026-07-31 16:58 CST / Phase 5 运维扩展 / 独立 Skill 主库 Bootstrap 开工计划
+
+### 本轮目标
+
+在不替换网站代码仓库 `origin`、不混入网站代码历史的前提下，跑通新的独立 Skill 内容主库 `neilbauman666/Catnip-skill-hub-main`：验证协作者 SSH 写权限、建立一次性最小 Bootstrap、推送 `main` 并建立独立本地工作副本。
+
+### 涉及层
+
+- Phase 5 Storage and Import：未来 GitHub Skill 来源主库边界。
+- GitHub 双仓库职责：网站代码仓库与 Skill 内容仓库彻底分离。
+- 施工文档、Git 备份与交接。
+
+### 当前仓库状态
+
+- 网站代码仓库当前分支：`backend-server-deployment`。
+- 网站代码基线：`29f2b41f5424fcada6465ee647e8b9d819c8ca78`，与远端分歧 `0 0`。
+- 网站 `origin` 保持 `git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`，本轮不修改。
+- 新 Skill 主库 SSH：`git@github.com:neilbauman666/Catnip-skill-hub-main.git`。
+- SSH 实际身份仍为 `NeilBaumanMax`；Neil Bauman 已在新账号仓库授予协作者权限，`git push --dry-run` 已成功。
+- 新 Skill 主库远端无引用、无历史；计划本地目录 `/Users/neil/Documents/Project/Catnip-skill-hub-main` 不存在。
+- 网站工作区已有 Claude 浏览器工具改动，保持原样，不覆盖、不暂存、不提交。
+
+### 计划修改
+
+- 先提交并 push 本开工计划，在网站代码仓库建立开发前远端备份。
+- 在受控临时目录克隆空的新主库，创建仅包含仓库身份说明的 `README.md` 和安全 `.gitignore`。
+- 使用网站仓库现有 Git 提交身份完成一次性 Bootstrap 提交，分支命名为 `main`，通过 SSH 推送。
+- 推送后从远端克隆到独立的持久本地目录，核验 remote、HEAD、main、日志和干净工作区。
+- 本轮不设计完整 Skill 目录、CI、Release、导入适配器或下载服务；不把网站代码推入新仓库。
+
+### 测试计划
+
+- 核验 SSH 认证输出、`git ls-remote`、首次 push 和远端 `main` 引用。
+- 对 Bootstrap 文件执行 `git diff --check`，明确暂存 README 与 `.gitignore`。
+- 在持久本地副本执行 branch、status、remote、HEAD 和最近日志检查。
+- 网站仓库执行 diff check，确认 `origin` 和既有用户改动未改变。
+
+### GitHub 备份计划
+
+- 网站仓库：`NeilBaumanMax/Catnip-Skill-Hub`
+- 网站 SSH Remote：`git@github.com:NeilBaumanMax/Catnip-Skill-Hub.git`
+- 当前分支：`backend-server-deployment`
+- 基线提交：`29f2b41f5424fcada6465ee647e8b9d819c8ca78`
+- 备份分支：`backup/pre-skill-library-bootstrap-20260731-1658`
+- 备份 push 状态：待开工计划提交后创建并核验。
+- 新 Skill 主库当前为空，无可备份提交；一次性 Bootstrap 成功后才产生首个回滚基线。
+
+### 回滚预案
+
+- 网站仓库只增加施工记录；如需撤回，优先 `git revert <本轮文档提交>`。
+- 新主库 Bootstrap 是空仓库首个提交；不使用 force push 或删除历史。若身份信息需修正，使用后续普通提交。
+- 不删除新仓库、远端分支或协作者权限；不执行 reset、clean、restore。
