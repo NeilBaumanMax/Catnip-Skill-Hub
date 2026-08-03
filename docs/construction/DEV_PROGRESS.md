@@ -2,6 +2,31 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-03 19:54 CST / Main Branch Promotion / 开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新明确指令，将已完成自动验收的 `UI_fix` 完整合并到 `main`，并把后续开发分支切换为 `main`；不恢复服务器部署，不扩展新的 UI 或后端功能。
+
+### 当前状态与保护边界
+
+- 网站仓库当前在 `UI_fix`，提交 `4a6c707b8cbed2913cf7a43ac368c1579b6b10e3`，与远端同步；远端 `main` 为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`。
+- `main` 是 `UI_fix` 的直接祖先，分歧为 `0 53`，计划采用可审计的快进合并。
+- 主工作区已有 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package*.json`、`.agents/`、`scripts/screenshots.ts` 与 `skills-lock.json` 用户工具改动；全部原样保护，不覆盖、不暂存。
+- 合并施工在 `/private/tmp/catnip-main-merge-20260803-1954` 隔离 worktree 完成，服务器部署继续暂停。
+
+### 施工与验证计划
+
+- 先提交并 push 本开工计划，在 `UI_fix` 建立 `backup/pre-main-ui-fix-merge-20260803-1954` 远端备份。
+- 在未合并的 `main` 基线启动隔离预览并保存修改前 3 页面 x 4 视口截图。
+- 将 `main` 快进至已备份的 `UI_fix`，执行 `npm test`、lint、typecheck、db:check、生产 build、`git diff --check`、HTTP 与修改后 12 张截图验收。
+- 更新 LOG、DEV_PROGRESS、01-public-web 与 HANDOFF，明确 `main` 为后续开发分支，提交并 push 后复核本地与远端状态。
+
+### 回滚预案
+
+- 合并前远端 `main` 基线保持为 `059ab6a50f5cba20aa756811e36d2ad1afee2c28`，并额外创建本轮备份分支。
+- 如推广后需撤销，不重写远端历史；应在审阅 53 个推广提交范围后使用普通 revert 提交，并重跑完整工程、HTTP 与视觉门禁。
+
 ## 2026-08-01 00:42 CST / Documentation Handoff Sync / 完成记录
 
 ### 完成状态

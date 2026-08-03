@@ -2,6 +2,21 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-08-03 19:54 CST / Main Branch Promotion / 开工计划
+
+### 本轮目标
+
+- 将 `UI_fix` 已完成的公共前台、下载来源扩展与相关文档历史安全推广到 `main`，后续开发统一从 `main` 开始。
+- 本轮只做分支推广、全量回归、视觉验收和交接同步，不新增视觉设计或产品能力。
+
+### 基线与计划
+
+- `main`：`059ab6a50f5cba20aa756811e36d2ad1afee2c28`；`UI_fix`：`4a6c707b8cbed2913cf7a43ac368c1579b6b10e3`；二者为可快进关系。
+- 主工作区未提交工具文件保持隔离；合并和验证在独立 worktree 执行。
+- 推广前创建并 push `backup/pre-main-ui-fix-merge-20260803-1954`，并保存旧 `main` 的 3 页面 x 4 视口截图基线。
+- 推广后执行 57 项测试基线、lint、typecheck、db:check、build、HTTP、3 页面 x 4 视口截图及读图检查。
+- 自动截图通过只代表工程视觉门禁，不追溯为 Neil Bauman 对旧版本的主观确认；本次明确合并指令视为允许推广当前 `UI_fix`。
+
 ## 2026-08-01 00:42 CST / Documentation Handoff Sync / 完成记录
 
 ### 实际完成
