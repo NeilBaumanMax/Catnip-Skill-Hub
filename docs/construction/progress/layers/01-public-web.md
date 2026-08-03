@@ -2,6 +2,11 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
+
+- `079d3def0e06b14cbe1d53d0d745b02095fe6923` 已 push 到 `origin/main`，公共前台后续施工分支正式为 `main`。
+- 本条状态回写提交后再次 push；截图和隔离依赖目录不进入仓库。
+
 ## 2026-08-03 20:18 CST / Main Branch Promotion / 完成记录
 
 ### 实际完成

@@ -2,6 +2,12 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
+
+- 推广与交接提交：`079d3def0e06b14cbe1d53d0d745b02095fe6923`（`docs: promote UI baseline to main`），已成功 push 到 `origin/main`。
+- 远端 `main` 已包含 `UI_fix` 完整历史和本轮分支规范；本条作为直接后继纯文档状态回写，提交后再次 push。
+- 远端备份 `backup/pre-main-ui-fix-merge-20260803-1954` 保持指向 `b3697c586b2a08f36ccf4f5a1e4583203e993018`。
+
 ## 2026-08-03 20:18 CST / Main Branch Promotion / 完成记录
 
 ### 完成状态

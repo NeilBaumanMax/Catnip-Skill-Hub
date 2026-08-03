@@ -1,5 +1,11 @@
 # 施工日志
 
+## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
+
+- `main` 推广与交接提交：`079d3def0e06b14cbe1d53d0d745b02095fe6923`，已成功 push 到 `origin/main`。
+- 推送范围从旧 `main` `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 到 `079d3de`，包含 `UI_fix` 完整历史、开工计划和本轮交接；未 force push。
+- 备份 `backup/pre-main-ui-fix-merge-20260803-1954` 已远端核验；本条纯文档回写提交后再次 push。
+
 ## 2026-08-03 20:18 CST / Main Branch Promotion / UI_fix 快进推广到 main
 
 ### 本轮计划回放
