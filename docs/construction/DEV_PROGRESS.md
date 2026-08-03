@@ -2,6 +2,20 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-03 21:00 CST / Tencent Cloud Ubuntu 22.04 Deployment Prep / 完成记录
+
+### 完成状态
+
+- 已从 `main` 开工计划提交 `e608d0f` 创建并切换到 `deployment/tencent-cloud-ubuntu-22-04-prep`。
+- 新分支已 push 到 origin 并设置 upstream；远端备份 `backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057` 已 push。
+- 历史 `backend-server-deployment` 保留不动；主工作区既有用户工具改动继续未暂存、未提交。
+
+### 验证与边界
+
+- 分支创建轮没有应用代码、依赖、运行配置或服务器变更，因此未执行也未虚报新的 unit、lint、typecheck、build、Compose 或服务器验收。
+- 本轮没有连接腾讯云，没有修改 Ubuntu、Docker、nginx、端口、DNS、HTTPS、防火墙、生产秘密或既有 `catnip-intro`。
+- 下一步必须先做腾讯云 Ubuntu 22.04 只读信息核验与部署方案审阅；任何服务器写操作仍需 Neil Bauman 新的明确授权。
+
 ## 2026-08-03 20:57 CST / Tencent Cloud Ubuntu 22.04 Deployment Prep / 开工计划
 
 ### 本轮目标

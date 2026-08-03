@@ -2,6 +2,25 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-03 21:00 CST / 腾讯云 Ubuntu 22.04 部署准备分支交接
+
+### 当前状态
+
+- 当前工作分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，从已验证的 `main` 开工计划提交 `e608d0f` 创建，并已跟踪同名 origin 分支。
+- 远端开发前备份为 `backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057`，与分支初始基线一致。
+- `main` 继续保留为公共开发基线；历史 `backend-server-deployment` 不复用、不删除。
+
+### 严格边界
+
+- 本轮只建立准备分支，没有连接腾讯云，也没有对 Ubuntu 22.04、Docker、nginx、端口、DNS、HTTPS、防火墙、生产秘密、数据或既有 `catnip-intro` 做任何写操作。
+- “准备分支已建立”不等于服务器环境已核验、依赖已安装、部署已开始或生产已验收。
+- 下一轮如只做方案，可继续只读审计；任何实际服务器写操作必须由 Neil Bauman 再次明确授权，并遵守 `docs/deployment/SERVER_DEPLOYMENT.md`。
+
+### 工作区保护
+
+- 既有 `.gitignore`、`AGENTS.md` 截图规则、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 仍为未提交用户工具改动，不得覆盖或顺手提交。
+- 收尾文档提交与远端准备分支最终 SHA 在 push 后追加回写。
+
 ## 2026-08-03 20:22 CST / main 推广最终状态
 
 - `079d3def0e06b14cbe1d53d0d745b02095fe6923` 已成功 push 到 `origin/main`；本条是其直接后继纯文档回写，提交后再次 push。

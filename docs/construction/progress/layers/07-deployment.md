@@ -2,6 +2,13 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-03 21:00 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 完成记录
+
+- 当前分支：`deployment/tencent-cloud-ubuntu-22-04-prep`，已跟踪 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`。
+- 开工计划基线：`e608d0f`；远端备份：`backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057`。
+- 本轮只建立 Git 准备入口，未连接或修改腾讯云 Ubuntu 22.04 服务器，不代表部署已开始。
+- 后续第一步应重新读取 `docs/deployment/SERVER_DEPLOYMENT.md`，执行只读系统、架构、资源、端口、进程、旧站、备份与回滚核验；写施工必须另获明确授权。
+
 ## 2026-08-03 20:57 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 开工计划
 
 ### 本轮目标

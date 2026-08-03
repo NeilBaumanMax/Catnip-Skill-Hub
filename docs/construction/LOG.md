@@ -1,5 +1,26 @@
 # 施工日志
 
+## 2026-08-03 21:00 CST / Tencent Cloud Ubuntu 22.04 / 创建部署准备分支
+
+### 实际操作
+
+- 在同步的 `main` 上提交并 push 开工计划 `e608d0f`。
+- 创建并 push `backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057`。
+- 从同一提交创建 `deployment/tencent-cloud-ubuntu-22-04-prep`，切换后 push 并设置 upstream。
+
+### 验证与漂移
+
+- 目标分支和备份在创建前均不存在；创建过程无命名冲突、无合并、无 force push。
+- `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package*.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 继续作为用户改动隔离，未暂存、未提交。
+- 本轮零应用代码和服务器变更，不适用新的工程或截图门禁；未连接腾讯云，未触碰既有站点。
+- 当前无需回滚；如停止该方向，保留分支历史并不再施工即可。
+
+### GitHub 状态
+
+- 开工计划与 `main` push：成功。
+- 备份 push：成功。
+- 准备分支初始 push：成功；收尾文档提交与最终 push 状态待回写。
+
 ## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
 
 - `main` 推广与交接提交：`079d3def0e06b14cbe1d53d0d745b02095fe6923`，已成功 push 到 `origin/main`。
