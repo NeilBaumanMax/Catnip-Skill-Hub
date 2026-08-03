@@ -2,6 +2,10 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-03 21:02 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 最终 Git 回写
+
+- `801ced3ff208ff9c713eac014742883f2dc978eb` 已 push 到同名 origin 分支；本条状态回写提交后再次 push。
+
 ## 2026-08-03 21:00 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 完成记录
 
 - 当前分支：`deployment/tencent-cloud-ubuntu-22-04-prep`，已跟踪 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`。
