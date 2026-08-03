@@ -1,5 +1,37 @@
 # 施工日志
 
+## 2026-08-03 20:18 CST / Main Branch Promotion / UI_fix 快进推广到 main
+
+### 本轮计划回放
+
+保护主工作区未提交工具文件，在隔离 worktree 中保存旧 `main` 截图基线，将已推送并建立远端备份的 `UI_fix` 快进到 `main`，执行完整工程、HTTP 与视觉门禁，再同步权威分支文档并推送。
+
+### 实际修改
+
+- `UI_fix` 先新增并 push 开工计划提交 `b3697c586b2a08f36ccf4f5a1e4583203e993018`。
+- 创建并远端核验 `backup/pre-main-ui-fix-merge-20260803-1954`，指向同一安全基线。
+- 隔离 `main` 从 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 通过 `git merge --ff-only UI_fix` 快进，无冲突。
+- 更新 `AGENTS.md`、`CODEX_MASTER_REQUIREMENTS.md`、`CONSTRUCTION_PLAN.md`、`TEST_METRICS.md` 和最新交接，使 `main` 成为唯一当前开发分支。
+
+### 失败与复测记录
+
+1. 修改前旧 `main` 首次启动：Turbopack 报告跨 worktree 的 `node_modules` 符号链接指向文件系统根外，退出不可用。原因是为复用依赖建立的临时符号链接不符合 Turbopack 约束；删除该临时链接并在隔离 worktree 执行 `npm ci` 后，旧 `main` 预览与 12 张基线截图成功。
+2. 快进后，仍运行的旧开发进程热加载新代码时报告无法解析 `@phosphor-icons/react`。原因是依赖目录仍对应合并前锁文件；停止旧进程并按合并后的锁文件重新 `npm ci`，随后 57/57 测试、构建、HTTP 和截图全部通过。
+3. `npm ci` 成功但 npm audit 摘要报告 4 moderate、4 high。该警告没有导致安装或门禁失败；本轮不执行可能改变锁文件和扩大范围的自动修复，留作明确依赖治理任务。
+
+### 最终验证
+
+- `npm test`：57/57；lint、typecheck、db:check、生产 build、`git diff --check`：成功。
+- HTTP：`/`、`/skills/project-brief`、`/recommend`、`/api/health` 均为 `200`。
+- 修改前与修改后截图均为 12/12；修改后重点读图无布局断裂、重叠或顶部 Logo 回归。截图验收：通过（自动验收）。
+- 主工作区 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package*.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 保持用户原样，未暂存、未提交。
+
+### 漂移与回滚
+
+- 产品、品牌、管理员、下载/安装边界与服务器暂停状态未改变；仅当前开发分支从 `UI_fix` 变为 `main`。
+- 当前无需回滚。若需撤销推广，不重写 `main` 历史；审阅推广提交范围后使用普通 revert，并重跑完整门禁。
+- 最终 `main` 提交与 push 状态在收尾后追加回写。
+
 ## 2026-08-01 00:42 CST / Documentation Handoff Sync / 新对话权威交接
 
 ### 本轮计划回放

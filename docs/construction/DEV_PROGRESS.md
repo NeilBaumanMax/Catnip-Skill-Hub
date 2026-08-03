@@ -2,6 +2,26 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-03 20:18 CST / Main Branch Promotion / 完成记录
+
+### 完成状态
+
+- `main` 已从 `059ab6a50f5cba20aa756811e36d2ad1afee2c28` 快进到合并前已备份的 `UI_fix` 基线 `b3697c586b2a08f36ccf4f5a1e4583203e993018`，无冲突、无历史重写。
+- `AGENTS.md`、施工主要求、总体计划、测试指标和最新 HANDOFF 已统一把 `main` 设为后续开发分支；历史分支全部保留。
+- 主工作区既有未提交工具改动全程隔离；合并与验证在独立 worktree 完成，未触碰服务器。
+
+### 验证摘要
+
+- 修改前旧 `main` 与修改后新 `main` 均完成首页、详情、推荐 3 页面 x 4 视口截图；修改后 12/12 生成，重点读图通过，截图验收：通过（自动验收）。
+- `npm test` 57/57、lint、typecheck、db:check、生产 build、`git diff --check` 全部通过；首页、详情、推荐和健康检查均为 `200`。
+- 修改前预览首次因跨 worktree `node_modules` 符号链接被 Turbopack 拒绝；改为隔离 `npm ci` 后复测成功。合并后旧进程热加载短暂缺少新增 Phosphor 包；按新锁文件重新 `npm ci` 后全部门禁通过。
+- 两次 `npm ci` 均报告 4 个 moderate 与 4 个 high 依赖审计项；本轮不擅自执行可能破坏锁文件的 `npm audit fix`，作为后续依赖治理风险保留。
+
+### GitHub 与下一状态
+
+- 开工计划提交 `b3697c586b2a08f36ccf4f5a1e4583203e993018` 已 push；远端备份 `backup/pre-main-ui-fix-merge-20260803-1954` 已核验指向同一提交。
+- 收尾文档提交和 `main` push 完成后回写最终提交；后续所有新施工从 `main` 开始，并继续先计划、备份、验证、文档、提交和 push。
+
 ## 2026-08-03 19:54 CST / Main Branch Promotion / 开工计划
 
 ### 本轮目标

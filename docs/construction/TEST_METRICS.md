@@ -113,7 +113,7 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 
 ## 前端视觉优化分支门禁
 
-- 当前前端视觉修改只在 `UI_fix` 实施；最新公共前台实现提交为 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`。`SKill-hub-ui`、`frontend/visual-optimization` 和 `backend-server-deployment` 作为历史/隔离分支保留但不承接当前 UI 方案，main 保持既有验收基线。
+- 当前前端视觉修改只在 `main` 实施；`UI_fix` 已于 2026-08-03 经完整门禁后快进推广到 `main`。`UI_fix`、`SKill-hub-ui`、`frontend/visual-optimization` 和 `backend-server-deployment` 作为历史/隔离分支保留但不承接后续开发。
 - 每轮先由 Neil Bauman 给出具体视觉目标，再记录 `01-public-web.md` 开工计划和开发前远端备份；不得把“优化前端”扩展成后端、数据、认证或部署重构。
 - 每次可见修改后至少执行 `npm test`、lint、typecheck、生产 build，并通过当前局域网 URL 检查首页及受影响路由。
 - 实时预览不替代提交前验证；不得在明文局域网环境启用真实管理员凭据。

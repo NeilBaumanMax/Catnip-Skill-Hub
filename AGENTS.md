@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 0 至 Phase 7 的功能与本地/局域网里程碑均已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。当前开发分支为 `UI_fix`，最新公共前台实现提交为 `6b0b786ce09d72f0cd57fea10a0f4240c8c58b12`，已完成顶部 Logo 去重、单层毛玻璃 header、分类单选和标签下拉多选；当前停点是等待 Neil Bauman 验收或给出下一条明确 UI 指令。`main`、`SKill-hub-ui`、`frontend/visual-optimization` 与 `backend-server-deployment` 均保留但不是当前分支。没有新的部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
+Phase 0 至 Phase 7 的功能与本地/局域网里程碑均已完成；服务器只读评估已记录，但 Neil Bauman 已明确暂停服务器部署。Neil Bauman 已于 2026-08-03 指示把 `UI_fix` 快进合并到 `main`，后续开发统一在 `main`；推广基线为 `b3697c586b2a08f36ccf4f5a1e4583203e993018`，包含顶部 Logo 去重、单层毛玻璃 header、分类单选和标签下拉多选。`UI_fix`、`SKill-hub-ui`、`frontend/visual-optimization` 与 `backend-server-deployment` 均保留但不再是当前开发分支。没有新的部署指令和重新完成服务器门禁前，不得恢复服务器写操作。
 
 ## 禁止事项
 
