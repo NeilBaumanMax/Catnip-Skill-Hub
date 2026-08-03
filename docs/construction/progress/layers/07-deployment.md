@@ -2,6 +2,25 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-03 20:57 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 开工计划
+
+### 本轮目标
+
+- 从 `main` 创建 `deployment/tencent-cloud-ubuntu-22-04-prep`，为腾讯云 Ubuntu 22.04 后续部署准备建立独立、可回滚、远端可见的施工入口。
+- 本轮只做 Git 与文档准备；不把“创建分支”写成服务器环境已验收或部署已开始。
+
+### 安全边界
+
+- 开发前基线：`cde94fe98111cd71ed6ed4bb341a2bf83423bbf9`。
+- 计划备份：`backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057`。
+- 历史 `backend-server-deployment`、`main` 和全部旧备份保留。
+- 禁止连接后直接写服务器，禁止触碰既有 `catnip-intro`；Docker、nginx、端口、DNS、HTTPS、防火墙、生产秘密和数据迁移均不在本轮范围。
+
+### 验证计划
+
+- 核验目标分支和备份远端引用、upstream、HEAD、分歧与工作区保护状态。
+- 本轮没有代码或运行配置修改，因此不执行也不虚报 unit、lint、typecheck、build、Compose 或服务器验收。
+
 ## 2026-07-27 / 基线
 
 - 状态：未开始。

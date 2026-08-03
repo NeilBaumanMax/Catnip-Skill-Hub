@@ -2,6 +2,30 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-03 20:57 CST / Tencent Cloud Ubuntu 22.04 Deployment Prep / 开工计划
+
+### 本轮目标
+
+按 Neil Bauman 最新明确指令，从已验证并同步的 `main` 创建腾讯云 Ubuntu 22.04 服务器部署准备分支 `deployment/tencent-cloud-ubuntu-22-04-prep`，作为后续部署评估和施工的唯一候选分支。
+
+### 当前状态与边界
+
+- 当前 `main` 为 `cde94fe98111cd71ed6ed4bb341a2bf83423bbf9`，与 `origin/main` 分歧 `0 0`。
+- 目标分支与计划备份均不存在；历史 `backend-server-deployment` 保留但不复用、不删除。
+- 主工作区已有 `.gitignore`、`AGENTS.md`、`next-env.d.ts`、`package*.json`、`.agents/`、`scripts/screenshots.ts`、`skills-lock.json` 用户工具改动，全部继续隔离保护。
+- 本轮只建立分支、远端备份和自包含交接，不连接腾讯云，不安装软件，不修改 nginx、Docker、端口、DNS、HTTPS、防火墙、生产秘密或既有 `catnip-intro`。
+
+### GitHub 与验证计划
+
+- 提交并 push 本开工计划后，从计划提交创建 `backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057` 并远端核验。
+- 从同一安全基线创建并切换到 `deployment/tencent-cloud-ubuntu-22-04-prep`，push 并设置 upstream。
+- 核验本地/远端分支 SHA、分歧、Remote、用户改动与服务器暂停边界；本轮无应用代码变化，不执行或虚报新的工程测试。
+
+### 回滚预案
+
+- 分支创建不改变 `main` 应用基线；如准备分支方向取消，保留历史并停止使用，不 force push、不删除既有分支。
+- 未来任何服务器写施工必须收到 Neil Bauman 新的明确指令，并重新满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的只读评估、回滚、旧站保护与完整门禁。
+
 ## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
 
 - 推广与交接提交：`079d3def0e06b14cbe1d53d0d745b02095fe6923`（`docs: promote UI baseline to main`），已成功 push 到 `origin/main`。
