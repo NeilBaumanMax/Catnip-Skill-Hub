@@ -2,6 +2,14 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 CST / 服务器部署恢复准备 / 开工计划
+
+- Neil Bauman 已明确表示准备开始服务器部署；本轮先完成本地可交付准备和只读预检，不执行服务器写操作。
+- 目标为 Ubuntu 22.04 x86_64、2 vCPU、约 4 GiB 内存的腾讯云实例；既有 nginx/80、Next.js/3000、Go/4000 与 `/home/ubuntu/catnip-intro` 保持不变。
+- 计划消除 SeaweedFS arm64 硬编码，验证 amd64 构建；建立只读主机预检；把未来 Catnip 容器入口固定为 `127.0.0.1:18080`，由宿主 nginx 独立 8080 配置回源。
+- 开工前提交为 `05200bc7e5d5f3d1c1536ef375c41fabf52e6371`；计划远端备份为 `backup/pre-server-deployment-readiness-20260807`。
+- 未创建系统盘快照或经确认的异机恢复点前，不安装 Docker、不修改 nginx/安全组/防火墙、不启用生产管理员、不触碰旧站。
+
 ## 2026-08-03 21:02 CST / 腾讯云 Ubuntu 22.04 部署准备分支 / 最终 Git 回写
 
 - `801ced3ff208ff9c713eac014742883f2dc978eb` 已 push 到同名 origin 分支；本条状态回写提交后再次 push。

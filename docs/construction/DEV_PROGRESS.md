@@ -2,6 +2,33 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 服务器部署恢复准备开工计划
+
+### 本轮目标
+
+- 响应 Neil Bauman 最新明确指令，解除“服务器部署暂停”作为当前停点，先完成可审计、可回滚的本地部署准备，不把准备工作写成服务器已部署。
+- 针对目标 Ubuntu 22.04 x86_64、2 vCPU、约 4 GiB 内存和既有站点共存条件，修复当前 Compose 的 arm64 架构阻塞，建立服务器只读预检和独立回环入口门禁。
+- 本轮不安装服务器软件、不修改 nginx、安全组、防火墙、端口、旧站目录、现有进程或生产秘密；实际服务器写施工必须在快照/异机恢复点和只读复核完成后继续。
+
+### 当前状态与保护边界
+
+- 当前分支：`deployment/tencent-cloud-ubuntu-22-04-prep`；开工前提交：`05200bc7e5d5f3d1c1536ef375c41fabf52e6371`，与同名远端跟踪分支分歧为 `0 0`。
+- 既有远端准备备份 `backup/pre-tencent-ubuntu22-deployment-prep-20260803-2057` 保留；本轮计划新增唯一备份 `backup/pre-server-deployment-readiness-20260807`。
+- `.gitignore`、`AGENTS.md`、`README.md`、`next-env.d.ts`、`package.json`、`package-lock.json`、`.agents/`、`docs/guide/`、`scripts/screenshots.ts`、`skills-lock.json` 为来源不明的既有用户改动，本轮不覆盖、不暂存、不提交。
+- 目标服务器上的 `catnip-intro`、上传、数据、nginx 80 路由及 3000/4000 现有进程继续视为不可触碰资产。
+
+### 计划修改与验证
+
+- 将 SeaweedFS 构建从硬编码 arm64 改为受校验的 amd64/arm64 架构选择，保持版本固定和每架构 SHA-256 校验。
+- 增加只读服务器预检脚本，输出系统、架构、资源、Swap、磁盘、Docker、端口、服务和旧站保护项，不读取秘密、不修改主机。
+- 增加服务器 Compose 覆盖或等价配置，使 Catnip 容器入口仅绑定 `127.0.0.1:18080`，继续隔离数据库、S3 和应用端口。
+- 执行 shell 语法、Compose config、目标架构镜像构建、`npm test`、lint、typecheck、db:check、生产 build 和 `git diff --check`；任何失败记录原因、修复和复测。
+
+### 回滚预案
+
+- 代码/配置回滚优先 `git revert <本轮实现提交>`，不重写历史；本轮服务器零写操作，因此不产生服务器回滚动作。
+- 后续服务器施工必须先创建腾讯云系统盘快照，或由 Neil Bauman 明确接受并完成经验证的异机备份替代方案；没有恢复点不安装 Docker、不 reload nginx。
+
 ## 2026-08-03 21:02 CST / Tencent Cloud Ubuntu 22.04 Deployment Prep / 最终 Git 回写
 
 - 完成与交接提交：`801ced3ff208ff9c713eac014742883f2dc978eb`，已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`。
