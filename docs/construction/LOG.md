@@ -1,5 +1,12 @@
 # 施工日志
 
+## 2026-08-07 02:58 CST / 首次服务器部署 / 镜像构建中间失败与修复
+
+- Docker 官方 Engine 29.7.2、Buildx 0.36.1、Compose 5.4.0 安装成功；`hello-world` 与固定摘要 Alpine 首次/复测均因服务器到 Docker Hub 443 超时失败，确认采用本机干净提交离线构建并经 SSH 导入。
+- 首轮完整 amd64 Compose 构建因 Alpine 3.23 已不再提供固定的 Node `24.17.0-r0` 失败；SeaweedFS 成功，其余并行目标取消。
+- 使用 Alpine 3.23 官方仓库核验 Node `24.18.1-r0`、npm `11.11.0-r0`、Caddy `2.11.4-r0`、PostgreSQL `18.4-r0` 与 su-exec `0.3-r0`；Dockerfile 和架构文档更新 Node 固定版本后，六个 amd64 镜像全部构建成功，Next.js 16.3.0 生产构建通过。
+- 失败发生在本地干净 worktree，服务器新栈尚未启动，旧站全程运行，无需回滚。
+
 ## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 准备实现 Git 回写
 
 - 实现提交 `e12dd64` 已成功 push 到远端准备分支，本地/远端分歧 `0 0`；备份 `backup/pre-server-deployment-readiness-20260807` 保持可用。

@@ -1,5 +1,5 @@
 FROM alpine:3.23 AS base
-RUN apk add --no-cache nodejs=24.17.0-r0 npm=11.11.0-r0
+RUN apk add --no-cache nodejs=24.18.1-r0 npm=11.11.0-r0
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -21,7 +21,7 @@ COPY scripts/migrate.mjs ./scripts/migrate.mjs
 CMD ["node", "scripts/migrate.mjs"]
 
 FROM alpine:3.23 AS runner
-RUN apk add --no-cache nodejs=24.17.0-r0
+RUN apk add --no-cache nodejs=24.18.1-r0
 WORKDIR /app
 ENV NODE_ENV=production
 RUN addgroup -S -g 1001 nodejs \
