@@ -4,6 +4,8 @@
 
 ## 2026-08-07 03:20 CST / 首次腾讯云服务器部署 / 完成记录
 
+- 部署收尾文档提交 `16c2b0d` 已成功 push；本条最终 Git 状态回写后再次 push，生产代码继续为 `9793173`。
+
 - 公网 `http://118.195.247.102` 已上线：宿主 nginx 80 回源 `127.0.0.1:18080` 的 Compose Caddy；PostgreSQL、SeaweedFS 与 app 无宿主端口，旧 3000/4000 已停止。
 - Docker Engine 29.7.2、Buildx 0.36.1、Compose 5.4.0 与 2 GiB Swap 已安装；生产代码发布 `9793173`，环境文件在仓库外且为 `0600`，管理员保持禁用。
 - 服务器无法访问 Docker Hub 时使用本地干净 worktree 构建并离线导入六个 amd64 目标；Node Alpine pin 与代理同源判断的中间问题均有提交和复测。

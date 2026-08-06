@@ -4,6 +4,8 @@
 
 ## 2026-08-07 03:20 CST / 腾讯云首次公网部署权威交接
 
+- 部署收尾文档提交 `16c2b0d` 已成功 push 到当前远端分支；本条最终状态回写提交后再次 push。服务器发布仍固定为 `9793173`。
+
 ### 当前生产事实
 
 - Catnip Skill Hub 已在 `http://118.195.247.102` 上线。宿主 nginx 监听 80，回源 `127.0.0.1:18080` 的 Docker Compose Caddy；`/`、`/skills/project-brief`、`/recommend` 和 `/api/health` 公网实测 200，健康返回 `postgres-s3`。

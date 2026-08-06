@@ -4,6 +4,8 @@
 
 ## 2026-08-07 03:20 CST / Tencent Cloud Ubuntu 22.04 / 首次公网部署完成记录
 
+- 部署收尾文档提交 `16c2b0d` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条最终状态回写提交后再次 push。
+
 ### 实际完成
 
 - Neil Bauman 确认系统盘快照完成并授权旧站退出后，创建 2 GiB `/swapfile`，从 Docker 官方 Ubuntu 仓库安装 Engine 29.7.2、Buildx 0.36.1 和 Compose 5.4.0；未修改 SSH、UFW 或腾讯云安全组。
