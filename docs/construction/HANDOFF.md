@@ -2,6 +2,12 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 CST / 腾讯云部署准备实现最终 Git 状态
+
+- 实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`，推送后本地/远端分歧 `0 0`。
+- 远端备份 `backup/pre-server-deployment-readiness-20260807` 指向 `349d4e8`；本条为直接后继状态回写。
+- 下一次从下方 2026-08-07 交接继续，先等待 Neil Bauman 确认腾讯云系统盘快照，不得跳过恢复点直接安装 Docker 或修改 nginx。
+
 ## 2026-08-07 CST / 腾讯云服务器部署恢复准备交接
 
 ### 当前状态

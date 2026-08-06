@@ -2,6 +2,11 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 CST / 服务器部署恢复准备 / Git 回写
+
+- 实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；备份 `backup/pre-server-deployment-readiness-20260807` 已保留。
+- 当前停在快照门禁前，服务器未发生写操作。
+
 ## 2026-08-07 CST / 服务器部署恢复准备 / 完成记录
 
 - 多架构 SeaweedFS 已落地，amd64 4.29 镜像完成 checksum、镜像架构和容器版本实测。

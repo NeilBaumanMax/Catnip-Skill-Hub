@@ -2,6 +2,12 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 准备实现 Git 回写
+
+- 部署准备实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本地与远端分歧 `0 0`。
+- 远端开发前备份 `backup/pre-server-deployment-readiness-20260807` 保持指向计划提交 `349d4e8`。
+- 本条为实现提交的直接后继状态回写；服务器仍为零写操作，下一门禁仍是腾讯云系统盘快照确认。
+
 ## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 服务器部署恢复准备完成记录
 
 ### 实际完成
