@@ -2,6 +2,34 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 02:41 CST / Tencent Cloud Ubuntu 22.04 / 首次服务器部署开工计划
+
+### 授权与目标
+
+- Neil Bauman 已确认腾讯云系统盘快照创建完成，并明确表示服务器既有旧站内容可以不再保留；服务器写施工门禁现已开放。
+- 将已验证的 Catnip Skill Hub 提交部署到目标 Ubuntu 22.04 x86_64 主机，先在 `127.0.0.1:18080` 验收完整 Compose 栈，再把宿主 nginx 的 80 入口安全切换到新站。
+- 新站验收成功后停止旧 Next.js/Go 进程；旧工作区不先删除，保留到新站稳定和最终备份完成，避免无必要的不可逆清理。
+
+### 开工状态与远端备份
+
+- 当前分支：`deployment/tencent-cloud-ubuntu-22-04-prep`；基线：`58ad0e30247a2bad50275de093c0f79042f4a8c5`，与远端分歧 `0 0`。
+- 计划远端备份：`backup/pre-first-server-deployment-20260807-0241`；成功 push 并核验后才执行服务器写操作。
+- 主工作区既有 `.gitignore`、AGENTS 截图段、README、next-env、Playwright package hunk、`.agents/`、`docs/guide/`、截图脚本和 skills lock 用户改动继续隔离，不覆盖、不提交、不部署。
+
+### 施工顺序
+
+1. 重新执行只读预检，确认快照由 Neil Bauman 完成、服务器事实未漂移；记录旧 nginx 配置、进程和端口，不读取秘密。
+2. 建立受控 Swap，按 Docker 官方 Ubuntu 仓库安装 Engine、Buildx 与 Compose plugin；不执行无审阅的全量系统升级。
+3. 将已提交 Git 基线作为归档发布到独立 `/opt/catnip-skill-hub`，在 `/etc/catnip-skill-hub` 生成不输出的随机生产秘密并保持管理员禁用。
+4. 构建并启动 PostgreSQL、SeaweedFS、迁移、app 和 Caddy；在 loopback 18080 执行健康、首页、详情、推荐、持久化集成和容器边界验收。
+5. 备份旧 nginx 配置，安装 80 -> 127.0.0.1:18080 的独立配置；`nginx -t` 成功后 reload，公网复测成功后才停止旧 3000/4000 进程。
+6. 创建服务器首份数据库/对象存储备份并记录恢复点、运行状态、失败与回滚命令；不启用管理员、不开放数据库/S3/app 端口、不修改 SSH。
+
+### 回滚
+
+- 新栈异常时停止 Catnip Compose 并保持旧 nginx/旧进程；切换后异常则恢复施工前 nginx 备份，`nginx -t` 后 reload，并按记录恢复旧进程或使用云快照。
+- 不删除 Docker 卷作为排障方式；不使用 force push、reset/clean；任何失败先停止扩展、记录并复测。
+
 ## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 准备实现 Git 回写
 
 - 部署准备实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本地与远端分歧 `0 0`。

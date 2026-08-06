@@ -2,6 +2,13 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 02:41 CST / 首次腾讯云服务器部署 / 开工计划
+
+- Neil Bauman 已确认系统盘快照完成并授权淘汰旧站；先保留旧工作区，只在新站 loopback 验收和 nginx 80 切换成功后停止旧进程。
+- 开工基线 `58ad0e30247a2bad50275de093c0f79042f4a8c5`；计划远端备份 `backup/pre-first-server-deployment-20260807-0241`。
+- 施工包括受控 Swap、Docker 官方仓库、提交归档发布、受限秘密、amd64 Compose 构建、持久化/健康验证、nginx 可回滚切换和首份服务器备份。
+- 管理员保持禁用；不开放 PostgreSQL、S3、app 或 Caddy 18080 公网端口，不修改 SSH、域名、DNS 或 HTTPS。
+
 ## 2026-08-07 CST / 服务器部署恢复准备 / Git 回写
 
 - 实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；备份 `backup/pre-server-deployment-readiness-20260807` 已保留。
