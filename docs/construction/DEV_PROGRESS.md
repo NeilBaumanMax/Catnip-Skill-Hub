@@ -2,6 +2,29 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 03:20 CST / Tencent Cloud Ubuntu 22.04 / 首次公网部署完成记录
+
+### 实际完成
+
+- Neil Bauman 确认系统盘快照完成并授权旧站退出后，创建 2 GiB `/swapfile`，从 Docker 官方 Ubuntu 仓库安装 Engine 29.7.2、Buildx 0.36.1 和 Compose 5.4.0；未修改 SSH、UFW 或腾讯云安全组。
+- 服务器无法连接 Docker Hub 443，改在干净临时 worktree 构建六个 `linux/amd64` 生产目标并离线导入；Node Alpine 固定版本从失效的 24.17.0 更新为 24.18.1。
+- 以已提交归档发布到 `/opt/catnip-skill-hub/releases/9793173`，生产环境文件放在 `/etc/catnip-skill-hub/env` 且为 `root:root 0600`；管理员邮箱和密码哈希为空。
+- PostgreSQL、SeaweedFS、迁移、app、Caddy 全栈健康；Caddy 只绑定 `127.0.0.1:18080`。修复 nginx 反代下同源判断后，正常同源写请求到达管理员未配置的 503，伪造跨源保持 403。
+- 备份旧 nginx 配置并通过 `nginx -t` 后，将公网 80 切换到新站；首页、详情、推荐和健康接口从本机公网均为 200。随后精确停止旧 Next.js/Go 进程，3000/4000 不再监听；旧 `/home/ubuntu/catnip-intro` 目录和资产保留。
+- 首份有效生产备份 `/var/backups/catnip-skill-hub/20260807-030544` 通过 SHA-256，并在隔离 PostgreSQL/对象卷恢复 5 张表和 120 个文件；整栈 `down` / `up --wait` 后仍为 5 张表且全部服务 healthy。
+
+### 验证结果
+
+- `npm test` 57/57；lint 0 error/3 个既有 warning；typecheck、db:check、Webpack production build、amd64 Docker production build、`npm audit --omit=dev` 0 vulnerabilities。
+- 公网生产截图 4 页面 × 4 视口共 16 张生成成功；重点读取桌面和手机首页，无资源缺失、文字重叠或布局断裂。截图验收：通过（自动验收，不等于 Neil Bauman 主观确认）。
+- 服务器最终只监听公网 22/80 与回环 18080；数据库、S3、app 和旧 3000/4000 无宿主公网监听。2 GiB Swap 生效，系统盘约 36 GiB 可用，近期 Compose 日志无 error/fatal/panic。
+
+### 剩余风险与停点
+
+- 当前为直接 IP HTTP 公共浏览入口；域名、DNS、HTTPS、管理员生产凭据、登录限流、异机/自动备份、监控和告警未完成。
+- UFW 仍 inactive，腾讯云安全组未在本轮变更；122 个系统包可升级但无 reboot-required。本轮不在未审阅 SSH/安全组影响的情况下贸然启用防火墙或执行全量升级。
+- 当前生产入口：`http://118.195.247.102`。下一轮默认维护现状；任何管理员启用、HTTPS、系统更新、防火墙/安全组或旧目录删除都需要独立计划与授权。
+
 ## 2026-08-07 02:41 CST / Tencent Cloud Ubuntu 22.04 / 首次服务器部署开工计划
 
 ### 授权与目标

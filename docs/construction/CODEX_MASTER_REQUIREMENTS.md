@@ -63,6 +63,6 @@
 - Phase 6 统计只接受阅读、ZIP 下载点击、安装命令复制和来源跳转四种增量事件；当前 Repository 为匿名进程内开发状态，不做唯一访客、用户画像或持久化承诺。
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
-- Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已于 2026-08-07 明确要求恢复部署准备。当前只做本地可交付准备和服务器只读复核，不得把准备状态声称为 Docker 已安装、nginx 已变更、公网已部署、HTTPS 或生产验收完成。
-- 当前部署准备分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`；`main` 继续是公共开发基线，历史分支保留。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
-- 服务器写施工必须满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的恢复点、架构、依赖、容量和既有站点保护门禁；没有系统盘快照或经 Neil Bauman 明确选择且已验证的异机恢复方案时，不安装 Docker、不 reload nginx。
+- Phase 7 首次服务器部署已于 2026-08-07 完成：`http://118.195.247.102` 经宿主 nginx 80 回源到仅监听 `127.0.0.1:18080` 的 Compose 栈，数据库、对象存储和 app 无宿主公网端口。系统盘快照、服务器首份备份、隔离恢复、整栈重启和公网多视口验收均有记录。
+- 当前部署分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，服务器代码发布提交为 `9793173`；`main` 继续是公共开发基线，历史分支保留。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
+- 当前仍是直接 IP HTTP：管理员邮箱/密码哈希保持空值，域名、HTTPS、UFW/安全组收口、系统更新、异机备份和监控未完成。后续生产写操作继续遵守 `docs/deployment/SERVER_DEPLOYMENT.md`，不得把当前公开浏览验收扩大为 HTTPS 管理入口或完整运维闭环。

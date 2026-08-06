@@ -2,6 +2,36 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 03:20 CST / 腾讯云首次公网部署权威交接
+
+### 当前生产事实
+
+- Catnip Skill Hub 已在 `http://118.195.247.102` 上线。宿主 nginx 监听 80，回源 `127.0.0.1:18080` 的 Docker Compose Caddy；`/`、`/skills/project-brief`、`/recommend` 和 `/api/health` 公网实测 200，健康返回 `postgres-s3`。
+- 服务器为 Ubuntu 22.04.5 x86_64、2 vCPU、3.6 GiB RAM、2 GiB Swap；Docker Engine 29.7.2、Buildx 0.36.1、Compose 5.4.0。公网只监听 22/80，18080 仅回环，PostgreSQL/S3/app/旧 3000/4000 无宿主公网监听。
+- 当前代码发布为 `9793173`，目录 `/opt/catnip-skill-hub/releases/9793173`，`current` 指向该目录。环境文件 `/etc/catnip-skill-hub/env` 为 `root:root 0600`；管理员邮箱和密码哈希为空，管理登录安全拒绝。
+- 旧 `/home/ubuntu/catnip-intro` 工作区和未提交资产仍保留；旧 Next.js/Go 进程在新站公网验收后按 Neil Bauman 授权停止，没有删除目录。
+
+### 恢复点与验证
+
+- 腾讯云施工前系统盘快照由 Neil Bauman 确认完成。Git 开工备份 `backup/pre-first-server-deployment-20260807-0241` 指向 `643ef13`，已 push。
+- nginx 旧配置备份：`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf`。
+- 有效生产数据备份：`/var/backups/catnip-skill-hub/20260807-030544`，SHA-256 通过；隔离恢复 5 张 PostgreSQL 表和 120 个对象文件成功。`20260807-030452` 有 `FAILED.txt`，不得用于恢复。
+- 整栈 `docker compose down` 后 `up --no-build -d --wait` 成功，数据库表数量保持 5，迁移退出 0，四个长期服务 healthy。
+- 工程：57/57、lint 0 error/3 warning、typecheck、db:check、Webpack production build、Linux amd64 Docker production build、audit 0。公网截图 4 页面 × 4 视口共 16 张，桌面/手机重点读图通过。
+
+### 已知风险与下一步
+
+- 当前只是直接 IP HTTP 公共浏览入口。域名、DNS、HTTPS、管理员生产凭据、登录限流、异机/自动备份、监控和告警均未完成；未完成这些前不要启用管理员。
+- UFW inactive，腾讯云安全组未在本轮变更；122 个系统包待更新且当前无 reboot-required。SSH、防火墙、安全组和系统升级必须另开维护轮，先确认不会锁死 SSH并保留回滚。
+- 服务器到 Docker Hub 443 会超时；下次发布应继续在可信干净环境构建 amd64 镜像后导入，或先单独修复服务器出站网络，不要临时取消版本固定。
+- 下一轮默认先只读核验公网健康、Compose、磁盘/Swap、监听和 Git。除非 Neil Bauman 明确要求，不删除旧工作区、不启用管理员、不改 DNS/HTTPS/防火墙/安全组。
+
+### Git 与工作区
+
+- 当前分支 `deployment/tencent-cloud-ubuntu-22-04-prep`；代码发布提交 `9793173`，收尾文档提交及最终远端 SHA 将在 push 后追加回写。
+- 主工作区既有 `.gitignore`、AGENTS 截图段、README、next-env、Playwright package hunk、`.agents/`、`docs/guide/`、`scripts/screenshots.ts` 和 `skills-lock.json` 继续作为用户改动隔离；本轮不得整文件暂存 AGENTS 或 package 文件。
+- 回滚顺序：先停 Compose；需要恢复旧入口时恢复 nginx 备份、`nginx -t`、reload，再按历史方式恢复旧进程；整机级问题使用腾讯云快照。禁止 force push、reset/clean 或删除数据卷排障。
+
 ## 2026-08-07 CST / 腾讯云部署准备实现最终 Git 状态
 
 - 实现提交 `e12dd64` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`，推送后本地/远端分歧 `0 0`。

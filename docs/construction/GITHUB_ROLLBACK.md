@@ -32,6 +32,8 @@ Phase 7 局域网访问施工前基线：`7727c2a871c50f90f978e6472f7cca234f2e8a
 
 Phase 7 服务器部署恢复准备计划提交：`349d4e8`；远端备份：`backup/pre-server-deployment-readiness-20260807`，已 push 并核验；本轮准备不包含服务器写操作。
 
+Phase 7 首次腾讯云服务器部署开工基线：`643ef13`；远端备份：`backup/pre-first-server-deployment-20260807-0241`，已 push 并核验。生产代码发布为 `9793173`；服务器回滚还可使用施工前系统盘快照、`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf` 和已验证的数据备份 `20260807-030544`。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

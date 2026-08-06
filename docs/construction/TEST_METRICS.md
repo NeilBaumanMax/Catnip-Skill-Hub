@@ -120,6 +120,17 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - 腾讯云系统盘快照或经 Neil Bauman 明确选择且已验证的异机恢复方案是安装 Docker、修改 nginx 或安全组之前的硬门禁。
 - 完整工程仍须执行 `npm test`、lint、typecheck、db:check、生产 build、Compose config、shell 语法和 `git diff --check`；服务器只读准备不等于公网部署验收。
 
+## Phase 7 腾讯云首次部署门禁
+
+- 写施工前必须有 Neil Bauman 确认的系统盘快照、已 push 的开发前 Git 备份和最新只读预检；生产环境文件必须在仓库外且为 `root:root 0600`。
+- 所有生产镜像必须核验为 `linux/amd64`；迁移退出 0，PostgreSQL、SeaweedFS、app 与 Caddy healthy，数据库/S3/app 无宿主端口，Caddy 只监听 `127.0.0.1:18080`。
+- nginx 修改前保留配置备份；`nginx -t` 成功后才 reload。公网只通过 80 访问，首页、详情、推荐和 `/api/health` 返回成功，健康接口明确为 `postgres-s3`。
+- 反代后的同源写请求必须通过，伪造跨源仍返回 403；管理员配置为空时管理登录安全失败，不得在直接 IP HTTP 上启用真实管理员凭据。
+- PostgreSQL custom dump 与 SeaweedFS 数据归档必须带校验和，并在隔离数据库和临时对象卷真实恢复；整套 Compose `down` / `up --wait` 后数据表数量和健康状态保持一致。
+- 停止旧站前先完成新站 loopback 和公网验证；停止后确认 3000/4000 不再监听并再次公网复测。旧工作区默认保留，不以删除目录作为切换步骤。
+- 执行 1440、1024、768、390 四视口的公网截图并读图；执行 `npm test`、lint、typecheck、db:check、production audit、生产构建与 `git diff --check`。沙箱造成的失败必须记录，使用等价非沙箱或 Docker 构建复测。
+- 验收记录必须明确剩余的域名/HTTPS、系统补丁、UFW/安全组、异机备份、监控和管理员入口风险；直接 IP HTTP 浏览成功不等于完整生产安全验收。
+
 ## 前端视觉优化分支门禁
 
 - 当前前端视觉修改只在 `main` 实施；`UI_fix` 已于 2026-08-03 经完整门禁后快进推广到 `main`。`UI_fix`、`SKill-hub-ui`、`frontend/visual-optimization` 和 `backend-server-deployment` 作为历史/隔离分支保留但不承接后续开发。

@@ -1,5 +1,33 @@
 # 施工日志
 
+## 2026-08-07 03:20 CST / 首次腾讯云公网部署 / 完成与失败复测记录
+
+### 生产变更
+
+- 开工计划 `643ef13` 与远端备份 `backup/pre-first-server-deployment-20260807-0241` 成功 push 后才进行服务器写操作；Neil Bauman 已确认系统盘快照。
+- 建立 2 GiB Swap，安装 Docker Engine 29.7.2、Buildx 0.36.1、Compose 5.4.0；生产环境文件为仓库外 `root:root 0600`，管理员保持禁用。
+- 生产代码发布为 `9793173`；宿主 nginx 80 回源 `127.0.0.1:18080`，数据库/S3/app 无宿主端口。旧 3000/4000 进程在新站公网验证后正常 TERM 退出，旧工作区保留。
+- nginx 施工前配置备份：`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf`；有效数据备份：`/var/backups/catnip-skill-hub/20260807-030544`。
+
+### 失败、原因、修复与复测
+
+1. 服务器 `hello-world` 和固定 Alpine 拉取均因到 Docker Hub 443 超时失败；改为本地干净 worktree 构建 `linux/amd64` 镜像、压缩传输和服务器 `docker load`，六个生产目标架构核验并成功启动。
+2. 首轮 amd64 构建因 Alpine 3.23 已移除 Node `24.17.0-r0` 失败；核验官方仓库后更新到 `24.18.1-r0`，提交 `51dde26`，完整 Compose 构建通过。
+3. 首次反代管理同源请求返回 403；原因是应用只用内部 `request.url` 判断 Origin。`src/lib/auth/request.ts` 受限采用 `x-forwarded-host` 与合法 `x-forwarded-proto`，补充正反测试，提交 `d79ee63`；公网同源最终返回预期管理员未配置 503，跨源仍为 403。
+4. nginx reload 后第一次 loopback 健康请求瞬时 404；立即检查生效配置、Host 路由与公网入口，随后重复请求均为 200，无持续故障。
+5. 首轮 SeaweedFS 备份辅助容器无权读取内部元数据，tar 失败；退出 trap 自动恢复健康栈，失败目录 `20260807-030452` 写入 `FAILED.txt`。改用只读挂载与容器内临时 root 后，`20260807-030544` 成功并通过 SHA-256。
+6. 第一次隔离 PostgreSQL 恢复探针命中 initdb 的瞬时就绪窗口，`pg_restore` 遇到数据库正在关闭；临时容器/卷自动清理。改为连续四次稳定 ready 后复测，5 张表恢复成功；SeaweedFS 120 文件、800 KiB 恢复成功。
+7. 公网截图首次因本机沙箱禁止 `tsx` IPC 管道而 `listen EPERM`；授权环境复跑生成 16/16 截图并读图通过。
+8. `npm audit --omit=dev` 首次因沙箱 DNS `ENOTFOUND` 失败；联网复跑为 0 vulnerabilities。
+9. `npm run build` 在普通与申请提升的本机环境两次因 Turbopack CSS 子进程不能绑定端口失败；`npm run build -- --webpack` 复测成功，且此前干净 Linux/amd64 Docker 生产构建已使用默认构建流程成功。
+10. 一次最终只读采集命令因 Bash `printf` 把 `--` 当选项退出；修正为显式 `%s` 格式后完整收集服务器状态，未发生写入。
+
+### 最终验收与回滚
+
+- 57/57、lint 0 error/3 warning、typecheck、db:check、Webpack build、amd64 Docker build、audit 0、健康/公共路由、同源安全、隔离恢复、整栈重启和公网 16 张截图均通过。
+- 当前无需回滚。应用异常优先停止 Compose；入口异常从 nginx 备份恢复并 `nginx -t` 后 reload；整机异常使用施工前腾讯云快照。数据恢复只使用有效备份 `20260807-030544`，不得使用带 `FAILED.txt` 的目录。
+- 未完成项：域名/HTTPS、管理员入口、UFW/安全组复核、122 个系统更新、异机/自动备份、监控和告警。
+
 ## 2026-08-07 02:58 CST / 首次服务器部署 / 镜像构建中间失败与修复
 
 - Docker 官方 Engine 29.7.2、Buildx 0.36.1、Compose 5.4.0 安装成功；`hello-world` 与固定摘要 Alpine 首次/复测均因服务器到 Docker Hub 443 超时失败，确认采用本机干净提交离线构建并经 SSH 导入。

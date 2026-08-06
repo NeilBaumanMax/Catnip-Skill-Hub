@@ -1,13 +1,25 @@
-# 服务器部署准备
+# 服务器部署与运维
 
-本文件记录目标服务器只读评估、暂停历史和 2026-08-07 恢复部署准备后的施工门禁。当前仍没有在服务器上安装 Docker、修改 nginx、改变防火墙、重启服务或部署 Catnip Skill Hub，不得写成服务器已部署。
+本文件记录目标服务器的只读评估、暂停历史、首次部署事实、回滚入口与剩余运维门禁。2026-08-07 已完成 Catnip Skill Hub 的直接 IP HTTP 部署；历史“尚未部署”段只作为当时证据，不代表当前状态。
 
-## 当前决定（2026-08-07）
+## 当前生产状态（2026-08-07）
 
-- Neil Bauman 已明确表示准备开始服务器部署，历史暂停不再是当前停点；先完成本地可交付准备和服务器只读复核，再单独进入服务器写施工。
-- 暂不使用域名；未来首轮服务器预览计划直接使用独立端口 `http://118.195.247.102:8080`。
-- 2026-07-29 评估时没有腾讯云系统盘快照。实际写施工前必须重新核验并优先创建系统盘快照；若 Neil Bauman 选择替代方案，必须先完成经验证的异机备份和恢复路径。
-- 当前只授权准备工作，不把“准备开始”扩大为安装 Docker、修改 nginx/安全组或启用生产秘密；这些动作必须在恢复点和只读复核通过后逐项执行。
+- 公共入口：`http://118.195.247.102`。宿主 nginx 监听 80，回源到只监听 `127.0.0.1:18080` 的 Catnip Caddy。
+- 发布代码：`9793173`；发布目录 `/opt/catnip-skill-hub/releases/9793173`，`/opt/catnip-skill-hub/current` 指向该目录。生产镜像均为 `linux/amd64`。
+- 服务：PostgreSQL 18.4、SeaweedFS 4.29、迁移、Next.js 16.3.0 app 与 Caddy 2.11.4 由 Docker Compose 管理；迁移退出 0，其余长期服务 healthy。
+- 网络：宿主只监听 SSH 22、nginx 80 和回环 18080；数据库、S3 与 app 不暴露宿主端口，旧 3000/4000 进程已按 Neil Bauman 明确授权停止。
+- 资源：2 vCPU、3.6 GiB RAM、2 GiB `/swapfile`、系统盘约 36 GiB 可用。UFW 仍 inactive，腾讯云安全组未在本轮变更。
+- 秘密：`/etc/catnip-skill-hub/env` 为 `root:root 0600`，不在发布目录和 Git 中；管理员邮箱与密码哈希为空，直接 IP HTTP 下管理登录保持禁用。
+- 备份：首份有效备份为 `/var/backups/catnip-skill-hub/20260807-030544`，含 PostgreSQL custom dump、SeaweedFS 归档、manifest 与 SHA-256；已在隔离数据库/对象卷真实恢复。`20260807-030452` 带 `FAILED.txt`，不可用于恢复。
+- nginx 回滚文件：`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf`；施工前腾讯云系统盘快照由 Neil Bauman 确认完成。
+- 旧 `/home/ubuntu/catnip-intro` 工作区及其未提交资产仍保留，没有删除、reset 或 clean；只有旧运行进程停止。
+- 未完成：域名、DNS、HTTPS、管理员生产凭据、登录限流、UFW/安全组复核、122 个系统更新、异机备份、自动备份、监控和告警。
+
+## 首次部署决定（2026-08-07）
+
+- Neil Bauman 确认系统盘快照完成并授权淘汰旧站后，服务器写门禁开放；新站先在 loopback 验收，再切换 nginx 80，最后停止旧进程。
+- 暂不使用域名；由于旧站可淘汰，最终直接复用公网 80，而非准备阶段预留的 8080 共存入口。
+- 管理员保持禁用；本轮不修改 SSH、腾讯云安全组、UFW、DNS 或 HTTPS。
 
 ## 2026-08-07 本地部署准备状态
 
@@ -17,7 +29,7 @@
 - `scripts/server-preflight.sh` 只读取系统、容量、Swap、磁盘、Docker、systemd、TCP 监听和旧站 Git 状态，不安装软件、不读取环境秘密、不修改主机。
 - `deploy/nginx/catnip-skill-hub-8080.conf.example` 是未来独立 8080 入口候选配置；只有备份现有 nginx、`nginx -t` 通过并准备好恢复命令后才可安装和 reload。
 
-## 已核验服务器事实
+## 部署前已核验服务器事实（历史基线）
 
 - 主机：`118.195.247.102`，腾讯云 CVM，Ubuntu 22.04.5 LTS，Linux 5.15，x86_64。
 - 登录：`ubuntu` 公钥登录成功，具备无密码 sudo；`root` SSH 登录被拒绝。不得修改 SSH 配置或复制私钥。
@@ -27,7 +39,7 @@
 - 网络：nginx 监听 80；22、80、3000、4000 当时可从公网访问，443 和 8080 未监听。UFW 未启用，主机 INPUT 默认接受并带腾讯云黑名单链。
 - 域名：`catnipent.com` 当时解析到其他 IP，不指向本主机；目标服务器没有已核验 HTTPS/certbot 配置。
 
-## 现有独立站保护边界
+## 旧独立站保护边界（部署前历史）
 
 - nginx 1.18 已启用，`/etc/nginx/sites-available/catnip` 通过 `server_name _` 占用 80。
 - `/` 代理到既有 Next.js `127.0.0.1:3000`；`/api/`、`/uploads/` 和轮播接口代理到 Go 服务 `127.0.0.1:4000`。
@@ -35,16 +47,17 @@
 - Next.js 与 Go 进程没有发现完整可靠的 systemd 服务闭环；服务器重启或 OOM 后不能假设自动恢复。
 - 现有数据与上传量不大，但没有发现可替代云快照的整机/异机恢复点。`/var/backups` 中的系统包记录不构成应用备份。
 
-## 已识别阻塞风险
+## 部署前已识别风险与处理结果
 
-1. 没有云快照：Docker 安装会调整系统服务、网络和 iptables；nginx reload 与系统更新也共享旧站运行环境，失败时无法一键回到部署前整机状态。
-2. 旧站恢复链脆弱：运行进程缺少稳定服务托管，仓库又有未提交资产，不能靠重新 clone 完整恢复。
-3. 内存风险：约 4 GiB 且无 Swap，构建或启动多容器可能触发 OOM 并杀死现有服务。
-4. 架构阻塞已在本地解除，但完整栈仍需在目标 amd64 主机或等价 Linux amd64 环境完成 Compose 构建、启动和持久化复测。
-5. 生产依赖风险：`npm audit --omit=dev` 发现 3 个 high、0 critical，涉及 Next.js 间接依赖的 PostCSS 和 Sharp。npm 建议的 Next.js 大版本降级不适用，禁止直接运行 `npm audit fix`。
-6. 公网面过大：3000/4000 绕过 nginx 可直接访问。未来应由腾讯云安全组关闭公网入口，只允许 nginx 从 loopback 回源。
+1. 云快照：Neil Bauman 已在写施工前创建系统盘快照，整机恢复门禁已满足。
+2. 旧站恢复链：旧工作区继续保留，nginx 原配置另有备份；旧进程已在新站公网验证通过后停止。
+3. 内存风险：已创建 2 GiB Swap；构建转移到本地干净 worktree，服务器只导入镜像，不在 4 GiB 主机做高峰构建。
+4. 架构：六个生产目标均完成 `linux/amd64` 构建与导入，长期服务健康，持久化重启通过。
+5. 生产依赖：Next.js/ESLint 升级到 16.3.0，`npm audit --omit=dev` 为 0 vulnerabilities。
+6. 公网面：3000/4000 已无监听；仅 22/80 公网监听，Docker 入口 18080 仅在 loopback。
+7. 仍需治理：UFW inactive、122 个系统更新、无 HTTPS/域名、无异机自动备份与监控。
 
-## 未来直接 IP 共存拓扑
+## 准备阶段的直接 IP 共存拓扑（历史方案）
 
 首轮不使用域名，也不改写旧站 80 路由。建议拓扑：
 
@@ -65,18 +78,18 @@
 - 腾讯云安全组未来只新增必要的 TCP 8080；3000/4000 收口必须单独验证旧站通过 80 仍正常。
 - 无域名阶段只作为 HTTP 预览，不启用真实管理员凭据或敏感管理操作；正式管理与公网生产验收等待域名和 HTTPS。
 
-## 恢复施工前门禁
+实际执行时 Neil Bauman 已授权淘汰旧站，因此没有开放 8080；当前使用 `80 -> nginx -> 127.0.0.1:18080 -> Catnip Caddy`，旧 3000/4000 不再监听。
 
-1. 本地先修复生产依赖风险，禁止无审阅的自动降级；全量通过 test、lint、typecheck、build 和 audit 复核。
-2. 建立并验证 amd64/多架构 SeaweedFS 镜像和 checksum；本地或 CI 完成目标架构 Compose 构建验证。
-3. 优先创建腾讯云系统盘快照。若 Neil Bauman 明确选择替代方案，必须先把 nginx、旧站目录、上传和数据备份到服务器之外，并记录恢复演练；同盘 tar 不等同快照。
-4. 记录旧站精确启动方式并建立可验证的重启恢复方案；任何重启前先验证。
-5. 评估并增加受控 Swap、容器内存限制和磁盘余量，避免在服务器直接进行高峰内存构建。
-6. 每一步后回归旧站 80、3000/4000 回源、nginx 配置和进程状态；异常即停止，不继续部署。
-7. 先备份再修改 nginx；新增独立配置，运行 `nginx -t` 成功后才 reload，保留显式恢复命令。
-8. 部署成功后建立异机备份、恢复演练、日志/容量/健康监控，再讨论域名、443 和 HTTPS。
+## 已完成的首次部署门禁
 
-## 下一步只读复核
+1. 系统盘快照由 Neil Bauman 确认完成；开发前 Git 备份 `backup/pre-first-server-deployment-20260807-0241` 已远端核验。
+2. 受控 Swap、官方 Docker Engine/Buildx/Compose 安装完成；服务器无法访问 Docker Hub 时改用本地 amd64 构建和离线导入。
+3. loopback 完整栈、迁移、公开路由、反代同源安全、nginx 配置测试与公网 80 切换完成。
+4. 数据库和对象卷首份备份通过 SHA-256、隔离恢复与整栈停机重启验证。
+5. 57/57 测试、lint 0 error/3 warning、typecheck、db:check、Webpack production build、amd64 Docker production build、audit 0 vulnerabilities 和 16 张公网截图通过。
+6. 首次部署完成不等于域名、HTTPS、管理员入口、异机灾备、系统补丁、主机防火墙或监控完成。
+
+## 常用只读复核
 
 从本地通过已核验的 `ubuntu` 公钥连接执行，不复制私钥，不把输出写入仓库：
 
@@ -84,7 +97,7 @@
 ssh ubuntu@118.195.247.102 'sh -s' < scripts/server-preflight.sh
 ```
 
-复核输出必须确认：Ubuntu 22.04、x86_64/amd64、磁盘余量、Swap 状态、Docker 是否安装、80/3000/4000 旧站监听、18080/8080 可用性及 `/home/ubuntu/catnip-intro` 未提交状态。任何事实与 2026-07-29 记录不一致时停止，不继续写施工。
+复核输出现在应确认：Ubuntu 22.04、x86_64/amd64、磁盘余量、2 GiB Swap、Docker 已安装、22/80 与回环 18080 监听、3000/4000 未监听，以及旧 `/home/ubuntu/catnip-intro` 仍保留。任何漂移先记录并判断是否需要回滚。
 
 服务器环境文件从 `deploy/server.env.template` 复制到仓库外或服务器受限目录，权限必须为 `0600`，填入随机秘密后不得回传或提交。直接 IP 的 HTTP 预览保持管理员邮箱和密码哈希为空。
 
@@ -92,6 +105,6 @@ ssh ubuntu@118.195.247.102 'sh -s' < scripts/server-preflight.sh
 
 - Git 代码回滚优先 `git revert`；不得 force push 或 reset 既有站点。
 - nginx 只恢复施工前备份文件，执行 `nginx -t` 后 reload，不覆盖其他站点配置。
-- Catnip 新服务异常时先停止其独立容器和 8080 server block，不改旧站 80 路由。
+- Catnip 新服务异常时先停止当前 Compose 栈；需要恢复旧站时，从施工前 nginx 备份恢复配置，`nginx -t` 后 reload，再按历史命令启动旧进程或使用系统盘快照。
 - Docker/系统包卸载不是默认回滚动作；应先停止新服务并恢复网络/代理状态，避免二次扰动。
 - 所有服务器变更、验证和回滚命令必须在新的 Phase 7 施工日志中逐步记录。
