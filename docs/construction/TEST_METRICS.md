@@ -111,6 +111,15 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - 私网健康接口、首页、品牌内容和安全响应头实测成功；管理员环境变量保持空值，不在局域网 HTTP 上启用管理登录。
 - 必须记录 macOS 防火墙状态、当前私网地址可能漂移，以及恢复 `127.0.0.1` 的命令。
 
+## Phase 7 服务器部署准备门禁
+
+- `scripts/server-preflight.sh` 必须通过 `sh -n`，只包含只读系统/服务/端口/旧站状态检查，不安装包、不写配置、不读取环境秘密。
+- SeaweedFS `linux/amd64` 镜像必须真实构建成功，SHA-256 校验通过，镜像架构为 `linux/amd64`，容器内 `weed version` 报告固定版本和 amd64。
+- `docker compose --env-file deploy/server.env.template config --quiet` 成功；渲染结果只把 Caddy 发布到 `127.0.0.1:18080`，PostgreSQL、S3 和 app 仍无宿主端口。
+- 服务器写施工前只读复核 Ubuntu、架构、CPU/内存/Swap、磁盘、Docker、nginx、监听端口和旧站未提交资产；任何漂移先停下记录。
+- 腾讯云系统盘快照或经 Neil Bauman 明确选择且已验证的异机恢复方案是安装 Docker、修改 nginx 或安全组之前的硬门禁。
+- 完整工程仍须执行 `npm test`、lint、typecheck、db:check、生产 build、Compose config、shell 语法和 `git diff --check`；服务器只读准备不等于公网部署验收。
+
 ## 前端视觉优化分支门禁
 
 - 当前前端视觉修改只在 `main` 实施；`UI_fix` 已于 2026-08-03 经完整门禁后快进推广到 `main`。`UI_fix`、`SKill-hub-ui`、`frontend/visual-optimization` 和 `backend-server-deployment` 作为历史/隔离分支保留但不承接后续开发。

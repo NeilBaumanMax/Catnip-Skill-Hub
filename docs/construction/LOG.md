@@ -1,5 +1,22 @@
 # 施工日志
 
+## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 恢复部署准备与只读复核
+
+### 修改与验证
+
+- 开工计划提交 `349d4e8` 已 push；远端备份 `backup/pre-server-deployment-readiness-20260807` 已 push，准备分支开工时与远端分歧 `0 0`。
+- 实现多架构 SeaweedFS、服务器回环端口模板、只读预检、nginx 示例和部署文档；升级 Next.js/ESLint 配套到 16.3.0，生产 audit 从 3 high 收敛为 0。
+- 57/57 测试、typecheck、db:check、生产 build、Compose 配置、shell 语法和差异检查通过；lint 为 0 error/3 warning。
+- amd64 SeaweedFS 构建和容器版本实测通过。首次 Docker Hub 元数据超时、首次沙箱 build 端口权限失败、两次 npm audit 网络失败均记录原因并成功复测。
+- 服务器默认 SSH 身份首次认证失败；使用既有专用身份后只读预检成功。服务器仍为 Ubuntu 22.04.5/x86_64/2 CPU/3.6 GiB、无 Swap、Docker 未安装、nginx 配置有效、UFW inactive、121 个包可升级、无待重启标记。
+- 旧站 80/3000/4000 与 `catnip-intro` 未提交资产保持原状；本轮服务器零写操作。
+
+### 漂移、回滚与停点
+
+- 已修正主要求、架构、测试指标、本地/服务器手册和入口文档的“部署仍暂停”与 arm64 漂移；公共 UI、产品、内容主库、管理员身份和品牌未改。
+- 当前无需回滚。需要撤销时优先 `git revert <本轮实现提交>`，复测 57 项、lint、typecheck、db:check、build、production audit、Compose config、shell 和 amd64 镜像。
+- 腾讯云系统盘快照尚未核验，服务器无 Swap；在 Neil Bauman 确认快照前不安装 Docker、不修改 nginx/安全组、不上传生产秘密。
+
 ## 2026-08-03 21:02 CST / Tencent Cloud Ubuntu 22.04 / 最终 Git 回写
 
 - 准备分支完成提交 `801ced3ff208ff9c713eac014742883f2dc978eb` 已成功 push。

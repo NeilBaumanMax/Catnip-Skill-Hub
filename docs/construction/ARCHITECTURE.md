@@ -98,7 +98,7 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - `src/lib/data/db` 定义 Drizzle schema 与 postgres.js 连接；版本化 SQL 位于 `drizzle/`，迁移容器成功后应用才启动。
 - Skill、推荐线索与统计端口在持久模式下使用 PostgreSQL 适配器；统计增量使用数据库原子 upsert，公开首页、详情、下载与管理端读取同一运行时 Skill Repository。
 - `S3AssetStorage` 将文件元数据保存在 PostgreSQL、原始字节保存在 SeaweedFS S3，保持 Phase 5 的 `AssetStorage` 契约。
-- 本地镜像以 Alpine 3.23 为小型固定基础，从 Alpine 官方仓库安装 Node 24.17.0、PostgreSQL 18.4 与 Caddy 2.11.4；SeaweedFS 4.29 arm64 上游归档以固定 SHA-256 校验。该 SeaweedFS 镜像只用于当前 Apple Silicon 本地里程碑，服务器架构必须重新确认。
+- 本地镜像以 Alpine 3.23 为小型固定基础，从 Alpine 官方仓库安装 Node 24.17.0、PostgreSQL 18.4 与 Caddy 2.11.4；SeaweedFS 4.29 根据 BuildKit `TARGETARCH` 选择 amd64 或 arm64 官方归档，并对每个架构使用独立固定 SHA-256 校验。
 - 长期进程实际以 UID 1001、Caddy 用户、UID 10001 和 PostgreSQL 用户运行；数据库/S3 无宿主端口，Caddy 只绑定一个显式本机地址。默认回环，当前局域网入口为 `192.168.120.107:8080`。
 - `scripts/set-local-bind-address.mjs` 是本地暴露控制边界：只接受回环或 RFC1918 IPv4，原子更新被忽略的 `.env.local` 并保持 `0600`；Caddy 健康检查与 Compose `--wait` 防止切换后过早验收。
 - `.env.local` 由脚本生成、权限为 `0600` 且被 Git 忽略；仓库只含空 `.env.example`。管理员邮箱和密码哈希为空时管理登录安全拒绝。
@@ -110,5 +110,5 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - 目标主机为 Ubuntu 22.04、x86_64、2 vCPU、约 3.6 GiB RAM、无 Swap；现有 nginx 独占宿主机 80，并代理既有 Next.js `3000` 与 Go `4000` 服务。
 - 未来无域名临时预览不得复用 80 或使用路径前缀；预定由 Catnip 容器入口仅绑定 `127.0.0.1:18080`，宿主 nginx 新增独立 `8080` server block，再以 `http://118.195.247.102:8080` 暴露。
 - Docker 不得直接绑定 `0.0.0.0`；PostgreSQL、S3、Next.js 均不得暴露宿主公网端口。现有 3000/4000 公网可达风险应通过腾讯云安全组收口，但变更前必须核对 80 回源。
-- 当前 SeaweedFS 构建固定为 arm64，服务器部署前必须建立 amd64 或多架构产物并核验 checksum；不得把本机产物直接搬到服务器。
+- SeaweedFS 的 amd64 构建已在本地真实完成并运行版本核验；服务器仍须在目标 amd64 环境重新构建完整 Compose 栈，不得把本机镜像导出物直接当作生产验收。
 - 既有站点仓库含未提交及未跟踪内容，运行进程缺少完整 systemd 托管；部署工具不得进入、暂存、清理、重启或覆盖该工作区。

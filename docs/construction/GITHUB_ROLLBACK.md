@@ -30,6 +30,8 @@ Phase 7 本地部署施工前基线：`c8c593ee04bb7e7f1062eb3d702b78a89b7b1ee9`
 
 Phase 7 局域网访问施工前基线：`7727c2a871c50f90f978e6472f7cca234f2e8af1`；远端备份：`backup/pre-phase7-lan-access-20260729-1400`，已 push 并远端核验。
 
+Phase 7 服务器部署恢复准备计划提交：`349d4e8`；远端备份：`backup/pre-server-deployment-readiness-20260807`，已 push 并核验；本轮准备不包含服务器写操作。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

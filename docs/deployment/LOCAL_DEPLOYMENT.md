@@ -10,7 +10,7 @@
 - SeaweedFS S3：保存 ZIP 与图片原始字节。
 - Caddy：缺省只监听本机回环地址，局域网模式只监听显式私网地址；提供压缩、安全响应头、上传体积限制、健康检查和反向代理。
 
-镜像和 npm 依赖均在仓库配置中固定版本。当前 Apple Silicon 本地栈以 Alpine 3.23 为共同基础，在仓库 Dockerfile 中安装固定版本的 PostgreSQL、Node.js、Caddy，并用已核验 SHA-256 的上游 arm64 产物构建 SeaweedFS。部署不依赖仓库目录 bind mount，避免 Docker Desktop 对 `Documents` 目录文件共享的运行时阻塞。不要在未审阅的情况下改为 `latest`。
+镜像和 npm 依赖均在仓库配置中固定版本。当前本地栈以 Alpine 3.23 为共同基础，在仓库 Dockerfile 中安装固定版本的 PostgreSQL、Node.js、Caddy；SeaweedFS 根据目标架构选择 amd64 或 arm64 官方产物并使用对应 SHA-256 校验。部署不依赖仓库目录 bind mount，避免 Docker Desktop 对 `Documents` 目录文件共享的运行时阻塞。不要在未审阅的情况下改为 `latest`。
 
 ## 首次启动
 

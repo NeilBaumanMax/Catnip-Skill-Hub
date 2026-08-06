@@ -2,6 +2,27 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 CST / 腾讯云服务器部署恢复准备交接
+
+### 当前状态
+
+- 当前分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`；开工计划 `349d4e8` 和远端备份 `backup/pre-server-deployment-readiness-20260807` 已 push。
+- 本地部署交付物已准备：SeaweedFS 4.29 支持 amd64/arm64 固定校验，服务器入口模板为 `127.0.0.1:18080`，只读预检与未来 nginx 8080 示例已建立。
+- Next.js/`eslint-config-next` 已升级到 16.3.0；production audit 为 0，57/57、lint 0 error/3 warning、typecheck、db:check、build、Compose 和 shell 验证通过。
+
+### 服务器事实与保护边界
+
+- 使用既有 `catnipent` 专用 SSH 身份完成只读复核；服务器为 Ubuntu 22.04.5 x86_64、2 CPU、3.6 GiB、无 Swap、约 40 GiB 可用。
+- Docker 未安装；nginx active 且配置测试成功；UFW inactive；121 个包可升级、无需立即重启。80/3000/4000 仍监听，8080/18080 空闲。
+- `/home/ubuntu/catnip-intro` 仍包含修改和未跟踪资产，现有 Next.js/Go 进程继续运行；本轮没有修改、上传、重启、暂存或清理任何服务器内容。
+- 腾讯云系统盘快照尚未核验。创建并确认快照是下一步硬门禁；此前不得安装 Docker、增加 Swap、修改 nginx/安全组/防火墙或配置生产秘密。
+
+### 工作区与下一步
+
+- `.gitignore`、AGENTS 截图段、README、next-env、Playwright package hunk、`.agents/`、`docs/guide/`、截图脚本和 skills lock 等既有用户改动继续隔离；本轮只提交审阅过的部署/依赖 hunk。
+- Neil Bauman 下一步需在腾讯云控制台创建系统盘快照并回复确认。确认后从本条继续：重新核验快照事实，设计受控 Swap/容器内存，按 Docker 官方 Ubuntu 仓库安装 Engine/Compose，再进行服务器 amd64 完整栈构建和逐步旧站回归。
+- 不先开放 8080，不关闭 3000/4000，不启用管理员；nginx 和安全组变更必须分别备份、验证和保留恢复命令。
+
 ## 2026-08-03 21:02 CST / 腾讯云 Ubuntu 22.04 准备分支最终状态
 
 - `801ced3ff208ff9c713eac014742883f2dc978eb` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条是其直接后继状态回写。

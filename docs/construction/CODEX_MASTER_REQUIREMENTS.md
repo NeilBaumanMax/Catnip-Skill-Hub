@@ -63,6 +63,6 @@
 - Phase 6 统计只接受阅读、ZIP 下载点击、安装命令复制和来源跳转四种增量事件；当前 Repository 为匿名进程内开发状态，不做唯一访客、用户画像或持久化承诺。
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
-- Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已明确暂停服务器部署。不得执行或声称 Docker 安装、nginx 变更、公网部署、HTTPS 或生产验收完成。
-- 当前没有新的已授权代码施工任务。下一次对话必须从 `main` 与 `HANDOFF.md` 最新记录接力，等待 Neil Bauman 给出明确下一项；不得自行建立替代开发分支、重构后端或恢复部署。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
-- 恢复服务器施工必须收到 Neil Bauman 新的明确指令，重新执行开工计划和远端备份，并满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的回滚、架构、依赖和既有站点保护门禁。
+- Phase 7 服务器只读评估已完成但服务器写施工尚未开始；Neil Bauman 已于 2026-08-07 明确要求恢复部署准备。当前只做本地可交付准备和服务器只读复核，不得把准备状态声称为 Docker 已安装、nginx 已变更、公网已部署、HTTPS 或生产验收完成。
+- 当前部署准备分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`；`main` 继续是公共开发基线，历史分支保留。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
+- 服务器写施工必须满足 `docs/deployment/SERVER_DEPLOYMENT.md` 的恢复点、架构、依赖、容量和既有站点保护门禁；没有系统盘快照或经 Neil Bauman 明确选择且已验证的异机恢复方案时，不安装 Docker、不 reload nginx。

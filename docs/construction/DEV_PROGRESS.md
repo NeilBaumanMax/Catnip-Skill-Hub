@@ -2,6 +2,36 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 服务器部署恢复准备完成记录
+
+### 实际完成
+
+- SeaweedFS 4.29 Dockerfile 改为受校验的 amd64/arm64 构建；官方 Release API 的两个 SHA-256 固定写入，`linux/amd64` 镜像已真实构建并运行版本核验。
+- Compose 增加独立宿主端口变量；服务器环境模板只把 Caddy 发布到 `127.0.0.1:18080`，数据库、S3 和 app 继续不暴露宿主端口。
+- 新增只读服务器预检脚本和未来 nginx 8080 独立入口示例；脚本不安装软件、不写配置、不读取环境秘密。
+- Next.js 与 `eslint-config-next` 从 16.2.12 升级到 16.3.0，解除 PostCSS/Sharp 生产依赖高危项；`npm audit --omit=dev` 最终为 0 vulnerabilities。
+- 既有 Playwright/截图工具用户改动继续保留在工作区，不纳入本轮提交。
+
+### 服务器只读复核
+
+- 专用 `catnipent` SSH 身份登录成功；未读取、打印或复制私钥。Ubuntu 22.04.5 LTS、x86_64、2 CPU、3.6 GiB RAM、无 Swap、系统盘约 40 GiB 可用。
+- Docker 未安装；nginx active 且 `nginx -t` 成功；UFW inactive；121 个包可升级，当前无 reboot-required 标记。
+- 80、3000、4000 继续监听；8080 与 18080 未监听。旧站 `/home/ubuntu/catnip-intro` 仍有已修改图片、锁文件和未跟踪二进制/素材，本轮只读列出，未触碰。
+- 服务器没有任何写操作：未安装包、未修改 nginx/安全组/防火墙、未重启进程、未创建目录、未上传代码或秘密。
+
+### 验证与失败记录
+
+- `npm test` 57/57、typecheck、db:check、生产 build、Compose server config、shell 语法、`git diff --check` 通过；lint 退出 0，Next.js 16.3.0 新增 3 条内部导航 warning、0 error。
+- amd64 镜像架构为 `linux/amd64`，`weed version` 返回 4.29/amd64；首次构建因 Docker Hub 元数据 `DeadlineExceeded` 失败，显式拉取固定摘要 Alpine 3.23 后复测成功。
+- 生产 build 首次在受限沙箱因 Turbopack 绑定内部端口被拒绝，授权环境复测成功；每次 build 后均恢复既有未提交 `next-env.d.ts` 用户内容。
+- npm audit 首次 DNS 失败、第二次 TLS 中断，第三次成功暴露 3 个 production high；升级 Next.js 后 production audit 复测为 0。全依赖树仍有 4 moderate、1 high，均在开发工具链，不进入 standalone 运行镜像，未运行自动 `audit fix`。
+- 默认 SSH 身份首次返回 publickey denied；改用既有服务器专用身份后两次只读预检成功。
+
+### 当前停点
+
+- 本地部署准备和服务器只读复核完成；尚未创建/核验腾讯云系统盘快照，服务器仍无 Swap，Docker 未安装，因此服务器写施工门禁尚未开放。
+- 下一步由 Neil Bauman 在腾讯云控制台创建系统盘快照并确认完成；随后再逐步执行受控 Swap、官方 Docker Engine 安装、完整栈构建、旧站回归、独立 nginx 8080 和安全组门禁。
+
 ## 2026-08-07 CST / Tencent Cloud Ubuntu 22.04 / 服务器部署恢复准备开工计划
 
 ### 本轮目标

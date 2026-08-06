@@ -24,7 +24,7 @@ services:
       - no-new-privileges:true
 
   seaweedfs:
-    image: catnip-seaweedfs:4.29-alpine3.23-arm64
+    image: catnip-seaweedfs:4.29-alpine3.23
     build:
       context: .
       dockerfile: deploy/seaweedfs/Dockerfile
@@ -126,7 +126,7 @@ services:
       context: .
       dockerfile: deploy/caddy/Dockerfile
     ports:
-      - "${CATNIP_BIND_ADDRESS:-127.0.0.1}:8080:8080"
+      - "${CATNIP_BIND_ADDRESS:-127.0.0.1}:${CATNIP_BIND_PORT:-8080}:8080"
     depends_on:
       app:
         condition: service_healthy

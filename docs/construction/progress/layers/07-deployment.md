@@ -2,6 +2,14 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 CST / 服务器部署恢复准备 / 完成记录
+
+- 多架构 SeaweedFS 已落地，amd64 4.29 镜像完成 checksum、镜像架构和容器版本实测。
+- 服务器 Compose 候选入口固定为 `127.0.0.1:18080`；未来宿主 nginx 独立 8080 回源示例已提供，数据库/S3/app 无宿主端口。
+- Next.js/ESLint 配套升级至 16.3.0；production audit 0 vulnerabilities；57/57、lint 0 error、typecheck、db:check、build、Compose 和 shell 门禁通过。
+- 服务器只读复核成功：Ubuntu 22.04.5、x86_64、2 CPU、3.6 GiB、无 Swap、40 GiB 可用、Docker 未安装、nginx 配置有效、UFW inactive、121 个升级、无待重启；80/3000/4000 与旧站未提交资产保持原状。
+- 本轮服务器零写操作。下一硬门禁是 Neil Bauman 在腾讯云控制台创建并确认系统盘快照；完成前不安装 Docker、不修改 nginx/安全组/防火墙。
+
 ## 2026-08-07 CST / 服务器部署恢复准备 / 开工计划
 
 - Neil Bauman 已明确表示准备开始服务器部署；本轮先完成本地可交付准备和只读预检，不执行服务器写操作。
