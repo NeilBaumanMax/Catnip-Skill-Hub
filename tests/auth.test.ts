@@ -59,5 +59,26 @@ test("签名会话拒绝篡改和过期 Token", () => {
 test("写请求只接受同源 Origin", () => {
   assert.equal(isSameOriginMutation(new Request("https://catnip.example/api", { headers: { origin: "https://catnip.example" } })), true);
   assert.equal(isSameOriginMutation(new Request("https://catnip.example/api", { headers: { origin: "https://evil.example" } })), false);
+  assert.equal(isSameOriginMutation(new Request("http://app:3000/api", {
+    headers: {
+      origin: "https://catnip.example",
+      "x-forwarded-host": "catnip.example",
+      "x-forwarded-proto": "https",
+    },
+  })), true);
+  assert.equal(isSameOriginMutation(new Request("http://app:3000/api", {
+    headers: {
+      origin: "https://evil.example",
+      "x-forwarded-host": "catnip.example",
+      "x-forwarded-proto": "https",
+    },
+  })), false);
+  assert.equal(isSameOriginMutation(new Request("http://app:3000/api", {
+    headers: {
+      origin: "https://catnip.example",
+      "x-forwarded-host": "catnip.example",
+      "x-forwarded-proto": "javascript",
+    },
+  })), false);
   assert.equal(isSameOriginMutation(new Request("https://catnip.example/api")), false);
 });
