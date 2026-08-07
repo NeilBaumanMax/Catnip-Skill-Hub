@@ -2,6 +2,13 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 21:02 CST / Skill 提交说明书权威交接
+
+- 后续 Agent 收录并发布 Skill 时，先读 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，再按两个仓库各自 `AGENTS.md` 和当前施工文档执行；说明书不会授予服务器写入、Tag 发布或安全配置变更权限。
+- 手册覆盖从外部来源审计到公网完成的 16 阶段、常见失败和最终检查表；关键现行事实包括内容/网站双仓、固定源 Commit、不可变 Release、真实下载和隔离安装、`REQUIRED_PUBLIC_SKILL_SLUGS`、图片双份处理和生产前恢复点。
+- 开工计划与远端备份为 `97dba55` / `backup/pre-skill-submission-guide-20260807-1910`。本轮没有修改网站代码或生产服务器，也没有暂存用户的 `docs/guide/USAGE.md`、图片和工具改动。
+- 文档验证：目录锚点 16/16、代码围栏成对、敏感模式 0；内容主库 13 项 validation、13 ZIP build/inspect 和 diff check 通过。
+
 ## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布权威交接
 
 ### 当前生产事实

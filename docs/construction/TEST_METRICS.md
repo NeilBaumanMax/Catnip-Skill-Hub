@@ -1,5 +1,11 @@
 # 测试指标
 
+## 2026-08-07 / Skill 提交说明书验证基线
+
+- Markdown 目录锚点 16/16 可解析，代码围栏成对，敏感凭据模式无命中，引用的网站实现/部署关键路径存在。
+- 手册中的内容主库主流程已真实复跑：13 项 repository validation、13 ZIP clean build、Release inspect 和 diff check 通过。
+- 纯文档轮次不把既有网站单元测试、构建或生产验收重复写成新通过；只有未来按手册真实执行时才记录对应结果。
+
 ## 2026-08-07 / 三个真实 Skill 公网发布基线
 
 - 网站单元测试当前为 60/60；lint 0 error/3 个既有 warning，typecheck、Turbopack production build、diff check 和 linux/amd64 app 镜像构建通过。

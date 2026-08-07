@@ -1,5 +1,20 @@
 # 施工日志
 
+## 2026-08-07 21:02 CST / Skill 提交与公网发布说明书 / 实现与验证
+
+### 实际变更
+
+- 开工计划 `97dba55` 与远端备份 `backup/pre-skill-submission-guide-20260807-1910` 先行 push 并核验；随后只新增 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md` 和本轮施工记录。
+- 使用 `skill-creator` 的结构、frontmatter、agents metadata、progressive disclosure 和 quick validation 规则，结合内容主库 `validate_repository.py`、`build_release.py`、`inspect_release.py` 以及网站现行下载/安装/生产 seed 代码形成 Agent 低自由度操作手册。
+- 手册把两个仓库职责、许可停工条件、不可变 Release、真实 ZIP/Agent 安装、图片来源、现有 PostgreSQL 兼容、截图误成功识别、生产恢复点和自动回滚整合为 16 阶段流程。
+
+### 检查与复测
+
+- 初次读取 `content/skills/apple-design` 图片和 Skill 示例时工作目录仍在网站仓库，命令正确返回路径不存在；切换到内容主库后读取真实 `SKILL.md`、`agents/openai.yaml` 和 1254×1254 PNG 封面成功，没有文件改动。
+- `git diff --check` 通过；64 个 Markdown 代码围栏为偶数；16/16 目录锚点存在；敏感凭据模式无命中；网站实现和部署文档关键路径全部存在。
+- 在内容主库真实执行 repository validator、`build_release.py --clean`、Release inspect 和 diff check，13/13 资源与 13 ZIP 全部通过，内容主库工作区保持干净。
+- 本轮纯文档，无 UI、应用逻辑、数据库或生产状态变更，因此不重复运行网站单元测试、构建或截图，也不把它们写成新通过。
+
 ## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 实现、部署与复测
 
 ### 交付事实

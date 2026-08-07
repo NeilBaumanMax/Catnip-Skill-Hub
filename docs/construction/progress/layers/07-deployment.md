@@ -2,6 +2,12 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 21:02 CST / Skill 提交与公网发布运维说明书
+
+- 新增 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，把生产前完整恢复点、干净提交 amd64 构建、旧镜像标签、独立 release、原子 current、失败自动回滚、数据库插入和公网验收固化为后续 Agent 的操作门禁。
+- 说明书明确普通 Skill 提交不得顺带修改 SSH、nginx 管理规则、UFW、安全组、DNS、HTTPS、生产秘密或旧工作区；服务器写入仍需 Neil Bauman 当轮明确授权。
+- 本轮只写文档，没有部署或改变当前生产状态。
+
 ## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 完成记录
 
 - 内容 `v0.2.0` 与网站 `50bd53b` 完成全部门禁后，以干净提交归档构建 linux/amd64 app，保留旧镜像并原子切换 `/opt/catnip-skill-hub/current`。

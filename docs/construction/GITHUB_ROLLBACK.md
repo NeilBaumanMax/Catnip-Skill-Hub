@@ -38,6 +38,8 @@ Phase 7 首次腾讯云服务器部署开工基线：`643ef13`；远端备份：
 
 三个真实 Skill 公网发布开工基线：`0a4d586`；远端备份：`backup/pre-three-public-skills-web-20260807-1742`，已 push 并核验。实现与生产发布为 `50bd53b`；服务器代码回滚为 release `a578bca` 与镜像 `catnip-skill-hub-app:rollback-a578bca`，数据恢复点为 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills`。
 
+Skill 提交说明书开工计划：`97dba55`；远端备份：`backup/pre-skill-submission-guide-20260807-1910`，已 push 并核验。该轮仅新增独立 Markdown 手册和施工记录，回滚使用完成提交的 `git revert`，不得删除用户未跟踪的 `docs/guide/USAGE.md` 或图片。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

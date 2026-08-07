@@ -2,6 +2,13 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 21:02 CST / Skill 提交与公网发布说明书 / 完成记录
+
+- 新建 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，共 16 个阶段和最终检查表，覆盖来源/许可审计、Skill 结构、内容 manifest、图片、验证器、确定性 ZIP、GitHub Release、真实下载/安装、网站 seed、生产数据库、视觉验收、服务器发布、公网检查、回滚和交接。
+- 说明书依据当前 `skill-creator`、内容主库验证/构建脚本、网站 seed/download/install/PostgreSQL 实现和本轮真实生产经验编写；明确 Release Tag 与单包版本可独立、现有生产库需加入缺失 seed 集合、截图脚本不能只看退出码等易漏门禁。
+- Markdown 共 64 个代码围栏且成对；16 个目录锚点全部解析到现有标题；敏感模式检查无命中，网站关键路径存在。按说明书复跑内容主库 13 项验证、13 ZIP build/inspect、diff check 全部通过。
+- 本轮未修改 `src/app` 或 CSS，不需要视觉截图；未连接或修改生产服务器。用户尚未提交的 `docs/guide/USAGE.md`、图片、工具、依赖和其他工作区改动继续隔离。
+
 ## 2026-08-07 19:10 CST / Skill 提交与公网发布说明书 / 开工计划
 
 - Neil Bauman 要求把本轮三个真实 Skill 从来源审计、内容主库收录、Release、网站集成到生产验收的完整过程整理为 Markdown，供后续 Agent 独立执行。
