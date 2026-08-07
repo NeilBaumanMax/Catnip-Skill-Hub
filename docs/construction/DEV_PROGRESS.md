@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 16:42 CST / 无域名管理员私网入口 / 开工计划
+
+- Neil Bauman 当前无法修改 `catnipent.cn` DNS，但要求任务继续；不在公网 HTTP 上发送管理员密码，改用本机 SSH 加密隧道访问服务器 loopback Caddy。
+- 公网 nginx 将对 `/admin` 与 `/api/admin` 返回 404，公共站点继续可访问；管理流量通过 `127.0.0.1` SSH 本地转发直达服务器 `127.0.0.1:18080`，绕过公网 nginx。
+- 管理员标识使用非公开本地地址，生成随机强密码；明文只写入 macOS 钥匙串并复制到剪贴板，服务器只保存 scrypt 哈希，仓库和日志不保存凭据。
+- 修改前先 push 本计划和唯一开发前备份；服务器 nginx 先备份并 `nginx -t`，环境文件继续保持 `root:root 0600`。验证公网 404、公共路由 200、隧道真实登录 Cookie、授权 API 与跨源拒绝。
+- 当前主工作区用户工具改动继续隔离，不暂存 AGENTS 截图段、README、next-env、Playwright package hunk及未跟踪工具文件。
+
 ## 2026-08-07 03:20 CST / Tencent Cloud Ubuntu 22.04 / 首次公网部署完成记录
 
 - 部署收尾文档提交 `16c2b0d` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条最终状态回写提交后再次 push。
