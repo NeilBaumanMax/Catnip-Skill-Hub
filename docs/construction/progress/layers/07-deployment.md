@@ -2,6 +2,12 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 17:11 CST / 管理员密码恢复 / 开工计划
+
+- 本机钥匙串实测不存在 `Catnip Skill Hub Admin`，服务器只保留不可逆密码哈希；Neil Bauman 已明确授权重置管理员密码。
+- 新密码只进入本机钥匙串和一次性剪贴板，服务器仅更新 scrypt 哈希；环境文件先备份并保持 `root:root 0600`，不修改公网 nginx、SSH、防火墙、安全组、DNS 或 HTTPS。
+- 先 push 计划与远端备份 `backup/pre-admin-password-reset-20260807-1711`；随后验证钥匙串可读回、应用健康、隧道登录、授权、退出和旧凭据失效，并把文档中失真的“既存钥匙串凭据”状态改为可验证的新事实。
+
 ## 2026-08-07 16:42 CST / 无域名管理员私网入口 / 开工计划
 
 - 域名 DNS 暂不可改，不启用公网 HTTP 管理登录；采用 SSH local forwarding 让 Neil 的本机 `localhost` 访问服务器 loopback Caddy。
