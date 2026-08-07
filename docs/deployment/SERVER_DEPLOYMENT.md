@@ -5,13 +5,13 @@
 ## 当前生产状态（2026-08-07）
 
 - 公共入口：`http://118.195.247.102`。宿主 nginx 监听 80，回源到只监听 `127.0.0.1:18080` 的 Catnip Caddy。
-- 发布代码：`a578bca`；发布目录 `/opt/catnip-skill-hub/releases/a578bca`，`/opt/catnip-skill-hub/current` 指向该目录。生产镜像均为 `linux/amd64`。
+- 发布代码：`50bd53b`；发布目录 `/opt/catnip-skill-hub/releases/50bd53b`，`/opt/catnip-skill-hub/current` 指向该目录。生产镜像均为 `linux/amd64`；前一发布 `a578bca` 与 app 回滚镜像保留。
 - 服务：PostgreSQL 18.4、SeaweedFS 4.29、迁移、Next.js 16.3.0 app 与 Caddy 2.11.4 由 Docker Compose 管理；迁移退出 0，其余长期服务 healthy。
 - 网络：宿主只监听 SSH 22、nginx 80 和回环 18080；数据库、S3 与 app 不暴露宿主端口，旧 3000/4000 进程已按 Neil Bauman 明确授权停止。
 - 资源：2 vCPU、3.6 GiB RAM、2 GiB `/swapfile`、系统盘约 36 GiB 可用。UFW 仍 inactive，腾讯云安全组未在本轮变更。
 - 秘密：`/etc/catnip-skill-hub/env` 为 `root:root 0600`，不在发布目录和 Git 中。随机管理员密码只存 Neil 的 macOS 钥匙串 `Catnip Skill Hub Admin`，服务器只存 scrypt 哈希；Compose env 文件把哈希中的字面 `$` 写为 `$$`。
 - 管理入口：公网 nginx 对 `/admin` 与 `/api/admin` 的精确路径及子路径全部返回 404；Neil 的 Mac 当前把 `127.0.0.1:18443` 经 SSH 转发到服务器 `127.0.0.1:18080`，从 `http://localhost:18443/admin/login` 登录。隧道中断后公网不会自动开放管理入口。
-- 备份：首份有效备份为 `/var/backups/catnip-skill-hub/20260807-030544`，含 PostgreSQL custom dump、SeaweedFS 归档、manifest 与 SHA-256；已在隔离数据库/对象卷真实恢复。`20260807-030452` 带 `FAILED.txt`，不可用于恢复。
+- 备份：首份有效且完成隔离恢复的备份为 `/var/backups/catnip-skill-hub/20260807-030544`；三个真实 Skill 发布前恢复点为 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills`，其 PostgreSQL/SeaweedFS 归档和 SHA-256 已验证。`20260807-030452` 带 `FAILED.txt`，不可用于恢复。
 - nginx 回滚文件：`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf`；施工前腾讯云系统盘快照由 Neil Bauman 确认完成。
 - 旧 `/home/ubuntu/catnip-intro` 工作区及其未提交资产仍保留，没有删除、reset 或 clean；只有旧运行进程停止。
 - 未完成：域名、DNS、HTTPS、MFA、登录审计/告警、UFW/安全组复核、122 个系统更新、异机备份、自动备份和监控。当前 SSH 隧道只适合 Neil 的单机管理，不替代长期身份代理。

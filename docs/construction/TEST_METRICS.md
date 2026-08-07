@@ -1,5 +1,12 @@
 # 测试指标
 
+## 2026-08-07 / 三个真实 Skill 公网发布基线
+
+- 网站单元测试当前为 60/60；lint 0 error/3 个既有 warning，typecheck、Turbopack production build、diff check 和 linux/amd64 app 镜像构建通过。
+- 三个下载 API 必须精确 307 到内容主库 `v0.2.0` 的对应 `${slug}-${version}.zip`；真实 Release 字节必须通过 SHA-256、解压和隔离 Agent 安装。
+- 生产必须保持三个 slug 已发布且未隐藏、六张图片与三详情 200、健康为 `postgres-s3`、公网管理 404，并只暴露既有 22/80 与回环 18080。
+- 标准截图脚本若因固定 `networkidle` 超时但错误返回 0，不得记为通过；必须使用显式主内容等待的同浏览器截图补验并读图。
+
 ## 代码施工前文档基线门禁（历史暂停状态）
 
 | 命令/检查 | 成功标准 |

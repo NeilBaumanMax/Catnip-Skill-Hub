@@ -2,6 +2,14 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 完成记录
+
+- 内容 `v0.2.0` 与网站 `50bd53b` 完成全部门禁后，以干净提交归档构建 linux/amd64 app，保留旧镜像并原子切换 `/opt/catnip-skill-hub/current`。
+- 部署前恢复点 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills` 的数据库、对象归档和 SHA-256 已验证；旧 release `a578bca` 与 rollback 镜像保留。
+- PostgreSQL 精确新增三个已发布、未隐藏资源；既有数据未覆盖。四项服务 healthy、近期错误 0，公网公共路由/图片/下载通过，管理路径继续 404。
+- 生产首页及三个新详情的桌面/手机 full-page 截图已读图，布局无断裂、重叠或资源缺失。截图验收：通过（自动验收）。
+- nginx、SSH、UFW、安全组、DNS、HTTPS、管理员凭据和旧工作区均未修改。
+
 ## 2026-08-07 17:42 CST / 三个真实 Skill 公网发布 / 开工计划
 
 - 目标：部署三项真实 Skill 的完整详情、真实图片、不可变 Release 下载和 Claude Code/Codex 安装命令；公网公共入口继续为 `http://118.195.247.102`，管理入口继续仅限 SSH 隧道。

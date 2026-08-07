@@ -36,6 +36,8 @@ Phase 7 首次腾讯云服务器部署开工基线：`643ef13`；远端备份：
 
 无域名管理员私网入口开工基线：`2448cb8`；远端备份：`backup/pre-private-admin-access-20260807-1642`，已 push 并核验。公网管理隐藏发布为 `a578bca`；nginx 施工前备份为 `/var/backups/catnip-skill-hub/nginx-catnip-pre-private-admin-20260807-164503.conf`，认证环境备份保存在同一受限备份目录且不得回传或提交。
 
+三个真实 Skill 公网发布开工基线：`0a4d586`；远端备份：`backup/pre-three-public-skills-web-20260807-1742`，已 push 并核验。实现与生产发布为 `50bd53b`；服务器代码回滚为 release `a578bca` 与镜像 `catnip-skill-hub-app:rollback-a578bca`，数据恢复点为 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills`。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

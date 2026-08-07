@@ -2,6 +2,27 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布权威交接
+
+### 当前生产事实
+
+- 公网 `http://118.195.247.102` 已完整展示 `idea-to-production-vibecoding`、`apple-design`、`dashi-ppt`；首页共 13 项，三项均有真实封面、效果图、完整详情、ZIP 下载和 Agent 安装入口。
+- 服务器 current 为 `/opt/catnip-skill-hub/releases/50bd53b`；app 镜像 `linux/amd64`，PostgreSQL、SeaweedFS、app、Caddy healthy，健康返回 `postgres-s3`。公网管理路径继续由 nginx 返回 404。
+- 内容主库 `neilbauman666/Catnip-skill-hub-main` 的 `v0.2.0` 不可变 Release 已发布：Idea/Apple 为 `1.0.0`，Dashi 为 `0.4.4`。Tag 不得移动，修复应发布新版本。
+
+### 恢复点与验证
+
+- 网站计划 `0a4d586`，备份 `backup/pre-three-public-skills-web-20260807-1742`；实现 `50bd53b` 已 push。内容实现 `fc77de4` 与备份 `backup/pre-three-public-skills-20260807-1742` 已 push。
+- 生产备份 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills` 已验证 PostgreSQL dump 清单、SeaweedFS tar 清单和 SHA-256；旧发布 `a578bca` 与 `catnip-skill-hub-app:rollback-a578bca` 保留。
+- 网站 60/60、lint、typecheck、build、diff check；内容仓库 validator、确定性构建、ZIP inspect、CI/Release；三 ZIP 真实下载/SHA/解压和三项隔离 Codex 安装均通过。
+- 生产三详情和六图片 200、下载精确 307、数据库 published/未隐藏、近期错误 0、桌面/手机 full-page 截图读图通过。
+
+### 继续维护边界
+
+- 不修改现有 SSH、nginx 管理 404、UFW、安全组、DNS、HTTPS、管理员凭据或旧 `catnip-intro`，除非 Neil Bauman 另行明确授权。
+- 域名/HTTPS、MFA、监控、异机自动备份和主机安全更新仍未完成；当前直接 IP HTTP 只适合公共浏览。
+- 主工作区 `.gitignore`、`AGENTS.md`、README、依赖、`.agents/`、`docs/guide/`、截图工具和 skills lock 是隔离的用户改动，本轮未提交或部署。
+
 ## 2026-08-07 17:17 CST / 管理员密码恢复权威交接
 
 ### 当前使用方式

@@ -2,6 +2,15 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 完成记录
+
+- 内容主库实现 `fc77de4`、main CI run `31168393729` 与 `v0.2.0` Release run `31168461824` 均成功；13 个 ZIP 与 3 个元数据资产公开可用，三个新增 ZIP 已真实下载、SHA-256 和解压验证，并在隔离项目用 `skills@1.5.22` 安装到 Codex 成功。
+- 网站实现提交 `50bd53b` 已 push；首页和详情页展示三个真实封面/效果图、作者/许可/固定来源、完整介绍、精确 Release 下载和 Agent 安装命令。生产 PostgreSQL 只补入三个缺失 slug，不覆盖既有记录。
+- 生产发布切到 `/opt/catnip-skill-hub/releases/50bd53b`；部署前完整恢复点 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills` 的数据库、对象归档和 SHA-256 均通过。旧 release `a578bca` 与镜像标签 `rollback-a578bca` 保留。
+- 本地 60/60、lint 0 error/3 个既有 warning、typecheck、生产 build、diff check 通过；公网三详情、六图片和健康接口 200，三下载精确 307，数据库三条均 published/未隐藏，公网管理继续 404。
+- 标准生产截图脚本因首页持续网络活动在固定 `networkidle` 15 秒处误超时且仍错误退出 0；改用同一 Playwright 显式等待 `main` 后生成首页及三个新详情的桌面/手机 full-page 截图并读图通过。截图验收：通过（自动验收，不等于 Neil Bauman 主观确认）。
+- 未修改 nginx、SSH、UFW、安全组、DNS、HTTPS、管理员凭据或旧 `catnip-intro`；用户既存工具与依赖改动继续隔离。
+
 ## 2026-08-07 17:42 CST / 三个真实 Skill 公网发布 / 开工计划
 
 - Neil Bauman 要求把三个指定 GitHub 资源完善为公网可见的完整 Skill：Idea to Production、Apple Design、Dashi PPT；详情页必须有封面/效果图、功能与场景介绍、来源/许可、ZIP 下载和本机 Agent 安装命令。

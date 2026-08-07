@@ -1,5 +1,30 @@
 # 施工日志
 
+## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 实现、部署与复测
+
+### 交付事实
+
+- 网站开工计划 `0a4d586` 与远端备份 `backup/pre-three-public-skills-web-20260807-1742` 先行 push；实现 `50bd53b` 后才部署。内容主库实现 `fc77de4`、备份 `backup/pre-three-public-skills-20260807-1742`、CI 和不可变 `v0.2.0` Release 均已远端验证。
+- 三个公开资源使用固定源 Commit、真实作者与许可；六张 Web 图片已纳入生产镜像。下载服务允许 catalog Tag 与单包版本不同，但仍严格要求固定主库、SemVer Tag 和精确 `${slug}-${version}.zip`。
+- 部署前创建 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills`；PostgreSQL custom dump、SeaweedFS 归档清单与 SHA-256 通过。以干净 `50bd53b` 归档构建 `linux/amd64` app 镜像，服务器保留旧 app 镜像标签并原子切换 current。
+
+### 失败、原因、修复与复测
+
+1. 内容 Release 首次本地构建被沙箱拒绝写 `dist`；授权环境复跑成功。官方 quick validator 首次缺 PyYAML；在 `/private/tmp` 隔离虚拟环境安装后三个资源全部通过。
+2. Dashi 上游文件末尾空白触发 diff check；保留上游字节并为确切文件声明属性后通过，没有机械改写第三方源文件。
+3. 网站测试首次被沙箱的 `tsx` IPC `EPERM` 阻断；授权环境复跑后发现旧断言硬编码 10 项，改为真实公开目录长度，最终 60/60。
+4. 本地截图首次仍使用旧默认地址；显式指定 `localhost:3000` 后运行。冷 PNG 优化与进程内旧种子缓存导致封面短暂空白；封面转为高质量静态 JPEG并重启开发服务后，桌面/手机截图读图通过。
+5. 服务器完整备份首次假设已有 `alpine:3.23` 辅助镜像而停止；数据库 dump 已成功，改用现有 SeaweedFS 镜像完成对象归档。随后 glob 因目录 `0700` 未展开，改为显式文件权限并复核 SHA、pg_restore 清单和 tar 清单成功。
+6. 发布归档携带临时根目录 `0700`，切流量前 Compose 配置检查因不能进入目录停止；把独立 release 根恢复为 `0755` 后门禁通过。归档中的 macOS provenance 扩展头仅被 GNU tar 忽略，不影响文件校验。
+7. 普通沙箱公网 curl 全部立即连接失败；授权网络重跑后所有目标成功。生产标准截图两轮被固定 `networkidle` 15 秒误超时且脚本仍退出 0；用同一 Chromium 显式等待 `main`、固定 3 秒后完成 8 张 full-page 截图并读图通过。
+
+### 最终验证与回滚
+
+- 本地门禁：60/60、lint 0 error/3 个既有 warning、typecheck、Turbopack production build、`git diff --check`、linux/amd64 镜像构建通过。
+- 公网：`/`、`/recommend`、`/api/health` 和三个详情 200；六张图片 200；三个下载 307 到 `v0.2.0` 精确 ZIP；三页均含 Agent 安装和 ZIP 下载入口；`/admin` 与 `/api/admin/session` 404。
+- 生产：三个 slug 均 `published|false`；四项长期服务 healthy，近十分钟 app/Caddy 错误关键词 0；只监听公网 22/80 与回环 18080。current 为 `50bd53b`。
+- 当前无需回滚。代码回滚使用 release `a578bca` 和镜像 `catnip-skill-hub-app:rollback-a578bca`；数据恢复使用本轮已校验备份。不得移动 `v0.2.0` Tag 或扩大公网管理面。
+
 ## 2026-08-07 17:17 CST / 管理员密码恢复 / 实现与验证
 
 ### 事实纠正
