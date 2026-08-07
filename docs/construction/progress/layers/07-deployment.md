@@ -2,6 +2,13 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 17:17 CST / 管理员密码恢复 / 完成记录
+
+- 计划提交与远端备份 `backup/pre-admin-password-reset-20260807-1711` 均已核验指向 `158ee5d`；生产写入发生在备份完成之后。
+- 新随机密码已写入并读回验证 Neil 的登录钥匙串，服务器仅替换 scrypt 哈希；受限环境备份为 `/etc/catnip-skill-hub/env.pre-admin-password-reset-20260807-171455`，现行文件仍为 `root:root 0600`。
+- app/Caddy 重建成功，四个长期服务 healthy；新密码真实登录与授权通过，错误密码和退出后匿名访问均为 401，公网健康 200、`/admin` 404。
+- nginx、SSH、防火墙、安全组、DNS、HTTPS、数据库/对象数据和旧工作区未改；域名、HTTPS、MFA、登录告警等风险保持未完成。
+
 ## 2026-08-07 17:11 CST / 管理员密码恢复 / 开工计划
 
 - 本机钥匙串实测不存在 `Catnip Skill Hub Admin`，服务器只保留不可逆密码哈希；Neil Bauman 已明确授权重置管理员密码。

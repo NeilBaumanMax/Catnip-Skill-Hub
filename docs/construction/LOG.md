@@ -1,5 +1,25 @@
 # 施工日志
 
+## 2026-08-07 17:17 CST / 管理员密码恢复 / 实现与验证
+
+### 事实纠正
+
+- Neil Bauman 在钥匙串中找不到上一轮声称已保存的 `Catnip Skill Hub Admin`；本轮使用 `security find-generic-password` 复核为 item not found。此前完成记录没有可验证的现存钥匙串项目支持，不能用于指导登录。
+- 生产服务器只读检查确认管理员邮箱与 scrypt 哈希仍存在；哈希不可逆，无法恢复原明文。Neil Bauman 明确回复“确认重置”后才进行写操作。
+
+### 实际变更与恢复点
+
+- 开工计划提交 `158ee5d` 已 push，唯一远端备份 `backup/pre-admin-password-reset-20260807-1711` 同样指向 `158ee5d` 并完成 `ls-remote` 核验；既存前端工具改动未暂存、未覆盖。
+- 生成 32 字节随机密码的十六进制表示，写入登录钥匙串服务 `Catnip Skill Hub Admin`、账户 `neil@catnipent.local`，随后分别验证项目存在与密码可读回；明文仅进入钥匙串和一次性剪贴板，未进入工具输出、仓库、服务器或文档。
+- 从钥匙串读取明文并在本机生成新 scrypt 哈希，服务器只接收哈希；更新前备份 `/etc/catnip-skill-hub/env.pre-admin-password-reset-20260807-171455`，新旧哈希指纹不同。环境文件继续为 `root:root 0600`，Compose 字面 `$` 保持正确转义。
+- 仅重建 app 与 Caddy；不修改 nginx、SSH、防火墙、安全组、DNS、HTTPS、数据库、对象存储或旧 `catnip-intro` 工作区。
+
+### 最终验证
+
+- 钥匙串项目存在且密码可读回；Compose config 通过，容器内哈希格式为 scrypt，PostgreSQL、SeaweedFS、app、Caddy 四个长期服务 healthy，近十分钟 app/Caddy 错误关键词计数为 0。
+- SSH 隧道认证闭环：登录页 200、错误密码 401、新密码登录 200、会话 Cookie 已签发、授权 API 200、退出 200、退出后匿名 API 401。
+- 公共健康接口 200，公网 `/admin` 继续 404。未修改代码或 UI，因此不重复执行代码门禁或视觉截图。
+
 ## 2026-08-07 16:55 CST / 无域名管理员私网入口 / 实现与失败复测
 
 - 实现与交接提交 `b6d2eee` 已成功 push；本条状态回写作为直接后继纯文档提交再次推送，服务器发布继续为 `a578bca`。

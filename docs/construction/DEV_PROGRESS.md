@@ -2,6 +2,13 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 17:17 CST / 管理员密码恢复 / 完成记录
+
+- 已纠正上一轮无法由当前钥匙串事实支持的凭据保存状态；新随机密码现已真实写入并读回验证登录钥匙串 `Catnip Skill Hub Admin`，同时复制到 Neil Bauman 当前剪贴板。服务器仍只保存不可逆 scrypt 哈希。
+- 计划提交和远端备份均为 `158ee5d`；服务器环境备份为 `/etc/catnip-skill-hub/env.pre-admin-password-reset-20260807-171455`，现行环境继续保持 `root:root 0600`。
+- app/Caddy 重建成功；Compose config、容器哈希格式、四项长期服务健康、近期日志、错误密码拒绝、新密码登录、授权、退出、公共健康与公网管理 404 全部通过。
+- 本轮没有代码或 UI 变更；既存 `.gitignore`、`AGENTS.md`、README、依赖、`.agents/`、指南、截图脚本和 skills lock 改动继续隔离保留。
+
 ## 2026-08-07 17:11 CST / 管理员密码恢复 / 开工计划
 
 - Neil Bauman 实际未在 macOS 钥匙串中找到 `Catnip Skill Hub Admin`；本轮只读复核同样确认该服务项不存在，而生产服务器仍配置管理员邮箱和不可逆 scrypt 哈希。此前“明文已存钥匙串”的完成记录与当前可验证事实冲突，不能继续作为可恢复凭据依据。
