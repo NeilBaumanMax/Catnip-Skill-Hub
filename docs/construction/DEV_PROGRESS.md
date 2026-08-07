@@ -4,6 +4,7 @@
 
 ## 2026-08-07 21:02 CST / Skill 提交与公网发布说明书 / 完成记录
 
+- 说明书实现与交接提交 `994e0b7` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条为直接后继的最终远端状态回写。
 - 新建 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，共 16 个阶段和最终检查表，覆盖来源/许可审计、Skill 结构、内容 manifest、图片、验证器、确定性 ZIP、GitHub Release、真实下载/安装、网站 seed、生产数据库、视觉验收、服务器发布、公网检查、回滚和交接。
 - 说明书依据当前 `skill-creator`、内容主库验证/构建脚本、网站 seed/download/install/PostgreSQL 实现和本轮真实生产经验编写；明确 Release Tag 与单包版本可独立、现有生产库需加入缺失 seed 集合、截图脚本不能只看退出码等易漏门禁。
 - Markdown 共 64 个代码围栏且成对；16 个目录锚点全部解析到现有标题；敏感模式检查无命中，网站关键路径存在。按说明书复跑内容主库 13 项验证、13 ZIP build/inspect、diff check 全部通过。

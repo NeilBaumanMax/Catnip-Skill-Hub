@@ -4,6 +4,7 @@
 
 ## 2026-08-07 21:02 CST / Skill 提交说明书权威交接
 
+- 说明书实现与交接提交 `994e0b7` 已成功 push 到当前远端分支；本条最终状态回写提交后再次 push。
 - 后续 Agent 收录并发布 Skill 时，先读 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，再按两个仓库各自 `AGENTS.md` 和当前施工文档执行；说明书不会授予服务器写入、Tag 发布或安全配置变更权限。
 - 手册覆盖从外部来源审计到公网完成的 16 阶段、常见失败和最终检查表；关键现行事实包括内容/网站双仓、固定源 Commit、不可变 Release、真实下载和隔离安装、`REQUIRED_PUBLIC_SKILL_SLUGS`、图片双份处理和生产前恢复点。
 - 开工计划与远端备份为 `97dba55` / `backup/pre-skill-submission-guide-20260807-1910`。本轮没有修改网站代码或生产服务器，也没有暂存用户的 `docs/guide/USAGE.md`、图片和工具改动。
