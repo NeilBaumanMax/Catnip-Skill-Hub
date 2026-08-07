@@ -10,6 +10,14 @@
 - 修改前先 push 本计划和唯一开发前备份；服务器 nginx 先备份并 `nginx -t`，环境文件继续保持 `root:root 0600`。验证公网 404、公共路由 200、隧道真实登录 Cookie、授权 API 与跨源拒绝。
 - 当前主工作区用户工具改动继续隔离，不暂存 AGENTS 截图段、README、next-env、Playwright package hunk及未跟踪工具文件。
 
+## 2026-08-07 16:55 CST / 无域名管理员私网入口 / 完成记录
+
+- 发布 `a578bca`：公网 nginx 对 `/admin`、`/admin/*`、`/api/admin`、`/api/admin/*` 返回 404，公共首页、详情、推荐、健康接口继续 200；配置备份 `nginx-catnip-pre-private-admin-20260807-164503.conf`，`nginx -t` 和 reload 成功。
+- 管理员标识为非公开本地地址；随机密码明文只保存于 macOS 钥匙串 `Catnip Skill Hub Admin` 并复制到剪贴板，服务器 `/etc/catnip-skill-hub/env` 只存 Compose 转义后的 scrypt 哈希且保持 `root:root 0600`。
+- Neil 的 Mac 已运行 SSH local forwarding：`127.0.0.1:18443 -> server 127.0.0.1:18080`。真实验证登录页 200、登录 200、授权 API 200、退出 200、退出后 401。
+- 57/57、lint 0 error/3 warning、db:check、Webpack production build、production audit 0 通过；并行 typecheck 首次因 build 同时重建 `.next/types` 失败，构建完成后单独复测通过。
+- 当前无需域名即可管理，但隧道随 Mac 重启/网络断开可能停止；公网永远不会因此回退为开放管理入口。域名、HTTPS、MFA和登录告警仍待后续。
+
 ## 2026-08-07 03:20 CST / Tencent Cloud Ubuntu 22.04 / 首次公网部署完成记录
 
 - 部署收尾文档提交 `16c2b0d` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条最终状态回写提交后再次 push。

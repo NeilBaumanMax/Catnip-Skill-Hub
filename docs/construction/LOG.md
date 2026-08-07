@@ -1,5 +1,28 @@
 # 施工日志
 
+## 2026-08-07 16:55 CST / 无域名管理员私网入口 / 实现与失败复测
+
+### 实际变更
+
+- 开工计划 `2448cb8` 与远端备份 `backup/pre-private-admin-access-20260807-1642` 成功 push 后施工。
+- nginx 精确隐藏公网管理页面/API，发布 `a578bca`；施工前备份 `/var/backups/catnip-skill-hub/nginx-catnip-pre-private-admin-20260807-164503.conf`，配置测试和 reload 成功。
+- 生成随机管理员密码，明文仅存 macOS 钥匙串服务 `Catnip Skill Hub Admin` 并复制到剪贴板；服务器只接收管理员标识与 scrypt 哈希。环境文件保持仓库外 `root:root 0600`。
+- 本机 SSH PID 66927 当前监听 `127.0.0.1:18443` 并转发到服务器 loopback Caddy；公网无管理入口。
+
+### 失败、修复与复测
+
+1. 首次公网循环复测把 zsh 特殊变量 `path` 当普通循环变量，覆盖 `PATH` 后出现八次 `curl: command not found`；未执行请求、未修改状态。改用 `endpoint` 后公共四路由 200、管理四路由 404。
+2. 首次认证环境写入在普通用户 `mktemp` 文件上由 `sudo tee` 遇到 permission denied，安装新环境文件前停止；改为由 root 在 `/etc/catnip-skill-hub` 创建临时文件后成功写入。
+3. 首次 app 重建时 Compose 将 scrypt 哈希中的 `$` 解释为变量并发出未设置警告，容器哈希被破坏；把每个字面 `$` 写为 `$$` 后，`docker compose config --quiet` 无警告，容器内哈希格式布尔验证通过。
+4. 工程门禁并行运行 typecheck 与 Next build 时，build 正在重建 `.next/types`，typecheck 报多个 TS6053 文件缺失；build 完成后单独复跑 typecheck 成功，属于并发竞态。
+
+### 最终验证
+
+- 公网公共四路由 200，管理四路由 404；loopback 健康为 `postgres-s3`，app/Caddy healthy。
+- SSH 隧道真实登录闭环：登录页 200、正确凭据 200、授权 API 200、退出 200、退出后 401。凭据与 Cookie 未输出。
+- 57/57、lint 0 error/3 warning、typecheck、db:check、Webpack build、audit 0 和差异检查通过；未修改 UI，不需要新视觉截图。
+- 当前无需回滚。回滚 nginx 使用 `nginx-catnip-pre-private-admin-20260807-164503.conf`；认证回滚使用受限 env 备份并重建 app/Caddy。不得把管理路径重新暴露到公网 HTTP。
+
 ## 2026-08-07 03:20 CST / 首次腾讯云公网部署 / 完成与失败复测记录
 
 - 部署收尾文档提交 `16c2b0d` 已成功 push；本条状态回写作为直接后继纯文档提交再次推送，不改变服务器发布 `9793173`。

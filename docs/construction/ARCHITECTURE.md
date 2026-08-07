@@ -4,7 +4,7 @@
 
 当前技术基线为 Next.js 16.3.0 App Router、React 19.2.4、TypeScript、Tailwind CSS 4、ESLint 9 与 npm。应用采用 `src/` 目录；公开及管理路由位于 `src/app`，Skill 纯领域层位于 `src/lib/domain/skills`，安装/下载服务位于 `src/lib/install` 与 `src/lib/downloads`，管理员用例、认证和数据端口位于 `src/lib/admin`、`src/lib/auth` 与 `src/lib/data`，导入、存储、推荐线索、发现查询和统计分别位于 `src/lib/import`、`src/lib/storage`、`src/lib/recommendations`、`src/lib/discovery` 与 `src/lib/analytics`。ZIP 使用 `fflate`；密码、会话和文件哈希只使用 Node.js 标准加密能力；单元测试由 Node test runner 经 `tsx` 执行。
 
-Phase 7 持久运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 只暴露一个显式宿主地址。腾讯云生产栈固定为 `127.0.0.1:18080`，由宿主 nginx 的 80 默认站点回源；未启用持久化模式时仍保留进程内适配器用于单元测试和轻量开发。当前已建立直接 IP 的公网 HTTP 浏览入口，但尚无域名、HTTPS 或管理员生产入口。
+Phase 7 持久运行模式以 `CATNIP_PERSISTENCE_MODE=postgres` 启用 PostgreSQL 18.4、Drizzle ORM 0.45.2 与 SeaweedFS 4.29 S3 适配器；Compose 通过内部 backend 网络隔离数据服务，通过 edge 网络让 Caddy 只暴露一个显式宿主地址。腾讯云生产栈固定为 `127.0.0.1:18080`，由宿主 nginx 的 80 默认站点回源公共路径；公网 nginx 对管理页面和 API 返回 404，Neil 的 Mac 通过 SSH local forwarding 直达 loopback Caddy。未启用持久化模式时仍保留进程内适配器用于单元测试和轻量开发。
 
 ## 目录与职责
 
@@ -110,5 +110,6 @@ Phase 2 已建立 `src/lib/domain/skills`，由类型、静态种子、目录约
 - 目标主机为 Ubuntu 22.04.5、x86_64、2 vCPU、约 3.6 GiB RAM、2 GiB Swap；Docker Engine 29.7.2、Buildx 0.36.1 与 Compose 5.4.0 已安装。
 - 公网 `http://118.195.247.102:80` 由宿主 nginx 回源 `127.0.0.1:18080` 的 Catnip Caddy。Docker 不绑定公网；PostgreSQL、SeaweedFS 和 Next.js 无宿主监听，旧 3000/4000 进程已停止。
 - 生产镜像在干净提交 worktree 中按 `linux/amd64` 构建，经离线传输和镜像架构核验部署；服务器到 Docker Hub 443 的连接曾超时，因此当前发布不能依赖服务器现场拉取。
-- 生产环境文件位于仓库外 `/etc/catnip-skill-hub/env`，权限 `root:root 0600`；管理员邮箱与密码哈希为空，HTTP 环境下管理登录安全拒绝。
+- 生产环境文件位于仓库外 `/etc/catnip-skill-hub/env`，权限 `root:root 0600`；管理员密码明文只存 Neil 的 macOS 钥匙串，服务器只存 scrypt 哈希。Compose env 文件中的字面 `$` 必须写为 `$$`，否则哈希会被变量插值破坏。
+- 公网 `/admin`、`/admin/*`、`/api/admin` 与 `/api/admin/*` 均由 nginx 返回 404；本机 `127.0.0.1:18443` 经 SSH 转发到服务器 `127.0.0.1:18080`，利用 localhost 安全上下文保持 production Secure Cookie，不把密码发送到公网 HTTP。
 - 数据卷已完成整栈停机重启持久化和隔离恢复；首份有效备份位于 `/var/backups/catnip-skill-hub/20260807-030544`。旧 `/home/ubuntu/catnip-intro` 工作区保留，仅旧进程按明确授权停止。

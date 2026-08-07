@@ -2,6 +2,27 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-08-07 16:55 CST / 无域名管理员私网入口权威交接
+
+### 当前使用方式
+
+- 公共站继续为 `http://118.195.247.102`；公网 `/admin`、`/admin/*`、`/api/admin`、`/api/admin/*` 全部由 nginx 返回 404。
+- Neil 的 Mac 当前有 SSH 隧道监听 `127.0.0.1:18443`，管理地址为 `http://localhost:18443/admin/login`。管理员标识 `neil@catnipent.local`；随机密码保存在 macOS 钥匙串服务 `Catnip Skill Hub Admin`，本轮结束时也已复制到剪贴板。
+- 隧道进程终止或 Mac 重启后，执行 `ssh -fNT -i /Users/neil/.ssh/catnipent -o IdentitiesOnly=yes -o ExitOnForwardFailure=yes -L 127.0.0.1:18443:127.0.0.1:18080 ubuntu@118.195.247.102`。不得改为公网 80 登录。
+
+### 生产与恢复点
+
+- 当前服务器发布 `a578bca`，`/opt/catnip-skill-hub/current` 指向对应 release。nginx 备份 `/var/backups/catnip-skill-hub/nginx-catnip-pre-private-admin-20260807-164503.conf`。
+- 生产环境 `/etc/catnip-skill-hub/env` 为 `root:root 0600`；服务器只保存 scrypt 哈希。Compose env 中 `$` 已写为 `$$`，否则会被插值破坏；可用 `docker compose config --quiet` 和容器内格式布尔检查验证，不打印值。
+- 认证环境修改前备份位于 `/var/backups/catnip-skill-hub/env-pre-private-admin-*` 与 `env-pre-compose-dollar-fix-*`，含秘密且只允许 root，不得复制到仓库或聊天。
+- Git 开工计划 `2448cb8`；远端备份 `backup/pre-private-admin-access-20260807-1642` 已核验；实现发布 `a578bca`。收尾提交和最终 push SHA 待状态回写。
+
+### 已验证与剩余风险
+
+- 公网公共四路由 200、管理四路由 404；隧道登录页/登录/授权/退出为 200，退出后授权为 401；57/57、lint 0 error/3 warning、typecheck、db:check、Webpack build、audit 0。
+- 当前 SSH 隧道加密了管理员流量，并利用 localhost 对 Secure Cookie 的浏览器例外；它适合 Neil 单机临时管理，但不是长期域名 HTTPS、MFA或身份代理。
+- 域名 DNS 当前不可由子账号修改；以后取得权限后再配置备案域名、HTTPS、独立管理身份代理/MFA。UFW、安全组、系统更新、异机备份和监控风险仍与上次交接一致。
+
 ## 2026-08-07 03:20 CST / 腾讯云首次公网部署权威交接
 
 - 部署收尾文档提交 `16c2b0d` 已成功 push 到当前远端分支；本条最终状态回写提交后再次 push。服务器发布仍固定为 `9793173`。

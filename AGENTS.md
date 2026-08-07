@@ -33,7 +33,7 @@ Neil Bauman 最新明确指令 > `docs/construction/CODEX_MASTER_REQUIREMENTS.md
 
 ## 当前 Phase
 
-Phase 0 至 Phase 7 的功能、本地/局域网里程碑与首次腾讯云公网部署均已完成。当前生产入口为 `http://118.195.247.102`：宿主 nginx 80 回源 `127.0.0.1:18080` 的 Compose 栈，PostgreSQL、SeaweedFS 与 app 不暴露宿主端口；管理员、域名和 HTTPS 尚未启用。当前分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，服务器代码发布提交为 `9793173`；`main` 继续是公共开发基线，历史分支保留。后续默认先维护现状，不擅自启用管理员、修改 SSH/防火墙/安全组、删除旧 `catnip-intro` 工作区或执行新的生产切换。
+Phase 0 至 Phase 7、本地/局域网里程碑、首次腾讯云公网部署与无域名管理员私网入口均已完成。公共入口为 `http://118.195.247.102`；公网 nginx 对 `/admin` 与 `/api/admin` 返回 404，管理员只能从 Neil 的 Mac 经 SSH 隧道访问 `http://localhost:18443/admin/login`。生产环境只保存 scrypt 哈希，随机密码保存在 macOS 钥匙串 `Catnip Skill Hub Admin`；不得打印、提交或复制到服务器日志。当前分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，服务器发布提交为 `a578bca`；`main` 继续是公共开发基线。后续默认维护现状，不擅自开放公网管理路径、修改 SSH/防火墙/安全组、删除旧 `catnip-intro` 或执行新生产切换。
 
 ## 禁止事项
 

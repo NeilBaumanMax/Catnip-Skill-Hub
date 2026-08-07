@@ -64,5 +64,5 @@
 - Phase 6 不实现 PostgreSQL、Drizzle、对象存储、外部搜索/分析服务、Docker Compose、代理、HTTPS 或部署。
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 首次服务器部署已于 2026-08-07 完成：`http://118.195.247.102` 经宿主 nginx 80 回源到仅监听 `127.0.0.1:18080` 的 Compose 栈，数据库、对象存储和 app 无宿主公网端口。系统盘快照、服务器首份备份、隔离恢复、整栈重启和公网多视口验收均有记录。
-- 当前部署分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，服务器代码发布提交为 `9793173`；`main` 继续是公共开发基线，历史分支保留。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
-- 当前仍是直接 IP HTTP：管理员邮箱/密码哈希保持空值，域名、HTTPS、UFW/安全组收口、系统更新、异机备份和监控未完成。后续生产写操作继续遵守 `docs/deployment/SERVER_DEPLOYMENT.md`，不得把当前公开浏览验收扩大为 HTTPS 管理入口或完整运维闭环。
+- 当前部署分支为 `deployment/tencent-cloud-ubuntu-22-04-prep`，服务器发布提交为 `a578bca`；`main` 继续是公共开发基线，历史分支保留。当前 UI 基线为：工具栏唯一图形 Logo、顶部文字品牌、单层毛玻璃 header、分类单选和标签下拉多选。
+- 当前仍是直接 IP HTTP，但公网 nginx 对全部管理页面/API 返回 404；管理员只允许 Neil 的 Mac 经 SSH local forwarding 访问服务器 loopback Caddy。随机密码只存 macOS 钥匙串，服务器只存 Compose 正确转义的 scrypt 哈希。域名、HTTPS、MFA、UFW/安全组收口、系统更新、异机备份和监控未完成，不得重新开放公网管理路径。

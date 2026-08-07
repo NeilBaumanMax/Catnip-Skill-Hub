@@ -131,6 +131,15 @@ Phase 1 仍无单元测试脚本；以 lint、typecheck、生产构建、Git 差
 - 执行 1440、1024、768、390 四视口的公网截图并读图；执行 `npm test`、lint、typecheck、db:check、production audit、生产构建与 `git diff --check`。沙箱造成的失败必须记录，使用等价非沙箱或 Docker 构建复测。
 - 验收记录必须明确剩余的域名/HTTPS、系统补丁、UFW/安全组、异机备份、监控和管理员入口风险；直接 IP HTTP 浏览成功不等于完整生产安全验收。
 
+## 无域名管理员私网入口门禁
+
+- 公网 nginx 必须对 `/admin`、`/admin/*`、`/api/admin`、`/api/admin/*` 返回 404，同时公共首页、详情、推荐和健康接口继续为 200；nginx 配置修改前备份，`nginx -t` 后才 reload。
+- Caddy 继续只监听服务器 `127.0.0.1:18080`；管理员只从 Neil 的 Mac 通过 SSH local forwarding 访问本机 `127.0.0.1:18443`，不得让浏览器向公网 HTTP 提交凭据。
+- 随机密码明文只进入 macOS 钥匙串和一次性剪贴板；仓库、工具输出、服务器日志与环境备份清单不得包含明文。服务器环境文件维持 `root:root 0600`。
+- scrypt 哈希写入 Compose env 文件时，每个字面 `$` 必须转义为 `$$`；`docker compose config --quiet` 不得出现未设置变量警告，容器内只做哈希格式布尔检查而不打印值。
+- 真实验收必须覆盖登录页 200、正确凭据登录 200、带 Cookie 管理 API 200、退出 200、退出后 401；错误来源与公网直连继续拒绝。
+- SSH 隧道重启、钥匙串服务名、nginx/env 回滚点和域名/HTTPS/MFA未完成风险必须写入 HANDOFF。
+
 ## 前端视觉优化分支门禁
 
 - 当前前端视觉修改只在 `main` 实施；`UI_fix` 已于 2026-08-03 经完整门禁后快进推广到 `main`。`UI_fix`、`SKill-hub-ui`、`frontend/visual-optimization` 和 `backend-server-deployment` 作为历史/隔离分支保留但不承接后续开发。
