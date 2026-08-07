@@ -5,6 +5,23 @@ server {
 
     client_max_body_size 27m;
 
+    # 管理入口只允许经 SSH 隧道直达 loopback Caddy，公网不暴露登录面。
+    location = /admin {
+        return 404;
+    }
+
+    location ^~ /admin/ {
+        return 404;
+    }
+
+    location = /api/admin {
+        return 404;
+    }
+
+    location ^~ /api/admin/ {
+        return 404;
+    }
+
     location / {
         proxy_pass http://127.0.0.1:18080;
         proxy_http_version 1.1;
