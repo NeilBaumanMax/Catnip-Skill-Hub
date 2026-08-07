@@ -2,6 +2,13 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 19:10 CST / Skill 提交与公网发布说明书 / 开工计划
+
+- Neil Bauman 要求把本轮三个真实 Skill 从来源审计、内容主库收录、Release、网站集成到生产验收的完整过程整理为 Markdown，供后续 Agent 独立执行。
+- 新建独立 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，不修改或暂存用户尚未提交的 `docs/guide/USAGE.md` 与图片；说明书使用实际仓库路径、脚本和门禁，但不记录秘密或授权未来 Agent 擅自修改生产。
+- 文档必须覆盖 Skill 标准结构、作者/许可、固定 Commit、封面/效果图、manifest、验证器、确定性 ZIP、SemVer Release、网站种子/图片/下载/安装、PostgreSQL兼容、截图、公网验收、失败记录与回滚。
+- 先提交本计划并 push 唯一远端备份 `backup/pre-skill-submission-guide-20260807-1910`；完成后核对命令与现行代码、运行 Markdown/链接/空白检查，更新 LOG、DEV_PROGRESS、07 层和 HANDOFF 后单独提交推送。
+
 ## 2026-08-07 19:02 CST / 三个真实 Skill 公网发布 / 完成记录
 
 - 内容主库实现 `fc77de4`、main CI run `31168393729` 与 `v0.2.0` Release run `31168461824` 均成功；13 个 ZIP 与 3 个元数据资产公开可用，三个新增 ZIP 已真实下载、SHA-256 和解压验证，并在隔离项目用 `skills@1.5.22` 安装到 Codex 成功。
