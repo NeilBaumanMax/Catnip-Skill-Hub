@@ -12,6 +12,8 @@
 
 ## 2026-08-07 16:55 CST / 无域名管理员私网入口 / 完成记录
 
+- 实现与交接提交 `b6d2eee` 已成功 push 到 `origin/deployment/tencent-cloud-ubuntu-22-04-prep`；本条最终状态回写提交后再次 push。
+
 - 发布 `a578bca`：公网 nginx 对 `/admin`、`/admin/*`、`/api/admin`、`/api/admin/*` 返回 404，公共首页、详情、推荐、健康接口继续 200；配置备份 `nginx-catnip-pre-private-admin-20260807-164503.conf`，`nginx -t` 和 reload 成功。
 - 管理员标识为非公开本地地址；随机密码明文只保存于 macOS 钥匙串 `Catnip Skill Hub Admin` 并复制到剪贴板，服务器 `/etc/catnip-skill-hub/env` 只存 Compose 转义后的 scrypt 哈希且保持 `root:root 0600`。
 - Neil 的 Mac 已运行 SSH local forwarding：`127.0.0.1:18443 -> server 127.0.0.1:18080`。真实验证登录页 200、登录 200、授权 API 200、退出 200、退出后 401。
