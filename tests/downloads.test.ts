@@ -84,7 +84,7 @@ test("受信 Catnip Release 资产优先解析为不可变重定向", async () =
   if (resolved.kind === "release_redirect") assert.equal(resolved.url, skill.source.releaseAssetUrl);
 });
 
-test("Release 来源拒绝任意域名、latest 和不匹配文件名", () => {
+test("Release 来源拒绝任意域名、latest 和不匹配文件名，并允许包版本独立于目录 Release 版本", () => {
   assert.match(
     getCatnipReleaseAssetError(
       "https://example.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.1.0/project-brief-0.1.0.zip",
@@ -109,14 +109,32 @@ test("Release 来源拒绝任意域名、latest 和不匹配文件名", () => {
     ) ?? "",
     /slug 和版本/,
   );
-  assert.match(
+  assert.equal(
     getCatnipReleaseAssetError(
-      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v9.9.9/project-brief-0.1.0.zip",
+      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.2.0/project-brief-0.1.0.zip",
       "project-brief",
       "0.1.0",
-    ) ?? "",
-    /版本 Tag/,
+    ),
+    null,
   );
+});
+
+test("三个 v0.2.0 公共 Skill 都解析为已验证 Release 下载", async () => {
+  const expected = {
+    "idea-to-production-vibecoding": "idea-to-production-vibecoding-1.0.0.zip",
+    "apple-design": "apple-design-1.0.0.zip",
+    "dashi-ppt": "dashi-ppt-0.4.4.zip",
+  } as const;
+
+  for (const [slug, filename] of Object.entries(expected)) {
+    const skill = getSkillBySlug(slug);
+    assert.ok(skill);
+    const resolved = await resolveSkillDownload(skill);
+    assert.equal(resolved.kind, "release_redirect");
+    if (resolved.kind === "release_redirect") {
+      assert.equal(resolved.url, `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.2.0/${filename}`);
+    }
+  }
 });
 
 test("没有 Release 的既有资源仍可使用本地归档服务", async () => {

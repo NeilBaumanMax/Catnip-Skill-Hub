@@ -3,6 +3,7 @@ import test from "node:test";
 import { GET } from "../src/app/api/admin/skills/route";
 import { POST as login } from "../src/app/api/admin/session/route";
 import { hashAdminPassword } from "../src/lib/auth";
+import { getPublishedSkills } from "../src/lib/domain/skills";
 
 test("未认证的管理 API 返回 401", async () => {
   const response = await GET(new Request("https://catnip.example/api/admin/skills"));
@@ -47,5 +48,5 @@ test("真实登录路由签发 HttpOnly 会话且授权管理 API", async (conte
   assert.equal(authorized.status, 200);
   const body = await authorized.json() as { skills: unknown[]; persistence: string };
   assert.equal(body.persistence, "process-memory");
-  assert.equal(body.skills.length, 10);
+  assert.equal(body.skills.length, getPublishedSkills().length);
 });

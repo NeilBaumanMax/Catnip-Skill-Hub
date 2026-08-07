@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CaretDown, Check, Tag } from "@phosphor-icons/react/dist/ssr";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
@@ -184,16 +185,21 @@ export default async function Home({ searchParams }: HomeProps) {
             </div>
 
             <div className="skill-waterfall" id="skill-grid">
-              {discovery.items.map((skill) => (
+              {discovery.items.map((skill) => {
+                const cover = skill.images.find((image) => image.kind === "cover");
+                return (
                 <article className="waterfall-card" data-size={skill.coverSize} key={skill.slug}>
                   <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
                     <div
-                      className={`waterfall-cover cover-${skill.coverTheme}`}
+                      className={`waterfall-cover cover-${skill.coverTheme}${cover?.url ? " has-real-image" : ""}`}
                       data-photo={skill.coverTheme === "brief" ? "mountain" : undefined}
                       aria-hidden="true"
                     >
+                      {cover?.url ? (
+                        <Image className="waterfall-cover-image" fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 25vw" src={cover.url} alt="" unoptimized />
+                      ) : null}
                       <span className="cover-original">{skill.originalName}</span>
-                      <span className="waterfall-art" />
+                      {cover?.url ? null : <span className="waterfall-art" />}
                     </div>
                     <div className="waterfall-copy">
                       <div className="waterfall-title-row">
@@ -208,7 +214,8 @@ export default async function Home({ searchParams }: HomeProps) {
                     </div>
                   </Link>
                 </article>
-              ))}
+                );
+              })}
             </div>
 
             {discovery.items.length === 0 ? (

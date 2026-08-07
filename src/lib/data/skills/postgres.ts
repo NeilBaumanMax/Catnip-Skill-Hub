@@ -1,6 +1,7 @@
 import { asc, eq } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { getPublishedSkills, type SkillResource } from "@/lib/domain/skills";
+import { REQUIRED_PUBLIC_SKILL_SEEDS } from "@/lib/domain/skills/seeds";
 import { databaseSchema, skills } from "@/lib/data/db/schema";
 import type { SkillRepository } from "./repository";
 
@@ -16,8 +17,8 @@ export class PostgresSkillRepository implements SkillRepository {
   private ensureSeeded(): Promise<void> {
     this.seedPromise ??= (async () => {
       const existing = await this.db.select({ slug: skills.slug }).from(skills).limit(1);
-      if (existing.length > 0) return;
-      const seeds = getPublishedSkills().map((skill) => ({
+      const initialSeeds = existing.length > 0 ? REQUIRED_PUBLIC_SKILL_SEEDS : getPublishedSkills();
+      const seeds = initialSeeds.map((skill) => ({
         slug: skill.slug,
         id: skill.id,
         title: skill.title,
@@ -25,7 +26,7 @@ export class PostgresSkillRepository implements SkillRepository {
         hidden: skill.governance.hidden,
         payload: clone(skill),
       }));
-      if (seeds.length > 0) await this.db.insert(skills).values(seeds).onConflictDoNothing();
+      if (seeds.length > 0) await this.db.insert(skills).values(seeds).onConflictDoNothing({ target: skills.slug });
     })();
     return this.seedPromise;
   }

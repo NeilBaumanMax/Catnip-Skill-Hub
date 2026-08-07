@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { SkillActions } from "@/app/_components/skill-actions";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
@@ -67,7 +68,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
             </div>
           </div>
 
-          <div className={`detail-cover cover-${skill.coverTheme}`} role="img" aria-label={cover?.alt}>
+          <div className={`detail-cover cover-${skill.coverTheme}${cover?.url ? " has-real-image" : ""}`} role="img" aria-label={cover?.alt}>
+            {cover?.url ? <Image className="detail-cover-image" fill priority sizes="(max-width: 900px) 100vw, 48vw" src={cover.url} alt="" unoptimized /> : null}
             <span>CATNIP SKILL / {skill.source.version}</span>
             <strong>{skill.title}</strong>
             <i className="cover-mark" aria-hidden="true" />
@@ -82,7 +84,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
           <div className="gallery-grid">
             {skill.images.map((image, index) => (
               <figure className={`gallery-visual cover-${image.visualKey}`} key={image.id}>
-                <div role="img" aria-label={image.alt}>
+                <div className={image.url ? "has-real-image" : undefined} role="img" aria-label={image.alt}>
+                  {image.url ? <Image className="gallery-image" fill sizes="(max-width: 800px) 100vw, 50vw" src={image.url} alt="" /> : null}
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <strong>{index === 0 ? skill.title : "工作流效果示意"}</strong>
                   <i className="cover-mark" aria-hidden="true" />
@@ -216,8 +219,8 @@ export default async function SkillPage({ params }: SkillPageProps) {
           <p>由管理员筛选、整理和发布。</p>
         </div>
         <div className="footer-note">
-          <span>当前目录含一个可下载 Catnip 原创 Skill</span>
-          <span>其他演示种子继续保持下载关闭</span>
+          <span>已开放资源可直接下载 ZIP 或复制 Agent 安装命令</span>
+          <span>每项资源均标注作者、版本、Commit 与 License</span>
         </div>
       </footer>
       </div>

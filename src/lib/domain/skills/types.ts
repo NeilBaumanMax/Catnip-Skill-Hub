@@ -55,6 +55,7 @@ export interface SkillImage {
   readonly id: string;
   readonly kind: ImageKind;
   readonly alt: string;
+  readonly url?: string;
   readonly visualKey: CoverTheme;
   readonly sourceType: ImageSourceType;
   readonly sourceLabel: string;

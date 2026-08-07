@@ -12,6 +12,22 @@ test("搜索覆盖中文标题、原始名称、简介、作者和标签", () =>
   assert.deepEqual(discoverSkills({ query: "HARDWARE-PROTOTYPE-PACK" }).items.map((skill) => skill.slug), ["hardware-prototype"]);
   assert.ok(discoverSkills({ query: "Catnip 薄荷猫" }).items.length >= 10);
   assert.deepEqual(discoverSkills({ query: "I2C" }).items.map((skill) => skill.slug), ["sensor-debug"]);
+  assert.deepEqual(discoverSkills({ query: "Emil Kowalski" }).items.map((skill) => skill.slug), ["apple-design"]);
+  assert.deepEqual(discoverSkills({ query: "PPTX" }).items.map((skill) => skill.slug), ["dashi-ppt"]);
+});
+
+test("三个正式公共 Skill 有完整图片、来源、许可与审核状态", () => {
+  for (const slug of ["idea-to-production-vibecoding", "apple-design", "dashi-ppt"]) {
+    const skill = getPublishedSkills().find((candidate) => candidate.slug === slug);
+    assert.ok(skill);
+    assert.equal(skill.images.length, 2);
+    assert.ok(skill.images.every((image) => image.url?.startsWith(`/skills/${slug}/`)));
+    assert.match(skill.source.sourceCommit ?? "", /^[0-9a-f]{40}$/);
+    assert.notEqual(skill.source.license, "待管理员在正式发布前确认");
+    assert.equal(skill.governance.reviewState, "reviewed");
+    assert.equal(skill.governance.downloadEnabled, true);
+    assert.equal(skill.governance.pinned, true);
+  }
 });
 
 test("分类、标签和关键词可组合且无效条件不会污染结果", () => {

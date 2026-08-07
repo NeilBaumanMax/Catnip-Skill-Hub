@@ -832,6 +832,37 @@ select:focus-visible {
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.3);
 }
 
+.detail-cover.has-real-image::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--rail-ink) 14%, transparent),
+    color-mix(in srgb, var(--rail-ink) 82%, transparent)
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.detail-cover-image {
+  z-index: 0;
+  object-fit: cover;
+}
+
+.detail-cover.has-real-image > span,
+.detail-cover.has-real-image > strong {
+  color: var(--rail-text);
+}
+
+.detail-cover.has-real-image > strong {
+  display: none;
+}
+
+.detail-cover.has-real-image .cover-mark {
+  display: none;
+}
+
 .detail-cover > span {
   position: relative;
   z-index: 2;
@@ -903,6 +934,34 @@ select:focus-visible {
   overflow: hidden;
   padding: 26px;
   isolation: isolate;
+}
+
+.gallery-visual > div.has-real-image::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--rail-ink) 8%, transparent),
+    transparent 54%,
+    color-mix(in srgb, var(--rail-ink) 76%, transparent)
+  );
+  content: "";
+  pointer-events: none;
+}
+
+.gallery-image {
+  z-index: 0;
+  object-fit: cover;
+}
+
+.gallery-visual > div.has-real-image > span,
+.gallery-visual > div.has-real-image > strong {
+  color: var(--rail-text);
+}
+
+.gallery-visual > div.has-real-image .cover-mark {
+  display: none;
 }
 
 .gallery-visual > div > span,
@@ -3308,6 +3367,17 @@ select:focus-visible {
   transition: filter 180ms ease-out;
 }
 
+.waterfall-cover-image {
+  z-index: 0;
+  object-fit: cover;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.waterfall-cover.has-real-image .cover-original {
+  color: var(--rail-text);
+  text-shadow: 0 2px 12px var(--rail-ink);
+}
+
 .waterfall-cover::after {
   position: absolute;
   inset: 0;
@@ -3386,6 +3456,10 @@ select:focus-visible {
 
 .waterfall-card:hover .waterfall-cover {
   filter: saturate(1.06) contrast(1.02);
+}
+
+.waterfall-card:hover .waterfall-cover-image {
+  transform: scale(1.025);
 }
 
 .waterfall-copy {
@@ -3815,6 +3889,7 @@ select:focus-visible {
   }
 
   .waterfall-art,
+  .waterfall-cover-image,
   .waterfall-cover,
   .waterfall-card > a,
   .rail-nav a,

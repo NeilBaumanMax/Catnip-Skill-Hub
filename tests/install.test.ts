@@ -60,3 +60,14 @@ test("没有仓库路径的演示资源不生成命令", () => {
   assert.ok(demoSkill);
   assert.equal(buildInstallCommandMatrix(demoSkill), null);
 });
+
+test("三个 v0.2.0 公共 Skill 都提供 Claude Code 与 Codex 安装命令", () => {
+  for (const slug of ["idea-to-production-vibecoding", "apple-design", "dashi-ppt"]) {
+    const skill = getSkillBySlug(slug);
+    assert.ok(skill);
+    const matrix = buildInstallCommandMatrix(skill);
+    assert.ok(matrix);
+    assert.match(matrix["claude-code"].project, new RegExp(`--skill ${slug} --agent claude-code`));
+    assert.match(matrix.codex.project, new RegExp(`--skill ${slug} --agent codex`));
+  }
+});

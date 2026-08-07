@@ -50,7 +50,7 @@ export function getCatnipReleaseAssetError(
   }
 
   const tagVersion = segments[4].startsWith("v") ? segments[4].slice(1) : "";
-  if (!SEMVER.test(tagVersion) || tagVersion !== version) {
+  if (!SEMVER.test(tagVersion)) {
     return "Release 下载必须固定到语义化版本 Tag，不得使用 latest 或分支。";
   }
 
