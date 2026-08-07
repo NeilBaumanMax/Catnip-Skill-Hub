@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-08-07 17:42 CST / 三个真实 Skill 公网发布 / 开工计划
+
+- Neil Bauman 要求把三个指定 GitHub 资源完善为公网可见的完整 Skill：Idea to Production、Apple Design、Dashi PPT；详情页必须有封面/效果图、功能与场景介绍、来源/许可、ZIP 下载和本机 Agent 安装命令。
+- 内容主库先完成可扩展目录、来源审计、图片、确定性 ZIP 与新不可变 Release；网站只绑定已经验证的 Tag 资产。Apple Design 保留 Emil Kowalski/MIT，Dashi PPT 保留 chuspeeism/AGPL-3.0 与随完整 Skill 分发的专有组件说明。
+- 网站将扩展真实图片渲染和三项完整领域数据，现有 PostgreSQL 生产库通过受控、可回滚的精确 upsert 增加资源；不覆盖既有 Skill 数据，不开放新的公网管理入口。
+- 修改 `src/app` 前先执行 3 页面 × 4 视口基线截图；代码完成后运行 57 项测试、lint、typecheck、db:check、生产构建、图片和下载测试，再做修改后截图读图。
+- 当前用户工具改动继续隔离；先提交本计划并 push `backup/pre-three-public-skills-web-20260807-1742`，服务器写入前另做数据库/环境恢复点，最终才部署和公网验收。
+
 ## 2026-08-07 17:17 CST / 管理员密码恢复 / 完成记录
 
 - 已纠正上一轮无法由当前钥匙串事实支持的凭据保存状态；新随机密码现已真实写入并读回验证登录钥匙串 `Catnip Skill Hub Admin`，同时复制到 Neil Bauman 当前剪贴板。服务器仍只保存不可逆 scrypt 哈希。

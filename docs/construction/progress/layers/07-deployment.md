@@ -2,6 +2,12 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-07 17:42 CST / 三个真实 Skill 公网发布 / 开工计划
+
+- 目标：部署三项真实 Skill 的完整详情、真实图片、不可变 Release 下载和 Claude Code/Codex 安装命令；公网公共入口继续为 `http://118.195.247.102`，管理入口继续仅限 SSH 隧道。
+- 先完成内容主库 Release 和网站代码门禁；生产写入前创建 PostgreSQL/对象恢复点，发布新代码到独立 release，精确 upsert 三项数据并验证下载字节与安装命令。
+- 不修改 SSH、nginx 公网管理 404、UFW、安全组、DNS、HTTPS或旧 `catnip-intro`；失败时回滚 current release 和数据库恢复点。
+
 ## 2026-08-07 17:17 CST / 管理员密码恢复 / 完成记录
 
 - 计划提交与远端备份 `backup/pre-admin-password-reset-20260807-1711` 均已核验指向 `158ee5d`；生产写入发生在备份完成之后。
