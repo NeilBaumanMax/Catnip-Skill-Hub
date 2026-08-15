@@ -2,6 +2,12 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-08-16 03:59 CST / 移除十个演示 Skill 与生产清理 / 开工计划
+
+- 目标是让本地、内容 Release、生产 PostgreSQL 和公网展示统一只保留三个真实 Skill；十个 Phase 2 演示 slug 的详情、搜索结果、推荐与下载入口全部移除。
+- 先完成两仓远端备份和内容新 Release，再建立并验证生产数据库/对象完整恢复点；生产仅精确删除目标 slug 和发布新网站提交，不修改 SSH、nginx 管理 404、UFW、安全组、DNS、HTTPS、管理员凭据或旧 `catnip-intro`。
+- 验收覆盖本地测试/lint/typecheck/build、内容 validator/确定性构建/ZIP inspect、修改前后截图、生产服务健康、三个真实详情与下载、十个旧详情 404、首页仅三项和公网管理 404。
+
 ## 2026-08-07 21:02 CST / Skill 提交与公网发布运维说明书
 
 - 新增 `docs/guide/SKILL_SUBMISSION_PLAYBOOK.md`，把生产前完整恢复点、干净提交 amd64 构建、旧镜像标签、独立 release、原子 current、失败自动回滚、数据库插入和公网验收固化为后续 Agent 的操作门禁。
