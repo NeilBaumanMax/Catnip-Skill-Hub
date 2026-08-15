@@ -11,7 +11,7 @@ test("首页导航能从哈希和可见区域解析唯一选中项", () => {
 
 test("独立推荐页与 Skill 详情页使用路径上下文", () => {
   assert.equal(resolvePublicNavigationSelection({ pathname: "/recommend", hash: "#about" }), "recommend");
-  assert.equal(resolvePublicNavigationSelection({ pathname: "/skills/project-brief" }), "explore");
+  assert.equal(resolvePublicNavigationSelection({ pathname: "/skills/apple-design" }), "explore");
   assert.equal(resolvePublicNavigationSelection({ pathname: "/admin" }), null);
 });
 

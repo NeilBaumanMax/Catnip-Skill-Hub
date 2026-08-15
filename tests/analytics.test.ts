@@ -27,15 +27,15 @@ test("统计拒绝未知或非公开 Skill，Repository 实例彼此隔离", asy
 });
 
 test("统计 API 强制同源、拒绝未知资源和无效事件", async () => {
-  const context = { params: Promise.resolve({ slug: "deeper-reasoning" }) };
-  const crossOrigin = await eventRoute(new Request("https://catnip.example/api/skills/deeper-reasoning/events", {
+  const context = { params: Promise.resolve({ slug: "apple-design" }) };
+  const crossOrigin = await eventRoute(new Request("https://catnip.example/api/skills/apple-design/events", {
     method: "POST",
     headers: { origin: "https://evil.example", "content-type": "application/json" },
     body: JSON.stringify({ event: "view" }),
   }), context);
   assert.equal(crossOrigin.status, 403);
 
-  const invalid = await eventRoute(new Request("https://catnip.example/api/skills/deeper-reasoning/events", {
+  const invalid = await eventRoute(new Request("https://catnip.example/api/skills/apple-design/events", {
     method: "POST",
     headers: { origin: "https://catnip.example", "content-type": "application/json" },
     body: JSON.stringify({ event: "set_total" }),

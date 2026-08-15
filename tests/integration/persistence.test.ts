@@ -27,7 +27,7 @@ test("PostgreSQL 与 S3 适配器跨实例持久化数据", { skip: !databaseUrl
 
   try {
     const skills = await skillRepository.list();
-    assert.equal(skills.length, 10);
+    assert.equal(skills.length, 3);
 
     await analyticsA.increment(analyticsSlug, "view");
     assert.equal((await analyticsB.get(analyticsSlug)).views, 1);
