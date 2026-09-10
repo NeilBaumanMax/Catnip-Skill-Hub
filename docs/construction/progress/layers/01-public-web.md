@@ -2,6 +2,20 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-09-11 03:55 CST / Neil’s Skill Hub 多彩品牌改版 / 开工计划
+
+### 本轮目标
+
+- 把公开站文字品牌和 metadata 统一更新为 `Neil’s Skill Hub`，以 Neil Bauman 提供的白兔头像建立 favicon 与公共导航品牌锚点。
+- 保留现有三条公共主路径和业务交互，在不改变信息架构的前提下，将蓝绿主视觉重塑为深夜蓝框架与珊瑚红、金黄、天青、紫罗兰组成的鲜艳多色体系。
+- 参考兔子灵感图的角色亲和力、发光纸张和分区色彩，但不照搬桌面应用框架或图片内文案。
+
+### 门禁与边界
+
+- 计划提交并 push 后建立 `backup/pre-neils-skill-hub-redesign-20260911-0355`，远端核验成功才创建 `redesign/neils-skill-hub-colorful` 并修改真实代码。
+- 修改前、后分别生成首页、详情、推荐三页的 1440、1024、768、390 四视口截图，重点读图桌面与移动首页；工程门禁包括 test、lint、typecheck、db:check、build、HTTP 与 diff check。
+- 不改搜索/筛选语义、下载/安装服务、管理端、数据库、部署配置、生产服务器或秘密；既有未提交用户工具文件继续精确隔离。
+
 ## 2026-08-03 20:22 CST / Main Branch Promotion / 最终 Git 回写
 
 - `079d3def0e06b14cbe1d53d0d745b02095fe6923` 已 push 到 `origin/main`，公共前台后续施工分支正式为 `main`。

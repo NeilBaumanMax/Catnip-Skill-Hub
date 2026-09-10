@@ -2,6 +2,15 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 03:55 CST / Neil’s Skill Hub 多彩品牌改版 / 开工计划
+
+- Neil Bauman 明确要求在新分支把公开站名称改为 `Neil’s Skill Hub`，使用其提供的戴圆框眼镜白兔头像作为网站图标，并参考三张兔子灵感主题图，把现有蓝绿视觉升级为鲜艳多色体系。
+- 本轮为公共前台视觉改版：保留首页、详情页、推荐页的信息架构、URL、搜索筛选、下载与安装边界；统一重做公共外壳、品牌字标、首页搜索舞台、Skill 卡片、详情与推荐页的色彩、层次和响应式表现。
+- 设计基调为深夜蓝外壳、明亮内容表面与珊瑚红/金黄/天青/紫罗兰功能色，兔子角色承担品牌引导；不复制参考图的桌面软件布局，不新增普通用户登录、社区、MCP/Prompt 市场或首页直接安装。
+- 开始真实 UI 修改前先完成三页面四视口截图基线；随后执行 `npm test`、lint、typecheck、db:check、生产 build、HTTP、修改后 12 张截图与重点读图，并记录任何失败、修复和复测。
+- 当前工作区既有 `.gitignore`、`AGENTS.md`、`README.md`、`next-env.d.ts`、`package*.json`、`.agents/`、`docs/guide/`、`scripts/screenshots.ts`、`skills-lock.json` 改动均视为用户改动，本轮不覆盖、不回滚、不冒充为改版成果。
+- 开工计划提交后创建并核验唯一远端备份 `backup/pre-neils-skill-hub-redesign-20260911-0355`，再创建开发分支 `redesign/neils-skill-hub-colorful`；不修改或部署当前腾讯云生产环境。
+
 ## 2026-08-16 03:59 CST / 移除十个演示 Skill 与生产清理 / 开工计划
 
 - Neil Bauman 明确要求删除十个虚构演示 Skill，并同步从生产服务器移除；最终公开目录只保留 `idea-to-production-vibecoding`、`apple-design`、`dashi-ppt` 三个真实 Skill。
