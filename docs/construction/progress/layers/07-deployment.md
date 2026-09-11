@@ -2,6 +2,14 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-09-11 10:48 CST / Neil’s Skill Hub 腾讯云视觉版本发布 / 开工计划
+
+- 发布目标：将 `redesign/neils-skill-hub-colorful` 的提交 `c3e4b66` 安全发布到 `http://118.195.247.102`，使生产采用 `Neil’s Skill Hub` 名称、兔子图标与插画、多彩紧凑主题和恢复后的 4/3/2/1 列瀑布流。
+- Git 保护：计划提交 push 后创建 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 并核验；生产构建只使用提交归档，不包含主工作区未提交文件。
+- 数据保护：切换前备份 PostgreSQL 与 SeaweedFS，生成并验证 SHA-256；保留服务器现有 release、current 指向和 app 镜像回滚标签。
+- 发布边界：不修改 nginx、SSH、防火墙、安全组、域名、HTTPS、生产环境秘密、管理员邮箱/哈希、数据库记录或旧 `catnip-intro`；公网 `/admin` 和 `/api/admin` 必须继续 404，管理仍仅经本机 SSH 隧道。
+- 验收：本地提交门禁与 amd64 镜像架构、服务器 Compose/健康/日志/端口、公共路由/图片/下载、四视口生产截图与读图全部通过后才报告完成；任何持续异常按旧 current 和旧镜像回滚。
+
 ## 2026-08-16 03:59 CST / 移除十个演示 Skill 与生产清理 / 开工计划
 
 - 目标是让本地、内容 Release、生产 PostgreSQL 和公网展示统一只保留三个真实 Skill；十个 Phase 2 演示 slug 的详情、搜索结果、推荐与下载入口全部移除。
