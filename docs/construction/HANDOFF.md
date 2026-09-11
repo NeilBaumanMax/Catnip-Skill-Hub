@@ -2,6 +2,11 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 09:13 CST / 公共页面尺度收紧与灵感兔替换 / 最终远端状态
+
+- 实现与验收提交 `bf91768` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。
+- 如需撤销本轮，应在当前分支使用非破坏性的 `git revert bf91768`，或从 `backup/pre-neils-scale-refine-20260911-0839` 对照；不得以 hard reset 覆盖用户未提交文件。
+
 ## 2026-09-11 09:09 CST / 公共页面尺度收紧与灵感兔替换权威交接
 
 - 当前分支继续为 `redesign/neils-skill-hub-colorful`；开工计划 `d3fb9cf` 和修改前备份 `backup/pre-neils-scale-refine-20260911-0839` 已在远端核验。
