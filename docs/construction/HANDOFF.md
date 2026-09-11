@@ -2,6 +2,11 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 08:31 CST / Neil’s Skill Hub 多彩品牌改版 / 最终远端状态
+
+- 实现与验收提交 `62b236c` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。
+- 回滚本轮开发代码时应在该分支对实现提交使用非破坏性的 `git revert 62b236c`；也可从开发前备份 `backup/pre-neils-skill-hub-redesign-20260911-0355` 对照。不得用 hard reset 覆盖工作区用户改动。
+
 ## 2026-09-11 08:27 CST / Neil’s Skill Hub 多彩品牌改版权威交接
 
 - 当前改版分支为 `redesign/neils-skill-hub-colorful`；开工计划 `b3b5188` 与远端备份 `backup/pre-neils-skill-hub-redesign-20260911-0355` 已 push。公开站显示名称为 `Neil’s Skill Hub`，项目内部身份和生产部署仍可称 Catnip Skill Hub。
