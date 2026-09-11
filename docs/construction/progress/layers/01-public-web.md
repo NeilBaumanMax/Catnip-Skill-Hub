@@ -2,6 +2,20 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-09-11 09:28 CST / 原瀑布流恢复与管理员登录说明 / 开工计划
+
+### 本轮目标
+
+- 撤销主题层对 Skill 区 1+2 网格的拓扑覆盖，恢复既有 CSS Grid 瀑布流：宽屏 4 列、1024 级 3 列、768 级 2 列、手机 1 列，并继续由 `medium`、`large`、`tall` span 形成高低错落。
+- 保留 Neil’s Skill Hub 多色卡片、白兔品牌、约 25% 的紧凑视觉尺度、真实搜索筛选和三项真实 Skill 数据；不改变 DOM/键盘顺序、路由或业务能力。
+- 向 Neil 提供管理员登录的安全操作说明，并只读验证本地入口和钥匙串条目，不泄露密码。
+
+### 门禁与边界
+
+- 计划提交和远端备份成功后才修改 `src/app/neil-theme.css` 与 `DESIGN.md`；修改前后生成标准 16 张截图并读图检查。
+- 运行 unit、lint、typecheck、db:check、Webpack build、diff check、布局检测、HTTP 和 390/768/1440/1968px 浏览器诊断。
+- 不触碰生产发布、nginx、SSH 策略、防火墙、安全组、数据库或管理员凭据；用户未提交文件不进入本轮提交。
+
 ## 2026-09-11 09:13 CST / 公共页面尺度收紧与灵感兔替换 / 最终 Git 回写
 
 - 实现、生成资产与视觉验收提交 `bf91768` 已 push 到 `origin/redesign/neils-skill-hub-colorful`；开发前备份仍为 `backup/pre-neils-scale-refine-20260911-0839`。

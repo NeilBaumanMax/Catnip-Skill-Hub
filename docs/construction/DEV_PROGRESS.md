@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 09:28 CST / 原瀑布流恢复与管理员登录说明 / 开工计划
+
+- Neil Bauman 明确要求 Skill 区继续使用改版前的多列高低错落瀑布流，不接受上一轮把三项内容改成 1+2 主次网格；本轮只恢复原有 4/3/2/1 列与 size span 拓扑，继续保留鲜艳多色主题、紧凑尺度和新灵感兔资产。
+- 开工前复核当前分支、用户未提交文件、既有 CSS Grid 瀑布流规则与 Next.js 16.3 全局 CSS 指引；修改前后均执行四视口自动截图并重点读图首页桌面、平板和手机。
+- 同步只读核验本机 `18443` 管理隧道入口与 macOS 钥匙串服务项是否存在，向 Neil 说明本地 SSH 隧道登录步骤；不读取、打印、提交或传输明文密码，不修改生产 nginx、SSH、防火墙、凭据或服务器。
+- 工程验收包括 59 项测试、lint、typecheck、db:check、Webpack production build、diff check、Impeccable layout 检测、HTTP 与浏览器溢出/控制台检查。
+- 先提交并 push 本计划，再创建远端备份 `backup/pre-waterfall-restore-20260911-0928`；既有 `.gitignore`、`AGENTS.md`、README、依赖文件、`.agents/`、指南和截图工具继续作为用户改动隔离。
+
 ## 2026-09-11 09:13 CST / 公共页面尺度收紧与灵感兔替换 / 最终 Git 回写
 
 - 实现与验收提交 `bf91768` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条为直接后继的最终远端状态记录。
