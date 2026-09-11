@@ -1,5 +1,12 @@
 # 测试指标
 
+## 2026-09-11 / 知乎 Skill 网站本地基线
+
+- 公共静态目录为四个正式 Skill；`zhihu` 必须可按中文标题、原名、作者和标签检索，两张图片、reviewed/download/pinned 和 64 位来源 SHA 必须完整。
+- 四个资源均使用 `v0.4.0` 不可变 Release URL；下载校验允许 prerelease 资源版本但继续拒绝非 github.com、非指定主库、latest、查询参数及 slug/版本不匹配。
+- 59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack production build 通过；Turbopack 两次因环境端口 EPERM 失败，不计作代码通过。
+- 新详情 1440/390px 两视口无横向溢出、控制台错误或破图；修改前后标准 16 张和补充全页图读图通过。截图验收：通过（自动验收）。
+
 ## 2026-09-11 / Neil’s Skill Hub 腾讯云视觉发布基线
 
 - 发布提交 `378a0eb` 的本地门禁继承已通过的 59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack build、16 张本地截图和五视口布局诊断；独立 `linux/amd64` runner 镜像内 Turbopack production build 成功。

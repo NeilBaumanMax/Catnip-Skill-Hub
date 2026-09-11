@@ -13,19 +13,23 @@ test("搜索覆盖中文标题、原始名称、简介、作者和标签", () =>
   assert.deepEqual(discoverSkills({ query: "Catnip 薄荷猫" }).items.map((skill) => skill.slug), ["idea-to-production-vibecoding"]);
   assert.deepEqual(discoverSkills({ query: "Emil Kowalski" }).items.map((skill) => skill.slug), ["apple-design"]);
   assert.deepEqual(discoverSkills({ query: "PPTX" }).items.map((skill) => skill.slug), ["dashi-ppt"]);
+  assert.deepEqual(discoverSkills({ query: "知乎开放平台" }).items.map((skill) => skill.slug), ["zhihu"]);
 });
 
-test("公开目录只保留三个正式 Skill，且图片、来源、许可与审核状态完整", () => {
+test("公开目录包含四个正式 Skill，且图片、来源、许可与审核状态完整", () => {
   const published = getPublishedSkills();
   assert.deepEqual(
     [...published.map((skill) => skill.slug)].sort(),
-    ["apple-design", "dashi-ppt", "idea-to-production-vibecoding"],
+    ["apple-design", "dashi-ppt", "idea-to-production-vibecoding", "zhihu"],
   );
 
   for (const skill of published) {
     assert.equal(skill.images.length, 2);
     assert.ok(skill.images.every((image) => image.url?.startsWith(`/skills/${skill.slug}/`)));
-    assert.match(skill.source.sourceCommit ?? "", /^[0-9a-f]{40}$/);
+    assert.ok(
+      /^[0-9a-f]{40}$/.test(skill.source.sourceCommit ?? "") ||
+      /^[0-9a-f]{64}$/.test(skill.source.sourceSha256 ?? ""),
+    );
     assert.notEqual(skill.source.license, "待管理员在正式发布前确认");
     assert.equal(skill.governance.reviewState, "reviewed");
     assert.equal(skill.governance.downloadEnabled, true);

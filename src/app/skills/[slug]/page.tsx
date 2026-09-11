@@ -188,11 +188,14 @@ export default async function SkillPage({ params }: SkillPageProps) {
               <div><dt>资源类型</dt><dd>{subtypeLabels[skill.subtype]}</dd></div>
               <div><dt>原始名称</dt><dd>{skill.originalName}</dd></div>
               <div><dt>版本</dt><dd>{skill.source.version}</dd></div>
-              <div><dt>Commit</dt><dd>{skill.source.sourceCommit ?? "演示阶段未绑定"}</dd></div>
+              <div>
+                <dt>{skill.source.sourceCommit ? "Commit" : "来源 SHA-256"}</dt>
+                <dd>{skill.source.sourceCommit ?? skill.source.sourceSha256 ?? "尚未绑定"}</dd>
+              </div>
               <div><dt>License</dt><dd>{skill.source.license}</dd></div>
               <div><dt>下载状态</dt><dd>{skill.governance.downloadEnabled ? "管理员已开放" : "尚未开放"}</dd></div>
             </dl>
-            <TrackedExternalLink href={skill.source.sourceUrl} slug={skill.slug}>查看来源仓库 ↗</TrackedExternalLink>
+            <TrackedExternalLink href={skill.source.sourceUrl} slug={skill.slug}>查看原始来源 ↗</TrackedExternalLink>
           </aside>
         </div>
 
@@ -220,7 +223,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
         </div>
         <div className="footer-note">
           <span>已开放资源可直接下载 ZIP 或复制 Agent 安装命令</span>
-          <span>每项资源均标注作者、版本、Commit 与 License</span>
+          <span>每项资源均标注作者、版本、来源校验与 License</span>
         </div>
       </footer>
       </div>

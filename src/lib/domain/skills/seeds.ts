@@ -31,6 +31,7 @@ interface SeedInput {
   sourceUrl?: string;
   releaseAssetUrl?: string;
   sourceCommit?: string;
+  sourceSha256?: string;
   license?: string;
   version?: string;
   downloadEnabled?: boolean;
@@ -68,6 +69,7 @@ function createSeed(input: SeedInput): SkillResource {
       license: input.license ?? "待管理员在正式发布前确认",
       version: input.version ?? "0.1.0",
       sourceCommit: input.sourceCommit,
+      sourceSha256: input.sourceSha256,
     },
     category: input.category,
     tags: input.tags,
@@ -141,7 +143,7 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     sourceUrl: "https://github.com/NeilBaumanMax/idea-to-production-vibecoding/tree/1ed2eb67325716f65deaee3bf7fcc8b7d998c282",
     repositoryUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main",
     repositoryPath: "content/skills/idea-to-production-vibecoding",
-    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/idea-to-production-vibecoding-1.0.0.zip",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/idea-to-production-vibecoding-1.0.0.zip",
     sourceCommit: "1ed2eb67325716f65deaee3bf7fcc8b7d998c282",
     license: "MIT",
     version: "1.0.0",
@@ -214,7 +216,7 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     sourceUrl: "https://github.com/NeilBaumanMax/Apple_Design_SKILL/tree/6bf24434f7730ad169077756cf9c7cd7bd675fc6/skills/apple-design",
     repositoryUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main",
     repositoryPath: "content/skills/apple-design",
-    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/apple-design-1.0.0.zip",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/apple-design-1.0.0.zip",
     sourceCommit: "6bf24434f7730ad169077756cf9c7cd7bd675fc6",
     license: "MIT",
     version: "1.0.0",
@@ -286,7 +288,7 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     sourceUrl: "https://github.com/NeilBaumanMax/dashi-ppt-skill-ZYY--Neil/tree/fdbb145517ea0e289000aef9b7906bcb3e0cd19a/skills/dashi-ppt",
     repositoryUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main",
     repositoryPath: "content/skills/dashi-ppt",
-    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/dashi-ppt-0.4.4.zip",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/dashi-ppt-0.4.4.zip",
     sourceCommit: "fdbb145517ea0e289000aef9b7906bcb3e0cd19a",
     license: "AGPL-3.0（内含仅限随完整 Skill 使用和分发的专有导出组件）",
     version: "0.4.4",
@@ -342,12 +344,92 @@ export const SKILL_SEEDS: readonly SkillResource[] = [
     risks: ["完整 Skill 体积约 25.6 MB，安装依赖和浏览器组件需要额外磁盘、时间与可能的网络访问", "主项目采用 AGPL-3.0；html-deck-to-pptx 专有组件只能随完整 Dashi Skill 使用和分发，不得单独提取或再分发"],
     relatedSlugs: ["idea-to-production-vibecoding", "apple-design"],
   }),
+  createSeed({
+    slug: "zhihu",
+    title: "把知乎知识接入 Agent 工作流",
+    originalName: "zhihu",
+    summary: "通过知乎官方 CLI 搜索社区与全网内容、查看热榜、调用直答，并按授权使用个人内容和知识库。",
+    description: "知乎开放平台 Skill 把社区搜索、全网检索、热榜、知乎直答、个人创作与收藏、知识库和 API 额度查询组织成一套 Agent 可调用的 CLI 工作流。日常任务优先使用受控脚本定位官方 CLI；涉及个人数据、知识库上传或认证时，只在用户明确授权后读取最小范围，并避免在对话、日志或项目文件中暴露 Access Secret。这个页面镜像 Neil 指定的 0.5.3 beta 官方归档快照。",
+    category: "编程开发",
+    tags: ["知乎", "CLI", "内容搜索", "知识库", "RAG", "Codex CLI"],
+    theme: "research",
+    size: "tall",
+    authorName: "知乎开放平台",
+    authorUrl: "https://developer.zhihu.com/",
+    sourceKind: "third_party",
+    sourceLabel: "知乎开放平台官方 CDN 发布包，经 Neil’s Skill Hub 镜像",
+    sourceUrl: "https://developer-cdn.zhihu.com/zhihu-cli/releases/beta/skill/0.5.3-beta.20260904115023/zhihu-cli-skill-0.5.3-beta.20260904115023.zip",
+    repositoryUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main",
+    repositoryPath: "content/skills/zhihu",
+    releaseAssetUrl: "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/zhihu-0.5.3-beta.20260904115023.zip",
+    sourceSha256: "f7b1de244c875749feec7fae5b134e2de5f26332198e6c73861140b2d72c4dd7",
+    license: "知乎官方发布包（未声明独立开源许可证）",
+    version: "0.5.3-beta.20260904115023",
+    downloadEnabled: true,
+    recommendationWeight: 90,
+    pinned: true,
+    reviewState: "reviewed",
+    adminNotes: "Catnip 内容主库 v0.4.0；用户提供 ZIP 与知乎官方 CDN 同版本归档逐字节一致，使用 SHA-256 固定来源；官方未声明独立开源许可证。",
+    images: [
+      {
+        id: "zhihu-cover",
+        kind: "cover",
+        alt: "终端连接问题卡片、知识节点和灵感灯泡的知乎开放平台 Skill 概念封面",
+        url: "/skills/zhihu/cover.jpg",
+        visualKey: "research",
+        sourceType: "ai_generated",
+        sourceLabel: "Catnip 使用 OpenAI imagegen 生成（无知乎商标）",
+      },
+      {
+        id: "zhihu-gallery-1",
+        kind: "gallery",
+        alt: "从研究问题经过 CLI 分流到搜索、热榜、直答、收藏和知识库的效果示意",
+        url: "/skills/zhihu/effect.png",
+        visualKey: "interface",
+        sourceType: "ai_generated",
+        sourceLabel: "Catnip 使用 OpenAI imagegen 生成的概念效果图",
+      },
+    ],
+    features: [
+      "搜索知乎社区原始内容并保留标题、作者、摘要与原文链接",
+      "独立检索全网来源、查看知乎热榜并调用知乎直答",
+      "按最小权限读取当前用户自己的创作、关注与收藏",
+      "列出、检索和上传知识库，并查询开放 API 当日剩余额度",
+      "提供知乎黑客松选题、接口组合、OAuth 与交付检查指南",
+    ],
+    useCases: ["收集知乎社区的真实经验与观点", "对比社区讨论和外部权威证据", "整理个人创作与收藏", "搭建知识库/RAG 工作流", "开发知乎开放平台或黑客松作品"],
+    usageSteps: [
+      "首次调用先运行 Skill 自带的无副作用 status，确认 CLI 版本和认证状态。",
+      "如未安装，得到用户明确同意后再由 setup 从知乎官方 HTTPS manifest 下载并校验 CLI。",
+      "公共搜索、热榜或直答只调用完成问题所需的最小命令组合。",
+      "需要个人内容、收藏或知识库时，再引导用户生成 Access Secret，并通过标准输入安全配置。",
+      "展示结论时保留原始来源链接，额度或频率受限后停止重复调用。",
+    ],
+    promptExamples: [
+      "使用 zhihu 搜索知乎上关于独立开发者冷启动的真实经验，保留最相关回答的作者、摘要和原文链接，再总结共识与分歧。",
+      "使用 zhihu 分别检索知乎社区观点和全网权威资料，比较两类证据；不要用直答替代原始来源。",
+      "使用 zhihu 查看我指定知识库中与 Agent Skill 设计相关的内容，只读取完成这次问题所需的最小范围。",
+    ],
+    results: [
+      { title: "社区证据可追溯", description: "搜索结果保留作者、摘要和原文链接，便于回看真实语境。" },
+      { title: "研究路径更完整", description: "知乎社区、全网来源、直答和知识库可以按任务分开调用再综合。" },
+      { title: "个人数据边界清晰", description: "认证和本人内容读取遵循显式授权、最小范围与本地凭据原则。" },
+    ],
+    risks: [
+      "这是 0.5.3 beta 的固定快照；知乎官方 beta manifest 已存在更新版本，功能和接口可能继续变化。",
+      "首次安装会从知乎官方 CDN 下载 CLI；个人内容、收藏和知识库能力需要 Access Secret，凭据不得进入对话、日志或仓库。",
+      "搜索、直答、认证验证和知识库操作可能消耗开放平台额度；遇到限流或结果未知时不得无条件重试。",
+      "官方发布包没有声明独立开源许可证；本站仅镜像 Neil 指定的官方归档并如实标注，不作额外法律结论。",
+    ],
+    relatedSlugs: ["idea-to-production-vibecoding", "dashi-ppt"],
+  }),
 ];
 
 const REQUIRED_PUBLIC_SKILL_SLUGS = new Set([
   "idea-to-production-vibecoding",
   "apple-design",
   "dashi-ppt",
+  "zhihu",
 ]);
 
 export const REQUIRED_PUBLIC_SKILL_SEEDS: readonly SkillResource[] = SKILL_SEEDS.filter(

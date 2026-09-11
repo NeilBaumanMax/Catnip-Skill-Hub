@@ -56,8 +56,8 @@ test("拒绝非 GitHub 仓库根地址和不安全 Skill 名称", () => {
   );
 });
 
-test("三个真实公共 Skill 都提供 Claude Code 与 Codex 安装命令", () => {
-  for (const slug of ["idea-to-production-vibecoding", "apple-design", "dashi-ppt"]) {
+test("四个真实公共 Skill 都提供 Claude Code 与 Codex 安装命令", () => {
+  for (const slug of ["idea-to-production-vibecoding", "apple-design", "dashi-ppt", "zhihu"]) {
     const skill = getSkillBySlug(slug);
     assert.ok(skill);
     const matrix = buildInstallCommandMatrix(skill);

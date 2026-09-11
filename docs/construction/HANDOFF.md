@@ -2,6 +2,13 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 15:52 CST / 知乎 Skill 网站本地交接
+
+- 内容主库 v0.4.0 已成功发布；网站工作树新增 `zhihu` 完整领域数据、`public/skills/zhihu/cover.jpg`、`effect.png`、artifact SHA 展示和 prerelease 下载支持。
+- 本地工程门禁和视觉验收通过；Turbopack EPERM、SemVer 首测失败、旧 dev 单例 404 均已记录和修复/替代复测。开发 server 当前留在 localhost:3000 运行。
+- 计划/备份为 `879976f` / `backup/pre-add-zhihu-skill-20260911-1357`；下一步提交并 push 网站实现，再创建生产完整恢复点、构建干净 amd64 镜像并部署。
+- 生产部署不得覆盖既有 13 条数据；新 app 通过 `onConflictDoNothing` 只补 `zhihu`。公网管理必须保持 404，nginx/SSH/UFW/安全组/DNS/HTTPS/凭据不改。
+
 ## 2026-09-11 11:42 CST / 腾讯云视觉发布 / 最终远端状态
 
 - 部署记录提交 `f2bf8b8` 已成功 push；本条直接后继提交只做最终 Git 状态回写。服务器继续运行 release `378a0eb`，恢复点、回滚镜像与安全边界均未改变。

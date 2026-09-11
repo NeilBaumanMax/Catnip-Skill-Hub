@@ -69,7 +69,7 @@ Neil Bauman 最新明确指令允许首页使用紧凑的品牌搜索舞台，�
 
 安装说明可记录中文介绍、原名、作者、仓库、Catnip 页面、版本和两个 CLI 的安装说明。来源 JSON 可记录 originalName、originalAuthor、sourceUrl、repositoryUrl、sourceCommit、license、downloadedAt、catnipPageUrl。
 
-每条资源保存作者、原始来源、GitHub、License、版本/Commit、下载文件、`downloadEnabled` 和管理员备注。平台不自动作法律结论，不按 License 自动允许或禁止，由管理员显式决定镜像下载。
+每条资源保存作者、原始来源、分发仓库、License、版本、Git Commit 或官方归档 SHA-256、下载文件、`downloadEnabled` 和管理员备注。平台不自动作法律结论，不按 License 自动允许或禁止，由管理员显式决定镜像下载。
 
 ## 8. 安装到 Agent
 

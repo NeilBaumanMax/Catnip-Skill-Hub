@@ -101,7 +101,7 @@ test("受信 Catnip Release 资产优先解析为不可变重定向", async () =
 test("Release 来源拒绝任意域名、latest 和不匹配文件名，并允许包版本独立于目录版本", () => {
   assert.match(
     getCatnipReleaseAssetError(
-      "https://example.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/apple-design-1.0.0.zip",
+      "https://example.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/apple-design-1.0.0.zip",
       "apple-design",
       "1.0.0",
     ) ?? "",
@@ -117,7 +117,7 @@ test("Release 来源拒绝任意域名、latest 和不匹配文件名，并允�
   );
   assert.match(
     getCatnipReleaseAssetError(
-      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/other-1.0.0.zip",
+      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/other-1.0.0.zip",
       "apple-design",
       "1.0.0",
     ) ?? "",
@@ -125,7 +125,7 @@ test("Release 来源拒绝任意域名、latest 和不匹配文件名，并允�
   );
   assert.equal(
     getCatnipReleaseAssetError(
-      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/apple-design-1.0.0.zip",
+      "https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/apple-design-1.0.0.zip",
       "apple-design",
       "1.0.0",
     ),
@@ -133,11 +133,12 @@ test("Release 来源拒绝任意域名、latest 和不匹配文件名，并允�
   );
 });
 
-test("三个 v0.3.0 公共 Skill 都解析为已验证 Release 下载", async () => {
+test("四个 v0.4.0 公共 Skill 都解析为已验证 Release 下载", async () => {
   const expected = {
     "idea-to-production-vibecoding": "idea-to-production-vibecoding-1.0.0.zip",
     "apple-design": "apple-design-1.0.0.zip",
     "dashi-ppt": "dashi-ppt-0.4.4.zip",
+    "zhihu": "zhihu-0.5.3-beta.20260904115023.zip",
   } as const;
 
   for (const [slug, filename] of Object.entries(expected)) {
@@ -146,7 +147,7 @@ test("三个 v0.3.0 公共 Skill 都解析为已验证 Release 下载", async ()
     const resolved = await resolveSkillDownload(skill);
     assert.equal(resolved.kind, "release_redirect");
     if (resolved.kind === "release_redirect") {
-      assert.equal(resolved.url, `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/${filename}`);
+      assert.equal(resolved.url, `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/${filename}`);
     }
   }
 });
@@ -177,7 +178,7 @@ test("公开下载 API 对真实 Skill 返回受信 Release 307", async () => {
   assert.equal(response.status, 307);
   assert.equal(
     response.headers.get("location"),
-    `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.3.0/${REAL_SLUG}-1.0.0.zip`,
+    `https://github.com/neilbauman666/Catnip-skill-hub-main/releases/download/v0.4.0/${REAL_SLUG}-1.0.0.zip`,
   );
   assert.equal(response.headers.get("cache-control"), "private, no-store");
 });

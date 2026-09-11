@@ -66,4 +66,5 @@
 - Phase 7 本地部署和局域网访问里程碑已完成：Docker Desktop、PostgreSQL/Drizzle、SeaweedFS S3、Compose、Caddy 健康检查、备份恢复、重启持久化、显式 RFC1918 地址绑定与回环回滚均有真实验收。默认仍为回环绑定，不得使用 `0.0.0.0`。
 - Phase 7 首次服务器部署已于 2026-08-07 完成：`http://118.195.247.102` 经宿主 nginx 80 回源到仅监听 `127.0.0.1:18080` 的 Compose 栈，数据库、对象存储和 app 无宿主公网端口。系统盘快照、服务器首份备份、隔离恢复、整栈重启和公网多视口验收均有记录。
 - 当前生产发布来自 `redesign/neils-skill-hub-colorful`，服务器发布提交为 `378a0eb`；前一 release `50bd53b` 与其 app 回滚镜像保留，历史分支不删除。当前 UI 基线为 `Neil’s Skill Hub` 多彩紧凑主题、白兔 Logo/灵感插画、工具栏唯一图形 Logo、顶部文字品牌、分类单选、标签下拉多选和 4/3/2/1 列瀑布流。
+- Skill 来源默认使用 GitHub 固定 Commit；没有 Git 仓库的官方发布物可使用受信 HTTPS 归档与完整 SHA-256，详情页必须按真实来源类型展示，不得伪造 Commit 或开源 License。
 - 当前仍是直接 IP HTTP，但公网 nginx 对全部管理页面/API 返回 404；管理员只允许 Neil 的 Mac 经 SSH local forwarding 访问服务器 loopback Caddy。随机密码只存 macOS 钥匙串，服务器只存 Compose 正确转义的 scrypt 哈希。域名、HTTPS、MFA、UFW/安全组收口、系统更新、异机备份和监控未完成，不得重新开放公网管理路径。

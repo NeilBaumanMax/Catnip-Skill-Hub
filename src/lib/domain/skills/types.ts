@@ -49,6 +49,7 @@ export interface SkillSource {
   readonly license: string;
   readonly version: string;
   readonly sourceCommit?: string;
+  readonly sourceSha256?: string;
 }
 
 export interface SkillImage {

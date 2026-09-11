@@ -6,7 +6,7 @@ import {
   type SkillArchive,
 } from "./archive";
 
-const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
+const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z.-]+)?$/;
 const RELEASE_OWNER = "neilbauman666";
 const RELEASE_REPOSITORY = "Catnip-skill-hub-main";
 

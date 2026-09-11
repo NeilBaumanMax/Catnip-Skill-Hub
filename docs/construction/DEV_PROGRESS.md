@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 15:52 CST / 知乎官方 CLI Skill 公网收录 / 网站本地完成
+
+- 内容主库实现 `db4161b`、main CI `34574423452`、`v0.4.0` Release run `34574770659`、远端 SHA/解压与 `skills@1.5.25` 隔离安装均通过；网站已绑定不可变知乎 ZIP。
+- 新增完整 `zhihu` seed、生产缺失 seed、两张 1254 方图、官方归档 `sourceSha256` 字段与详情来源展示；既有三个资源同步指向 v0.4.0 Release，首页仍为原 4/3/2/1 列瀑布流。
+- 初次测试因下载校验只接受纯三段 SemVer 而拒绝合法 beta 版本；扩展 prerelease 后 59/59 通过。lint 0 error/3 既有 warning、typecheck、db:check、Webpack production build、HTTP 与 diff check 通过。
+- Turbopack 在沙箱和授权调用中均因内部端口 `EPERM` 失败，Webpack 生产构建成功；旧 dev seed 单例导致本地详情 404，重启开发进程后详情和两图均 200。
+- 修改前后标准 16 张截图完成；新详情桌面/手机全页截图显式 decode 图片，零横向溢出、零控制台错误，读图通过。截图验收：通过（自动验收）。
+
 ## 2026-09-11 13:57 CST / 知乎官方 CLI Skill 公网收录 / 开工计划
 
 - Neil Bauman 明确要求把本机 `zhihu-cli-skill-0.5.3-beta.20260904115023.zip` 上传到网站，并生成封面示例图和效果图；目标公开 slug 为 `zhihu`，主分类暂定“编程开发”，保持首页既有 4/3/2/1 列瀑布流和当前多彩主题。

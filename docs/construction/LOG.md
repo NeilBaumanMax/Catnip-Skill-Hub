@@ -1,5 +1,25 @@
 # 施工日志
 
+## 2026-09-11 15:52 CST / 知乎官方 CLI Skill / 网站实现与本地验证
+
+### 实现
+
+- 新增 `zhihu` 完整目录数据：中文标题、说明、5 项功能/场景/步骤、3 个 Prompt/效果、4 条风险、官方来源和 v0.4.0 Release 下载；加入 `REQUIRED_PUBLIC_SKILL_SLUGS` 以补入既有生产库。
+- 新增 `sourceSha256` 领域字段；详情按来源显示 Commit 或 SHA-256，来源按钮不再假设一定是仓库。下载 URL 校验继续锁定 Catnip GitHub Release，但允许合法 SemVer prerelease 资源版本。
+- 将生成封面转为 367K JPEG，效果图保留 1.8M PNG；两图 1254×1254，均标记 Catnip/OpenAI imagegen 来源，不使用知乎商标或伪造产品截图。
+
+### 失败、修复与复测
+
+1. 首轮 59 项测试有 1 项失败：下载服务的 `SEMVER` 只接受 `x.y.z`，拒绝知乎 `0.5.3-beta...`；扩展为与内容主库一致的 prerelease 规则后 59/59。
+2. 默认 Turbopack 构建在普通和授权环境两次均因创建内部进程绑定端口 `EPERM` 失败；使用同版本 Next.js Webpack production build 成功，并在 build 后复跑 typecheck。
+3. 修改后首次 HTTP 检查遇到本地 dev server 已退出；重启时发现遗留旧进程占用 3000，且旧 seed 单例返回知乎详情 404。精确停止该进程并重新启动后，详情与两图均 200，服务器保持运行。
+
+### 验证
+
+- 59/59、lint 0 error/3 个既有管理端 warning、typecheck、db:check、Webpack build 与 diff check 通过。
+- 修改前后各 16 张标准截图完成；新详情 1440/390 全页图显式 decode，所有图片 naturalWidth > 0，scrollWidth 等于 clientWidth，控制台/page errors 为 0。
+- 读图确认桌面/手机的封面、效果图、长版本、64 位 SHA、下载/安装、功能、场景、Prompt、风险和来源卡均无重叠或断裂。截图验收：通过（自动验收）。
+
 ## 2026-09-11 11:42 CST / 腾讯云视觉发布 / 最终 Git 回写
 
 - 完整生产验收、回滚入口、数据漂移和依赖风险已由提交 `f2bf8b8` 成功 push；本条仅补记最终远端同步事实，不改变运行代码或服务器状态。
