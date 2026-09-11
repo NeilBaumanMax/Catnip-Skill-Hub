@@ -2,6 +2,11 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 16:16 CST / 知乎官方 CLI Skill 公网收录 / 最终 Git 回写
+
+- 生产部署、恢复点、测试与回滚记录提交 `8f66def` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条作为直接后继纯文档提交再次同步远端。
+- 生产 current 保持 `8c1c340`，无需二次部署；开发前备份 `backup/pre-add-zhihu-skill-20260911-1357` 保持可用。
+
 ## 2026-09-11 16:12 CST / 知乎官方 CLI Skill 公网收录 / 腾讯云完成
 
 - 网站实现提交 `8c1c340` 已 push，并从该提交干净归档构建 `linux/amd64` 镜像 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`；生产 current 已原子切换到 `/opt/catnip-skill-hub/releases/8c1c340`。
