@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 13:57 CST / 知乎官方 CLI Skill 公网收录 / 开工计划
+
+- Neil Bauman 明确要求把本机 `zhihu-cli-skill-0.5.3-beta.20260904115023.zip` 上传到网站，并生成封面示例图和效果图；目标公开 slug 为 `zhihu`，主分类暂定“编程开发”，保持首页既有 4/3/2/1 列瀑布流和当前多彩主题。
+- 原包 SHA-256 为 `f7b1de244c875749feec7fae5b134e2de5f26332198e6c73861140b2d72c4dd7`，已与知乎官方 CDN 同版本 URL 的远端字节逐字节一致；包内无凭据、路径穿越、符号链接或二进制，但包含经授权后下载官方 CLI 的脚本并涉及 Access Secret、个人数据、上传和 API 额度，详情页须明确风险与最小授权边界。
+- 上游包未声明独立开源 License、Git 仓库或 Git Commit；不伪造开源许可或 Commit。内容主库将以官方 HTTPS 归档 URL + 完整 SHA-256 建立 artifact provenance，标记“知乎官方发布包，未声明独立开源许可证”，并由本次管理员指令允许 Catnip 镜像。
+- 内容主库计划升至 `v0.4.0`，生成两张无商标仿冒、无伪造产品截图的 AI 视觉，发布不可变 Release 并验证下载/解压/隔离安装；网站随后增加完整领域数据、图片、Release URL 和生产缺失 seed，再从干净提交发布到腾讯云。
+- 两仓开工计划先提交并 push，再分别建立远端备份 `backup/pre-add-zhihu-skill-20260911-1357`。生产写入前另建 PostgreSQL + SeaweedFS 完整恢复点；不修改 nginx、SSH、UFW、安全组、DNS、HTTPS、管理员凭据或旧 `catnip-intro`。
+
 ## 2026-09-11 11:42 CST / 腾讯云视觉发布 / 最终 Git 回写
 
 - 部署验收、风险与回滚记录提交 `f2bf8b8` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终回写随直接后继文档提交再次推送。
