@@ -2,6 +2,11 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 10:12 CST / 原瀑布流恢复与管理员登录说明 / 最终远端状态
+
+- 实现与验收提交 `ec4a674` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。
+- 如需撤销本轮，应使用非破坏性的 `git revert ec4a674`，或从 `backup/pre-waterfall-restore-20260911-0928` 对照；不得用 hard reset 覆盖用户未提交文件。
+
 ## 2026-09-11 09:40 CST / 原瀑布流恢复与管理员登录说明权威交接
 
 - 当前分支为 `redesign/neils-skill-hub-colorful`；计划 `0cfcfbf` 与开发前备份 `backup/pre-waterfall-restore-20260911-0928` 已 push。生产未部署。
