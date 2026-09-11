@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 16:12 CST / 知乎官方 CLI Skill 公网收录 / 腾讯云完成
+
+- 网站实现提交 `8c1c340` 已 push，并从该提交干净归档构建 `linux/amd64` 镜像 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`；生产 current 已原子切换到 `/opt/catnip-skill-hub/releases/8c1c340`。
+- 部署前恢复点 `/var/backups/catnip-skill-hub/20260911-155029-pre-zhihu` 的 PostgreSQL、SeaweedFS、manifest 与 SHA-256 已验证；旧 `378a0eb` release 和 `rollback-378a0eb` 镜像保留。
+- 生产库通过 `onConflictDoNothing` 只补入 `zhihu`，公开且未隐藏记录由 13 增至 14；版本、官方归档 SHA、公开详情、两图和 v0.4.0 下载均核验通过。
+- 四项长期服务 healthy，健康为 `postgres-s3`，近期 app/Caddy 错误关键词 0；公网管理继续 404，私网 loopback 登录页 200，端口仍仅公网 22/80 与回环 18080。
+- 线上首页桌面 4 列、手机单列瀑布流和新详情桌面/手机全页图读图通过；零溢出、零破图、零控制台错误。截图验收：通过（自动验收）。
+
 ## 2026-09-11 15:52 CST / 知乎官方 CLI Skill 公网收录 / 网站本地完成
 
 - 内容主库实现 `db4161b`、main CI `34574423452`、`v0.4.0` Release run `34574770659`、远端 SHA/解压与 `skills@1.5.25` 隔离安装均通过；网站已绑定不可变知乎 ZIP。

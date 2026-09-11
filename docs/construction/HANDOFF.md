@@ -2,6 +2,14 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 16:12 CST / 知乎 Skill 腾讯云权威交接
+
+- 生产 current 为 `/opt/catnip-skill-hub/releases/8c1c340`，运行镜像 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`、`linux/amd64`；四项长期服务 healthy，近十分钟 app/Caddy 错误关键词 0。
+- 公网详情为 `http://118.195.247.102/skills/zhihu`；内容主库 `v0.4.0` 不可变 ZIP 已绑定，生产记录是 `published|false`，版本 `0.5.3-beta.20260904115023`，官方来源 SHA-256 为 `f7b1de244c875749feec7fae5b134e2de5f26332198e6c73861140b2d72c4dd7`。
+- 最新恢复点 `/var/backups/catnip-skill-hub/20260911-155029-pre-zhihu` 完整校验通过且为 root 0700。回滚代码使用 `/opt/catnip-skill-hub/releases/378a0eb` 与 `catnip-skill-hub-app:rollback-378a0eb`；若同时撤销新增数据库记录，必须先单独评估并使用恢复点，不能把代码回滚与数据恢复混为一谈。
+- 公网 `/admin`、`/admin/login`、`/api/admin/session` 继续 404；服务器 loopback `/admin/login` 为 200。SSH、nginx、UFW、安全组、DNS、HTTPS、环境秘密、管理员凭据和旧 `/home/ubuntu/catnip-intro` 均未修改。
+- 线上首页保留 4/3/2/1 瀑布流；本轮实测 1440 桌面 4 列、390 手机单列，14 卡和知乎详情两视口无溢出、破图或控制台错误。临时服务器归档已精确删除。
+
 ## 2026-09-11 15:52 CST / 知乎 Skill 网站本地交接
 
 - 内容主库 v0.4.0 已成功发布；网站工作树新增 `zhihu` 完整领域数据、`public/skills/zhihu/cover.jpg`、`effect.png`、artifact SHA 展示和 prerelease 下载支持。

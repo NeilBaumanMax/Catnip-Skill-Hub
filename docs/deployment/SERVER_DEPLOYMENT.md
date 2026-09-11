@@ -5,15 +5,15 @@
 ## 当前生产状态（2026-09-11）
 
 - 公共入口：`http://118.195.247.102`。宿主 nginx 监听 80，回源到只监听 `127.0.0.1:18080` 的 Catnip Caddy。
-- 发布代码：`378a0eb`；发布目录 `/opt/catnip-skill-hub/releases/378a0eb`，`/opt/catnip-skill-hub/current` 指向该目录。app 镜像为 `linux/amd64`；前一发布 `50bd53b`、`catnip-skill-hub-app:rollback-50bd53b`、更早的 `a578bca` 回滚入口均保留。
+- 发布代码：`8c1c340`；发布目录 `/opt/catnip-skill-hub/releases/8c1c340`，`/opt/catnip-skill-hub/current` 指向该目录。app 镜像为 `linux/amd64`；前一发布 `378a0eb` 与 `catnip-skill-hub-app:rollback-378a0eb` 均保留。
 - 服务：PostgreSQL 18.4、SeaweedFS 4.29、迁移、Next.js 16.3.0 app 与 Caddy 2.11.4 由 Docker Compose 管理；迁移退出 0，其余长期服务 healthy。
 - 网络：宿主只监听 SSH 22、nginx 80 和回环 18080；数据库、S3 与 app 不暴露宿主端口，旧 3000/4000 进程已按 Neil Bauman 明确授权停止。
 - 资源：2 vCPU、3.6 GiB RAM、2 GiB `/swapfile`、系统盘约 36 GiB 可用。UFW 仍 inactive，腾讯云安全组未在本轮变更。
 - 秘密：`/etc/catnip-skill-hub/env` 为 `root:root 0600`，不在发布目录和 Git 中。随机管理员密码只存 Neil 的 macOS 钥匙串 `Catnip Skill Hub Admin`，服务器只存 scrypt 哈希；Compose env 文件把哈希中的字面 `$` 写为 `$$`。
 - 管理入口：公网 nginx 对 `/admin` 与 `/api/admin` 的精确路径及子路径全部返回 404；Neil 的 Mac 当前把 `127.0.0.1:18443` 经 SSH 转发到服务器 `127.0.0.1:18080`，从 `http://localhost:18443/admin/login` 登录。隧道中断后公网不会自动开放管理入口。
-- 备份：首份有效且完成隔离恢复的备份为 `/var/backups/catnip-skill-hub/20260807-030544`；三个真实 Skill 发布前恢复点为 `/var/backups/catnip-skill-hub/20260807-184127-pre-three-skills`。最新视觉发布前恢复点为 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual`，PostgreSQL custom dump、SeaweedFS 归档、manifest 与 SHA-256 均已验证，目录为 `root:root 0700`。`20260807-030452` 带 `FAILED.txt`，不可用于恢复。
-- 数据事实：2026-09-11 只读查询显示生产库仍有 13 条 `published`、未隐藏 Skill，其中包含 10 条旧演示记录；本次纯视觉发布没有新增、删除或修改数据库记录。后续清理必须单独获得 Neil Bauman 明确授权并先建立恢复点。
-- 依赖风险：提交 `378a0eb` 的 `npm audit --omit=dev` 报告 nanoid/sharp 高危与 Next.js 16.3.0 严重告警；Windows RCE 不适用本 Linux 主机，但 AVIF Image Optimization 风险仍需独立升级到修复版并完整复测。本次视觉发布沿用生产既有 Next.js 16.3.0，没有夹带依赖修改。
+- 备份：首份有效且完成隔离恢复的备份为 `/var/backups/catnip-skill-hub/20260807-030544`；最新恢复点为 `/var/backups/catnip-skill-hub/20260911-155029-pre-zhihu`，PostgreSQL custom dump、SeaweedFS 归档、manifest、SHA-256、数据库清单和对象清单均已验证，目录为 `root:root 0700`。`20260807-030452` 带 `FAILED.txt`，不可用于恢复。
+- 数据事实：2026-09-11 生产库有 14 条 `published`、未隐藏 Skill，其中包含本轮只新增的 `zhihu` 和 10 条旧演示记录；既有记录未覆盖或删除。后续清理必须单独获得 Neil Bauman 明确授权并先建立恢复点。
+- 依赖风险：提交 `8c1c340` 沿用既有依赖；最近一次 `npm audit --omit=dev` 报告 nanoid/sharp 高危与 Next.js 16.3.0 严重告警。Windows RCE 不适用本 Linux 主机，但 AVIF Image Optimization 风险仍需独立升级到修复版并完整复测。本次 Skill 发布没有夹带依赖修改。
 - nginx 回滚文件：`/var/backups/catnip-skill-hub/nginx-catnip-pre-cutover-20260807-0305.conf`；施工前腾讯云系统盘快照由 Neil Bauman 确认完成。
 - 旧 `/home/ubuntu/catnip-intro` 工作区及其未提交资产仍保留，没有删除、reset 或 clean；只有旧运行进程停止。
 - 未完成：域名、DNS、HTTPS、MFA、登录审计/告警、UFW/安全组复核、122 个系统更新、异机备份、自动备份和监控。当前 SSH 隧道只适合 Neil 的单机管理，不替代长期身份代理。

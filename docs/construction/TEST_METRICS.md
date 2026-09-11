@@ -1,5 +1,14 @@
 # 测试指标
 
+## 2026-09-11 / 知乎 Skill 腾讯云生产验收
+
+- 镜像：从干净 `8c1c340` 归档 buildx 构建成功；`linux/amd64`，摘要 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`，传输前后 SHA/镜像摘要一致。
+- 备份：PostgreSQL、SeaweedFS、manifest 的 SHA-256 为 3/3 OK；数据库 restore list 与对象 tar list 可读，root 0700。
+- 生产：长期服务 4/4 healthy，migrate exit 0，健康 `postgres-s3`，日志错误关键词 0；published 且未隐藏 14 条，知乎记录字段完整。
+- HTTP：`/`、`/recommend`、`/api/health`、`/skills/zhihu`、封面和效果图均 200；下载 307 到 v0.4.0；公网三个管理路径 3/3 为 404，私网登录页 200。
+- 浏览器：详情 1440/390 两视口与首页 1440/390 两视口完成全页截图；零横向溢出、零破图、零 console/page error。首页桌面 4 列、手机单列。截图验收：通过（自动验收）。
+- 已记录并修复/替代复测：SSH 身份遗漏、Docker Hub 辅助镜像超时、宿主缺少 pg_restore、旧库 text JSON 查询表达式、手机截图一次超时。
+
 ## 2026-09-11 / 知乎 Skill 网站本地基线
 
 - 公共静态目录为四个正式 Skill；`zhihu` 必须可按中文标题、原名、作者和标签检索，两张图片、reviewed/download/pinned 和 64 位来源 SHA 必须完整。

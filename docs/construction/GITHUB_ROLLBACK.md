@@ -42,6 +42,8 @@ Skill 提交说明书开工计划：`97dba55`；远端备份：`backup/pre-skill
 
 Neil’s Skill Hub 腾讯云视觉发布计划：`378a0eb`；远端备份 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 已 push 并核验。生产 current 为 release `378a0eb`；代码运行态回滚目标为 `/opt/catnip-skill-hub/releases/50bd53b` 与 `catnip-skill-hub-app:rollback-50bd53b`，数据恢复点为 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual`。数据未在本轮修改，正常回滚不得恢复数据库或对象归档。
 
+知乎官方 CLI Skill 发布计划：`879976f`；网站远端备份 `backup/pre-add-zhihu-skill-20260911-1357` 已 push 并核验。实现与生产 release 为 `8c1c340`；代码运行态回滚目标为 `/opt/catnip-skill-hub/releases/378a0eb` 与 `catnip-skill-hub-app:rollback-378a0eb`，数据恢复点为 `/var/backups/catnip-skill-hub/20260911-155029-pre-zhihu`。生产新增了 `zhihu`，代码回滚与数据恢复必须分开决策。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。

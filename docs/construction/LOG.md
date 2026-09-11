@@ -1,5 +1,30 @@
 # 施工日志
 
+## 2026-09-11 16:12 CST / 知乎官方 CLI Skill / 腾讯云部署与验收
+
+### 发布与数据保护
+
+- 网站实现提交 `8c1c340` 已 push；生产只使用该提交的 Git 归档构建，未包含主工作区中用户既有的依赖、指南、Agent 配置或截图工具改动。
+- 本地镜像为 `linux/amd64`，摘要 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`。服务器校验源码归档和 57M 镜像传输 SHA 后导入，并验证镜像摘要一致。
+- 部署前恢复点 `/var/backups/catnip-skill-hub/20260911-155029-pre-zhihu` 包含 20K PostgreSQL custom dump、272K SeaweedFS 归档、manifest 和 SHA256SUMS；三项校验、`pg_restore -l` 和对象 tar 清单均通过，目录为 `root:root 0700`。
+- 旧 current `378a0eb` 和镜像 `catnip-skill-hub-app:rollback-378a0eb` 保留；新 release 先通过 Compose config，再原子切换 current 并以失败自动恢复旧 symlink/镜像的分支重建 app/Caddy。
+
+### 失败、修复与复测
+
+1. 首次 SSH 预检没有指定项目专用身份，返回 `Permission denied`；改用既有 `/Users/neil/.ssh/catnipent` 与 `IdentitiesOnly=yes` 后成功，未改服务器。
+2. 备份对象卷时服务器尝试拉取辅助 `alpine:3.23`，因 Docker Hub 超时失败；数据库转储保留，改用运行中的 SeaweedFS 容器只读打包 `/data` 后完成归档。
+3. 宿主没有 `pg_restore`；改在现有 PostgreSQL 容器内读取 custom dump 清单，随后全部备份门禁通过。
+4. 生产 JSON 字段首轮查询因旧库 `payload` 为 text 且转换表达式优先级不正确失败；使用 `((payload::jsonb)->...)` 只读复测成功，确认新记录完整。
+5. 公网详情手机截图首轮 30 秒等待超时；服务持续 healthy，提升到 60 秒后桌面和手机均成功，无控制台错误。
+
+### 最终验收与回滚
+
+- current `/opt/catnip-skill-hub/releases/8c1c340`，migrate exit 0，PostgreSQL、SeaweedFS、app、Caddy healthy；`/api/health` 为 `postgres-s3`，近期 app/Caddy 错误关键词 0，端口仍仅公网 22/80 与回环 18080。
+- 公开且未隐藏记录从 13 增至 14，仅新增 `zhihu`；版本 `0.5.3-beta.20260904115023` 和官方归档 SHA-256 与目录定义一致，既有记录未覆盖或删除。
+- 公网首页、推荐、知乎详情和两图均 200；下载接口精确 307 到内容主库 `v0.4.0` 资产。公网三项管理路径 404，私网 loopback 登录页 200。
+- 首页 1440 桌面保持 4 列、390 手机保持单列，14 卡均显示；详情两视口图片全部 decode、零横向溢出、零控制台错误，全页截图读图通过。截图验收：通过（自动验收）。
+- 临时 `/tmp/source.tar` 与 `/tmp/app-8c1c340.tar` 已精确删除，正式 release、候选/回滚镜像和恢复点保留。无需回滚；持续异常时把 current 恢复为 `378a0eb`、latest 恢复 `rollback-378a0eb`，再以 `--no-build --force-recreate --wait app caddy` 重建并复测；涉及新增数据库记录的回退另行决策。
+
 ## 2026-09-11 15:52 CST / 知乎官方 CLI Skill / 网站实现与本地验证
 
 ### 实现
