@@ -1,5 +1,27 @@
 # 施工日志
 
+## 2026-09-11 09:40 CST / 原瀑布流恢复与管理员登录核验 / 实现与验证
+
+### 实际变更
+
+- 开工计划 `0cfcfbf` 与远端备份 `backup/pre-waterfall-restore-20260911-0928` 先行 push 并核验，之后才修改前端。
+- `src/app/neil-theme.css` 移除首卡跨两行、平板首卡跨双列和 700px 提前单列覆盖，恢复原有 CSS Grid 瀑布流拓扑：宽屏 4 列、1180px 以下 3 列、860px 以下 2 列、620px 以下 1 列。
+- `medium`、`large`、`tall` 继续分别使用 row span；为保留 Neil 认可的紧凑尺度，将 span 收紧为 42/48/54，列间距与卡片底部间距为 14px。多色主题、兔子品牌、内容 DOM 顺序、搜索筛选、路由和业务逻辑不变。
+- `DESIGN.md` 已纠正上一轮 1+2 网格描述，重新把多列高低错落瀑布流设为当前布局契约。
+
+### 失败、修复与复测
+
+1. 基线阶段沙箱内 `curl localhost:3000` 不可见，`tsx` 又因本地 IPC `EPERM` 退出；获准环境确认既有 3000 服务返回 200，16/16 基线截图随后成功。
+2. 尝试重复启动 dev server 返回 `EADDRINUSE ::1:3000`，证明服务已存在；未终止或替换该进程，后续直接复用。
+3. 单元测试首次同样因沙箱 `tsx` IPC `EPERM` 未执行；获准环境复测为 59/59。一次只读 `rg` 使用无匹配 zsh glob 返回错误，改用明确路径检索完成，不影响源码。
+4. 只读管理员核验显示钥匙串服务 `Catnip Skill Hub Admin`、账户 `neil@catnipent.local` 的项目存在，但 `http://localhost:18443/admin/login` 当前连接失败，说明 SSH 本地转发本轮核验时未运行；未读取明文密码、未启动隧道、未修改生产。
+
+### 最终验证
+
+- 59/59、lint 0 error/3 个既有 admin warning、typecheck、db:check、Webpack production build、`git diff --check` 与 Impeccable layout 检测 0 全部通过。
+- 标准截图 16/16 完成，首页 1440/1024/768/390 与 Skill 区补充截图读图通过。计算样式实测 1440/1968 为 4 列、1024 为 3 列、768 为 2 列、390 为单列；五种宽度横向溢出均为 0，浏览器控制台错误均为 0。
+- 截图验收：通过（自动验收，不等于 Neil Bauman 主观确认）。公网管理继续 404；本轮未修改或部署服务器、数据库、nginx、SSH 配置、防火墙、安全组或凭据。
+
 ## 2026-09-11 09:13 CST / 公共页面尺度收紧与灵感兔替换 / 最终 Git 回写
 
 - 实现、资产与验收提交 `bf91768` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条作为直接后继纯文档提交再次推送。

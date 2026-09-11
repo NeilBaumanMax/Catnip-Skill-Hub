@@ -2,6 +2,14 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 09:40 CST / 原瀑布流恢复与管理员登录说明权威交接
+
+- 当前分支为 `redesign/neils-skill-hub-colorful`；计划 `0cfcfbf` 与开发前备份 `backup/pre-waterfall-restore-20260911-0928` 已 push。生产未部署。
+- 当前 Skill 区不再是 1+2 网格：`src/app/neil-theme.css` 明确维持 4/3/2/1 列 CSS Grid 瀑布流和 42/48/54 size span，首卡没有跨栏特例。鲜艳多色主题、紧凑尺度和 `/brand/neil-rabbit-inspiration.png` 保持不变。
+- 最终门禁为 59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack build、diff check、layout 0；标准截图 16/16 和补充 Skill 区截图读图通过，五视口零溢出、零控制台错误。
+- 2026-09-11 09:32 CST 只读核验：macOS 钥匙串 `Catnip Skill Hub Admin` / `neil@catnipent.local` 项目存在；本机 `localhost:18443` 当前未监听。Neil 登录前需执行既有 SSH local forwarding 命令，再打开 `http://localhost:18443/admin/login`；公网 `/admin` 继续为安全策略下的 404。
+- 用户未提交的 `.gitignore`、`AGENTS.md`、README、依赖文件、`.agents/`、指南、截图脚本和 skills lock 不得被后续提交冒领。
+
 ## 2026-09-11 09:13 CST / 公共页面尺度收紧与灵感兔替换 / 最终远端状态
 
 - 实现与验收提交 `bf91768` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。
