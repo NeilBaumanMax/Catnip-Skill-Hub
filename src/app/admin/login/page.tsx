@@ -10,10 +10,10 @@ export default async function AdminLoginPage() {
 
   return (
     <main className="admin-shell admin-login-shell">
-      <Link className="brand-wordmark" href="/">Catnip 薄荷猫</Link>
+      <Link className="brand-wordmark" href="/">Neil’s Skill Hub</Link>
       <section className="admin-login-card">
         <p className="eyebrow">管理员入口</p>
-        <h1>管理 Catnip Skill</h1>
+        <h1>管理 Neil’s Skill Hub</h1>
         <p>此入口仅供预创建管理员使用。普通访客浏览和下载无需登录。</p>
         <LoginForm />
       </section>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CaretDown, Check, Tag } from "@phosphor-icons/react/dist/ssr";
+import { CaretDown, Check, LightbulbFilament, Question, Sparkle, Tag } from "@phosphor-icons/react/dist/ssr";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
 import { analyticsService } from "@/lib/analytics";
@@ -44,11 +44,11 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <PublicShell>
       {/*
-        THESIS: Skill 封面是首页主体，拒绝大型 Hero 与通用市场卡片墙。
-        OWN-WORLD: 蓝调山景环境、深蓝玻璃工具层、Catnip 薄荷焦点与多样内容封面。
-        STORY: 用户从搜索和分类进入瀑布流，在卡片上理解用途，再进入详情行动。
-        FIRST VIEWPORT: 左侧功能栏，顶部发现控制，紧凑标题，下方立即出现四列 Skill。
-        FORM: 内容发现画廊，采用 Neil Bauman 指定的 Unsplash 式框架与 Catnip 产品边界。
+        THESIS: 让 Neil 的兔子角色成为 Skill 发现入口，拒绝匿名的蓝绿工具画廊。
+        OWN-WORLD: 深夜蓝框架、金黄行动、珊瑚红温度、天青探索与紫罗兰创意。
+        STORY: 访客先理解这是 Neil 的精选 Skill 库，再搜索、浏览封面并进入详情行动。
+        FIRST VIEWPORT: 左侧品牌与搜索，右侧兔子吉祥物；精选内容在舞台下方露出入口。
+        FORM: 非对称角色搜索舞台，延续现有发现信息架构与内容瀑布流。
       */}
       <span className="navigation-sentinel" id="page-top" aria-hidden="true" />
       <PublicHeader query={discovery.filters.query}>
@@ -134,33 +134,53 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <main className="discovery-content">
           <section className="search-stage" id="search-stage" aria-labelledby="page-title">
-            <div className="search-stage-copy">
-              <span className="search-stage-kicker">Curated Agent Skills</span>
-              <h1 id="page-title" aria-label="Catnip Skill Hub">
-                <span>Catnip</span>
-                <span>Skill Hub</span>
-              </h1>
-              <p>更快找到真正能进入工作流的 Agent Skill。</p>
-            </div>
+            <div className="search-stage-grid">
+              <div className="search-stage-content">
+                <div className="search-stage-copy">
+                  <span className="search-stage-kicker">Curated by Neil Bauman</span>
+                  <h1 id="page-title" aria-label="Neil’s Skill Hub">
+                    <span>Neil’s</span>
+                    <span>Skill Hub</span>
+                  </h1>
+                  <p>找灵感，解问题。把真正好用的 Agent Skill 带进工作流。</p>
+                </div>
 
-            <div className="search-console">
-              <form className="hero-search" role="search" aria-label="搜索 Skill" action="/" method="get">
-                <label htmlFor="hero-search-input">搜索 Skill</label>
-                <input
-                  id="hero-search-input"
-                  name="q"
-                  type="search"
-                  placeholder="描述你想完成的任务"
-                  defaultValue={discovery.filters.query}
-                  maxLength={100}
+                <div className="search-console">
+                  <form className="hero-search" role="search" aria-label="搜索 Skill" action="/" method="get">
+                    <label htmlFor="hero-search-input">搜索 Skill</label>
+                    <input
+                      id="hero-search-input"
+                      name="q"
+                      type="search"
+                      placeholder="描述你想完成的任务"
+                      defaultValue={discovery.filters.query}
+                      maxLength={100}
+                    />
+                    <button type="submit">开始探索</button>
+                  </form>
+                  <nav className="scene-shortcuts" aria-label="常用场景">
+                    {discovery.availableTags.slice(0, 6).map((tag) => (
+                      <Link href={discoveryHref({ tags: [tag] })} key={tag}>{tag}</Link>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+
+              <div className="hero-mascot" aria-hidden="true">
+                <span className="mascot-symbol mascot-symbol-idea"><LightbulbFilament size={27} weight="fill" /></span>
+                <span className="mascot-symbol mascot-symbol-question"><Question size={26} weight="bold" /></span>
+                <span className="mascot-symbol mascot-symbol-spark"><Sparkle size={25} weight="fill" /></span>
+                <span className="mascot-halo" />
+                <Image
+                  className="hero-mascot-image"
+                  src="/brand/neil-rabbit-mascot.png"
+                  alt=""
+                  width={1254}
+                  height={1254}
+                  priority
+                  sizes="(max-width: 700px) 220px, 410px"
                 />
-                <button type="submit">搜索</button>
-              </form>
-              <nav className="scene-shortcuts" aria-label="常用场景">
-                {discovery.availableTags.slice(0, 6).map((tag) => (
-                  <Link href={discoveryHref({ tags: [tag] })} key={tag}>{tag}</Link>
-                ))}
-              </nav>
+              </div>
             </div>
 
             <EcosystemMarquee />
@@ -169,7 +189,7 @@ export default async function Home({ searchParams }: HomeProps) {
           <section className="discovery-intro" aria-labelledby="page-title">
             <div>
               <h2>今日精选</h2>
-              <p>由 Catnip 筛选、整理。先看见能力，再决定是否带进工作流。</p>
+              <p>由 Neil Bauman 筛选、整理。先看见能力，再决定是否带进工作流。</p>
             </div>
             <div className="discovery-summary" aria-live="polite">
               <strong>{discovery.items.length}</strong>
@@ -188,7 +208,7 @@ export default async function Home({ searchParams }: HomeProps) {
               {discovery.items.map((skill) => {
                 const cover = skill.images.find((image) => image.kind === "cover");
                 return (
-                <article className="waterfall-card" data-size={skill.coverSize} key={skill.slug}>
+                <article className="waterfall-card" data-category={skill.category} data-size={skill.coverSize} key={skill.slug}>
                   <Link href={`/skills/${skill.slug}`} aria-label={`查看 ${skill.title}`}>
                     <div
                       className={`waterfall-cover cover-${skill.coverTheme}${cover?.url ? " has-real-image" : ""}`}
@@ -230,11 +250,11 @@ export default async function Home({ searchParams }: HomeProps) {
 
         <footer className="discovery-footer" id="about">
           <div>
-            <strong>Catnip Skill Hub</strong>
-            <p>由管理员 Neil Bauman 筛选、整理和发布。</p>
+            <strong>Neil’s Skill Hub</strong>
+            <p>Neil Bauman 的 Agent Skill 灵感收藏夹。</p>
           </div>
           <div>
-            <span>Catnip 品牌图形已正式接入</span>
+            <span>每项 Skill 均经过人工整理</span>
             <a
               href="https://unsplash.com/photos/mountain-landscape-with-a-calm-lake-at-dawn-JCqW61z2Sz0"
               target="_blank"

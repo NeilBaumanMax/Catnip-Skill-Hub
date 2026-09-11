@@ -2,6 +2,21 @@
 
 本文件按时间追加公共前台层记录，不覆盖历史。
 
+## 2026-09-11 08:27 CST / Neil’s Skill Hub 多彩品牌改版 / 完成记录
+
+### 已完成
+
+- 在 `redesign/neils-skill-hub-colorful` 将公共站品牌统一为 `Neil’s Skill Hub`，以 Neil Bauman 提供的白兔头像作为导航 Logo 与 favicon，并建立透明首页角色资产。
+- 共享外壳、首页搜索舞台、真实 Skill 卡片、详情页与推荐页已统一为深夜蓝底和珊瑚红、金黄、天青、紫罗兰多色体系；桌面采用角色与搜索非对称构图，手机保留紧凑内容入口。
+- 搜索、分类/标签筛选、详情、推荐、下载、安装和统计边界未变；没有新增登录、社区、MCP/Prompt 市场或首页安装。
+
+### 验收
+
+- 59/59、lint 0 error/3 个既有 warning、typecheck、db:check、Webpack production build、diff check 通过。默认 Turbopack 因环境 CSS 子进程内部端口 `EPERM` 未通过，已记录并以 Webpack 路径复测。
+- 标准 16 张截图全部生成；首页四视口、真实 `/skills/apple-design` 桌面/手机和推荐页重点读图通过，无断裂、重叠、破图或控制台错误。390px 页面横向溢出为 0。
+- `/skills/project-brief` 是已删除演示资源，标准脚本截图正确显示 404；未为满足旧路径而恢复虚构内容。截图验收：通过（自动验收）。
+- 生产、数据库和服务器配置未修改；开发前远端备份为 `backup/pre-neils-skill-hub-redesign-20260911-0355`。
+
 ## 2026-09-11 03:55 CST / Neil’s Skill Hub 多彩品牌改版 / 开工计划
 
 ### 本轮目标

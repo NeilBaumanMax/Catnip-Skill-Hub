@@ -2,6 +2,15 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 08:27 CST / Neil’s Skill Hub 多彩品牌改版权威交接
+
+- 当前改版分支为 `redesign/neils-skill-hub-colorful`；开工计划 `b3b5188` 与远端备份 `backup/pre-neils-skill-hub-redesign-20260911-0355` 已 push。公开站显示名称为 `Neil’s Skill Hub`，项目内部身份和生产部署仍可称 Catnip Skill Hub。
+- 当前品牌资产为 `public/brand/neil-rabbit-icon.png` 和 `public/brand/neil-rabbit-mascot.png`；旧 `logo.png` 只作历史保留。主题入口为 `src/app/neil-theme.css`，在旧 `globals.css` 之后加载并集中覆盖公共界面。
+- 首页采用深夜蓝外壳、紫罗兰舞台、金黄行动色，以及珊瑚红/天青等 Skill 语义色；详情和推荐共享同一色彩与触控规则。业务路由、数据、搜索筛选、下载/安装、权限和生产配置没有变化。
+- 最终工程门禁为 59/59、lint 0 error/3 个既有 admin warning、typecheck、db:check、Webpack production build、diff check；默认 Turbopack 在当前环境因内部端口 `EPERM` 失败，不得写成已通过。
+- `scripts/screenshots.ts` 仍包含历史 `/skills/project-brief`，该演示资源已删除，截图 404 属于脚本漂移；真实详情验收使用 `/skills/apple-design`。修改后标准 16 张加真实详情 2 张均完成，重点读图通过。
+- 本轮不部署生产；服务器仍保持既有发布和公网管理 404 安全边界。用户未提交的 `.gitignore`、`AGENTS.md`、README、依赖、`.agents/`、`docs/guide/`、截图脚本和 skills lock 不得被后续提交冒领。
+
 ## 2026-08-07 21:02 CST / Skill 提交说明书权威交接
 
 - 说明书实现与交接提交 `994e0b7` 已成功 push 到当前远端分支；本条最终状态回写提交后再次 push。

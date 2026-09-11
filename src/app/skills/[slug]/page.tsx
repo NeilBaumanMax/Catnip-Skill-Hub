@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: SkillPageProps): Promise<Meta
   if (!skill || skill.governance.publishStatus !== "published" || skill.governance.hidden) return {};
 
   return {
-    title: `${skill.title} | Catnip Skill Hub`,
+    title: `${skill.title} | Neil’s Skill Hub`,
     description: skill.summary,
   };
 }
@@ -70,7 +70,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
 
           <div className={`detail-cover cover-${skill.coverTheme}${cover?.url ? " has-real-image" : ""}`} role="img" aria-label={cover?.alt}>
             {cover?.url ? <Image className="detail-cover-image" fill priority sizes="(max-width: 900px) 100vw, 48vw" src={cover.url} alt="" unoptimized /> : null}
-            <span>CATNIP SKILL / {skill.source.version}</span>
+            <span>NEIL’S PICK / {skill.source.version}</span>
             <strong>{skill.title}</strong>
             <i className="cover-mark" aria-hidden="true" />
           </div>
@@ -215,7 +215,7 @@ export default async function SkillPage({ params }: SkillPageProps) {
 
       <footer className="site-footer">
         <div>
-          <strong>Catnip Skill Hub</strong>
+          <strong>Neil’s Skill Hub</strong>
           <p>由管理员筛选、整理和发布。</p>
         </div>
         <div className="footer-note">

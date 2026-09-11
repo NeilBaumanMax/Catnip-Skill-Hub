@@ -32,15 +32,15 @@ Catnip 不是开放社区或通用插件市场。它以管理员策展、人工�
 - 每个 Skill 只有一个固定主分类，可有多个自由标签。
 - 首页卡片整张进入详情，不直接提供下载或安装。
 - 资源先进入草稿，再由管理员发布；推荐表单只收集线索。
-- 正式 Logo、吉祥物与品牌视觉资产尚未提供，不得伪造。
+- 正式兔子 Logo 与首页吉祥物资产已提供或经授权延展；不得再用旧 Catnip 图形、emoji 或无来源近似图替代。
 - 服务器部署当前暂停；前端工作不得扩展到生产部署或服务器配置。
 
 ## Brand Commitments
 
-- 产品名称：Catnip Skill Hub。
-- 公开品牌：Catnip Skill Hub，使用 Neil Bauman 提供的正式 Catnip 图形。
+- 产品身份继续为 Catnip Skill Hub；2026-09-11 起公开网站名称为 `Neil’s Skill Hub`。
+- 公开品牌使用 Neil Bauman 提供的白兔头像，并以同一角色的透明背景衍生图作为首页吉祥物。
 - 项目负责人和管理员：Neil Bauman。
-- 正式网页 Logo 与 favicon 使用 `public/brand/logo.png`；后续替换必须由 Neil Bauman 提供新版本。
+- 网页导航与 favicon 使用 `public/brand/neil-rabbit-icon.png`；首页吉祥物使用 `public/brand/neil-rabbit-mascot.png`。
 - 首页体验以图片驱动、持续发现、克制但不呆板为原则。
 - Neil Bauman 已将 Unsplash 的左侧功能入口、顶部分类/搜索/标签和中部瀑布流设为当前首页参考方向；这是一项结构与审美约束，不授权复制其品牌素材。
 
@@ -48,9 +48,9 @@ Catnip 不是开放社区或通用插件市场。它以管理员策展、人工�
 
 - 产品事实：`docs/product/PRODUCT_REQUIREMENTS.md`。
 - 工程与施工边界：`docs/construction/`。
-- 现有十条明确标记的 Catnip 演示 Skill 数据与真实应用路由。
-- 一张有来源记录的 Unsplash 蓝调山景图片，可作为替换性演示内容，不是正式品牌资产。
-- 当前已有 Neil Bauman 提供的正式网页 Logo；仍没有正式吉祥物、完整正式 Skill 封面库、用户证言或商业数据，未来工作不得虚构这些内容。
+- 当前公开目录保留三条真实 Skill 数据与应用路由；此前十条演示 Skill 已删除。
+- Neil Bauman 提供的白兔头像是正式网页 Logo；透明背景同角色图是已授权延展并验收的首页吉祥物。
+- 仍没有用户证言或商业数据，未来工作不得虚构这些内容。
 
 ## Product Principles
 

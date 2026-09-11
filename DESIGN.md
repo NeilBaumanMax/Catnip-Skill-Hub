@@ -1,15 +1,19 @@
 ---
-name: Catnip Skill Hub
-description: Curated Agent Skill discovery gallery
+name: Neil’s Skill Hub
+description: Colorful rabbit-led Agent Skill discovery gallery curated by Neil Bauman
 colors:
-  gallery-canvas: "#071421"
-  gallery-surface: "rgb(9 23 37 / 0.72)"
-  gallery-ink: "#f4f7f7"
-  gallery-muted: "#bbc9cf"
-  gallery-line: "rgb(255 255 255 / 0.16)"
-  catnip-mint: "#96dfa8"
-  rail-ink: "#07111c"
-  rail-text: "#f4f8f6"
+  gallery-canvas: "#10152f"
+  gallery-surface: "#171d42"
+  gallery-ink: "#f9f7ff"
+  gallery-muted: "#c7c9dc"
+  gallery-line: "rgb(218 224 255 / 0.18)"
+  primary-gold: "#ffca55"
+  coral: "#ff8c78"
+  sky: "#64d9ef"
+  violet: "#b78cff"
+  aqua: "#65ddc1"
+  rail-ink: "#14162f"
+  rail-text: "#fff9f3"
   ecosystem-claude: "#d97757"
   ecosystem-codex: "#74d8ad"
   ecosystem-notion: "#f2f1ed"
@@ -87,7 +91,21 @@ components:
     padding: "10px 14px"
 ---
 
-# Design System: Catnip Skill Hub
+# Design System: Neil’s Skill Hub
+
+## 2026-09-11 Neil’s Skill Hub Brand Override
+
+Neil Bauman 最新明确指令把公开站名称更新为 `Neil’s Skill Hub`，并以其提供的白兔头像、两张兔子主题插画和一张深蓝多彩产品界面作为新视觉依据。本节覆盖下方全部旧名称、Catnip 图形、蓝绿山景和单一薄荷强调色规则；产品功能、信息架构、管理员身份、来源治理和公开/管理边界保持不变。
+
+**Creative North Star: "深夜灵感学院"**
+
+- 深夜蓝是连续环境，不再使用山景照片。鲜艳颜色采用全调色板策略并承担固定角色：金黄用于主要行动与选中，珊瑚红用于品牌温度，天青用于探索与开发，紫罗兰用于创意与产品，水绿色用于标签和确认。
+- 颜色必须形成大面积清晰分区或语义归属，不以随机光点、霓虹外发光或渐变文字制造热闹。生态品牌色仍只用于生态带本身。
+- 首页首屏采用非对称搜索舞台：左侧品牌、说明与搜索，右侧透明兔子吉祥物；1440 x 900 仍需露出精选内容入口。兔子出现动效只用于建立视觉焦点，并尊重 reduced-motion。
+- 导航/favicon 使用 Neil Bauman 提供的原始 675 x 675 兔子头像 `/brand/neil-rabbit-icon.png`；首页使用同一角色的透明背景衍生资产 `/brand/neil-rabbit-mascot.png`。顶部文字品牌不重复图形。
+- 卡片与内容面采用 16px 软圆角；搜索舞台可使用 24-28px 大容器圆角；小型按钮与筛选项可使用全圆角。主要正文继续采用系统无衬线，品牌展示采用系统圆体栈。
+- 首页内容结构、五类单选、标签多选、真实搜索、详情页行动、推荐表单及全部现有 URL 不变。首页仍不提供直接下载、安装、普通用户登录或社区功能。
+- 视觉参数：`DESIGN_VARIANCE 8`、`MOTION_INTENSITY 5`、`VISUAL_DENSITY 5`。页面主题锁定为深色，实色回退为 `#171d42`。
 
 ## 2026-08-01 Public Header Distillation Override
 

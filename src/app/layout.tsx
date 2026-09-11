@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./neil-theme.css";
 
 export const metadata: Metadata = {
-  title: "Catnip Skill Hub",
-  description: "Curated Agent Skills for real workflows.",
+  title: "Neil’s Skill Hub",
+  description: "Neil Bauman 精选的 Agent Skills，帮你把灵感带进真实工作流。",
   icons: {
-    icon: [{ url: "/brand/logo.png", type: "image/png" }],
-    apple: [{ url: "/brand/logo.png", type: "image/png" }],
+    icon: [{ url: "/brand/neil-rabbit-icon.png", type: "image/png" }],
+    apple: [{ url: "/brand/neil-rabbit-icon.png", type: "image/png" }],
   },
 };
 

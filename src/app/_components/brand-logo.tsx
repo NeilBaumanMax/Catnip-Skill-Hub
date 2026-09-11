@@ -11,11 +11,11 @@ export function BrandLogo({ className, priority = false }: BrandLogoProps) {
       alt=""
       aria-hidden="true"
       className={className}
-      height={1080}
+      height={675}
       priority={priority}
       sizes="48px"
-      src="/brand/logo.png"
-      width={1078}
+      src="/brand/neil-rabbit-icon.png"
+      width={675}
     />
   );
 }

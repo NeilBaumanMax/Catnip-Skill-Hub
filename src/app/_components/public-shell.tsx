@@ -6,12 +6,12 @@ import { PublicRailNav } from "./public-rail-nav";
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
     <div className="discovery-page public-shell">
-      <aside className="utility-rail" aria-label="Catnip Skill Hub">
-        <Link className="rail-brand" href="/#page-top" aria-label="Catnip Skill Hub 首页">
+      <aside className="utility-rail" aria-label="Neil’s Skill Hub">
+        <Link className="rail-brand" href="/#page-top" aria-label="Neil’s Skill Hub 首页">
           <BrandLogo className="brand-logo" priority />
         </Link>
         <PublicRailNav />
-        <span className="rail-signature" aria-hidden="true">CATNIP</span>
+        <span className="rail-signature" aria-hidden="true">NEIL’S</span>
       </aside>
       <div className="discovery-main">{children}</div>
     </div>
@@ -34,8 +34,8 @@ export function PublicHeader({
       <div className="discovery-topline">
         <Link className="discovery-wordmark" href="/#page-top">
           <span className="discovery-wordmark-copy">
-            <strong>Catnip Skill Hub</strong>
-            <small>Curated Agent Skills</small>
+            <strong>Neil’s Skill Hub</strong>
+            <small>Curated by Neil Bauman</small>
           </span>
         </Link>
 

@@ -18,7 +18,7 @@ export default async function AdminPage() {
     <main className="admin-shell">
       <header className="admin-header">
         <div>
-          <Link className="brand-wordmark" href="/">Catnip 薄荷猫</Link>
+          <Link className="brand-wordmark" href="/">Neil’s Skill Hub</Link>
           <p>管理员：{admin.email}</p>
         </div>
         <div className="admin-header-actions">

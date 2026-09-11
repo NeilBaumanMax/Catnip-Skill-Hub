@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 08:27 CST / Neil’s Skill Hub 多彩品牌改版 / 完成记录
+
+- 已在 `redesign/neils-skill-hub-colorful` 完成公开品牌改版：站名、metadata、favicon、公共导航、页脚与管理端字标统一为 `Neil’s Skill Hub`，新兔子图标和透明首页角色资产已纳入稳定品牌路径。
+- 首页、三张真实 Skill 卡片、详情和推荐页统一为深夜蓝环境与珊瑚红、金黄、天青、紫罗兰多色系统；保留既有 URL、搜索筛选、下载安装和权限边界。
+- 59/59 测试、lint、typecheck、db:check、Webpack production build 与 diff check 通过；默认 Turbopack 因环境内部端口 `EPERM` 失败，已如实记录并由成功的 Webpack 构建复核生产代码。
+- 修改后 16 张标准截图和 2 张真实详情补充截图完成；四种视口重点读图、390px 溢出、破图与控制台错误检查均通过。`project-brief` 的 404 是旧截图路径漂移，真实 `apple-design` 详情另行通过。
+- 截图验收：通过（自动验收，不等于 Neil Bauman 主观确认）。腾讯云生产环境未触碰；用户既有未提交文件继续隔离。
+
 ## 2026-09-11 03:55 CST / Neil’s Skill Hub 多彩品牌改版 / 开工计划
 
 - Neil Bauman 明确要求在新分支把公开站名称改为 `Neil’s Skill Hub`，使用其提供的戴圆框眼镜白兔头像作为网站图标，并参考三张兔子灵感主题图，把现有蓝绿视觉升级为鲜艳多色体系。

@@ -2,7 +2,8 @@
 
 ## 1. 产品身份与定位
 
-- 名称：Catnip Skill Hub
+- 公开站点名称：Neil’s Skill Hub
+- 项目/产品内部身份：Catnip Skill Hub
 - 团队品牌：Catnip 薄荷猫
 - 项目负责人和管理员：Neil Bauman
 - 定义：由管理员筛选、整理和发布的 Agent Skill 发现网站。
@@ -84,4 +85,4 @@ Phase 3 实现前必须实际检查 `npx skills --help` 和 `npx skills add --he
 
 ## 10. 品牌规则
 
-Neil Bauman 已于 2026-07-31 提供正式 Catnip 图形，网页 Logo 与浏览器标签页图标统一使用 `public/brand/logo.png`。公开站点名称统一为 `Catnip Skill Hub`，公开 metadata 和品牌副标题不再使用语言市场定位或旧标题术语。不得以 emoji、网络猫图或重新生成的近似图形替代正式 Logo；后续替换必须由 Neil Bauman 提供新版本。详细约定见 `public/brand/README.md`。
+Neil Bauman 于 2026-09-11 明确将公开站点名称更新为 `Neil’s Skill Hub`。网页 Logo 与浏览器标签页图标统一使用其直接提供的 `public/brand/neil-rabbit-icon.png`；首页可使用经该图标延展并验收的 `public/brand/neil-rabbit-mascot.png`。公开 metadata、导航字标与页脚必须使用新站名，Catnip Skill Hub 继续作为项目和产品内部身份。旧 `public/brand/logo.png` 只作历史资产保留，不再用于当前公共入口。详细约定见 `public/brand/README.md`。

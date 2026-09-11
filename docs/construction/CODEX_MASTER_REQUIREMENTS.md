@@ -34,6 +34,7 @@
 
 ## 当前前端专项要求
 
+- 2026-09-11 最新公开前端基线：站名为 `Neil’s Skill Hub`，网站图标使用 Neil Bauman 提供的白兔头像，视觉采用深夜蓝环境与珊瑚红、金黄、天青、紫罗兰多色体系；相关开发分支为 `redesign/neils-skill-hub-colorful`。这项最新明确指令覆盖本节下方旧 UI 基线中的名称、Logo 和蓝绿色彩描述，但不改变产品能力与生产安全边界。
 - 当前开发分支为 `main`；Neil Bauman 已于 2026-08-03 明确指示将 `UI_fix` 快进推广到 `main` 并在主分支继续开发，推广基线为 `b3697c586b2a08f36ccf4f5a1e4583203e993018`，远端备份为 `backup/pre-main-ui-fix-merge-20260803-1954`。`UI_fix`、旧备份、`SKill-hub-ui`、`frontend/visual-optimization` 与 `backend-server-deployment` 均保留，不删除、不误写为当前分支。
 - 前端施工以 `docs/construction/SKILL_HUB_UI_PLAN.md` 为专项依据：使用 WorkBuddy 的成熟信息架构、Marvis 的封面驱动浏览节奏和 Catnip 的管理员策展身份。
 - 首次规划轮只写文档，不改 UI 代码；后续 UI-1 至 UI-4 每批完成施工闭环后必须停下向 Neil Bauman 汇报，未经继续指令不得进入下一批。

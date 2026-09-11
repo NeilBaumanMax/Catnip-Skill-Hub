@@ -1,5 +1,28 @@
 # 施工日志
 
+## 2026-09-11 08:27 CST / Neil’s Skill Hub 多彩品牌改版 / 实现与验证
+
+### 实际变更
+
+- 开工计划提交 `b3b5188`、远端备份 `backup/pre-neils-skill-hub-redesign-20260911-0355` 与开发分支 `redesign/neils-skill-hub-colorful` 均先行 push 并核验，之后才修改真实 UI。
+- 公开站名称、metadata、favicon、导航、页脚和管理端字标统一为 `Neil’s Skill Hub`；使用 Neil Bauman 提供的白兔头像作为正式图标，并以受控背景提取生成透明首页角色图。
+- 首页重构为“深夜灵感学院”搜索舞台：深夜蓝框架、珊瑚红/金黄/天青/紫罗兰语义色、非对称角色构图和彩色生态标签；三张真实 Skill 卡片、详情页和推荐页同步进入同一设计系统，搜索、筛选、下载和安装语义不变。
+- `DESIGN.md`、`PRODUCT.md`、产品要求、施工主要求与品牌资产说明已同步最新品牌事实；旧 Catnip Logo 保留为历史资产。
+
+### 失败、修复与复测
+
+1. 沙箱内开发服务监听和 `tsx` IPC 分别被 `EPERM` 阻断；在获准环境复跑后正常。Playwright 初次缺 Chromium，安装时首轮下载超时，工具自动重试后安装成功。
+2. 默认 Turbopack production build 在沙箱内及获准环境均因 CSS 子进程绑定内部端口 `EPERM` 失败；改用同一 Next.js 官方 Webpack 构建路径复测成功，不伪报默认构建通过。
+3. 初次移动端诊断发现隐藏 tooltip 造成 390px 页面 2px 横向溢出，并发现部分关键控件不足 44px；隐藏移动 tooltip、收紧溢出并统一关键触控高度后复测为 `clientWidth=scrollWidth=390`。
+4. 强制截图路径 `/skills/project-brief` 因该演示 Skill 已在此前明确删除而正确返回 404；保留这项历史脚本漂移，同时额外对真实 `/skills/apple-design` 生成桌面和移动截图验收，不恢复已删除演示数据。
+
+### 最终验证
+
+- `npm test` 59/59、lint 0 error/3 个既有 admin warning、typecheck、db:check、`git diff --check` 与 `npm run build -- --webpack` 全部通过。
+- 修改后标准截图 16/16 生成，其中三条公共路径四视口为强制验收范围；另生成真实详情页桌面/手机截图。首页 1440、1024、768、390，真实详情和推荐页重点读图均无布局断裂或文字重叠。截图验收：通过（自动验收，不等于 Neil Bauman 主观确认）。
+- 390px 首页、真实详情与推荐页均无横向溢出、破图或浏览器控制台错误；页面标题与 favicon 已切换到新品牌。
+- 本轮未修改或部署腾讯云生产环境，也未修改 nginx、SSH、防火墙、安全组、DNS、HTTPS、数据库或秘密；来源不明的用户工作区改动保持隔离。
+
 ## 2026-08-07 21:02 CST / Skill 提交与公网发布说明书 / 实现与验证
 
 - 说明书实现与交接提交 `994e0b7` 已成功 push；本条最终状态回写作为直接后继纯文档提交再次推送。
