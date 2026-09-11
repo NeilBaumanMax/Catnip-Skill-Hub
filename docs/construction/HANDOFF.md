@@ -2,6 +2,14 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 09:09 CST / 公共页面尺度收紧与灵感兔替换权威交接
+
+- 当前分支继续为 `redesign/neils-skill-hub-colorful`；开工计划 `d3fb9cf` 和修改前备份 `backup/pre-neils-scale-refine-20260911-0839` 已在远端核验。
+- 当前首页资产是 `public/brand/neil-rabbit-inspiration.png`，来源为内置 ImageGen 参考用户“找灵感”图生成的透明无文字插画；`neil-rabbit-icon.png` 继续只用于导航/favicon，`neil-rabbit-mascot.png` 是不再渲染的历史首页资产。
+- 尺度规则集中在 `src/app/neil-theme.css` 的 Compact Discovery 覆盖：1380px 公共上限、75%/1180px 首页舞台、340px 桌面舞台、425px 手机舞台、220px 桌面卡片行与平板自适应行。
+- 最终门禁为 59/59、lint 0 error/3 个既有 warning、typecheck、db:check、Webpack build、diff check 和布局扫描 0；三公共路由在 390/768/1968px 无溢出、破图、控制台错误或实际小触控控件。
+- 标准截图脚本仍会对已删除的 `/skills/project-brief` 生成 404 截图；真实详情继续用 `/skills/apple-design` 补充验收。生产没有部署，用户未提交文件不得被后续提交冒领。
+
 ## 2026-09-11 08:31 CST / Neil’s Skill Hub 多彩品牌改版 / 最终远端状态
 
 - 实现与验收提交 `62b236c` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。

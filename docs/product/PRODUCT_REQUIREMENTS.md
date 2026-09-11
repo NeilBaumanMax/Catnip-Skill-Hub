@@ -85,4 +85,4 @@ Phase 3 实现前必须实际检查 `npx skills --help` 和 `npx skills add --he
 
 ## 10. 品牌规则
 
-Neil Bauman 于 2026-09-11 明确将公开站点名称更新为 `Neil’s Skill Hub`。网页 Logo 与浏览器标签页图标统一使用其直接提供的 `public/brand/neil-rabbit-icon.png`；首页可使用经该图标延展并验收的 `public/brand/neil-rabbit-mascot.png`。公开 metadata、导航字标与页脚必须使用新站名，Catnip Skill Hub 继续作为项目和产品内部身份。旧 `public/brand/logo.png` 只作历史资产保留，不再用于当前公共入口。详细约定见 `public/brand/README.md`。
+Neil Bauman 于 2026-09-11 明确将公开站点名称更新为 `Neil’s Skill Hub`。网页 Logo 与浏览器标签页图标统一使用其直接提供的 `public/brand/neil-rabbit-icon.png`；首页使用无文字、透明背景的“举灯泡跃出书本”同角色插画 `public/brand/neil-rabbit-inspiration.png`，不得使用头像原图或带底部文字标牌的参考图。公开 metadata、导航字标与页脚必须使用新站名，Catnip Skill Hub 继续作为项目和产品内部身份。旧 `public/brand/logo.png` 与上一版 `public/brand/neil-rabbit-mascot.png` 只作历史资产保留，不再用于当前公共入口。详细约定见 `public/brand/README.md`。

@@ -38,9 +38,9 @@ Catnip 不是开放社区或通用插件市场。它以管理员策展、人工�
 ## Brand Commitments
 
 - 产品身份继续为 Catnip Skill Hub；2026-09-11 起公开网站名称为 `Neil’s Skill Hub`。
-- 公开品牌使用 Neil Bauman 提供的白兔头像，并以同一角色的透明背景衍生图作为首页吉祥物。
+- 公开品牌使用 Neil Bauman 提供的白兔头像作为导航与 favicon；首页使用无文字、透明背景的“举灯泡跃出书本”同角色插画，不使用头像原图。
 - 项目负责人和管理员：Neil Bauman。
-- 网页导航与 favicon 使用 `public/brand/neil-rabbit-icon.png`；首页吉祥物使用 `public/brand/neil-rabbit-mascot.png`。
+- 网页导航与 favicon 使用 `public/brand/neil-rabbit-icon.png`；首页吉祥物使用 `public/brand/neil-rabbit-inspiration.png`。
 - 首页体验以图片驱动、持续发现、克制但不呆板为原则。
 - Neil Bauman 已将 Unsplash 的左侧功能入口、顶部分类/搜索/标签和中部瀑布流设为当前首页参考方向；这是一项结构与审美约束，不授权复制其品牌素材。
 

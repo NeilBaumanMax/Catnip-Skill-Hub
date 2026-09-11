@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CaretDown, Check, LightbulbFilament, Question, Sparkle, Tag } from "@phosphor-icons/react/dist/ssr";
+import { CaretDown, Check, Tag } from "@phosphor-icons/react/dist/ssr";
 import { PublicHeader, PublicShell } from "@/app/_components/public-shell";
 import { EcosystemMarquee } from "@/app/_components/ecosystem-marquee";
 import { analyticsService } from "@/lib/analytics";
@@ -167,18 +167,15 @@ export default async function Home({ searchParams }: HomeProps) {
               </div>
 
               <div className="hero-mascot" aria-hidden="true">
-                <span className="mascot-symbol mascot-symbol-idea"><LightbulbFilament size={27} weight="fill" /></span>
-                <span className="mascot-symbol mascot-symbol-question"><Question size={26} weight="bold" /></span>
-                <span className="mascot-symbol mascot-symbol-spark"><Sparkle size={25} weight="fill" /></span>
                 <span className="mascot-halo" />
                 <Image
                   className="hero-mascot-image"
-                  src="/brand/neil-rabbit-mascot.png"
+                  src="/brand/neil-rabbit-inspiration.png"
                   alt=""
-                  width={1254}
-                  height={1254}
+                  width={1212}
+                  height={1298}
                   priority
-                  sizes="(max-width: 700px) 220px, 410px"
+                  sizes="(max-width: 700px) 160px, 320px"
                 />
               </div>
             </div>

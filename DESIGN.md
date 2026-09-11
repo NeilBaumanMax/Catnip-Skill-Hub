@@ -25,10 +25,16 @@ colors:
 typography:
   brandDisplay:
     fontFamily: "ui-rounded, SF Pro Rounded, system-ui, sans-serif"
-    fontSize: "clamp(3.7rem, 7.2vw, 6.7rem)"
+    fontSize: "clamp(2.8rem, 4.7vw, 4.65rem)"
     fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "-0.075em"
+    lineHeight: 0.9
+    letterSpacing: "-0.04em"
+  detailDisplay:
+    fontFamily: "ui-rounded, SF Pro Rounded, system-ui, sans-serif"
+    fontSize: "clamp(2.35rem, 4.2vw, 4rem)"
+    fontWeight: 800
+    lineHeight: 0.98
+    letterSpacing: "-0.035em"
   display:
     fontFamily: "LXGW WenKai Catnip, PingFang SC, sans-serif"
     fontSize: "clamp(2.1rem, 4.2vw, 4.5rem)"
@@ -92,6 +98,16 @@ components:
 ---
 
 # Design System: Neil’s Skill Hub
+
+## 2026-09-11 Compact Discovery Override
+
+Neil Bauman 最新反馈要求公共页面的大框整体缩小约 25%，并以“找灵感”兔子插画替代首页头像式主视觉。本节覆盖下方关于舞台、内容最大宽度、卡片媒体高度和首页吉祥物路径的旧尺度规则；颜色、信息架构和功能边界不变。
+
+- 宽屏公共内容最大宽度收紧到 1380px；首页舞台使用约 75% 内容宽度、最高 1180px，桌面最小高度从 430px 降到 340px。
+- 品牌标题最大字号从 6.1rem 降到 4.65rem；搜索控件保持 44px 可用触控高度，靠减少外边距、内边距和装饰占用建立紧凑感。
+- 三项 Skill 继续使用 1+2 非对称结构，但网格行基准从 290px 收紧到 220px；移动端封面从 330px 收紧到 248px。
+- 首页使用无文字透明资产 `/brand/neil-rabbit-inspiration.png`：白兔戴圆框眼镜和红金围巾，举灯泡跃出打开的书本。不得恢复头像式半身图、参考图黑底或底部文字标牌。
+- 当前视觉参数：`DESIGN_VARIANCE 7`、`MOTION_INTENSITY 4`、`VISUAL_DENSITY 6`。
 
 ## 2026-09-11 Neil’s Skill Hub Brand Override
 
