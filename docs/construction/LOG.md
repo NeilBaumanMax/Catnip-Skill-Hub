@@ -1,5 +1,32 @@
 # 施工日志
 
+## 2026-09-11 11:36 CST / Neil’s Skill Hub 腾讯云视觉版本发布 / 实现与验证
+
+### 发布与恢复
+
+- 开工计划 `378a0eb` 和远端备份 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 先行 push；生产发布只使用该提交的 Git 归档，未包含工作区未提交工具、依赖或指南改动。
+- 部署前只读确认服务器 current 为 `50bd53b`、四项服务 healthy、app 为 amd64、环境 `root:root 0600`、35G 可用、2GiB Swap、旧工作区存在且网络仅 22/80 与回环 18080。
+- 创建 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual`，PostgreSQL custom dump 19K、SeaweedFS 归档 271K、manifest 与 SHA-256 全部通过；数据库 pg_restore 清单和对象 tar 清单可读，目录为 `root:root 0700`。
+- 构建镜像摘要 `sha256:4c30caf94a796f89e40b75e6745e6e087ffd6c730a4b6e56392b35acc1cef9df`，架构 `linux/amd64`。服务器保留旧镜像 `rollback-50bd53b`，建立 release `378a0eb` 并通过 Compose config 后原子切换 current；内置失败分支可恢复旧 symlink/镜像。
+
+### 失败、修复与风险
+
+1. 首次 buildx 因 Docker Desktop 未运行而无法连接 socket；启动 Docker Desktop 后复测进入构建。
+2. 干净 Git 归档不包含空 `content/`，Dockerfile 最终 COPY 失败；确认网站工作区该目录为空且不受 Git 跟踪后，只在临时构建目录建立空目录，复测镜像成功。
+3. `npm ci` 汇总 9 项含开发依赖告警；单独 `npm audit --omit=dev` 确认生产仍有 nanoid/sharp 两项 high 与 Next.js 16.3.0 一项 critical。Windows RCE 不适用 Linux，AVIF 风险仍需独立升级；本轮未碰用户未提交 package 文件，也未伪报 audit 0。
+4. 首次备份验证以普通用户进入 root 0700 目录失败；保持权限不变，改用 sudo 在目录内生成/验证 SHA-256，并完成数据库和对象清单验证。
+5. 发布归档带 macOS provenance 扩展头，GNU tar 忽略提示；候选文件提取、权限、Compose config 和镜像摘要均通过。
+6. 数据库只读 SQL 先后因 shell 引号和旧字段名 `status` 失败；按实际 schema 使用 `publish_status` 复测，发现生产仍有 13 条 published、未隐藏 Skill。该漂移早于本轮且数据未修改，不在视觉发布中擅自删除。
+7. 标准公网截图首页首次因固定 `networkidle` 超时，但脚本继续退出 0；使用同一 Chromium 的 `domcontentloaded`、显式等待和全页截图补验。首张 1440 图在图片 decode 前留下空圆，再显式 `img.decode()` 复拍，兔子正常且请求失败 0。
+8. 一次镜像列表命令使用 Docker 不支持的 `.Architecture` formatter 失败；改用兼容字段后核验全部镜像标签。
+
+### 最终验收
+
+- current `/opt/catnip-skill-hub/releases/378a0eb`；运行 app 镜像与候选摘要一致，migrate exit 0，PostgreSQL/SeaweedFS/app/Caddy healthy，健康 `postgres-s3`，近 15 分钟错误关键词 0，磁盘约 35G 可用。
+- 公网 `/`、`/recommend`、三真实详情、兔子 icon/hero 为 200，三下载为 307；公网 `/admin`、`/admin/login`、`/api/admin/session` 为 404，私网 loopback 登录页为 200，nginx 配置测试成功。
+- 390/768/1024/1440/1968px 分别为 1/2/3/4/4 列，13 卡实际高度 336/384/432px，五视口零横向溢出、零控制台错误；桌面/平板/手机全页和详情/推荐读图通过。截图验收：通过（自动验收）。
+- 临时传输的两个服务器归档已精确删除；正式 release、候选/回滚镜像、旧 release 和新恢复点保留。无需回滚；如持续异常，将 current 恢复为 `50bd53b`、latest 恢复 `rollback-50bd53b` 后 `--no-build --force-recreate --wait app caddy` 并复测全部门禁。
+
 ## 2026-09-11 10:12 CST / 原瀑布流恢复与管理员登录核验 / 最终 Git 回写
 
 - 实现、设计契约与验收提交 `ec4a674` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条作为直接后继纯文档提交再次推送。

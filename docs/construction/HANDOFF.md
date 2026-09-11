@@ -2,6 +2,17 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 11:36 CST / Neil’s Skill Hub 腾讯云视觉版本发布权威交接
+
+- 当前生产为 `http://118.195.247.102`，current `/opt/catnip-skill-hub/releases/378a0eb`；来自分支 `redesign/neils-skill-hub-colorful` 的计划提交 `378a0eb`，开发前远端备份为 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048`。
+- 运行 app 镜像摘要 `sha256:4c30caf94a796f89e40b75e6745e6e087ffd6c730a4b6e56392b35acc1cef9df`，linux/amd64；migrate exit 0，PostgreSQL、SeaweedFS、app、Caddy healthy，近 15 分钟错误 0。
+- 最新恢复点 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual` 已验证且为 root 0700；代码回滚使用旧 release `50bd53b` 与 `catnip-skill-hub-app:rollback-50bd53b`。本轮未改数据，正常代码回滚不得恢复数据备份。
+- 公网公共路由、三真实详情/下载和品牌资源通过，管理路径继续 404；私网 loopback 管理登录为 200。nginx、SSH、UFW、安全组、DNS、HTTPS、环境秘密、管理员凭据与旧 `catnip-intro` 未修改。
+- 生产实际有 13 条 published、未隐藏 Skill，包含 10 条旧演示数据；本轮只读发现但未删除。后续若要只保留三个真实 Skill，必须另获 Neil Bauman 明确数据删除授权并先做新恢复点。
+- `npm audit --omit=dev` 有 3 项生产告警，Next.js AVIF 风险需独立依赖升级轮次；不要在无测试的情况下直接运行 audit fix 或覆盖用户未提交 package 文件。
+- 视觉验收：390/768/1024/1440/1968px 为 1/2/3/4/4 列，13 卡高度 336/384/432px，零溢出和零控制台错误；显式图片 decode 的 1440 全页图确认兔子正常。标准截图的 networkidle 超时不能单独作为失败或通过。
+- 主工作区用户未提交的 `.gitignore`、`AGENTS.md`、README、package 文件、`.agents/`、指南、截图脚本和 skills lock 继续保持隔离，不得冒领。
+
 ## 2026-09-11 10:12 CST / 原瀑布流恢复与管理员登录说明 / 最终远端状态
 
 - 实现与验收提交 `ec4a674` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终状态回写提交后再次 push。

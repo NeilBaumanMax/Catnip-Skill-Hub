@@ -1,5 +1,13 @@
 # 测试指标
 
+## 2026-09-11 / Neil’s Skill Hub 腾讯云视觉发布基线
+
+- 发布提交 `378a0eb` 的本地门禁继承已通过的 59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack build、16 张本地截图和五视口布局诊断；独立 `linux/amd64` runner 镜像内 Turbopack production build 成功。
+- 生产 current 必须为 `/opt/catnip-skill-hub/releases/378a0eb`，运行 app 镜像摘要必须为 `sha256:4c30caf94a796f89e40b75e6745e6e087ffd6c730a4b6e56392b35acc1cef9df`；migrate exit 0，PostgreSQL、SeaweedFS、app、Caddy healthy，健康为 `postgres-s3`。
+- 公网首页、推荐、三个真实详情和两张兔子品牌资源为 200；三个真实下载为 307；公网 `/admin`、`/admin/login`、`/api/admin/session` 为 404；公网只监听 22/80，Caddy 只监听回环 18080。
+- 生产首页 390/768/1024/1440/1968px 必须为 1/2/3/4/4 列，13 张现存数据库卡片高度保持 336/384/432px 变化，横向溢出和控制台错误为 0。标准脚本首页 networkidle 超时不得算通过，使用显式图片 decode 的全页截图补验。
+- `npm audit --omit=dev` 当前为 3 项生产告警，不得伪报 0；依赖升级需另开施工轮，不能与视觉发布混合。
+
 ## 2026-08-07 / Skill 提交说明书验证基线
 
 - Markdown 目录锚点 16/16 可解析，代码围栏成对，敏感凭据模式无命中，引用的网站实现/部署关键路径存在。

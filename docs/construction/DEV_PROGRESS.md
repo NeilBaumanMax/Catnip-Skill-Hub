@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 11:36 CST / Neil’s Skill Hub 腾讯云视觉版本发布 / 完成记录
+
+- 计划提交 `378a0eb` 与远端备份 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 先行 push；从该提交干净归档构建并导入 `linux/amd64` app 镜像，生产 current 已原子切换到 `/opt/catnip-skill-hub/releases/378a0eb`。
+- 发布前恢复点 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual` 的 PostgreSQL、SeaweedFS、manifest 和 SHA-256 已验证；旧 `50bd53b` release 与 `rollback-50bd53b` 镜像保留。
+- migrate exit 0，四项长期服务 healthy，健康为 `postgres-s3`，近 15 分钟 app/Caddy 错误关键词 0；公网公共路由/品牌资源/下载通过，管理入口继续 404，端口继续只暴露 22/80 与回环 18080。
+- 生产五视口为 1/2/3/4/4 列，13 卡真实瀑布流高度 336/384/432px，零溢出与零控制台错误；全页截图读图通过。截图验收：通过（自动验收）。
+- 发现生产库仍有 13 条已发布旧数据，本轮未修改；发现 3 项生产依赖 audit 告警，本轮未混入依赖升级。服务器临时传输归档已精确删除，正式 release、镜像和恢复点保留。
+
 ## 2026-09-11 10:48 CST / Neil’s Skill Hub 腾讯云视觉版本发布 / 开工计划
 
 - Neil Bauman 明确要求把当前 `redesign/neils-skill-hub-colorful` 推送到腾讯云生产；目标提交为 `c3e4b66`，其中首页多彩改版、灵感兔和原瀑布流实现分别已完成本地工程与多视口视觉验收。

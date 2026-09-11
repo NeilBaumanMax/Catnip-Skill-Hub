@@ -40,6 +40,8 @@ Phase 7 首次腾讯云服务器部署开工基线：`643ef13`；远端备份：
 
 Skill 提交说明书开工计划：`97dba55`；远端备份：`backup/pre-skill-submission-guide-20260807-1910`，已 push 并核验。该轮仅新增独立 Markdown 手册和施工记录，回滚使用完成提交的 `git revert`，不得删除用户未跟踪的 `docs/guide/USAGE.md` 或图片。
 
+Neil’s Skill Hub 腾讯云视觉发布计划：`378a0eb`；远端备份 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 已 push 并核验。生产 current 为 release `378a0eb`；代码运行态回滚目标为 `/opt/catnip-skill-hub/releases/50bd53b` 与 `catnip-skill-hub-app:rollback-50bd53b`，数据恢复点为 `/var/backups/catnip-skill-hub/20260911-111056-pre-neils-visual`。数据未在本轮修改，正常回滚不得恢复数据库或对象归档。
+
 ## 历史安全
 
 远端领先、分叉或无共同历史时停止分析；不盲目 push、合并不相关历史或 force push。不用 reset/clean/restore 解决分歧，不覆盖用户改动。
