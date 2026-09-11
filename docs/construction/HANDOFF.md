@@ -2,6 +2,10 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-11 11:42 CST / 腾讯云视觉发布 / 最终远端状态
+
+- 部署记录提交 `f2bf8b8` 已成功 push；本条直接后继提交只做最终 Git 状态回写。服务器继续运行 release `378a0eb`，恢复点、回滚镜像与安全边界均未改变。
+
 ## 2026-09-11 11:36 CST / Neil’s Skill Hub 腾讯云视觉版本发布权威交接
 
 - 当前生产为 `http://118.195.247.102`，current `/opt/catnip-skill-hub/releases/378a0eb`；来自分支 `redesign/neils-skill-hub-colorful` 的计划提交 `378a0eb`，开发前远端备份为 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048`。

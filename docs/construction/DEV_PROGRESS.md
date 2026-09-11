@@ -2,6 +2,10 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-11 11:42 CST / 腾讯云视觉发布 / 最终 Git 回写
+
+- 部署验收、风险与回滚记录提交 `f2bf8b8` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条最终回写随直接后继文档提交再次推送。
+
 ## 2026-09-11 11:36 CST / Neil’s Skill Hub 腾讯云视觉版本发布 / 完成记录
 
 - 计划提交 `378a0eb` 与远端备份 `backup/pre-tencent-neils-skill-hub-deploy-20260911-1048` 先行 push；从该提交干净归档构建并导入 `linux/amd64` app 镜像，生产 current 已原子切换到 `/opt/catnip-skill-hub/releases/378a0eb`。
