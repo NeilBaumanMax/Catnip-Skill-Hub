@@ -251,15 +251,20 @@ export default async function Home({ searchParams }: HomeProps) {
             <p>Neil Bauman 的 Agent Skill 灵感收藏夹。</p>
           </div>
           <div>
-            <span>每项 Skill 均经过人工整理</span>
             <a
-              href="https://unsplash.com/photos/mountain-landscape-with-a-calm-lake-at-dawn-JCqW61z2Sz0"
+              href="https://github.com/NeilBaumanMax"
               target="_blank"
               rel="noreferrer"
             >
-              山景摄影：Wolfgang Hasselmann / Unsplash
+              GitHub · NeilBaumanMax
             </a>
-            <Link href="/recommend">推荐一个 Skill</Link>
+            <a
+              href="https://github.com/neilbauman666"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub · neilbauman666
+            </a>
           </div>
         </footer>
     </PublicShell>
