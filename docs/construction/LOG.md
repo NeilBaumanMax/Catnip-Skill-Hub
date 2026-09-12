@@ -1,5 +1,28 @@
 # 施工日志
 
+## 2026-09-12 15:45 CST / 首页页脚作者 GitHub 入口 / 腾讯云部署与验收
+
+### 发布与数据保护
+
+- 网站实现提交 `3722f62` 已 push；生产只使用该提交的干净 Git 归档构建（临时构建目录补建空 `content/`），未包含主工作区用户既有的依赖、指南、Agent 配置或截图工具改动。
+- 本地 runner/migrator 镜像均为 `linux/amd64`，app 摘要 `sha256:2399f9f21868285310f68d4452a251b06505444fb62b0e0ee4eb82d6f211219d`、migrate 摘要 `sha256:7499bc28c5305b8ded8547df9ae1af18aa09d6223f44cab189e41d11a4687f4c`。服务器校验源码归档与镜像传输 SHA 后导入，加载后镜像摘要与本地一致。
+- 部署前恢复点 `/var/backups/catnip-skill-hub/20260912-152707-pre-github-footer` 包含 21K PostgreSQL custom dump、5.3M SeaweedFS 归档、manifest 和 SHA256SUMS；3/3 校验、`pg_restore -l`（25 项）与对象 tar 清单（1143 项）均通过，目录为 `root:root 0700`。
+- 旧 current `8c1c340` release 保留；切换前镜像已打 `catnip-skill-hub-app:rollback-8c1c340` 与 `catnip-skill-hub-migrate:rollback-8c1c340`。新 release 先通过 Compose config，再原子切换 current 并内置失败自动恢复旧 symlink/回滚镜像的分支重建 app/Caddy。
+
+### 失败、修复与复测
+
+1. 恢复点脚本末尾 `tar -tf | head` 触发 SIGPIPE（exit 141）提前退出，后续清单行未执行；备份与 SHA 校验本身已完成，补跑 `sha256sum -c`、`pg_restore -l` 与对象清单全量复核通过。
+2. 服务器 Docker 不支持 `.Architecture` 格式化字段（历史已知）；改用镜像 ID 摘要核验，与本地构建一致。
+3. 收尾 `docker compose ps` 未带 env 文件产生插值报错噪音；该命令只读，不影响部署结果。
+4. 公网首页首轮截图报告 4 张图片未加载；滚动触发懒加载并显式 `decode()` 后 1440/390 两视口 0 破图，属懒加载误报。
+
+### 最终验收与回滚
+
+- current `/opt/catnip-skill-hub/releases/3722f62`，migrate exit 0，PostgreSQL、SeaweedFS、app、Caddy healthy；`/api/health` 为 `postgres-s3`，近期 app/Caddy 错误关键词 0，端口仍仅公网 22/80 与回环 18080，`nginx -t` 通过。
+- 公网首页、推荐、apple-design 详情均 200；首页页脚渲染两个作者 GitHub 链接（新标签打开），OCR 桌面/手机双视口确认；公网三项管理路径 404，loopback 登录页 200。
+- 首页 1440 桌面 14 卡、390 手机 14 卡，零横向溢出、零控制台错误、零破图，全页截图读图（OCR）通过。截图验收：通过（自动验收）。
+- 临时 `/tmp/source-3722f62.tar` 与 `/tmp/images-3722f62.tar` 已精确删除，正式 release、候选/回滚镜像和恢复点保留。无需回滚；持续异常时把 current 恢复为 `8c1c340`、latest 恢复 `rollback-8c1c340`，再以 `--no-build --force-recreate --wait app caddy` 重建并复测；本轮无数据库写入，不涉及数据回退。
+
 ## 2026-09-12 15:15 CST / 首页页脚作者 GitHub 入口 / 开工计划
 
 ### 目标与范围

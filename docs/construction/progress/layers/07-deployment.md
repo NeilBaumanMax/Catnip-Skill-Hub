@@ -2,6 +2,12 @@
 
 本文件按时间追加部署层记录，不覆盖历史。
 
+## 2026-09-12 15:45 CST / 首页页脚 GitHub 入口发布完成
+
+- 网站 `3722f62` 完成门禁后，以干净提交构建 `linux/amd64` 镜像并原子切换 `/opt/catnip-skill-hub/current`；旧 `8c1c340` release 与 `rollback-8c1c340` 镜像保留。
+- 发布前恢复点 `/var/backups/catnip-skill-hub/20260912-152707-pre-github-footer` 完成 PostgreSQL/SeaweedFS/manifest/SHA、数据库清单和对象清单验证。
+- 本轮无数据库变更；公共页面、页脚两个作者 GitHub 链接、服务健康、日志、端口和管理隐藏边界通过。截图验收：通过（自动验收）。
+
 ## 2026-09-11 16:12 CST / 知乎 Skill 腾讯云发布完成
 
 - 内容 `v0.4.0` 和网站 `8c1c340` 完成门禁后，以干净提交构建 `linux/amd64` 镜像并原子切换 `/opt/catnip-skill-hub/current`；旧 `378a0eb` release 与回滚镜像保留。

@@ -1,5 +1,15 @@
 # 测试指标
 
+## 2026-09-12 / 首页页脚 GitHub 入口腾讯云生产验收
+
+- 工程：59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack production build、`git diff --check` 通过。
+- 镜像：从干净 `3722f62` 归档 buildx 构建 `linux/amd64`；app `sha256:2399f9f21868285310f68d4452a251b06505444fb62b0e0ee4eb82d6f211219d`、migrate `sha256:7499bc28c5305b8ded8547df9ae1af18aa09d6223f44cab189e41d11a4687f4c`，传输前后 SHA 与镜像摘要一致。
+- 备份：PostgreSQL、SeaweedFS、manifest 的 SHA-256 为 3/3 OK；restore list 25 项、对象 tar 清单 1143 项可读，目录 root 0700。
+- 生产：长期服务 4/4 healthy，migrate exit 0，健康 `postgres-s3`，app/Caddy 日志错误关键词 0；`nginx -t` 通过。
+- HTTP：`/`、`/recommend`、`/skills/apple-design` 为 200；页脚两个 GitHub 链接渲染正确；公网三个管理路径 3/3 为 404，私网 loopback 登录页 200。
+- 浏览器：首页 1440/390 两视口全页截图，14 卡、零横向溢出、零破图（滚动 + decode 复核）、零 console/page error。截图验收：通过（自动验收）。
+- 已记录并修复/替代复测：恢复点脚本 SIGPIPE 提前退出、服务器 Docker `.Architecture` 字段不支持、懒加载首轮破图误报、收尾 `compose ps` 缺 env 文件噪音。
+
 ## 2026-09-11 / 知乎 Skill 腾讯云生产验收
 
 - 镜像：从干净 `8c1c340` 归档 buildx 构建成功；`linux/amd64`，摘要 `sha256:75a5ef3155a5312d752130f1a405498a56dbe62f3a15ff8106966b4d58fe9d89`，传输前后 SHA/镜像摘要一致。

@@ -2,6 +2,14 @@
 
 本文件按时间追加施工记录，不覆盖历史。
 
+## 2026-09-12 15:45 CST / 首页页脚作者 GitHub 入口 / 腾讯云完成
+
+- 网站实现提交 `3722f62` 已 push，并从该提交干净归档构建 `linux/amd64` 镜像（app `sha256:2399f9f21868285310f68d4452a251b06505444fb62b0e0ee4eb82d6f211219d`）；生产 current 已原子切换到 `/opt/catnip-skill-hub/releases/3722f62`。
+- 部署前恢复点 `/var/backups/catnip-skill-hub/20260912-152707-pre-github-footer` 三项 SHA、数据库清单与对象清单已验证；旧 `8c1c340` release 与 `rollback-8c1c340` 镜像保留。
+- 本轮无数据库变更；首页页脚由 Unsplash 署名与推荐链接改为作者两个 GitHub 入口，左侧品牌块与顶部「推荐一个 Skill」导航保留。
+- 四项长期服务 healthy，健康为 `postgres-s3`，近期 app/Caddy 错误关键词 0；公网管理继续 404，私网 loopback 登录页 200，端口仍仅公网 22/80 与回环 18080。
+- 公网首页桌面/手机截图：14 卡、2 个 GitHub 链接、零溢出、零破图、零控制台错误。截图验收：通过（自动验收）。
+
 ## 2026-09-11 16:16 CST / 知乎官方 CLI Skill 公网收录 / 最终 Git 回写
 
 - 生产部署、恢复点、测试与回滚记录提交 `8f66def` 已成功 push 到 `origin/redesign/neils-skill-hub-colorful`；本条作为直接后继纯文档提交再次同步远端。

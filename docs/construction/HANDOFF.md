@@ -2,6 +2,15 @@
 
 本文件按时间追加可独立接力的交接记录，不覆盖历史。
 
+## 2026-09-12 15:45 CST / 首页页脚作者 GitHub 入口 / 腾讯云权威交接
+
+- 生产 current 为 `/opt/catnip-skill-hub/releases/3722f62`，运行 app 镜像摘要 `sha256:2399f9f21868285310f68d4452a251b06505444fb62b0e0ee4eb82d6f211219d`、`linux/amd64`；migrate exit 0，四项长期服务 healthy，近十分钟 app/Caddy 错误关键词 0，健康 `postgres-s3`。
+- 首页 `discovery-footer` 右侧已改为作者两个 GitHub 入口（`https://github.com/NeilBaumanMax`、`https://github.com/neilbauman666`，新标签打开）；左侧品牌块保留，顶部导航仍有「推荐一个 Skill」，无功能入口丢失。
+- 最新恢复点 `/var/backups/catnip-skill-hub/20260912-152707-pre-github-footer` 完整校验通过且为 root 0700。回滚代码使用 `/opt/catnip-skill-hub/releases/8c1c340` 与 `catnip-skill-hub-app:rollback-8c1c340`（migrate 回滚镜像 `rollback-8c1c340` 同步保留）；本轮无数据库写入，代码回滚不涉及数据回退。
+- 公网 `/admin`、`/admin/login`、`/api/admin/session` 继续 404；服务器 loopback `/admin/login` 为 200。SSH、nginx、UFW、安全组、DNS、HTTPS、环境秘密、管理员凭据和旧 `/home/ubuntu/catnip-intro` 均未修改。
+- 线上首页保留 4/3/2/1 瀑布流；本轮实测 1440 桌面 14 卡、390 手机 14 卡，页脚双视口 OCR 确认两个 GitHub 链接，零溢出、零破图、零控制台错误。临时服务器归档已精确删除。
+- 主工作区用户未提交的 `.gitignore`、`AGENTS.md`、README、`next-env.d.ts`、package 文件、`.agents/`、`docs/guide/`、`scripts/screenshots.ts`、`skills-lock.json` 继续保持隔离，未进入提交或发布归档。
+
 ## 2026-09-11 16:16 CST / 知乎 Skill / 最终远端状态
 
 - 部署记录提交 `8f66def` 已 push；本条后继只回写 Git 状态，不改变生产 `8c1c340`、恢复点、回滚镜像或安全边界。
