@@ -1,5 +1,19 @@
 # 施工日志
 
+## 2026-09-12 15:15 CST / 首页页脚作者 GitHub 入口 / 开工计划
+
+### 目标与范围
+
+- 首页最底部 `discovery-footer` 右侧改为作者两个 GitHub 入口（新标签打开）：`https://github.com/NeilBaumanMax` 与 `https://github.com/neilbauman666`。左侧品牌与简介保留；顶部导航已有「推荐一个 Skill」入口，不造成功能丢失。
+- 生产部署按知乎发布同款流程：发布提交干净 Git 归档 → 本地 `linux/amd64` 镜像 → 服务器只读预检 → 部署前恢复点 → SHA-256 校验传输 → Compose config → 原子切换 current → 失败自动回滚分支重建 app/Caddy → 公网/loopback 验收 → 文档收尾。
+- 不修改 nginx、SSH、UFW、安全组、DNS、HTTPS、环境秘密、管理员凭据与旧 `/home/ubuntu/catnip-intro`；不覆盖生产既有 14 条 Skill 数据，本轮无数据库迁移。
+
+### 门禁与回滚
+
+- 工程门禁：59/59、lint 0 error/3 既有 warning、typecheck、db:check、Webpack production build、`git diff --check`。
+- 恢复点 `/var/backups/catnip-skill-hub/<ts>-pre-github-footer`；旧 current `8c1c340` 与镜像 `rollback-8c1c340` 保留；持续异常时恢复 current 符号链接后以 `--no-build --force-recreate --wait app caddy` 重建并复测。
+- 用户未提交文件（`.gitignore`、`AGENTS.md`、README、`next-env.d.ts`、package 文件、`.agents/`、`docs/guide/`、`scripts/screenshots.ts`、`skills-lock.json`）继续隔离，不得进入提交或发布归档。
+
 ## 2026-09-11 16:16 CST / 知乎官方 CLI Skill / 最终 Git 回写
 
 - 腾讯云部署、验证、恢复点与回滚记录提交 `8f66def` 已成功 push；本条直接后继提交只同步最终 Git 状态。
